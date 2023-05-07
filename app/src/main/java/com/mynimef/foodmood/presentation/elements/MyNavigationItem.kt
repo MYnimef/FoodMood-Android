@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 
 data class BottomNavigationItem(val icon: Int, val route: String)
 
@@ -32,11 +30,10 @@ fun MyNavigationItem(
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
-        Icon (
+        MyIcon(
             modifier = Modifier
                 .fillMaxSize(0.7f),
-            painter = painterResource(id = drawableId),
-            contentDescription = null
+            drawableId = drawableId
         )
     }
 }
