@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation
+package com.mynimef.foodmood.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +27,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.foodmood.ui.theme.FoodMoodTheme
+import com.mynimef.foodmood.presentation.BottomNavigationItem
+import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun NavigationScreen() {

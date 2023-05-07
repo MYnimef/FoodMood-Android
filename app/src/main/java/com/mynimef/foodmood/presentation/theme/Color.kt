@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.ui.theme
+package com.mynimef.foodmood.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

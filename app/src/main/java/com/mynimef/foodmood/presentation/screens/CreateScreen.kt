@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation
+package com.mynimef.foodmood.presentation.screens
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

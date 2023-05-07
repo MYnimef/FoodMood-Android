@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.ui.theme
+package com.mynimef.foodmood.presentation.theme
 
 import android.app.Activity
 import android.os.Build
