@@ -52,7 +52,10 @@ fun NavigationScreen() {
 }
 
 @Composable
-fun MyNavigationBar(modifier: Modifier, navController: NavHostController) {
+fun MyNavigationBar(
+    modifier: Modifier,
+    navController: NavHostController
+) {
     NavigationBar(
         modifier = modifier
     ) {
@@ -114,7 +117,10 @@ fun MyNavigationItem(
 }
 
 @Composable
-fun MyMavHost(modifier: Modifier, navController: NavHostController) {
+fun MyMavHost(
+    modifier: Modifier,
+    navController: NavHostController
+) {
     NavHost(
         modifier = modifier,
         navController = navController,
