@@ -1,11 +1,10 @@
 package com.mynimef.foodmood.presentation.screens.trainer
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +17,8 @@ import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainerNavigationScreen() {
     val navController = rememberNavController()
@@ -27,22 +28,21 @@ fun TrainerNavigationScreen() {
         BottomNavigationItem(icon = R.drawable.ic_settings, route = "settings"),
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+    Scaffold(
+        bottomBar = {
+            MyNavigationBar(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                navController = navController,
+                bottomNavItems
+            )
+        }
     ) {
         MyMavHost(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(fraction = 0.9f),
             navController = navController
-        )
-        MyNavigationBar(
-            modifier = Modifier
-                .fillMaxWidth(),
-            navController = navController,
-            bottomNavItems
         )
     }
 }

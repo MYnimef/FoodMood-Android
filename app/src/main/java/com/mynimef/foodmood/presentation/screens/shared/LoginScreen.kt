@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
@@ -26,6 +27,8 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen() {
+    val viewModel: LoginViewModel = viewModel()
+
     val login = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
