@@ -11,11 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodMood"
-        tools:targetApi="31">
+        tools:targetApi="33">
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.FoodMood">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
