@@ -2,6 +2,7 @@
 <resources>
     <string name="welcome">Добро Пожаловать!</string>
     <string name="password">Пароль</string>
-    <string name="login">Войти</string>
-    <string name="email">Почта</string>
+    <string name="signin">Войти</string>
+    <string name="email">Адрес электронной почты</string>
+    <string name="signup">Нет аккаунта?</string>
 </resources>
