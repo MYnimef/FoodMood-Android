@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -39,10 +40,10 @@ fun LoginScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Добро поажловать!")
+        Text(stringResource(R.string.welcome))
         TextField(
             value = login.value,
-            label = { Text("Login") },
+            label = { Text(stringResource(R.string.email)) },
             singleLine = true,
             onValueChange = {
                 login.value = it
@@ -50,7 +51,7 @@ fun LoginScreen() {
         )
         TextField(
             value = password.value,
-            label = { Text("Password") },
+            label = { Text(stringResource(R.string.password)) },
             singleLine = true,
             visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -71,7 +72,7 @@ fun LoginScreen() {
 
             }
         ) {
-            Text("Войти")
+            Text(stringResource(R.string.login))
         }
     }
 }

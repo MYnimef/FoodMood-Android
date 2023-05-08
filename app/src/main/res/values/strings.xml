@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">FoodMood</string>
+    <string name="app_name" translatable="false">FoodMood</string>
+    <string name="welcome">Welcome!</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
 </resources>
