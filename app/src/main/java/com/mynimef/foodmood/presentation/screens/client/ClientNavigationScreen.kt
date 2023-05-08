@@ -48,7 +48,7 @@ fun ClientNavigationScreen() {
 }
 
 @Composable
-fun MyMavHost(
+private fun MyMavHost(
     modifier: Modifier,
     navController: NavHostController
 ) {
@@ -65,7 +65,7 @@ fun MyMavHost(
 
 @Preview(showBackground = true)
 @Composable
-fun ClientNavigationScreenPreview() {
+private fun ClientNavigationScreenPreview() {
     FoodMoodTheme {
         ClientNavigationScreen()
     }

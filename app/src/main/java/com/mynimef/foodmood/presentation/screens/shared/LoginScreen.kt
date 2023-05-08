@@ -27,7 +27,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navigateTo: (route: String) -> Unit) {
     val viewModel: LoginViewModel = viewModel()
 
     val login = remember { mutableStateOf("") }
@@ -69,7 +69,7 @@ fun LoginScreen() {
         Text(text = "Нет аккаунта?")
         Button(
             onClick = {
-
+                navigateTo("trainer")
             }
         ) {
             Text(stringResource(R.string.login))
@@ -79,8 +79,8 @@ fun LoginScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
+private fun LoginScreenPreview() {
     FoodMoodTheme {
-        LoginScreen()
+        LoginScreen {}
     }
 }

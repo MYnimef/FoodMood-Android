@@ -3,7 +3,7 @@ package com.mynimef.foodmood.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.mynimef.foodmood.presentation.screens.trainer.TrainerNavigationScreen
+import com.mynimef.foodmood.presentation.screens.shared.MainScreen
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 class MainActivity: ComponentActivity() {
@@ -11,7 +11,7 @@ class MainActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FoodMoodTheme {
-                TrainerNavigationScreen()
+                MainScreen()
             }
         }
     }
