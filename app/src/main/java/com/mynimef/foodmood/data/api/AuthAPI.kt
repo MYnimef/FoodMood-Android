@@ -3,15 +3,15 @@ package com.mynimef.foodmood.data.api
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthAPI {
 
     @POST("/auth/signup")
-    fun signUp(@Body signUpRequest: SignUpRequest): Call<SignInResponse>
+    suspend fun signUp(@Body signUpRequest: SignUpRequest): Response<SignInResponse>
 
     @POST("/auth/signin")
-    fun signIn(@Body signInRequest: SignInRequest): Call<SignInResponse>
+    suspend fun signIn(@Body signInRequest: SignInRequest): Response<SignInResponse>
 }
