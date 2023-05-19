@@ -9,4 +9,10 @@
     <string name="name">Name</string>
     <string name="repeat_pass">Repeat password</string>
     <string name="next">Next</string>
+    <string name="pref">What will you track?</string>
+    <string name="emotion">Emotions after eating</string>
+    <string name="water">Water balance</string>
+    <string name="food">Food</string>
+    <string name="weight">Weight</string>
+    <string name="complete">Complete</string>
 </resources>

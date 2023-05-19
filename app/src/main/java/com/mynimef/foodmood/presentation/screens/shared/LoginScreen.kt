@@ -104,7 +104,7 @@ private fun CenterElements(
             })
 
         MyLogInButton(text = stringResource(R.string.signin)) {
-            navigateTo("client")
+            navigateTo("trainer")
         }
 
         MyLogInButton(text = stringResource(R.string.signup)) {
