@@ -2,8 +2,6 @@ package com.mynimef.foodmood.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-
-
 val Biege = Color(0xFFF4F3ED)
 
 val DarkGreen = Color(0x3381B29A)
