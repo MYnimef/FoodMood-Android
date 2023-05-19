@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.data
+package com.mynimef.foodmood.data.models
 
 data class User(
     val id: Long,

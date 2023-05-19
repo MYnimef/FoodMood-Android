@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.data
+package com.mynimef.foodmood.data.models
 
 enum class Emotion {
     VERY_GOOD,
