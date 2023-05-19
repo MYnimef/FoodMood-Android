@@ -1,6 +1,7 @@
 package com.mynimef.foodmood.presentation.elements
 
 import android.content.res.Resources
+import android.content.res.Resources.Theme
 import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,16 +33,17 @@ fun MyDate() {
 
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(bottomEnd = 8.dp))
+            .clip(RoundedCornerShape(bottomEnd = 10.dp))
             .width(150.dp)
             .height(45.dp)
-            .background(color = Color.White),
+            .background(color = MaterialTheme.colorScheme.primaryContainer),
         contentAlignment = Alignment.Center
     ) {
         Text(
             modifier = Modifier
                 .fillMaxWidth(0.7f),
             text = date.toString(),
+            color = MaterialTheme.colorScheme.onPrimary,
             maxLines = 1,
             textAlign = TextAlign.Center
         )
