@@ -39,7 +39,7 @@ fun TrainerNavigationScreen() {
                     .background(MaterialTheme.colorScheme.primaryContainer),
                 navController = navController,
                 bottomNavItems,
-                60.dp
+                40.dp
             )
         }
     ) {
