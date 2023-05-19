@@ -1,6 +1,7 @@
 package com.mynimef.foodmood.presentation.elements
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -13,6 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
@@ -28,7 +30,8 @@ fun MyTextFieldLogin(
 ) {
     TextField(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(bottom = 20.dp),
         value = value,
         label =  { Text(label) },
         singleLine = true,

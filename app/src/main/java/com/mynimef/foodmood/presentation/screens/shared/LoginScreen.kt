@@ -26,6 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -71,12 +72,14 @@ private fun CenterElements(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp)
+            .padding(horizontal = 30.dp)
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(stringResource(R.string.welcome))
+        Text(stringResource(R.string.welcome),
+            modifier = Modifier.padding(bottom = 30.dp),
+            style = MaterialTheme.typography.titleLarge)
 
         MyTextFieldLogin(value = login.value,
             label = stringResource(R.string.email),
@@ -100,18 +103,11 @@ private fun CenterElements(
                 password.value = it
             })
 
-        Text(
-            modifier = Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Right,
-            text = stringResource(R.string.signup)
-        )
-
         MyLogInButton(text = stringResource(R.string.signin)) {
             navigateTo("client")
         }
 
-        MyLogInButton(text = stringResource(R.string.signin)) {
+        MyLogInButton(text = stringResource(R.string.signup)) {
             navigateTo("trainer")
         }
     }

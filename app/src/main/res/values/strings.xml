@@ -4,5 +4,5 @@
     <string name="password">Password</string>
     <string name="signin">Sign in</string>
     <string name="email">Email</string>
-    <string name="signup">Have no account?</string>
+    <string name="signup">Create account</string>
 </resources>
