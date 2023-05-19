@@ -42,6 +42,7 @@ private fun MyMavHost(
         composable("login") { LoginScreen(navigateTo) }
         composable("client") { ClientNavigationScreen() }
         composable("trainer") { TrainerNavigationScreen() }
+        composable("signup") { SignupScreen(navigateTo) }
     }
 }
 

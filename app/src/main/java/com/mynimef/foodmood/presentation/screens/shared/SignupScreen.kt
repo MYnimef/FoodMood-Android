@@ -41,11 +41,13 @@ import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun LoginScreen(navigateTo: (route: String) -> Unit) {
-    val viewModel: LoginViewModel = viewModel()
+fun SignupScreen(navigateTo: (route: String) -> Unit) {
+    val viewModel: SignupViewModel = viewModel()
 
+    val name = remember { mutableStateOf("") }
     val login = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
+    val repeatPassword = remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -54,8 +56,10 @@ fun LoginScreen(navigateTo: (route: String) -> Unit) {
     ) {
         CenterElements(
             navigateTo = navigateTo,
+            name = name,
             login = login,
-            password = password
+            password = password,
+            repeatPassword = repeatPassword
         )
     }
 }
@@ -64,10 +68,13 @@ fun LoginScreen(navigateTo: (route: String) -> Unit) {
 @Composable
 private fun CenterElements(
     navigateTo: (route: String) -> Unit,
+    name: MutableState<String>,
     login: MutableState<String>,
-    password: MutableState<String>
+    password: MutableState<String>,
+    repeatPassword: MutableState<String>,
 ) {
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
+    val repeatPasswordVisible = rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -77,9 +84,16 @@ private fun CenterElements(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(stringResource(R.string.welcome),
+        Text(stringResource(R.string.welcome_mess),
             modifier = Modifier.padding(bottom = 30.dp),
             style = MaterialTheme.typography.titleLarge)
+
+        MyTextFieldLogin(value = name.value,
+            label = stringResource(R.string.name),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            visualTranfromation = VisualTransformation.None,
+            trailingIcon = null,
+            onValueChange =  {name.value = it} )
 
         MyTextFieldLogin(value = login.value,
             label = stringResource(R.string.email),
@@ -103,20 +117,33 @@ private fun CenterElements(
                 password.value = it
             })
 
-        MyLogInButton(text = stringResource(R.string.signin)) {
-            navigateTo("client")
-        }
 
-        MyLogInButton(text = stringResource(R.string.signup)) {
-            navigateTo("signup")
+        MyTextFieldLogin(value = repeatPassword.value,
+            label = stringResource(R.string.repeat_pass),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTranfromation = if (repeatPasswordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(
+                    onClick = { repeatPasswordVisible.value = !repeatPasswordVisible.value }
+                ) {
+                    MyIcon(drawableId = if (repeatPasswordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
+                }
+            },
+            onValueChange = {
+                password.value = it
+            })
+
+
+        MyLogInButton(text = stringResource(R.string.next)) {
+            navigateTo("trainer")
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun LoginScreenPreview() {
+private fun SignupScreenPreview() {
     FoodMoodTheme {
-        LoginScreen {}
+        SignupScreen {}
     }
 }
