@@ -36,6 +36,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLogInButton
+import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -76,35 +77,18 @@ private fun CenterElements(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(stringResource(R.string.welcome))
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = login.value,
-            label = { Text(stringResource(R.string.email)) },
-            singleLine = true,
+
+        MyTextFieldLogin(value = login.value,
+            label = stringResource(R.string.email),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            onValueChange = {
-                login.value = it
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                containerColor = MaterialTheme.colorScheme.background,
-                cursorColor = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-        )
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background),
-            value = password.value,
-            label = { Text(stringResource(R.string.password)) },
-            singleLine = true,
-            visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTranfromation = VisualTransformation.None,
+            trailingIcon = null,
+            onValueChange =  {login.value = it} )
+
+        MyTextFieldLogin(value = password.value,
+            label = stringResource(R.string.password),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            onValueChange = {
-                password.value = it
-            },
+            visualTranfromation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(
                     onClick = { passwordVisible.value = !passwordVisible.value }
@@ -112,12 +96,10 @@ private fun CenterElements(
                     MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
                 }
             },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                containerColor = MaterialTheme.colorScheme.background
-            )
-        )
+            onValueChange = {
+                password.value = it
+            })
+
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
