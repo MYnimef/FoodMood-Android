@@ -20,9 +20,9 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp),
+        fontSize = 26.sp,
+        lineHeight = 26.sp,
+        letterSpacing = 0.sp),
 
     titleLarge = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),

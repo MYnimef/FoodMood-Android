@@ -135,7 +135,7 @@ private fun CenterElements(
 
 
         MyLogInButton(text = stringResource(R.string.next)) {
-            navigateTo("trainer")
+            navigateTo("preferences")
         }
     }
 }
