@@ -3,6 +3,10 @@
     <string name="welcome">Добро Пожаловать!</string>
     <string name="password">Пароль</string>
     <string name="signin">Войти</string>
-    <string name="email">Адрес электронной почты</string>
-    <string name="signup">Нет аккаунта?</string>
+    <string name="email">Эл.почта</string>
+    <string name="signup">Создать аккаунт</string>
+    <string name="welcome_mess">Давайте познакомимся!</string>
+    <string name="name">Имя</string>
+    <string name="repeat_pass">Повторите пароль</string>
+    <string name="next">Далее</string>
 </resources>
