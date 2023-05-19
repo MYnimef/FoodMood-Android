@@ -62,6 +62,13 @@ private fun MyMavHost(
     modifier: Modifier,
     navController: NavHostController
 ) {
+    val navigateTo = { route: String ->
+        navController.navigate(route) {
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -69,7 +76,7 @@ private fun MyMavHost(
     ) {
         composable("home") { com.mynimef.foodmood.presentation.screens.client.HomeScreen() }
         composable("create") { com.mynimef.foodmood.presentation.screens.client.CreateScreen() }
-        composable("settings") { com.mynimef.foodmood.presentation.screens.client.SettingsScreen() }
+        composable("settings") { com.mynimef.foodmood.presentation.screens.client.SettingsScreen(navigateTo) }
         composable("calendar") { com.mynimef.foodmood.presentation.screens.client.CalendarScreen() }
         composable("reports") { com.mynimef.foodmood.presentation.screens.client.ReportsScreen() }
     }

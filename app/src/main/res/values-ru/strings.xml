@@ -15,4 +15,11 @@
     <string name="food">Еду</string>
     <string name="weight">Вес</string>
     <string name="complete">Завершить</string>
+    <string name="settings">Настройки</string>
+    <string name="user_settings">Изменить данные профиля</string>
+    <string name="prefrences">Предпочтения</string>
+    <string name="notifications">Уведомления</string>
+    <string name="language">Язык</string>
+    <string name="error">Сообщить об ошибке</string>
+    <string name="idea">Предложить идею</string>
 </resources>
