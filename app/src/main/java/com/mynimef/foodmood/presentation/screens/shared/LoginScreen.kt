@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
+import com.mynimef.foodmood.presentation.elements.MyLogInButton
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -65,7 +70,8 @@ private fun CenterElements(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp),
+            .padding(32.dp)
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -79,11 +85,18 @@ private fun CenterElements(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             onValueChange = {
                 login.value = it
-            }
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = MaterialTheme.colorScheme.background,
+                cursorColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
         )
         TextField(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background),
             value = password.value,
             label = { Text(stringResource(R.string.password)) },
             singleLine = true,
@@ -98,7 +111,12 @@ private fun CenterElements(
                 ) {
                     MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
                 }
-            }
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = MaterialTheme.colorScheme.background
+            )
         )
         Text(
             modifier = Modifier
@@ -106,12 +124,13 @@ private fun CenterElements(
             textAlign = TextAlign.Right,
             text = stringResource(R.string.signup)
         )
-        Button(
-            onClick = {
-                navigateTo("trainer")
-            }
-        ) {
-            Text(stringResource(R.string.signin))
+
+        MyLogInButton(text = stringResource(R.string.signin)) {
+            navigateTo("client")
+        }
+
+        MyLogInButton(text = stringResource(R.string.signin)) {
+            navigateTo("trainer")
         }
     }
 }
