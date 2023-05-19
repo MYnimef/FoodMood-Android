@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -17,7 +18,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun MyNavigationBar(
     modifier: Modifier,
     navController: NavHostController,
-    items: List<BottomNavigationItem>
+    items: List<BottomNavigationItem>,
+    spaceSize: Dp
 ) {
     NavigationBar(
         modifier = modifier
@@ -28,7 +30,7 @@ fun MyNavigationBar(
         Row(
             modifier = modifier
                 .fillMaxHeight(),
-            horizontalArrangement = Arrangement.spacedBy(40.dp, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(spaceSize, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
             items.forEach { item ->
