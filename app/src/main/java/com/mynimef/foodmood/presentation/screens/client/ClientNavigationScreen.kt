@@ -1,11 +1,14 @@
 package com.mynimef.foodmood.presentation.screens.client
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,18 +22,28 @@ import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun ClientNavigationScreen() {
     val navController = rememberNavController()
     val bottomNavItems = listOf(
         BottomNavigationItem(icon = R.drawable.ic_home, route = "home"),
-        BottomNavigationItem(icon = R.drawable.ic_create, route = "create"),
+        BottomNavigationItem(icon = R.drawable.ic_calendar, route = "calendar"),
+        BottomNavigationItem(icon = R.drawable.ic_add, route = "create"),
+        BottomNavigationItem(icon = R.drawable.ic_reports, route = "reports"),
         BottomNavigationItem(icon = R.drawable.ic_settings, route = "settings"),
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+    Scaffold(
+        bottomBar = {
+            MyNavigationBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primaryContainer),
+                navController = navController,
+                bottomNavItems
+            )
+        }
     ) {
         MyMavHost(
             modifier = Modifier
@@ -38,14 +51,9 @@ fun ClientNavigationScreen() {
                 .fillMaxHeight(fraction = 0.9f),
             navController = navController
         )
-        MyNavigationBar(
-            modifier = Modifier
-                .fillMaxWidth(),
-            navController = navController,
-            bottomNavItems
-        )
     }
 }
+
 
 @Composable
 private fun MyMavHost(
@@ -60,6 +68,8 @@ private fun MyMavHost(
         composable("home") { com.mynimef.foodmood.presentation.screens.trainer.HomeScreen() }
         composable("create") { com.mynimef.foodmood.presentation.screens.trainer.CreateScreen() }
         composable("settings") { com.mynimef.foodmood.presentation.screens.trainer.SettingsScreen() }
+        composable("home") { com.mynimef.foodmood.presentation.screens.trainer.HomeScreen() }
+        composable("home") { com.mynimef.foodmood.presentation.screens.trainer.HomeScreen() }
     }
 }
 
