@@ -67,11 +67,11 @@ private fun MyMavHost(
         navController = navController,
         startDestination = "home"
     ) {
-        composable("home") { com.mynimef.foodmood.presentation.screens.trainer.HomeScreen() }
-        composable("create") { com.mynimef.foodmood.presentation.screens.trainer.CreateScreen() }
-        composable("settings") { com.mynimef.foodmood.presentation.screens.trainer.SettingsScreen() }
-        composable("home") { com.mynimef.foodmood.presentation.screens.trainer.HomeScreen() }
-        composable("home") { com.mynimef.foodmood.presentation.screens.trainer.HomeScreen() }
+        composable("home") { com.mynimef.foodmood.presentation.screens.client.HomeScreen() }
+        composable("create") { com.mynimef.foodmood.presentation.screens.client.CreateScreen() }
+        composable("settings") { com.mynimef.foodmood.presentation.screens.client.SettingsScreen() }
+        composable("calendar") { com.mynimef.foodmood.presentation.screens.client.CalendarScreen() }
+        composable("reports") { com.mynimef.foodmood.presentation.screens.client.ReportsScreen() }
     }
 }
 
