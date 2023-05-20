@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodMood"
+        android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
             android:name=".presentation.MainActivity"

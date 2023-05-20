@@ -28,25 +28,25 @@ fun SignUpScreenSecond(
     viewModel: SignUpViewModel,
 ) {
     SignUpScreenSecond(
-        navigateTo = navigateTo,
         food = viewModel.food.collectAsState().value,
         triggerFood = viewModel::triggerFood,
         water = viewModel.water.collectAsState().value,
         triggerWater = viewModel::triggerWater,
         weight = viewModel.weight.collectAsState().value,
         triggerWeight = viewModel::triggerWeight,
+        signUp = viewModel::signUp,
     )
 }
 
 @Composable
 private fun SignUpScreenSecond(
-    navigateTo: (route: String) -> Unit,
     food: Boolean,
     triggerFood: () -> Unit,
     water: Boolean,
     triggerWater: () -> Unit,
     weight: Boolean,
     triggerWeight: () -> Unit,
+    signUp: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -54,26 +54,26 @@ private fun SignUpScreenSecond(
             .fillMaxSize()
     ) {
         CenterElements(
-            navigateTo = navigateTo,
             food = food,
             triggerFood = triggerFood,
             water = water,
             triggerWater = triggerWater,
             weight = weight,
-            triggerWeight = triggerWeight
+            triggerWeight = triggerWeight,
+            signUp = signUp,
         )
     }
 }
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: String) -> Unit,
     food: Boolean,
     triggerFood: () -> Unit,
     water: Boolean,
     triggerWater: () -> Unit,
     weight: Boolean,
     triggerWeight: () -> Unit,
+    signUp: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -107,9 +107,10 @@ private fun CenterElements(
             selected = weight,
             onClick = triggerWeight,
         )
-        MyLogInButton(text = stringResource(R.string.complete)) {
-            navigateTo("client")
-        }
+        MyLogInButton(
+            text = stringResource(R.string.complete),
+            onClick = signUp
+        )
     }
 }
 
@@ -122,13 +123,13 @@ private fun SignUpSecondScreenPreview() {
         val weight = rememberSaveable { mutableStateOf(false) }
 
         SignUpScreenSecond(
-            navigateTo = {},
             food = food.value,
             triggerFood = { food.value = !food.value },
             water = water.value,
             triggerWater = { water.value = !water.value },
             weight = weight.value,
             triggerWeight = { weight.value = !weight.value },
+            signUp = {},
         )
     }
 }
