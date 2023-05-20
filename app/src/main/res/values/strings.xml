@@ -22,4 +22,5 @@
     <string name="language">Language</string>
     <string name="error">Report an error</string>
     <string name="idea">Suggest an idea</string>
+    <string name="userinfo">Profile</string>
 </resources>

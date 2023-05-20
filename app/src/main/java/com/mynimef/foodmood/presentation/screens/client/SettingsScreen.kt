@@ -68,7 +68,7 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo("home")}) {
+                onClick = { navigateTo("userinfo")}) {
                 MyIcon(drawableId = R.drawable.ic_user)
             }
             TextButton(

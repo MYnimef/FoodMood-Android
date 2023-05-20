@@ -22,4 +22,5 @@
     <string name="language">Язык</string>
     <string name="error">Сообщить об ошибке</string>
     <string name="idea">Предложить идею</string>
+    <string name="userinfo">Данные профиля</string>
 </resources>
