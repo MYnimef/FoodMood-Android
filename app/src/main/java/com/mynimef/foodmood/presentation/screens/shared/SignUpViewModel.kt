@@ -20,14 +20,21 @@ class SignUpViewModel: ViewModel() {
     private val _name = MutableStateFlow("")
     val name: StateFlow<String> = _name.asStateFlow()
 
-    private val _login = MutableStateFlow("")
-    val login: StateFlow<String> = _login.asStateFlow()
+    private val _email = MutableStateFlow("")
+    val email: StateFlow<String> = _email.asStateFlow()
 
     private val _password = MutableStateFlow("")
     val password: StateFlow<String> = _password.asStateFlow()
 
     private val _repeatPassword = MutableStateFlow("")
     val repeatPassword: StateFlow<String> = _repeatPassword.asStateFlow()
+
+    private val _buttonActive = MutableStateFlow(false)
+    val buttonActive: StateFlow<Boolean> = _buttonActive.asStateFlow()
+
+    private var nameCheck = false
+    private var emailCheck = false
+    private var passwordCheck = false
 
     private val _food = MutableStateFlow(false)
     val food: StateFlow<Boolean> = _food.asStateFlow()
@@ -38,10 +45,30 @@ class SignUpViewModel: ViewModel() {
     private val _weight = MutableStateFlow(false)
     val weight: StateFlow<Boolean> = _weight.asStateFlow()
 
-    fun setName(value: String) { _name.value = value }
-    fun setLogin(value: String) { _login.value = value }
-    fun setPassword(value: String) { _password.value = value }
-    fun setRepeatPassword(value: String) { _repeatPassword.value = value }
+    fun setName(value: String) {
+        _name.value = value
+        nameCheck = value.length >= 2
+        checkButtonActive()
+    }
+    fun setEmail(value: String) {
+        _email.value = value
+        emailCheck = value.isNotEmpty()
+        checkButtonActive()
+    }
+    fun setPassword(value: String) {
+        _password.value = value
+        passwordCheck = value.length >= 8 && value == _repeatPassword.value
+        checkButtonActive()
+    }
+    fun setRepeatPassword(value: String) {
+        _repeatPassword.value = value
+        passwordCheck = value.length >= 8 && value == _password.value
+        checkButtonActive()
+    }
+
+    private fun checkButtonActive() {
+        _buttonActive.value = nameCheck && emailCheck && passwordCheck
+    }
 
     fun triggerFood() { _food.value = !_food.value }
     fun triggerWater() { _water.value = !_water.value }
@@ -50,7 +77,7 @@ class SignUpViewModel: ViewModel() {
     fun signUp() {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignUpRequest(
-                email = _login.value,
+                email = _email.value,
                 password = _password.value,
                 name = _name.value,
                 device = Build.MANUFACTURER + Build.MODEL,

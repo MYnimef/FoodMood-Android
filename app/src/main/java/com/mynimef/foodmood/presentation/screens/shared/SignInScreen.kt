@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.EMainNavigation
 import com.mynimef.foodmood.presentation.elements.MyIcon
-import com.mynimef.foodmood.presentation.elements.MyLogInButton
+import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
@@ -69,21 +69,25 @@ private fun CenterElements(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(stringResource(R.string.welcome),
+        Text(
+            text = stringResource(R.string.welcome),
             modifier = Modifier.padding(bottom = 30.dp),
-            style = MaterialTheme.typography.titleLarge)
+            style = MaterialTheme.typography.titleLarge
+        )
 
-        MyTextFieldLogin(value = login.value,
+        MyTextFieldLogin(
+            value = login.value,
             label = stringResource(R.string.email),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            visualTranfromation = VisualTransformation.None,
-            trailingIcon = null,
-            onValueChange =  {login.value = it} )
+            visualTransformation = VisualTransformation.None,
+            onValueChange =  { login.value = it }
+        )
 
-        MyTextFieldLogin(value = password.value,
+        MyTextFieldLogin(
+            value = password.value,
             label = stringResource(R.string.password),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTranfromation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(
                     onClick = { passwordVisible.value = !passwordVisible.value }
@@ -93,13 +97,18 @@ private fun CenterElements(
             },
             onValueChange = {
                 password.value = it
-            })
+            }
+        )
 
-        MyLogInButton(text = stringResource(R.string.signin)) {
+        MyLoginButton(
+            text = stringResource(R.string.signin)
+        ) {
             navigateTo(EMainNavigation.TRAINER)
         }
 
-        MyLogInButton(text = stringResource(R.string.signup)) {
+        MyLoginButton(
+            text = stringResource(R.string.signup)
+        ) {
             navigateTo(EMainNavigation.SIGNUP)
         }
     }

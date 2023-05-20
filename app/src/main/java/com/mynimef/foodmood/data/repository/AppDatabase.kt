@@ -10,13 +10,15 @@ import com.mynimef.foodmood.data.repository.dao.AccountDao
 @Database(entities = [AccountEntity::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun accountDao(): AccountDao
-
     companion object {
         fun init(applicationContext: Context): AppDatabase {
             return Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "foodmood-database"
-            ).build()
+                context = applicationContext,
+                klass = AppDatabase::class.java,
+                name = "foodmood-database"
+            )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
 }

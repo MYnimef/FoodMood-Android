@@ -12,10 +12,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
-
 @Composable
-fun MyLogInButton(
+fun MyLoginButton(
     text: String,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
@@ -28,7 +28,8 @@ fun MyLogInButton(
             MaterialTheme.colorScheme.onSecondaryContainer,
             MaterialTheme.colorScheme.secondary,
             MaterialTheme.colorScheme.onSecondary,
-        )
+        ),
+        enabled = enabled,
     ) {
         Text(text,  style = MaterialTheme.typography.titleMedium)
     }
@@ -37,10 +38,12 @@ fun MyLogInButton(
 
 @Preview
 @Composable
-private fun PrevMyLoginButton() {
+private fun MyLoginButtonPreview() {
     FoodMoodTheme {
-        MyLogInButton(text = "n") {
-
-        }
+        MyLoginButton(
+            text = "Sample",
+            enabled = true,
+            onClick = {}
+        )
     }
 }

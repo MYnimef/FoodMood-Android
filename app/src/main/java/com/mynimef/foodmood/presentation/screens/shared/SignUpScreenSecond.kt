@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.EMainNavigation
-import com.mynimef.foodmood.presentation.elements.MyLogInButton
+import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyRadioTextSelector
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
@@ -108,7 +108,7 @@ private fun CenterElements(
             selected = weight,
             onClick = triggerWeight,
         )
-        MyLogInButton(
+        MyLoginButton(
             text = stringResource(R.string.complete),
             onClick = signUp
         )
