@@ -81,6 +81,7 @@ private fun MyMavHost(
         composable("reports") { com.mynimef.foodmood.presentation.screens.client.ReportsScreen() }
         composable("userinfo") { com.mynimef.foodmood.presentation.screens.client.UserInfoScreen() }
         composable("prefsettings") { com.mynimef.foodmood.presentation.screens.client.PrefSettingsScreen(navigateTo)}
+        composable("notifications") { com.mynimef.foodmood.presentation.screens.client.NotificationsScreen() }
     }
 }
 
