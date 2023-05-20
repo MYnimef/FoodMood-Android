@@ -10,7 +10,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -21,7 +20,7 @@ fun MyTextFieldSettings(
     label: String,
     keyboardOptions: KeyboardOptions,
     enabled: Boolean,
-    trailingIcon: @Composable() (() -> Unit)?,
+    trailingIcon: @Composable (() -> Unit)? = null,
     onValueChange: (String) -> Unit
 ) {
     TextField(

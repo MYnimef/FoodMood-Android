@@ -1,7 +1,6 @@
 package com.mynimef.foodmood.presentation.elements
 
 import android.content.res.Resources
-import android.content.res.Resources.Theme
 import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,13 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.ConfigurationCompat
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
-
 
 @Composable
 fun MyDate() {
