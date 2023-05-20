@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.data.api
+package com.mynimef.foodmood.data.repository.api
 
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
