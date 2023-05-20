@@ -16,6 +16,7 @@ fun MyIcon(
     Icon (
         modifier = modifier,
         painter = painterResource(id = drawableId),
-        contentDescription = null
+        contentDescription = null,
+        tint = Color.Unspecified,
     )
 }

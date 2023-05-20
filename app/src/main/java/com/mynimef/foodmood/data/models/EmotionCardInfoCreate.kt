@@ -1,4 +1,6 @@
-package com.mynimef.foodmood.data
+package com.mynimef.foodmood.data.models
+
+import com.mynimef.foodmood.data.models.Emotion
 
 data class EmotionCardInfoCreate(
     val emotion: Emotion,

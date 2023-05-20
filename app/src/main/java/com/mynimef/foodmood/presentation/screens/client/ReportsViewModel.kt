@@ -2,5 +2,5 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import androidx.lifecycle.ViewModel
 
-class SettingsViewModel: ViewModel() {
+class ReportsViewModel: ViewModel() {
 }

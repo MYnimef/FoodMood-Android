@@ -1,13 +1,16 @@
 package com.mynimef.foodmood.presentation.screens.trainer
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,7 +27,7 @@ fun TrainerNavigationScreen() {
     val navController = rememberNavController()
     val bottomNavItems = listOf(
         BottomNavigationItem(icon = R.drawable.ic_home, route = "home"),
-        BottomNavigationItem(icon = R.drawable.ic_create, route = "create"),
+        BottomNavigationItem(icon = R.drawable.ic_add, route = "create"),
         BottomNavigationItem(icon = R.drawable.ic_settings, route = "settings"),
     )
 
@@ -32,9 +35,11 @@ fun TrainerNavigationScreen() {
         bottomBar = {
             MyNavigationBar(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primaryContainer),
                 navController = navController,
-                bottomNavItems
+                bottomNavItems,
+                40.dp
             )
         }
     ) {
