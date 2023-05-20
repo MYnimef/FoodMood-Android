@@ -15,4 +15,15 @@
     <string name="food">Food</string>
     <string name="weight">Weight</string>
     <string name="complete">Complete</string>
+    <string name="settings">Settings</string>
+    <string name="user_settings">Change profile info</string>
+    <string name="prefrences">Preferences</string>
+    <string name="notifications">Notifications</string>
+    <string name="language">Language</string>
+    <string name="error">Report an error</string>
+    <string name="idea">Suggest an idea</string>
+    <string name="userinfo">Profile</string>
+    <string name="water_l">Water norm in liters</string>
+    <string name="water_notif">Set reminders to drink water</string>
+    <string name="weight_kg">Weight in kg</string>
 </resources>
