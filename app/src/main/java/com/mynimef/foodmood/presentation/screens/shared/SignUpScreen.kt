@@ -4,28 +4,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.foodmood.presentation.screens.client.ClientNavigationScreen
-import com.mynimef.foodmood.presentation.screens.trainer.TrainerNavigationScreen
-import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun MainScreen() {
+fun SignUpScreen(
+    navigateTo: (route: String) -> Unit,
+) {
     val navController = rememberNavController()
     MyMavHost(
         modifier = Modifier
             .fillMaxSize(),
-        navController = navController
+        navController = navController,
+        parentNavigateTo = navigateTo,
     )
 }
 
 @Composable
 private fun MyMavHost(
     modifier: Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    parentNavigateTo: (route: String) -> Unit,
 ) {
     val navigateTo = { route: String ->
         navController.navigate(route) {
@@ -33,23 +35,26 @@ private fun MyMavHost(
             restoreState = true
         }
     }
+    val viewModel: SignUpViewModel = viewModel()
 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = "login"
+        startDestination = "first"
     ) {
-        composable("login") { LoginScreen(navigateTo) }
-        composable("signup") { SignUpScreen(navigateTo) }
-        composable("client") { ClientNavigationScreen() }
-        composable("trainer") { TrainerNavigationScreen() }
+        composable("first") { SignUpScreenFirst(
+            navigateTo = navigateTo,
+            viewModel = viewModel,
+        ) }
+        composable("second") { SignUpScreenSecond(
+            navigateTo = parentNavigateTo,
+            viewModel = viewModel,
+        ) }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-private fun MainScreenPreview() {
-    FoodMoodTheme {
-        MainScreen()
-    }
+private fun SignUpScreenPreview() {
+
 }
