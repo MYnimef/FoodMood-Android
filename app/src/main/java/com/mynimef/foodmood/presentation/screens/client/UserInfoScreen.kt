@@ -80,7 +80,7 @@ private fun CenterElements(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 20.dp)
+                .padding(bottom = 5.dp)
         ) {
             MyIcon(
                 drawableId = R.drawable.ic_user,

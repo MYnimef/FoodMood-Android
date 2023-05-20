@@ -23,4 +23,7 @@
     <string name="error">Report an error</string>
     <string name="idea">Suggest an idea</string>
     <string name="userinfo">Profile</string>
+    <string name="water_l">Water norm in liters</string>
+    <string name="water_notif">Set reminders to drink water</string>
+    <string name="weight_kg">Weight in kg</string>
 </resources>

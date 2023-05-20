@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +29,7 @@ fun MyTextFieldSettings(
             .fillMaxWidth()
             .padding(bottom = 20.dp),
         value = value,
-        label =  { Text(label) },
+        label =  { Text(label, fontSize = 24.sp) },
         singleLine = true,
         enabled = enabled,
         keyboardOptions = keyboardOptions,

@@ -23,4 +23,7 @@
     <string name="error">Сообщить об ошибке</string>
     <string name="idea">Предложить идею</string>
     <string name="userinfo">Данные профиля</string>
+    <string name="water_l">Норма воды в литрах</string>
+    <string name="water_notif">Настроить напоминания пить воду</string>
+    <string name="weight_kg">Вес в килограммах</string>
 </resources>
