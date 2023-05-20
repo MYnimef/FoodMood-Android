@@ -31,12 +31,11 @@ import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SignupScreen(
-    navigateTo: (route: String) -> Unit
+fun SignUpFirstScreen(
+    navigateTo: (route: String) -> Unit,
+    viewModel: SignUpViewModel,
 ) {
-    val viewModel: SignupViewModel = viewModel()
-
-    SignupScreen(
+    SignUpFirstScreen(
         navigateTo = navigateTo,
         name = viewModel.name.collectAsState().value,
         setName= viewModel::setName,
@@ -50,7 +49,7 @@ fun SignupScreen(
 }
 
 @Composable
-private fun SignupScreen(
+private fun SignUpFirstScreen(
     navigateTo: (route: String) -> Unit,
     name: String,
     setName: (String) -> Unit,
@@ -160,21 +159,21 @@ private fun CenterElements(
         MyLogInButton(
             text = stringResource(R.string.next)
         ) {
-            navigateTo("preferences")
+            navigateTo("second")
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun SignupScreenPreview() {
+private fun SignUpFirstScreenPreview() {
     FoodMoodTheme {
         val name = remember { mutableStateOf("") }
         val login = remember { mutableStateOf("") }
         val password = remember { mutableStateOf("") }
         val repeatPassword = remember { mutableStateOf("") }
 
-        SignupScreen(
+        SignUpFirstScreen(
             navigateTo = {},
             name = name.value,
             setName = { name.value = it },
