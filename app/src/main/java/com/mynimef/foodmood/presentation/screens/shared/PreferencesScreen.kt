@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
@@ -89,12 +90,15 @@ private fun CenterElements(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 selected = true, onClick = { },
                 colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primaryContainer))
-            Text(stringResource(R.string.emotion),
-                modifier = Modifier.align(Alignment.CenterVertically),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primaryContainer)
+            TextButton( onClick = {},) {
+                Text(
+                    stringResource(R.string.emotion),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primaryContainer)
+            }
         }
-
+       
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -106,12 +110,14 @@ private fun CenterElements(
                     food.value = !food.value
                 },
                 colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primaryContainer))
-            Text(
-                stringResource(R.string.food),
-                modifier = Modifier.align(Alignment.CenterVertically),
-                style = MaterialTheme.typography.titleMedium,
-                color = if (food.value) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
+            TextButton(
+                onClick = {  food.value = !food.value },) {
+                Text(
+                    stringResource(R.string.food),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = if (food.value) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
                 )
+            }
         }
 
         Row(
@@ -125,11 +131,14 @@ private fun CenterElements(
                     water.value = !water.value
                 },
                 colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primaryContainer))
+            TextButton(
+                onClick = {  water.value = !water.value },) {
             Text(stringResource(R.string.water),
                 modifier = Modifier.align(Alignment.CenterVertically),
                 style = MaterialTheme.typography.titleMedium,
                 color = if (water.value) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
             )
+            }
         }
 
         Row(
@@ -143,11 +152,13 @@ private fun CenterElements(
                     weight.value = !weight.value
                 },
                 colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primaryContainer))
+            TextButton(
+                onClick = {  weight.value = !weight.value },) {
             Text(stringResource(R.string.weight),
                 modifier = Modifier.align(Alignment.CenterVertically),
                 style = MaterialTheme.typography.titleMedium,
                 color = if (weight.value) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
-            )
+            )}
         }
 
         MyLogInButton(text = stringResource(R.string.complete)) {
