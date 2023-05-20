@@ -24,6 +24,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun PrefSettingsScreen(navigateTo: (route: String) -> Unit) {
     val waterL = remember { mutableStateOf("") }
+    val weightKg = remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -45,7 +47,8 @@ fun PrefSettingsScreen(navigateTo: (route: String) -> Unit) {
     ) {
         CenterElements(
             waterL = waterL,
-            navigateTo = navigateTo
+            navigateTo = navigateTo,
+            weightKg = weightKg
         )
     }
 }
@@ -54,6 +57,7 @@ fun PrefSettingsScreen(navigateTo: (route: String) -> Unit) {
 @Composable
 private fun CenterElements(
     waterL: MutableState<String>,
+    weightKg: MutableState<String>,
     navigateTo: (route: String) -> Unit,
     ) {
 
@@ -61,6 +65,7 @@ private fun CenterElements(
     val water = rememberSaveable { mutableStateOf(false) }
     val waterEdit = rememberSaveable { mutableStateOf(false) }
     val weight = rememberSaveable { mutableStateOf(false) }
+    val weightEdit = rememberSaveable { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -208,21 +213,21 @@ private fun CenterElements(
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 5.dp)) {
-            MyTextFieldSettings(value = waterL.value,
+            MyTextFieldSettings(value = weightKg.value,
                 label = stringResource(R.string.weight_kg),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                enabled = waterEdit.value,
+                enabled = weightEdit.value,
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            if (water.value) waterEdit.value = !waterEdit.value }
+                            if (weight.value) weightEdit.value = !weightEdit.value }
                     ) {
                         MyIcon(
-                            drawableId = if (waterEdit.value && water.value) R.drawable.ic_edit else R.drawable.ic_edit_off)
+                            drawableId = if (weightEdit.value && weight.value) R.drawable.ic_edit else R.drawable.ic_edit_off)
                     }
                 },
                 onValueChange = {
-                    waterL.value = it
+                    weightKg.value = it
                 })
         }
     }
