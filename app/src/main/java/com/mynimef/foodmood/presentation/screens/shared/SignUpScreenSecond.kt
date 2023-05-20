@@ -18,13 +18,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.EMainNavigation
 import com.mynimef.foodmood.presentation.elements.MyLogInButton
 import com.mynimef.foodmood.presentation.elements.MyRadioTextSelector
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun SignUpScreenSecond(
-    navigateTo: (route: String) -> Unit,
+    navigateTo: (route: EMainNavigation) -> Unit,
     viewModel: SignUpViewModel,
 ) {
     SignUpScreenSecond(

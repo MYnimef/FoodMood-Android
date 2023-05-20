@@ -3,7 +3,7 @@ package com.mynimef.foodmood.data.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.mynimef.foodmood.data.models.database.AccountEntity
-import com.mynimef.foodmood.data.models.enums.AppState
+import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
 
@@ -15,7 +15,7 @@ object Repository {
 
     private lateinit var accessToken: String
 
-    var appState: AppState = AppState.NONE
+    var appState: EAppState = EAppState.NONE
         private set
 
     fun init(context: Context) {
@@ -23,8 +23,8 @@ object Repository {
         database = AppDatabase.init(context)
         network = NetworkService()
 
-        appState = AppState.fromInt(sharedPref.getInt("app_state", 0))
-        if (appState != AppState.NONE) {
+        appState = EAppState.fromInt(sharedPref.getInt("app_state", 0))
+        if (appState != EAppState.NONE) {
             accessToken = ""
         }
     }
@@ -38,8 +38,8 @@ object Repository {
                     refreshToken = it.refreshToken,
                 ))
                 appState = when (it.role) {
-                    SignInResponse.Role.USER -> AppState.USER
-                    SignInResponse.Role.TRAINER -> AppState.TRAINER
+                    SignInResponse.Role.USER -> EAppState.CLIENT
+                    SignInResponse.Role.TRAINER -> EAppState.TRAINER
                 }
                 accessToken = it.accessToken
             }

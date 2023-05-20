@@ -63,4 +63,9 @@ class SignUpViewModel: ViewModel() {
             }
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
+    }
 }
