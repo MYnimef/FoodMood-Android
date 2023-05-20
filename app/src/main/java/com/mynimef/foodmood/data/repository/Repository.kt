@@ -1,15 +1,19 @@
-package com.mynimef.foodmood.data
+package com.mynimef.foodmood.data.repository
 
-import android.util.Log
-import com.google.gson.Gson
+import android.content.Context
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 
 object Repository {
 
-    private val network = NetworkService()
+    private lateinit var database: AppDatabase
+    private lateinit var network: NetworkService
+
+    fun init(applicationContext: Context) {
+        database = AppDatabase.init(applicationContext)
+        network = NetworkService()
+    }
 
     suspend fun signUp(request: SignUpRequest): Boolean {
-        Log.d("json", Gson().toJson(request))
         val response = network.signUp(request)
         if (response.isSuccessful) {
             return true

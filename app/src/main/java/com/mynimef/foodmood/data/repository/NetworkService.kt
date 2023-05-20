@@ -1,6 +1,6 @@
-package com.mynimef.foodmood.data
+package com.mynimef.foodmood.data.repository
 
-import com.mynimef.foodmood.data.api.AuthAPI
+import com.mynimef.foodmood.data.repository.api.AuthAPI
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse

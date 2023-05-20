@@ -2,7 +2,7 @@ package com.mynimef.foodmood.presentation.screens.shared
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.Repository
+import com.mynimef.foodmood.data.repository.Repository
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
