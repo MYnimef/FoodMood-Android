@@ -1,6 +1,8 @@
 package com.mynimef.foodmood.data
 
 import com.mynimef.foodmood.data.api.AuthAPI
+import com.mynimef.foodmood.data.models.requests.SignInRequest
+import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -17,11 +19,6 @@ class NetworkService {
         authAPI = retrofit.create(AuthAPI::class.java)
     }
 
-    fun signUp() {
-
-    }
-
-    fun signIn() {
-
-    }
+    suspend fun signUp(request: SignUpRequest) = authAPI.signUp(request)
+    suspend fun signIn(request: SignInRequest) = authAPI.signIn(request)
 }
