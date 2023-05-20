@@ -114,40 +114,36 @@ private fun CenterElements(
                 name.value = it
             })
 
-        MyTextFieldSettings(value = name.value,
-            label = stringResource(R.string.name),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            enabled = nameEdit.value,
+        MyTextFieldSettings(value = login.value,
+            label = stringResource(R.string.email),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            enabled = loginEdit.value,
             trailingIcon = {
                 IconButton(
-                    onClick = { nameEdit.value = !nameEdit.value }
+                    onClick = { loginEdit.value = !loginEdit.value }
                 ) {
                     MyIcon(
-                        drawableId = if (nameEdit.value) R.drawable.ic_visibility else R.drawable.ic_visibility,
-                        tint = if (nameEdit.value) Color.Blue else MaterialTheme.colorScheme.onPrimaryContainer
-                    )
+                        drawableId = if (loginEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off)
                 }
             },
             onValueChange = {
-                name.value = it
+                login.value = it
             })
 
-        MyTextFieldSettings(value = name.value,
-            label = stringResource(R.string.name),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            enabled = nameEdit.value,
+        MyTextFieldSettings(value = password.value,
+            label = stringResource(R.string.password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            enabled = passwordEdit.value,
             trailingIcon = {
                 IconButton(
-                    onClick = { nameEdit.value = !nameEdit.value }
+                    onClick = { passwordEdit.value = !passwordEdit.value }
                 ) {
                     MyIcon(
-                        drawableId = if (nameEdit.value) R.drawable.ic_visibility else R.drawable.ic_visibility,
-                        tint = if (nameEdit.value) Color.Blue else MaterialTheme.colorScheme.onPrimaryContainer
-                    )
+                        drawableId = if (passwordEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off)
                 }
             },
             onValueChange = {
-                name.value = it
+                password.value = it
             })
     }
 }
