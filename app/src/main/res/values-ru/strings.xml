@@ -26,4 +26,5 @@
     <string name="water_l">Норма воды в литрах</string>
     <string name="water_notif">Настроить напоминания пить воду</string>
     <string name="weight_kg">Вес в килограммах</string>
+    <string name="emotion_button">эмоции</string>
 </resources>
