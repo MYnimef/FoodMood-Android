@@ -190,7 +190,7 @@ private fun CenterElements(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 20.dp)
+                .padding(bottom = 10.dp)
         ) {
             RadioButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
