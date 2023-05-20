@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -58,73 +59,109 @@ private fun CenterElements(
         horizontalAlignment = Alignment.Start
     ) {
         Text(stringResource(R.string.settings),
-            modifier = Modifier.padding(bottom = 30.dp),
+            modifier = Modifier.padding(bottom = 30.dp, top = 70.dp),
             style = MaterialTheme.typography.titleLarge)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp)
+                .padding(bottom = 20.dp)
         ) {
-            IconButton(onClick = { navigateTo("")}) {
+            IconButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = { navigateTo("home")}) {
                 MyIcon(drawableId = R.drawable.ic_user)
             }
-            Text(stringResource(R.string.user_settings),
-                style = MaterialTheme.typography.titleMedium)
+            TextButton(
+                onClick = { navigateTo("home") },) {
+                Text(stringResource(R.string.user_settings),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.titleMedium)
+            }
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp)
+                .padding(bottom = 20.dp)
         ) {
-            IconButton(onClick = { navigateTo("")}) {
+            IconButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = { navigateTo("home")}) {
                 MyIcon(drawableId = R.drawable.ic_preference)
             }
-            Text(stringResource(R.string.prefrences),
-                style = MaterialTheme.typography.titleMedium)
+            TextButton(
+                onClick = { navigateTo("home") },) {
+                Text(stringResource(R.string.prefrences),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.titleMedium)
+            }
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp)
+                .padding(bottom = 20.dp)
         ) {
-            IconButton(onClick = { navigateTo("")}) {
+            IconButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = { navigateTo("home")}) {
                 MyIcon(drawableId = R.drawable.ic_notification)
             }
-            Text(stringResource(R.string.notifications),
-                style = MaterialTheme.typography.titleMedium)
+            TextButton(
+                onClick = { navigateTo("home") },) {
+                Text(stringResource(R.string.notifications),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.titleMedium)
+            }
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp)
+                .padding(bottom = 20.dp)
         ) {
-            IconButton(onClick = { navigateTo("")}) {
+            IconButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = { navigateTo("home")}) {
                 MyIcon(drawableId = R.drawable.ic_language)
             }
-            Text(stringResource(R.string.language),
-                style = MaterialTheme.typography.titleMedium)
+            TextButton(
+                onClick = { navigateTo("home") },) {
+                Text(stringResource(R.string.language),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.titleMedium)
+            }
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp)
+                .padding(bottom = 20.dp)
         ) {
-            IconButton(onClick = { navigateTo("")}) {
+            IconButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = { navigateTo("home")}) {
                 MyIcon(drawableId = R.drawable.ic_error)
             }
-            Text(stringResource(R.string.error),
-                style = MaterialTheme.typography.titleMedium)
+            TextButton(
+                onClick = { navigateTo("home") },) {
+                Text(stringResource(R.string.error),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.titleMedium)
+            }
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp)
+                .padding(bottom = 20.dp)
         ) {
-            IconButton(onClick = { navigateTo("")}) {
+            IconButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = { navigateTo("home")}) {
                 MyIcon(drawableId = R.drawable.ic_idea)
             }
-            Text(stringResource(R.string.idea),
-                style = MaterialTheme.typography.titleMedium)
+            TextButton(
+                onClick = { navigateTo("home") },) {
+                Text(stringResource(R.string.idea),
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.titleMedium)
+            }
         }
     }
 }
