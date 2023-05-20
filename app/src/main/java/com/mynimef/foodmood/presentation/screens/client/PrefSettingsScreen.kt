@@ -183,9 +183,7 @@ private fun CenterElements(
                     stringResource(R.string.water_notif),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium,
-                    fontSize = 24.sp,
-                    color = if (weight.value) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                    fontSize = 24.sp)
             }
         }
 

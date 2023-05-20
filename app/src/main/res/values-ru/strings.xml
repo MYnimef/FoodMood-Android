@@ -12,7 +12,7 @@
     <string name="pref">Что будем отслеживать?</string>
     <string name="emotion">Эмоции после еды</string>
     <string name="water">Водный баланс</string>
-    <string name="food">Ед</string>
+    <string name="food">Еда</string>
     <string name="weight">Вес</string>
     <string name="complete">Завершить</string>
     <string name="settings">Настройки</string>

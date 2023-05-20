@@ -85,11 +85,11 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo("home")}) {
+                onClick = { navigateTo("prefsettings")}) {
                 MyIcon(drawableId = R.drawable.ic_preference)
             }
             TextButton(
-                onClick = { navigateTo("home") },) {
+                onClick = { navigateTo("prefsettings") },) {
                 Text(stringResource(R.string.prefrences),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)
