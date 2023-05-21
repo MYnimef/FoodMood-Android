@@ -28,4 +28,6 @@
     <string name="water_notif">Настроить напоминания пить воду</string>
     <string name="weight_kg">Вес в килограммах</string>
     <string name="emotion_button">эмоции</string>
+    <string name="emotion_question">Как ты себя чувствуешь?</string>
+    <string name="food_question">Что ты ел?</string>
 </resources>
