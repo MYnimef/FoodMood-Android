@@ -17,12 +17,21 @@ import com.mynimef.foodmood.R
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-    bodyMedium = TextStyle(
+    bodyLarge = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp),
+
+    bodyMedium = TextStyle(
+        fontFamily = Font(R.font.rubik).toFontFamily(),
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+        lineHeight = 21.sp,
+        letterSpacing = 0.sp,
+        color = DarkBrown
+    ),
 
     bodySmall = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
@@ -44,7 +53,7 @@ val Typography = Typography(
     titleMedium = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
         fontWeight = FontWeight.Medium,
-        fontSize = 26.sp,
+        fontSize = 28.sp,
         lineHeight = 31.sp,
         letterSpacing = 0.sp,
         color = DarkestGreen

@@ -49,21 +49,21 @@ fun MyTextFieldLogin(
             focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            errorLeadingIconColor = MaterialTheme.colorScheme.error,
             focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            errorTrailingIconColor = MaterialTheme.colorScheme.error,
             focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            errorLabelColor = MaterialTheme.colorScheme.error,
             placeholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
             focusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer
+            errorSupportingTextColor = MaterialTheme.colorScheme.error
         )
     )
 }
