@@ -78,9 +78,12 @@ class SignUpViewModel: ViewModel() {
     fun signUp() {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignUpRequest(
+                name = _name.value,
                 email = _email.value,
                 password = _password.value,
-                name = _name.value,
+                trackFood = _food.value,
+                trackWater = _water.value,
+                trackWeight = _weight.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
             val response = Repository.signUp(request)
