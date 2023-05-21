@@ -20,18 +20,20 @@ fun MyLoginButton(
 ) {
     Button(
         modifier = Modifier
-            .padding(top = 5.dp, bottom = 10.dp)
+            .padding(top = 10.dp, bottom = 10.dp)
             .width(290.dp),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            MaterialTheme.colorScheme.secondaryContainer,
-            MaterialTheme.colorScheme.onSecondaryContainer,
             MaterialTheme.colorScheme.secondary,
             MaterialTheme.colorScheme.onSecondary,
+            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.onSecondaryContainer,
         ),
         enabled = enabled,
     ) {
-        Text(text,  style = MaterialTheme.typography.titleMedium)
+        Text(text,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onPrimaryContainer)
     }
 }
 

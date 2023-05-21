@@ -30,13 +30,13 @@ fun MyRadioTextSelector(
             modifier = Modifier.align(Alignment.CenterVertically),
             selected = selected,
             onClick = onClick,
-            colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primaryContainer))
+            colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary))
         TextButton(onClick = onClick) {
             Text(
                 text = text,
                 modifier = Modifier.align(Alignment.CenterVertically),
                 style = MaterialTheme.typography.titleMedium,
-                color = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
+                color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
     }
@@ -46,7 +46,7 @@ fun MyRadioTextSelector(
 @Composable
 private fun MyRadioTextSelector() {
     FoodMoodTheme {
-        MyRadioTextSelector(text = "sample", selected = true) {
+        MyRadioTextSelector(text = "sample", selected = false) {
 
         }
     }

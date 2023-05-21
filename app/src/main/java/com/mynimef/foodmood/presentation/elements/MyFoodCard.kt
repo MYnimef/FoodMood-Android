@@ -32,14 +32,14 @@ fun MyFoodCard() {
             modifier = Modifier.size(55.dp))
             Text("Breakfast",
                 modifier = Modifier.padding(start = 15.dp).align(Alignment.CenterVertically),
-                style = MaterialTheme.typography.titleLarge)
+                style = MaterialTheme.typography.titleMedium)
         }
         Box(
             modifier = Modifier
                 .clip(AbsoluteRoundedCornerShape(10.dp))
                 .width(330.dp)
                 .height(150.dp)
-                .background(color = MaterialTheme.colorScheme.primary)
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
         ) {
             Column() {
                 Button(
@@ -51,13 +51,14 @@ fun MyFoodCard() {
                     onClick = {}) {
                     Text(
                         text = stringResource(R.string.emotion_button),
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Text(
                     text = "Saved text about emotions",
                     modifier = Modifier.padding(10.dp),
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
             Column(modifier = Modifier.align(Alignment.TopEnd)) {

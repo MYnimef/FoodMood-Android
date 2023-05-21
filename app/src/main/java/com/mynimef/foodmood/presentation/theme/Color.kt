@@ -4,13 +4,13 @@ import androidx.compose.ui.graphics.Color
 
 val Biege = Color(0xFFF4F3ED)
 
-val DarkGreen = Color(0x3381B29A)
-val Green = Color(0xFF81B29A)
-val LightGreen = Color(0xCC81B29A)
+val DarkestGreen = Color(0xFF5B8E7D)
+val DarkGreen = Color(0xFF81B29A)
+val Green = Color(0xCC81B29A)
+val LightGreen = Color(0x3381B29A)
 
-val DarkBlue = Color(0x593D405B)
 val Blue = Color(0xFF9398C5)
-val LightBlue = Color(0x263D405B)
+val LightBlue = Color(0x599398C5)
 
 val DarkBrown = Color(0xFF2E2829)
 

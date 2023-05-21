@@ -33,7 +33,7 @@ fun MyDate() {
             .clip(RoundedCornerShape(bottomEnd = 10.dp))
             .width(150.dp)
             .height(45.dp)
-            .background(color = MaterialTheme.colorScheme.primaryContainer),
+            .background(color = MaterialTheme.colorScheme.primary),
         contentAlignment = Alignment.Center
     ) {
         Text(

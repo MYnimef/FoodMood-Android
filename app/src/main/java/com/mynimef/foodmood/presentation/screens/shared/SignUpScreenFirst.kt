@@ -117,6 +117,7 @@ private fun CenterElements(
             value = name,
             label = stringResource(R.string.name),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            isError = false,
             visualTransformation = VisualTransformation.None,
             onValueChange = setName
         )
@@ -126,6 +127,7 @@ private fun CenterElements(
             label = stringResource(R.string.email),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             visualTransformation = VisualTransformation.None,
+            isError = false,
             onValueChange = setLogin
         )
 
@@ -141,6 +143,7 @@ private fun CenterElements(
                     MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
                 }
             },
+            isError = password.length !in 8..20 && password.isNotEmpty(),
             onValueChange = setPassword
         )
 
@@ -156,6 +159,7 @@ private fun CenterElements(
                     MyIcon(drawableId = if (repeatPasswordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
                 }
             },
+            isError = repeatPassword.length !in 8..20 && repeatPassword.isNotEmpty() || (repeatPassword!=password && repeatPassword.isNotEmpty()),
             onValueChange = setRepeatPassword
         )
 
