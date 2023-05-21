@@ -24,7 +24,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkGreen,
+    primary = Green,
     onPrimary = Biege,
     primaryContainer = LightGreen,
     onPrimaryContainer = DarkBrown,
@@ -34,7 +34,7 @@ private val DarkColorScheme = darkColorScheme(
     secondaryContainer = LightYellow,
     onSecondaryContainer = DarkBrown,
 
-    tertiary = DarkBlue,
+    tertiary = Blue,
     onTertiary = Color.White,
     tertiaryContainer = LightBlue,
     onTertiaryContainer = DarkBrown,
@@ -48,6 +48,7 @@ private val DarkColorScheme = darkColorScheme(
     background = Biege,
     onBackground = DarkBrown,
 
+    error = Red,
     /* inversePrimary = ,
     inverseSurface = ,
     inverseOnSurface = ,
@@ -62,7 +63,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = DarkGreen,
+    primary = Green,
     onPrimary = Biege,
     primaryContainer = LightGreen,
     onPrimaryContainer = DarkBrown,
@@ -72,7 +73,7 @@ private val LightColorScheme = lightColorScheme(
     secondaryContainer = LightYellow,
     onSecondaryContainer = DarkBrown,
 
-    tertiary = DarkBlue,
+    tertiary = Blue,
     onTertiary = Color.White,
     tertiaryContainer = LightBlue,
     onTertiaryContainer = DarkBrown,
@@ -86,17 +87,7 @@ private val LightColorScheme = lightColorScheme(
     background = Biege,
     onBackground = DarkBrown,
 
-    /* inversePrimary = ,
-    inverseSurface = ,
-    inverseOnSurface = ,
-
-    error = ,
-    onError = ,
-    errorContainer = ,
-    onErrorContainer = ,
-    outline = ,
-    outlineVariant = ,
-    scrim = ,*/
+    error = Red,
 )
 
 @Composable
