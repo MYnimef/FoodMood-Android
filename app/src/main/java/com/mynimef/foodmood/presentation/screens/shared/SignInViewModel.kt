@@ -52,9 +52,9 @@ class SignInViewModel: ViewModel() {
                 password = _password.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            val isSuccess = Repository.signIn(request)
+            val response = Repository.signIn(request)
             withContext(Dispatchers.Main) {
-                when (isSuccess) {
+                when (response) {
                     ESignIn.SUCCESS -> {}
                     ESignIn.WRONG_PASSWORD -> {}
                     ESignIn.NO_CONNECTION -> {}

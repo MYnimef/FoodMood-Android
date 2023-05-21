@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.enums.ESignIn
+import com.mynimef.foodmood.data.models.enums.ESignUp
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
@@ -44,13 +45,22 @@ object Repository {
         }
     }
 
-    suspend fun signUp(request: SignUpRequest): Boolean {
-        val response = network.signUp(request)
-        if (response.isSuccessful) {
-            signIn(response.body()!!)
-            return true
+    suspend fun signUp(request: SignUpRequest): ESignUp {
+        return try {
+            val response = network.signUp(request)
+            if (response.isSuccessful) {
+                signIn(response.body()!!)
+                ESignUp.SUCCESS
+            } else {
+                when (response.code()) {
+                    403 -> ESignUp.WRONG_INPUT
+                    409 -> ESignUp.ACCOUNT_EXISTS
+                    else -> ESignUp.UNKNOWN
+                }
+            }
+        } catch (e: IOException) {
+            ESignUp.NO_CONNECTION
         }
-        return false
     }
 
     suspend fun signIn(request: SignInRequest): ESignIn {
