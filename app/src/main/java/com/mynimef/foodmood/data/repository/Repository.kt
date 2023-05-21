@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
+import com.mynimef.foodmood.data.models.enums.ESignIn
+import com.mynimef.foodmood.data.models.enums.ESignUp
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.io.IOException
 
 object Repository {
 
@@ -42,22 +45,39 @@ object Repository {
         }
     }
 
-    suspend fun signUp(request: SignUpRequest): Boolean {
-        val response = network.signUp(request)
-        if (response.isSuccessful) {
-            signIn(response.body()!!)
-            return true
+    suspend fun signUp(request: SignUpRequest): ESignUp {
+        return try {
+            val response = network.signUp(request)
+            if (response.isSuccessful) {
+                signIn(response.body()!!)
+                ESignUp.SUCCESS
+            } else {
+                when (response.code()) {
+                    403 -> ESignUp.WRONG_INPUT
+                    409 -> ESignUp.ACCOUNT_EXISTS
+                    else -> ESignUp.UNKNOWN
+                }
+            }
+        } catch (e: IOException) {
+            ESignUp.NO_CONNECTION
         }
-        return false
     }
 
-    suspend fun signIn(request: SignInRequest): Boolean {
-        val response = network.signIn(request)
-        if (response.isSuccessful) {
-            signIn(response.body()!!)
-            return true
+    suspend fun signIn(request: SignInRequest): ESignIn {
+        return try {
+            val response = network.signIn(request)
+            if (response.isSuccessful) {
+                signIn(response.body()!!)
+                ESignIn.SUCCESS
+            } else {
+                when (response.code()) {
+                    401 -> ESignIn.WRONG_PASSWORD
+                    else -> ESignIn.UNKNOWN
+                }
+            }
+        } catch (e: IOException) {
+            ESignIn.NO_CONNECTION
         }
-        return false
     }
 
     private suspend fun signIn(response: SignInResponse) {

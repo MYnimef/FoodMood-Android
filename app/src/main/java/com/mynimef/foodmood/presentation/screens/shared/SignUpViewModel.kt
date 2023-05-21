@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.shared
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
+import com.mynimef.foodmood.data.models.enums.ESignUp
 import com.mynimef.foodmood.data.repository.Repository
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import kotlinx.coroutines.CoroutineScope
@@ -82,10 +83,14 @@ class SignUpViewModel: ViewModel() {
                 name = _name.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            val isSuccess = Repository.signUp(request)
+            val response = Repository.signUp(request)
             withContext(Dispatchers.Main) {
-                if (isSuccess) {
-
+                when (response) {
+                    ESignUp.SUCCESS -> {}
+                    ESignUp.WRONG_INPUT -> {}
+                    ESignUp.ACCOUNT_EXISTS -> {}
+                    ESignUp.NO_CONNECTION -> {}
+                    ESignUp.UNKNOWN -> {}
                 }
             }
         }
