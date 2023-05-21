@@ -80,7 +80,7 @@ class SignUpViewModel: ViewModel() {
                 email = _email.value,
                 password = _password.value,
                 name = _name.value,
-                device = Build.MANUFACTURER + Build.MODEL,
+                device = Build.MANUFACTURER + " " + Build.MODEL,
             )
             val isSuccess = Repository.signUp(request)
             withContext(Dispatchers.Main) {

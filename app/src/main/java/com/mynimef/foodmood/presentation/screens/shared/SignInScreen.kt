@@ -11,7 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,9 +37,27 @@ fun SignInScreen(
 ) {
     val viewModel: SignInViewModel = viewModel()
 
-    val login = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
+    SignInScreen(
+        navigateTo = navigateTo,
+        signIn = viewModel::signIn,
+        email = viewModel.email.collectAsState().value,
+        setEmail = viewModel::setEmail,
+        password = viewModel.password.collectAsState().value,
+        setPassword = viewModel::setPassword,
+        buttonActive = viewModel.buttonActive.collectAsState().value,
+    )
+}
 
+@Composable
+private fun SignInScreen(
+    navigateTo: (route: EAuthNavigation) -> Unit,
+    signIn: () -> Unit,
+    email: String,
+    setEmail: (String) -> Unit,
+    password: String,
+    setPassword: (String) -> Unit,
+    buttonActive: Boolean,
+) {
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -47,8 +65,12 @@ fun SignInScreen(
     ) {
         CenterElements(
             navigateTo = navigateTo,
-            login = login,
-            password = password
+            signIn = signIn,
+            email = email,
+            setEmail = setEmail,
+            password = password,
+            setPassword = setPassword,
+            buttonActive = buttonActive,
         )
     }
 }
@@ -56,8 +78,12 @@ fun SignInScreen(
 @Composable
 private fun CenterElements(
     navigateTo: (route: EAuthNavigation) -> Unit,
-    login: MutableState<String>,
-    password: MutableState<String>
+    signIn: () -> Unit,
+    email: String,
+    setEmail: (String) -> Unit,
+    password: String,
+    setPassword: (String) -> Unit,
+    buttonActive: Boolean,
 ) {
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
 
@@ -76,15 +102,15 @@ private fun CenterElements(
         )
 
         MyTextFieldLogin(
-            value = login.value,
+            value = email,
             label = stringResource(R.string.email),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             visualTransformation = VisualTransformation.None,
-            onValueChange =  { login.value = it }
+            onValueChange = setEmail
         )
 
         MyTextFieldLogin(
-            value = password.value,
+            value = password,
             label = stringResource(R.string.password),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
@@ -95,15 +121,14 @@ private fun CenterElements(
                     MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
                 }
             },
-            onValueChange = {
-                password.value = it
-            }
+            onValueChange = setPassword
         )
 
         MyLoginButton(
-            text = stringResource(R.string.signin)
-        ) {
-        }
+            text = stringResource(R.string.signin),
+            enabled = buttonActive,
+            onClick = signIn
+        )
 
         MyLoginButton(
             text = stringResource(R.string.signup)
@@ -117,6 +142,19 @@ private fun CenterElements(
 @Composable
 private fun SignInScreenPreview() {
     FoodMoodTheme {
+        val email = remember { mutableStateOf("") }
+        val password = remember { mutableStateOf("") }
+
+        SignInScreen(
+            navigateTo = {},
+            signIn = {},
+            email = email.value,
+            setEmail = { email.value = it },
+            password = password.value,
+            setPassword = { password.value = it },
+            buttonActive = true,
+        )
+
         SignInScreen {}
     }
 }

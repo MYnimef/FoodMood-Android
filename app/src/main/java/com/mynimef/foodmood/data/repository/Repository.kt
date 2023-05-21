@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
+import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ object Repository {
     private lateinit var network: NetworkService
 
     private var accountID = 1
-    private lateinit var accessToken: String
+    private var accessToken: String? = null
 
     private val _appState = MutableStateFlow(EAppState.NONE)
     val appState = _appState.asStateFlow()
@@ -38,30 +39,36 @@ object Repository {
         _appState.value = state
         if (state != EAppState.NONE) {
             accountID = sharedPref.getInt("account_id", 1)
-            accessToken = ""
         }
     }
 
     suspend fun signUp(request: SignUpRequest): Boolean {
         val response = network.signUp(request)
         if (response.isSuccessful) {
-            response.body()!!.let {
-                database.accountDao().insert(AccountEntity(
-                    name = it.name,
-                    refreshToken = it.refreshToken,
-                ))
-                setState(when (it.role) {
-                    SignInResponse.Role.USER -> EAppState.CLIENT
-                    SignInResponse.Role.TRAINER -> EAppState.TRAINER
-                })
-                accessToken = it.accessToken
-            }
+            signIn(response.body()!!)
             return true
         }
         return false
     }
 
-    fun signIn() {
+    suspend fun signIn(request: SignInRequest): Boolean {
+        val response = network.signIn(request)
+        if (response.isSuccessful) {
+            signIn(response.body()!!)
+            return true
+        }
+        return false
+    }
 
+    private suspend fun signIn(response: SignInResponse) {
+        database.accountDao().insert(AccountEntity(
+            name = response.name,
+            refreshToken = response.refreshToken,
+        ))
+        setState(when (response.role) {
+            SignInResponse.Role.USER -> EAppState.CLIENT
+            SignInResponse.Role.TRAINER -> EAppState.TRAINER
+        })
+        accessToken = response.accessToken
     }
 }
