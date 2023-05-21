@@ -6,6 +6,7 @@
     <string name="email">Эл.почта</string>
     <string name="signup">Создать аккаунт</string>
     <string name="welcome_mess">Давайте познакомимся!</string>
+    <string name="final_signup">Последний шаг...</string>
     <string name="name">Имя</string>
     <string name="repeat_pass">Повторите пароль</string>
     <string name="next">Далее</string>

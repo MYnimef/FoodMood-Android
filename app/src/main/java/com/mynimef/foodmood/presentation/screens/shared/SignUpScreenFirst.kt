@@ -40,12 +40,6 @@ fun SignUpScreenFirst(
         navigateTo = navigateTo,
         name = viewModel.name.collectAsState().value,
         setName= viewModel::setName,
-        login = viewModel.email.collectAsState().value,
-        setLogin = viewModel::setEmail,
-        password = viewModel.password.collectAsState().value,
-        setPassword = viewModel::setPassword,
-        repeatPassword = viewModel.repeatPassword.collectAsState().value,
-        setRepeatPassword = viewModel::setRepeatPassword,
         buttonActive = viewModel.buttonActive.collectAsState().value,
     )
 }
@@ -55,12 +49,6 @@ private fun SignUpScreenFirst(
     navigateTo: (route: String) -> Unit,
     name: String,
     setName: (String) -> Unit,
-    login: String,
-    setLogin: (String) -> Unit,
-    password: String,
-    setPassword: (String) -> Unit,
-    repeatPassword: String,
-    setRepeatPassword: (String) -> Unit,
     buttonActive: Boolean,
 ) {
     Box(
@@ -72,12 +60,6 @@ private fun SignUpScreenFirst(
             navigateTo = navigateTo,
             name = name,
             setName = setName,
-            login = login,
-            setLogin = setLogin,
-            password = password,
-            setPassword = setPassword,
-            repeatPassword = repeatPassword,
-            setRepeatPassword = setRepeatPassword,
             buttonActive = buttonActive
         )
     }
@@ -88,16 +70,8 @@ private fun CenterElements(
     navigateTo: (route: String) -> Unit,
     name: String,
     setName: (String) -> Unit,
-    login: String,
-    setLogin: (String) -> Unit,
-    password: String,
-    setPassword: (String) -> Unit,
-    repeatPassword: String,
-    setRepeatPassword: (String) -> Unit,
     buttonActive: Boolean,
 ) {
-    val passwordVisible = rememberSaveable { mutableStateOf(false) }
-    val repeatPasswordVisible = rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -122,47 +96,6 @@ private fun CenterElements(
             onValueChange = setName
         )
 
-        MyTextFieldLogin(
-            value = login,
-            label = stringResource(R.string.email),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            visualTransformation = VisualTransformation.None,
-            isError = false,
-            onValueChange = setLogin
-        )
-
-        MyTextFieldLogin(
-            value = password,
-            label = stringResource(R.string.password),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(
-                    onClick = { passwordVisible.value = !passwordVisible.value }
-                ) {
-                    MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
-                }
-            },
-            isError = password.length !in 8..20 && password.isNotEmpty(),
-            onValueChange = setPassword
-        )
-
-        MyTextFieldLogin(
-            value = repeatPassword,
-            label = stringResource(R.string.repeat_pass),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = if (repeatPasswordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(
-                    onClick = { repeatPasswordVisible.value = !repeatPasswordVisible.value }
-                ) {
-                    MyIcon(drawableId = if (repeatPasswordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
-                }
-            },
-            isError = repeatPassword.length !in 8..20 && repeatPassword.isNotEmpty() || (repeatPassword!=password && repeatPassword.isNotEmpty()),
-            onValueChange = setRepeatPassword
-        )
-
         MyLoginButton(
             text = stringResource(R.string.next),
             enabled = buttonActive,
@@ -177,20 +110,11 @@ private fun CenterElements(
 private fun SignUpFirstScreenPreview() {
     FoodMoodTheme {
         val name = remember { mutableStateOf("") }
-        val login = remember { mutableStateOf("") }
-        val password = remember { mutableStateOf("") }
-        val repeatPassword = remember { mutableStateOf("") }
 
         SignUpScreenFirst(
             navigateTo = {},
             name = name.value,
             setName = { name.value = it },
-            login = login.value,
-            setLogin = { login.value = it },
-            password = password.value,
-            setPassword = { password.value = it },
-            repeatPassword = repeatPassword.value,
-            setRepeatPassword = { repeatPassword.value = it },
             buttonActive = true
         )
     }

@@ -68,7 +68,7 @@ class SignUpViewModel: ViewModel() {
     }
 
     private fun checkButtonActive() {
-        _buttonActive.value = nameCheck && emailCheck && passwordCheck
+        _buttonActive.value = nameCheck || (emailCheck && passwordCheck)
     }
 
     fun triggerFood() { _food.value = !_food.value }

@@ -6,6 +6,7 @@
     <string name="email">Email</string>
     <string name="signup">Create account</string>
     <string name="welcome_mess">Let\'s start!</string>
+    <string name="final_signup">Final step...</string>
     <string name="name">Name</string>
     <string name="repeat_pass">Repeat password</string>
     <string name="next">Next</string>

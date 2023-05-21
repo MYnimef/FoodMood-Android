@@ -66,7 +66,7 @@ fun MyFoodCard() {
                     modifier = Modifier.size(65.dp),
                     onClick = {}) {
                     MyIcon(
-                        drawableId = R.drawable.ic_great_mood,
+                        drawableId = R.drawable.ic_mood_great,
                         modifier = Modifier.padding(end = 10.dp, top = 14.dp)
                     )
                 }
