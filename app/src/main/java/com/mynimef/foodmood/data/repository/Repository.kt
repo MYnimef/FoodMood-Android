@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
+import com.mynimef.foodmood.data.models.enums.ESignIn
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.io.IOException
 
 object Repository {
 
@@ -51,13 +53,21 @@ object Repository {
         return false
     }
 
-    suspend fun signIn(request: SignInRequest): Boolean {
-        val response = network.signIn(request)
-        if (response.isSuccessful) {
-            signIn(response.body()!!)
-            return true
+    suspend fun signIn(request: SignInRequest): ESignIn {
+        return try {
+            val response = network.signIn(request)
+            if (response.isSuccessful) {
+                signIn(response.body()!!)
+                ESignIn.SUCCESS
+            } else {
+                when (response.code()) {
+                    401 -> ESignIn.WRONG_PASSWORD
+                    else -> ESignIn.UNKNOWN
+                }
+            }
+        } catch (e: IOException) {
+            ESignIn.NO_CONNECTION
         }
-        return false
     }
 
     private suspend fun signIn(response: SignInResponse) {
