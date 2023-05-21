@@ -9,7 +9,7 @@ import com.mynimef.foodmood.data.repository.dao.AccountDao
 
 @Database(entities = [AccountEntity::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun accountDao(): AccountDao
+    protected abstract fun accountDao(): AccountDao
     companion object {
         fun init(applicationContext: Context): AppDatabase {
             return Room.databaseBuilder(
@@ -21,4 +21,6 @@ abstract class AppDatabase: RoomDatabase() {
                 .build()
         }
     }
+
+    suspend fun insertAccount(account: AccountEntity) = accountDao().insert(account)
 }

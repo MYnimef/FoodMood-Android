@@ -61,7 +61,7 @@ object Repository {
     }
 
     private suspend fun signIn(response: SignInResponse) {
-        database.accountDao().insert(AccountEntity(
+        database.insertAccount(AccountEntity(
             name = response.name,
             refreshToken = response.refreshToken,
         ))
