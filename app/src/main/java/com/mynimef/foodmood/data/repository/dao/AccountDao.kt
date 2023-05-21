@@ -9,11 +9,11 @@ import com.mynimef.foodmood.data.models.database.AccountEntity
 @Dao
 interface AccountDao {
     @Query("SELECT * FROM account")
-    fun getAll(): List<AccountEntity>
+    suspend fun getAll(): List<AccountEntity>
 
     @Insert
-    fun insert(account: AccountEntity)
+    suspend fun insert(account: AccountEntity)
 
     @Delete
-    fun delete(account: AccountEntity)
+    suspend fun delete(account: AccountEntity)
 }

@@ -10,6 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,8 +23,8 @@ fun MyTextFieldLogin(
     value: String,
     label: String,
     keyboardOptions: KeyboardOptions,
-    visualTranfromation: VisualTransformation,
-    trailingIcon: @Composable() (() -> Unit)?,
+    visualTransformation: VisualTransformation,
+    trailingIcon: @Composable (() -> Unit)? = null,
     onValueChange: (String) -> Unit
 ) {
     TextField(
@@ -34,7 +35,7 @@ fun MyTextFieldLogin(
         label =  { Text(label) },
         singleLine = true,
         keyboardOptions = keyboardOptions,
-        visualTransformation = visualTranfromation,
+        visualTransformation = visualTransformation,
         trailingIcon = trailingIcon,
         onValueChange = onValueChange,
         colors = TextFieldDefaults.textFieldColors(
@@ -69,8 +70,14 @@ fun MyTextFieldLogin(
 
 @Preview
 @Composable
-fun PrevMyTextFieldLogin() {
+fun MyTextFieldLoginPreview() {
     FoodMoodTheme {
-       // MyTextFieldLogin( "tncn", "email", KeyboardOptions(keyboardType = KeyboardType.Email), {})
+       MyTextFieldLogin(
+           value = "email",
+           label = "email",
+           keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+           visualTransformation = VisualTransformation.None,
+           onValueChange = {},
+       )
     }
 }

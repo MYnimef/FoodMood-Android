@@ -5,48 +5,59 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.EAuthNavigation
 import com.mynimef.foodmood.presentation.elements.MyIcon
-import com.mynimef.foodmood.presentation.elements.MyLogInButton
+import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun LoginScreen(navigateTo: (route: String) -> Unit) {
-    val viewModel: LoginViewModel = viewModel()
+fun SignInScreen(
+    navigateTo: (route: EAuthNavigation) -> Unit
+) {
+    val viewModel: SignInViewModel = viewModel()
 
-    val login = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
+    SignInScreen(
+        navigateTo = navigateTo,
+        signIn = viewModel::signIn,
+        email = viewModel.email.collectAsState().value,
+        setEmail = viewModel::setEmail,
+        password = viewModel.password.collectAsState().value,
+        setPassword = viewModel::setPassword,
+        buttonActive = viewModel.buttonActive.collectAsState().value,
+    )
+}
 
+@Composable
+private fun SignInScreen(
+    navigateTo: (route: EAuthNavigation) -> Unit,
+    signIn: () -> Unit,
+    email: String,
+    setEmail: (String) -> Unit,
+    password: String,
+    setPassword: (String) -> Unit,
+    buttonActive: Boolean,
+) {
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -54,18 +65,25 @@ fun LoginScreen(navigateTo: (route: String) -> Unit) {
     ) {
         CenterElements(
             navigateTo = navigateTo,
-            login = login,
-            password = password
+            signIn = signIn,
+            email = email,
+            setEmail = setEmail,
+            password = password,
+            setPassword = setPassword,
+            buttonActive = buttonActive,
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CenterElements(
-    navigateTo: (route: String) -> Unit,
-    login: MutableState<String>,
-    password: MutableState<String>
+    navigateTo: (route: EAuthNavigation) -> Unit,
+    signIn: () -> Unit,
+    email: String,
+    setEmail: (String) -> Unit,
+    password: String,
+    setPassword: (String) -> Unit,
+    buttonActive: Boolean,
 ) {
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
 
@@ -77,21 +95,25 @@ private fun CenterElements(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(stringResource(R.string.welcome),
+        Text(
+            text = stringResource(R.string.welcome),
             modifier = Modifier.padding(bottom = 30.dp),
-            style = MaterialTheme.typography.titleLarge)
+            style = MaterialTheme.typography.titleLarge
+        )
 
-        MyTextFieldLogin(value = login.value,
+        MyTextFieldLogin(
+            value = email,
             label = stringResource(R.string.email),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            visualTranfromation = VisualTransformation.None,
-            trailingIcon = null,
-            onValueChange =  {login.value = it} )
+            visualTransformation = VisualTransformation.None,
+            onValueChange = setEmail
+        )
 
-        MyTextFieldLogin(value = password.value,
+        MyTextFieldLogin(
+            value = password,
             label = stringResource(R.string.password),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTranfromation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(
                     onClick = { passwordVisible.value = !passwordVisible.value }
@@ -99,24 +121,40 @@ private fun CenterElements(
                     MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
                 }
             },
-            onValueChange = {
-                password.value = it
-            })
+            onValueChange = setPassword
+        )
 
-        MyLogInButton(text = stringResource(R.string.signin)) {
-            navigateTo("trainer")
-        }
+        MyLoginButton(
+            text = stringResource(R.string.signin),
+            enabled = buttonActive,
+            onClick = signIn
+        )
 
-        MyLogInButton(text = stringResource(R.string.signup)) {
-            navigateTo("signup")
+        MyLoginButton(
+            text = stringResource(R.string.signup)
+        ) {
+            navigateTo(EAuthNavigation.SIGNUP)
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun LoginScreenPreview() {
+private fun SignInScreenPreview() {
     FoodMoodTheme {
-        LoginScreen {}
+        val email = remember { mutableStateOf("") }
+        val password = remember { mutableStateOf("") }
+
+        SignInScreen(
+            navigateTo = {},
+            signIn = {},
+            email = email.value,
+            setEmail = { email.value = it },
+            password = password.value,
+            setPassword = { password.value = it },
+            buttonActive = true,
+        )
+
+        SignInScreen {}
     }
 }
