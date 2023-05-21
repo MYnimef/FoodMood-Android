@@ -6,6 +6,8 @@ import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 object Repository {
 
@@ -13,18 +15,29 @@ object Repository {
     private lateinit var database: AppDatabase
     private lateinit var network: NetworkService
 
+    private var accountID = 1
     private lateinit var accessToken: String
 
-    var appState: EAppState = EAppState.NONE
-        private set
+    private val _appState = MutableStateFlow(EAppState.NONE)
+    val appState = _appState.asStateFlow()
+
+    private fun setState(state: EAppState) {
+        _appState.value = state
+        with (sharedPref.edit()) {
+            putInt("app_state", state.value)
+            apply()
+        }
+    }
 
     fun init(context: Context) {
         sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
         database = AppDatabase.init(context)
         network = NetworkService()
 
-        appState = EAppState.fromInt(sharedPref.getInt("app_state", 0))
-        if (appState != EAppState.NONE) {
+        val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
+        _appState.value = state
+        if (state != EAppState.NONE) {
+            accountID = sharedPref.getInt("account_id", 1)
             accessToken = ""
         }
     }
@@ -37,10 +50,10 @@ object Repository {
                     name = it.name,
                     refreshToken = it.refreshToken,
                 ))
-                appState = when (it.role) {
+                setState(when (it.role) {
                     SignInResponse.Role.USER -> EAppState.CLIENT
                     SignInResponse.Role.TRAINER -> EAppState.TRAINER
-                }
+                })
                 accessToken = it.accessToken
             }
             return true

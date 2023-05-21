@@ -3,8 +3,6 @@ package com.mynimef.foodmood.presentation.screens.shared
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,15 +10,12 @@ import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.data.models.enums.EAuthNavigation
 
 @Composable
-fun SignUpScreen(
-    navigateTo: (route: EAuthNavigation) -> Unit,
-) {
+fun AuthNavigationScreen() {
     val navController = rememberNavController()
     MyMavHost(
         modifier = Modifier
             .fillMaxSize(),
         navController = navController,
-        parentNavigateTo = navigateTo,
     )
 }
 
@@ -28,35 +23,23 @@ fun SignUpScreen(
 private fun MyMavHost(
     modifier: Modifier,
     navController: NavHostController,
-    parentNavigateTo: (route: EAuthNavigation) -> Unit,
 ) {
-    val navigateTo = { route: String ->
-        navController.navigate(route) {
+    val navigateTo = { route: EAuthNavigation ->
+        navController.navigate(route.value) {
             launchSingleTop = true
             restoreState = true
         }
     }
-    val viewModel: SignUpViewModel = viewModel()
-
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = "first"
+        startDestination = EAuthNavigation.SIGNIN.value
     ) {
-        composable("first") { SignUpScreenFirst(
-            parentNavigateTo = parentNavigateTo,
-            navigateTo = navigateTo,
-            viewModel = viewModel,
+        composable(EAuthNavigation.SIGNIN.value) { SignInScreen(
+            navigateTo = navigateTo
         ) }
-        composable("second") { SignUpScreenSecond(
-            navigateTo = navigateTo,
-            viewModel = viewModel,
+        composable(EAuthNavigation.SIGNUP.value) { SignUpScreen(
+            navigateTo = navigateTo
         ) }
     }
-}
-
-@Preview
-@Composable
-private fun SignUpScreenPreview() {
-
 }
