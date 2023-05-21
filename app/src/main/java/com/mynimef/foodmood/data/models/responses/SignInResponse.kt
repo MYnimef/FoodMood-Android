@@ -9,7 +9,7 @@ data class SignInResponse(
     @SerializedName("role") val role: Role,
 ) {
     enum class Role {
-        USER,
+        CLIENT,
         TRAINER,
     }
 }

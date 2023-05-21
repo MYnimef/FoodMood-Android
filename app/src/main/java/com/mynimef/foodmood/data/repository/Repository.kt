@@ -47,7 +47,7 @@ object Repository {
 
     suspend fun signUp(request: SignUpRequest): ESignUp {
         return try {
-            val response = network.signUp(request)
+            val response = network.signUpClient(request)
             if (response.isSuccessful) {
                 signIn(response.body()!!)
                 ESignUp.SUCCESS
@@ -86,7 +86,7 @@ object Repository {
             refreshToken = response.refreshToken,
         ))
         setState(when (response.role) {
-            SignInResponse.Role.USER -> EAppState.CLIENT
+            SignInResponse.Role.CLIENT -> EAppState.CLIENT
             SignInResponse.Role.TRAINER -> EAppState.TRAINER
         })
         accessToken = response.accessToken

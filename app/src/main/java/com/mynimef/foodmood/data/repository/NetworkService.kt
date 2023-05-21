@@ -22,7 +22,7 @@ class NetworkService {
         authAPI = retrofit.create(AuthAPI::class.java)
     }
 
-    suspend fun signUp(request: SignUpRequest): Response<SignInResponse> = authAPI.signUp(request)
+    suspend fun signUpClient(request: SignUpRequest): Response<SignInResponse> = authAPI.signUpClient(request)
     suspend fun signIn(request: SignInRequest): Response<SignInResponse> = authAPI.signIn(request)
     suspend fun refreshToken(request: RefreshTokenRequest): Response<RefreshTokenResponse> = authAPI.refreshToken(request)
 }
