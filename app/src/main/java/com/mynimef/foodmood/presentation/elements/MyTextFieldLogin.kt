@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import java.lang.Error
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,6 +26,7 @@ fun MyTextFieldLogin(
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation,
     trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean,
     onValueChange: (String) -> Unit
 ) {
     TextField(
@@ -37,6 +39,7 @@ fun MyTextFieldLogin(
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
         trailingIcon = trailingIcon,
+        isError = isError,
         onValueChange = onValueChange,
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -77,6 +80,7 @@ fun MyTextFieldLoginPreview() {
            label = "email",
            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
            visualTransformation = VisualTransformation.None,
+           isError = true,
            onValueChange = {},
        )
     }
