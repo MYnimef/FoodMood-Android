@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,20 +27,29 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun MyFoodCard() {
+fun MyFoodCard(
+    iconEatId: Int,
+    typeEatId: Int,
+    textEmotion: String,
+    iconEmotionId: Int,) {
     Column() {
         Row() {
-            MyIcon(drawableId=R.drawable.ic_breakfast, 
-            modifier = Modifier.size(55.dp))
-            Text("Breakfast",
-                modifier = Modifier.padding(start = 15.dp).align(Alignment.CenterVertically),
+            MyIcon(drawableId=iconEatId,
+            modifier = Modifier
+                .size(55.dp)
+                .align(Alignment.CenterVertically))
+            Text(
+                stringResource(id = typeEatId),
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .align(Alignment.CenterVertically),
                 style = MaterialTheme.typography.titleMedium)
         }
         Box(
             modifier = Modifier
                 .clip(AbsoluteRoundedCornerShape(10.dp))
-                .width(330.dp)
-                .height(150.dp)
+                .fillMaxWidth()
+                .fillMaxHeight()
                 .background(color = MaterialTheme.colorScheme.primaryContainer)
         ) {
             Column() {
@@ -56,7 +67,7 @@ fun MyFoodCard() {
                     )
                 }
                 Text(
-                    text = "Saved text about emotions",
+                    text = textEmotion,
                     modifier = Modifier.padding(10.dp),
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -66,7 +77,7 @@ fun MyFoodCard() {
                     modifier = Modifier.size(65.dp),
                     onClick = {}) {
                     MyIcon(
-                        drawableId = R.drawable.ic_great_mood,
+                        drawableId = iconEmotionId,
                         modifier = Modifier.padding(end = 10.dp, top = 14.dp)
                     )
                 }
@@ -79,6 +90,6 @@ fun MyFoodCard() {
 @Composable
 private fun MyFoodCardPreview() {
     FoodMoodTheme {
-        MyFoodCard()
+        MyFoodCard(R.drawable.ic_breakfast, R.string.type_food_breakfast,"fvgeb", R.drawable.ic_mood_great)
     }
 }
