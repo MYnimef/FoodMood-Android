@@ -7,8 +7,11 @@
     <string name="signup">Create account</string>
     <string name="welcome_mess">Let\'s start!</string>
     <string name="final_signup">Final step...</string>
+
     <string name="name">Name</string>
+    <string name="birthday">Birthday date</string>
     <string name="repeat_pass">Repeat password</string>
+
     <string name="next">Next</string>
     <string name="pref">What will you track?</string>
     <string name="emotion">Emotions after eating</string>

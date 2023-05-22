@@ -21,6 +21,9 @@ class SignUpViewModel: ViewModel() {
     private val _name = MutableStateFlow("")
     val name: StateFlow<String> = _name.asStateFlow()
 
+    private val _birthday = MutableStateFlow("")
+    val birthday: StateFlow<String> = _name.asStateFlow()
+    
     private val _firstButtonActive = MutableStateFlow(false)
     val firstButtonActive: StateFlow<Boolean> = _firstButtonActive.asStateFlow()
 
@@ -58,6 +61,11 @@ class SignUpViewModel: ViewModel() {
     private fun checkFirstButtonActive() {
         _firstButtonActive.value = nameCheck
     }
+
+    fun setBirthday(value: String) {
+        _birthday.value = value
+    }
+
     fun setEmail(value: String) {
         _email.value = value
         emailCheck = value.isNotEmpty()

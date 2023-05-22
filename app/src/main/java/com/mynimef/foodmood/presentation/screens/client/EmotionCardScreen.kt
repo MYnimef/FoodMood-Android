@@ -10,42 +10,30 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.EAuthNavigation
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyEmotionButton
-import com.mynimef.foodmood.presentation.elements.MyFoodCard
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyTextFieldEmotionalCard
-import com.mynimef.foodmood.presentation.screens.trainer.HomeViewModel
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -108,7 +96,7 @@ private fun CenterElements(
                     .padding(top = 30.dp),
             ) {
                 MyIcon(
-                    drawableId = R.drawable.ic_breakfast,
+                    drawableId = R.drawable.ic_food_breakfast,
                     modifier = Modifier.size(55.dp)
                 )
                 Text(

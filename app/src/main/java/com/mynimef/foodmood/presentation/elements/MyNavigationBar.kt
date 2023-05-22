@@ -36,6 +36,7 @@ fun MyNavigationBar(
             items.forEach { item ->
                 MyNavigationItem(
                     drawableId = item.icon,
+                    drawableFillId = item.iconFill,
                     selected = currentRoute == item.route,
                     normalColor = Color.Black,
                     selectedColor = Color.Black

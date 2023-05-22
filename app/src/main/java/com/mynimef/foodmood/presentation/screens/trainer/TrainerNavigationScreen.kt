@@ -16,7 +16,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.EClientNavigation
 import com.mynimef.foodmood.data.models.enums.ETrainerNavigation
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
@@ -28,9 +27,9 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun TrainerNavigationScreen() {
     val navController = rememberNavController()
     val bottomNavItems = listOf(
-        BottomNavigationItem(icon = R.drawable.ic_home, route = "home"),
-        BottomNavigationItem(icon = R.drawable.ic_add, route = "create"),
-        BottomNavigationItem(icon = R.drawable.ic_settings, route = "settings"),
+        BottomNavigationItem(icon = R.drawable.ic_nav_home, iconFill = R.drawable.ic_nav_home_fill, route = "home"),
+        BottomNavigationItem(icon = R.drawable.ic_nav_create, iconFill = R.drawable.ic_nav_create, route = "create"),
+        BottomNavigationItem(icon = R.drawable.ic_nav_settings_fill, iconFill = R.drawable.ic_nav_settings_fill, route = "settings"),
     )
 
     Scaffold(

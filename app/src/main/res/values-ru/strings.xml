@@ -7,8 +7,11 @@
     <string name="signup">Создать аккаунт</string>
     <string name="welcome_mess">Давайте познакомимся!</string>
     <string name="final_signup">Последний шаг...</string>
+
     <string name="name">Имя</string>
     <string name="repeat_pass">Повторите пароль</string>
+    <string name="birthday">Дата рождения</string>
+
     <string name="next">Далее</string>
     <string name="pref">Что будем отслеживать?</string>
     <string name="emotion">Эмоции после еды</string>
