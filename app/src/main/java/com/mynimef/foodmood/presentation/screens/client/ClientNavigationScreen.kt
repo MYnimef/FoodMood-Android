@@ -2,8 +2,10 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -39,19 +41,22 @@ fun ClientNavigationScreen() {
             MyNavigationBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(MaterialTheme.colorScheme.primary)
+                ,
                 navController = navController,
-                bottomNavItems,
-                20.dp
+                items = bottomNavItems,
+                spaceSize = 20.dp,
             )
         }
     ) {
-        MyMavHost(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(fraction = 0.9f),
-            navController = navController
-        )
+        Box(modifier = Modifier.padding(it)) {
+            MyMavHost(
+                modifier = Modifier
+                    .fillMaxSize()
+                ,
+                navController = navController
+            )
+        }
     }
 }
 
@@ -73,7 +78,7 @@ private fun MyMavHost(
         navController = navController,
         startDestination = EClientNavigation.HOME.value
     ) {
-        composable(EClientNavigation.HOME.value) { HomeScreen()}
+        composable(EClientNavigation.HOME.value) { HomeScreen() }
         composable(EClientNavigation.CREATE.value) { CreateScreen(navigateTo = navigateTo) }
         composable(EClientNavigation.CHOICE.value) { CardsChoiceScreen(navigateTo = navigateTo) }
         composable(EClientNavigation.SETTINGS.value) { SettingsScreen(navigateTo = navigateTo) }
