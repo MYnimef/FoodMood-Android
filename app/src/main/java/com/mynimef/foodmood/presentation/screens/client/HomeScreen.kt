@@ -1,6 +1,8 @@
 package com.mynimef.foodmood.presentation.screens.client
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,8 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -68,15 +72,46 @@ private fun CenterElements() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp),
+            .padding(horizontal = 30.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        MyFoodCard()
+        MyFoodCard(
+           iconEatId = R.drawable.ic_breakfast,
+           typeEatId = R.string.type_food_breakfast,
+           textEmotion = "test",
+           iconEmotionId = R.drawable.ic_mood_great
+        )
         Spacer(modifier = Modifier.height(20.dp))
-        MyFoodCard()
+        MyFoodCard(
+            iconEatId = R.drawable.ic_breakfast,
+            typeEatId = R.string.type_food_snack,
+            textEmotion = "test",
+            iconEmotionId = R.drawable.ic_mood_great
+        )
         Spacer(modifier = Modifier.height(20.dp))
-        MyFoodCard()
+        MyFoodCard(
+            iconEatId = R.drawable.ic_dinner,
+            typeEatId = R.string.type_food_dinner,
+            textEmotion = "test",
+            iconEmotionId = R.drawable.ic_mood_great
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        MyFoodCard(
+            iconEatId = R.drawable.ic_breakfast,
+            typeEatId = R.string.type_food_snack,
+            textEmotion = "test",
+            iconEmotionId = R.drawable.ic_mood_great
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        MyFoodCard(
+            iconEatId = R.drawable.ic_supper,
+            typeEatId = R.string.type_food_supper,
+            textEmotion = "test",
+            iconEmotionId = R.drawable.ic_mood_great
+        )
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 
