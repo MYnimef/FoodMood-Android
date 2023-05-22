@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.AccountEntity
+import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.enums.ESignIn
 import com.mynimef.foodmood.data.models.enums.ESignUp
@@ -32,8 +33,8 @@ object Repository {
     private val _client = MutableSharedFlow<ClientEntity>(replay = 1)
     val client: SharedFlow<ClientEntity> = _client
 
-    private val _trainer = MutableSharedFlow<ClientEntity>(replay = 1)
-    val trainer: SharedFlow<ClientEntity> = _trainer
+    private val _trainer = MutableSharedFlow<TrainerEntity>(replay = 1)
+    val trainer: SharedFlow<TrainerEntity> = _trainer
 
     private fun setState(state: EAppState) {
         _appState.value = state
@@ -51,8 +52,9 @@ object Repository {
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
         _appState.value = state
         if (state != EAppState.NONE) {
-            sharedPref.getInt("account_id", 1)
-            //refreshToken()
+            val id = sharedPref.getLong("account_id", 0)
+            refreshToken = database.getRefreshTokenById(id)
+            refreshAccessToken()
         }
     }
 
@@ -92,17 +94,22 @@ object Repository {
     }
 
     private suspend fun signIn(response: SignInResponse) {
-        database.insertAccount(AccountEntity(
+        val id = database.insertAccount(AccountEntity(
             refreshToken = response.refreshToken,
         ))
+        with (sharedPref.edit()) {
+            putLong("account_id", id)
+            apply()
+        }
         setState(when (response.role) {
             SignInResponse.Role.CLIENT -> EAppState.CLIENT
             SignInResponse.Role.TRAINER -> EAppState.TRAINER
         })
+        refreshToken = response.refreshToken
         accessToken = response.accessToken
     }
 
-    private suspend fun refreshToken(): Boolean {
+    private suspend fun refreshAccessToken(): Boolean {
         accessToken = null
         val request = RefreshTokenRequest(
             refreshToken = refreshToken

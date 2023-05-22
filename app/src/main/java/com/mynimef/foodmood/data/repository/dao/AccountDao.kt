@@ -8,11 +8,14 @@ import com.mynimef.foodmood.data.models.database.AccountEntity
 
 @Dao
 interface AccountDao {
+    @Query("SELECT account.refresh_token FROM account WHERE account.id = :id")
+    suspend fun getRefreshTokenById(id: Long): String
+
     @Query("SELECT * FROM account")
     suspend fun getAll(): List<AccountEntity>
 
     @Insert
-    suspend fun insert(account: AccountEntity)
+    suspend fun insert(account: AccountEntity): Long
 
     @Delete
     suspend fun delete(account: AccountEntity)

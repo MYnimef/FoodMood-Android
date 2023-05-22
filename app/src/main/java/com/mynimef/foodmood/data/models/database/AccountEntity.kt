@@ -9,7 +9,7 @@ data class AccountEntity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Int = 0,
+    val id: Long = 0,
 
     @ColumnInfo(name = "refresh_token")
     val refreshToken: String,
