@@ -23,6 +23,9 @@ class SignUpViewModel: ViewModel() {
 
     private val _birthday = MutableStateFlow("")
     val birthday: StateFlow<String> = _name.asStateFlow()
+    
+    private val _firstButtonActive = MutableStateFlow(false)
+    val firstButtonActive: StateFlow<Boolean> = _firstButtonActive.asStateFlow()
 
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> = _email.asStateFlow()
@@ -33,8 +36,8 @@ class SignUpViewModel: ViewModel() {
     private val _repeatPassword = MutableStateFlow("")
     val repeatPassword: StateFlow<String> = _repeatPassword.asStateFlow()
 
-    private val _buttonActive = MutableStateFlow(false)
-    val buttonActive: StateFlow<Boolean> = _buttonActive.asStateFlow()
+    private val _secondButtonActive = MutableStateFlow(false)
+    val secondButtonActive: StateFlow<Boolean> = _secondButtonActive.asStateFlow()
 
     private var nameCheck = false
     private var emailCheck = false
@@ -52,7 +55,11 @@ class SignUpViewModel: ViewModel() {
     fun setName(value: String) {
         _name.value = value
         nameCheck = value.length >= 2
-        checkButtonActive()
+        checkFirstButtonActive()
+    }
+
+    private fun checkFirstButtonActive() {
+        _firstButtonActive.value = nameCheck
     }
 
     fun setBirthday(value: String) {
@@ -62,21 +69,21 @@ class SignUpViewModel: ViewModel() {
     fun setEmail(value: String) {
         _email.value = value
         emailCheck = value.isNotEmpty()
-        checkButtonActive()
+        checkSecondButtonActive()
     }
     fun setPassword(value: String) {
         _password.value = value
         passwordCheck = value.length >= 8 && value == _repeatPassword.value
-        checkButtonActive()
+        checkSecondButtonActive()
     }
     fun setRepeatPassword(value: String) {
         _repeatPassword.value = value
         passwordCheck = value.length >= 8 && value == _password.value
-        checkButtonActive()
+        checkSecondButtonActive()
     }
 
-    private fun checkButtonActive() {
-        _buttonActive.value = nameCheck || (emailCheck && passwordCheck)
+    private fun checkSecondButtonActive() {
+        _secondButtonActive.value = emailCheck && passwordCheck
     }
 
     fun triggerFood() { _food.value = !_food.value }

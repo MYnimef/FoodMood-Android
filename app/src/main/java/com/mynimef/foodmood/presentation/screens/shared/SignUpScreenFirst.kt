@@ -48,7 +48,7 @@ fun SignUpScreenFirst(
         setName= viewModel::setName,
         birthday = viewModel.birthday.collectAsState().value,
         setBirthday= viewModel::setBirthday,
-        buttonActive = viewModel.buttonActive.collectAsState().value,
+        buttonActive = viewModel.firstButtonActive.collectAsState().value,
     )
 }
 
