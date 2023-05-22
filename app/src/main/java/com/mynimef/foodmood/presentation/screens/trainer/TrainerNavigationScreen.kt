@@ -1,13 +1,10 @@
 package com.mynimef.foodmood.presentation.screens.trainer
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,12 +34,9 @@ fun TrainerNavigationScreen() {
     Scaffold(
         bottomBar = {
             MyNavigationBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary),
                 navController = navController,
-                bottomNavItems,
-                40.dp
+                items = bottomNavItems,
+                spaceSize = 40.dp
             )
         }
     ) {
