@@ -27,6 +27,18 @@ class SignUpViewModel: ViewModel() {
     private val _firstButtonActive = MutableStateFlow(false)
     val firstButtonActive: StateFlow<Boolean> = _firstButtonActive.asStateFlow()
 
+    private var nameCheck = false
+    private var birthdayCheck = false
+
+    private val _food = MutableStateFlow(false)
+    val food: StateFlow<Boolean> = _food.asStateFlow()
+
+    private val _water = MutableStateFlow(false)
+    val water: StateFlow<Boolean> = _water.asStateFlow()
+
+    private val _weight = MutableStateFlow(false)
+    val weight: StateFlow<Boolean> = _weight.asStateFlow()
+
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> = _email.asStateFlow()
 
@@ -39,32 +51,26 @@ class SignUpViewModel: ViewModel() {
     private val _secondButtonActive = MutableStateFlow(false)
     val secondButtonActive: StateFlow<Boolean> = _secondButtonActive.asStateFlow()
 
-    private var nameCheck = false
     private var emailCheck = false
     private var passwordCheck = false
-
-    private val _food = MutableStateFlow(false)
-    val food: StateFlow<Boolean> = _food.asStateFlow()
-
-    private val _water = MutableStateFlow(false)
-    val water: StateFlow<Boolean> = _water.asStateFlow()
-
-    private val _weight = MutableStateFlow(false)
-    val weight: StateFlow<Boolean> = _weight.asStateFlow()
 
     fun setName(value: String) {
         _name.value = value
         nameCheck = value.length >= 2
         checkFirstButtonActive()
     }
-
-    private fun checkFirstButtonActive() {
-        _firstButtonActive.value = nameCheck
-    }
-
     fun setBirthday(value: String) {
         _birthday.value = value
+        birthdayCheck = value.isNotEmpty()
+        checkFirstButtonActive()
     }
+    private fun checkFirstButtonActive() {
+        _firstButtonActive.value = nameCheck && birthdayCheck
+    }
+
+    fun triggerFood() { _food.value = !_food.value }
+    fun triggerWater() { _water.value = !_water.value }
+    fun triggerWeight() { _weight.value = !_weight.value }
 
     fun setEmail(value: String) {
         _email.value = value
@@ -81,14 +87,9 @@ class SignUpViewModel: ViewModel() {
         passwordCheck = value.length >= 8 && value == _password.value
         checkSecondButtonActive()
     }
-
     private fun checkSecondButtonActive() {
         _secondButtonActive.value = emailCheck && passwordCheck
     }
-
-    fun triggerFood() { _food.value = !_food.value }
-    fun triggerWater() { _water.value = !_water.value }
-    fun triggerWeight() { _weight.value = !_weight.value }
 
     fun signUp() {
         job = CoroutineScope(Dispatchers.IO).launch {
