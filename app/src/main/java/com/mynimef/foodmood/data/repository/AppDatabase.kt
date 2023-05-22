@@ -22,5 +22,7 @@ abstract class AppDatabase: RoomDatabase() {
         }
     }
 
+
+    suspend fun getRefreshTokenById(id: Long) = accountDao().getRefreshTokenById(id)
     suspend fun insertAccount(account: AccountEntity) = accountDao().insert(account)
 }
