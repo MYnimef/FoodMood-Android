@@ -22,7 +22,7 @@ class SignUpViewModel: ViewModel() {
     val name: StateFlow<String> = _name.asStateFlow()
 
     private val _birthday = MutableStateFlow("")
-    val birthday: StateFlow<String> = _name.asStateFlow()
+    val birthday: StateFlow<String> = _birthday.asStateFlow()
     
     private val _firstButtonActive = MutableStateFlow(false)
     val firstButtonActive: StateFlow<Boolean> = _firstButtonActive.asStateFlow()
