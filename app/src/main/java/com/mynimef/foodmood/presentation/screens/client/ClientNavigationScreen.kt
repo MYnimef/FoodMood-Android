@@ -19,7 +19,6 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.EClientNavigation
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
-import com.mynimef.foodmood.presentation.screens.shared.EmailSendScreen
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
