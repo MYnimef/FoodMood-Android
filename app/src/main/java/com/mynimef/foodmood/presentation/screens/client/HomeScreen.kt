@@ -64,7 +64,7 @@ private fun CenterElements() {
         Spacer(modifier = Modifier.height(20.dp))
         MyFoodCard(
             iconEatId = R.drawable.ic_food_lunch,
-            typeEatId = R.string.type_food_snack,
+            typeEatId = R.string.type_food_snack1,
             textEmotion = "test",
             iconEmotionId = R.drawable.ic_mood_great
         )
@@ -78,7 +78,7 @@ private fun CenterElements() {
         Spacer(modifier = Modifier.height(20.dp))
         MyFoodCard(
             iconEatId = R.drawable.ic_food_lunch,
-            typeEatId = R.string.type_food_snack,
+            typeEatId = R.string.type_food_snack2,
             textEmotion = "test",
             iconEmotionId = R.drawable.ic_mood_great
         )

@@ -33,9 +33,11 @@
     <string name="emotion_button">эмоции</string>
     <string name="emotion_question">Как ты себя чувствуешь?</string>
     <string name="food_question">Что ты ел?</string>
+    <string name="pick">Выберите\nтип</string>
 
     <string name="type_food_breakfast">Завтрак</string>
     <string name="type_food_dinner">Обед</string>
     <string name="type_food_supper">Ужин</string>
-    <string name="type_food_snack">Перекус</string>
+    <string name="type_food_snack1">Перекус 1</string>
+    <string name="type_food_snack2">Перекус 2</string>
 </resources>

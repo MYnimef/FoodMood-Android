@@ -33,9 +33,11 @@
     <string name="emotion_button">emotions</string>
     <string name="emotion_question">How do you feel?</string>
     <string name="food_question">What did you eat?</string>
+    <string name="pick">Pick\ntype</string>
 
     <string name="type_food_breakfast">Breakfast</string>
     <string name="type_food_dinner">Dinner</string>
     <string name="type_food_supper">Supper</string>
-    <string name="type_food_snack">Snack</string>
+    <string name="type_food_snack1">Snack 1</string>
+    <string name="type_food_snack2">Snack 2</string>
 </resources>

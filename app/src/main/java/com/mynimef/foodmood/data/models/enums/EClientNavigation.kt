@@ -4,6 +4,8 @@ enum class EClientNavigation(val value: String) {
     HOME("home"),
     CALENDAR("calendar"),
     CREATE("create"),
+    CHOICE("choice"),
     REPORTS("reports"),
-    SETTINGS("settings")
+    SETTINGS("settings"),
+    EMAILSEND("emailsend")
 }

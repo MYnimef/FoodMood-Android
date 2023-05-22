@@ -19,6 +19,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.EClientNavigation
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
+import com.mynimef.foodmood.presentation.screens.shared.EmailSendScreen
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -29,7 +30,7 @@ fun ClientNavigationScreen() {
     val bottomNavItems = listOf(
         BottomNavigationItem(icon = R.drawable.ic_nav_home, iconFill = R.drawable.ic_nav_home_fill, route = "home"),
         BottomNavigationItem(icon = R.drawable.ic_nav_calendar, iconFill = R.drawable.ic_nav_calendar_fill, route = "calendar"),
-        BottomNavigationItem(icon = R.drawable.ic_nav_create, iconFill = R.drawable.ic_nav_create, route = "create"),
+        BottomNavigationItem(icon = R.drawable.ic_nav_create, iconFill = R.drawable.ic_nav_create, route = "choice"),
         BottomNavigationItem(icon = R.drawable.ic_nav_reports, iconFill = R.drawable.ic_nav_reports_fill, route = "reports"),
         BottomNavigationItem(icon = R.drawable.ic_nav_settings, iconFill = R.drawable.ic_nav_settings_fill, route = "settings"),
     )
@@ -74,10 +75,12 @@ private fun MyMavHost(
         startDestination = EClientNavigation.HOME.value
     ) {
         composable(EClientNavigation.HOME.value) { HomeScreen()}
-        composable(EClientNavigation.CREATE.value) { CreateScreen() }
+        composable(EClientNavigation.CREATE.value) { CreateScreen(navigateTo = navigateTo) }
+        composable(EClientNavigation.CHOICE.value) { CardsChoiceScreen(navigateTo = navigateTo) }
         composable(EClientNavigation.SETTINGS.value) { SettingsScreen(navigateTo = navigateTo) }
         composable(EClientNavigation.CALENDAR.value) { CalendarScreen() }
         composable(EClientNavigation.REPORTS.value) { ReportsScreen() }
+       // composable(EClientNavigation.EMAILSEND.value) { EmailSendScreen() }
     }
 }
 
