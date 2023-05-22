@@ -53,7 +53,6 @@ private val DarkColorScheme = darkColorScheme(
     inverseSurface = ,
     inverseOnSurface = ,
 
-    error = ,
     onError = ,
     errorContainer = ,
     onErrorContainer = ,

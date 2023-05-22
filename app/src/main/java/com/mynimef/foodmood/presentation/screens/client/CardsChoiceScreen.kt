@@ -1,0 +1,49 @@
+package com.mynimef.foodmood.presentation.screens.client
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.EClientNavigation
+import com.mynimef.foodmood.presentation.elements.MyChoiceCard
+import com.mynimef.foodmood.presentation.elements.MyPolygonLayout
+import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+
+@Composable
+fun CardsChoiceScreen(
+    navigateTo: (route: EClientNavigation) -> Unit
+) {
+   Box(
+       modifier = Modifier.fillMaxSize(),
+       contentAlignment = Alignment.Center
+   )  {
+    Text(stringResource(id = R.string.pick), style = MaterialTheme.typography.titleMedium,
+    textAlign = TextAlign.Center)
+    MyPolygonLayout(Modifier.padding(horizontal = 60.dp)) {
+        MyChoiceCard(drawableId = R.drawable.ic_food_breakfast, R.string.type_food_breakfast, {navigateTo(EClientNavigation.CREATE)})
+        MyChoiceCard(drawableId = R.drawable.ic_food_dinner, R.string.type_food_dinner, {navigateTo(EClientNavigation.CREATE)})
+        MyChoiceCard(drawableId = R.drawable.ic_food_lunch, R.string.type_food_snack2, {navigateTo(EClientNavigation.CREATE)})
+        MyChoiceCard(drawableId = R.drawable.ic_food_lunch, R.string.type_food_snack1, {navigateTo(EClientNavigation.CREATE)})
+        MyChoiceCard(drawableId = R.drawable.ic_food_supper, R.string.type_food_supper, {navigateTo(EClientNavigation.CREATE)})
+    }
+   }
+}
+
+@Preview
+@Composable
+fun ChoisePrev() {
+    FoodMoodTheme() {
+        CardsChoiceScreen(navigateTo = {})
+    }
+}
