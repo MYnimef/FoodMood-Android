@@ -13,16 +13,16 @@ import com.mynimef.foodmood.presentation.screens.trainer.TrainerNavigationScreen
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun MainScreen() {
-    val viewModel: MainViewModel = viewModel()
+fun MainNavigationScreen() {
+    val viewModel: MainNavigationViewModel = viewModel()
 
-    MainScreen(
+    MainNavigationScreen(
         appState = viewModel.getAppState().collectAsState().value
     )
 }
 
 @Composable
-private fun MainScreen(
+private fun MainNavigationScreen(
     appState: EAppState
 ) {
     Navigation(
@@ -51,10 +51,10 @@ private fun Navigation(
 
 @Preview(showBackground = true)
 @Composable
-private fun MainScreenPreview() {
+private fun MainNavigationScreenPreview() {
     FoodMoodTheme {
-        MainScreen(
-            appState = EAppState.NONE
+        MainNavigationScreen(
+            appState = EAppState.CLIENT
         )
     }
 }
