@@ -44,7 +44,7 @@ fun SignUpScreenThird(
         repeatPassword = viewModel.repeatPassword.collectAsState().value,
         setRepeatPassword = viewModel::setRepeatPassword,
         signUp = viewModel::signUp,
-        buttonActive = viewModel.buttonActive.collectAsState().value,
+        buttonActive = viewModel.secondButtonActive.collectAsState().value,
     )
 }
 

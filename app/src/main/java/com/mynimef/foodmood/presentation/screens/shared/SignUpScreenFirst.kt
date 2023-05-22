@@ -40,7 +40,7 @@ fun SignUpScreenFirst(
         navigateTo = navigateTo,
         name = viewModel.name.collectAsState().value,
         setName= viewModel::setName,
-        buttonActive = viewModel.buttonActive.collectAsState().value,
+        buttonActive = viewModel.firstButtonActive.collectAsState().value,
     )
 }
 
