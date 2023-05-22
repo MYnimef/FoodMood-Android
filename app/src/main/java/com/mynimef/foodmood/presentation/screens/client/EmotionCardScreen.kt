@@ -144,7 +144,7 @@ private fun CenterElements(
             ) {
                 MyTextFieldEmotionalCard(
                     value = textEmotion,
-                    label = "How do you feel?", onValueChange = setTextEmotion
+                    hintText = "How do you feel?", onValueChange = setTextEmotion
                 )
             }
             Text(
@@ -161,7 +161,7 @@ private fun CenterElements(
             ) {
                 MyTextFieldEmotionalCard(
                     value = textFood,
-                    label = "How do ypu feel?", onValueChange = setTextFood
+                    hintText = "How do ypu feel?", onValueChange = setTextFood
                 )
             }
         }

@@ -10,6 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,17 +23,16 @@ import java.lang.Error
 @Composable
 fun MyTextFieldEmotionalCard(
     value: String,
-    label: String,
-    onValueChange: (String) -> Unit
+    hintText: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
+    maxLines: Int = 4,
 ) {
     TextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 20.dp),
         value = value,
-        label =  { Text(label) },
-        singleLine = true,
         onValueChange = onValueChange,
+        maxLines = maxLines,
+        placeholder = { if (value.isEmpty()) hintText else " "},
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -69,7 +69,7 @@ fun MyTextFieldEmotionalCardPreview() {
     FoodMoodTheme {
         MyTextFieldEmotionalCard(
             value = "email",
-            label = "email",
+            "hint",
             onValueChange = {},
         )
     }

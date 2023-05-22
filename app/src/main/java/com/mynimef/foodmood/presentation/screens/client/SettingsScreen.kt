@@ -134,7 +134,10 @@ private fun CenterElements(
                 MyIcon(drawableId = R.drawable.ic_error)
             }
             TextButton(
-                onClick = { navigateTo(EClientNavigation.SETTINGS) },) {
+                onClick = {
+                    //MyOpenEmail(senderEmail = "bhh", emailSubject = "bujbh", emailBody = "bjhbu")
+                          },
+            ) {
                 Text(stringResource(R.string.error),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)

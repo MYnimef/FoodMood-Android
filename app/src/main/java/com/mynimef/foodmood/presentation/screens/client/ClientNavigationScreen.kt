@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.EClientNavigation
+import com.mynimef.foodmood.data.models.enums.EFoodType
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
@@ -78,9 +79,8 @@ private fun MyMavHost(
         navController = navController,
         startDestination = EClientNavigation.HOME.value
     ) {
-        composable(EClientNavigation.HOME.value) { HomeScreen() }
-        composable(EClientNavigation.CREATE.value) { CreateScreen(navigateTo = navigateTo) }
-        composable(EClientNavigation.CHOICE.value) { CardsChoiceScreen(navigateTo = navigateTo) }
+        composable(EClientNavigation.CHOICE.value) { CreateNavigationScreen() }
+        composable(EClientNavigation.HOME.value) { HomeScreen()}
         composable(EClientNavigation.SETTINGS.value) { SettingsScreen(navigateTo = navigateTo) }
         composable(EClientNavigation.CALENDAR.value) { CalendarScreen() }
         composable(EClientNavigation.REPORTS.value) { ReportsScreen() }
