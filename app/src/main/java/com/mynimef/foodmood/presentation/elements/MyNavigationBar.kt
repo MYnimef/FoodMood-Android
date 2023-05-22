@@ -38,8 +38,6 @@ fun MyNavigationBar(
                     drawableId = item.icon,
                     drawableFillId = item.iconFill,
                     selected = currentRoute == item.route,
-                    normalColor = Color.Black,
-                    selectedColor = Color.Black
                 ) {
                     navController.navigate(item.route) {
                         launchSingleTop = true
