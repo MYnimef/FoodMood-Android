@@ -18,8 +18,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.EAuthNavigation
+import com.mynimef.foodmood.data.models.enums.EClientNavigation
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
+import com.mynimef.foodmood.presentation.screens.shared.SignInScreen
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -40,7 +43,7 @@ fun ClientNavigationScreen() {
             MyNavigationBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primaryContainer),
+                    .background(MaterialTheme.colorScheme.primary),
                 navController = navController,
                 bottomNavItems,
                 20.dp
@@ -62,8 +65,8 @@ private fun MyMavHost(
     modifier: Modifier,
     navController: NavHostController
 ) {
-    val navigateTo = { route: String ->
-        navController.navigate(route) {
+    val navigateTo = { route: EClientNavigation ->
+        navController.navigate(route.value) {
             launchSingleTop = true
             restoreState = true
         }
@@ -72,16 +75,13 @@ private fun MyMavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = "home"
+        startDestination = EClientNavigation.HOME.value
     ) {
-        composable("home") { com.mynimef.foodmood.presentation.screens.client.HomeScreen() }
-        composable("create") { com.mynimef.foodmood.presentation.screens.client.CreateScreen() }
-        composable("settings") { com.mynimef.foodmood.presentation.screens.client.SettingsScreen(navigateTo) }
-        composable("calendar") { com.mynimef.foodmood.presentation.screens.client.CalendarScreen() }
-        composable("reports") { com.mynimef.foodmood.presentation.screens.client.ReportsScreen() }
-        composable("userinfo") { com.mynimef.foodmood.presentation.screens.client.UserInfoScreen() }
-        composable("prefsettings") { com.mynimef.foodmood.presentation.screens.client.PrefSettingsScreen(navigateTo)}
-        composable("notifications") { com.mynimef.foodmood.presentation.screens.client.NotificationsScreen() }
+        composable(EClientNavigation.HOME.value) { HomeScreen()}
+        composable(EClientNavigation.CREATE.value) { CreateScreen() }
+        composable(EClientNavigation.SETTINGS.value) { SettingsScreen(navigateTo = navigateTo) }
+        composable(EClientNavigation.CALENDAR.value) { CalendarScreen() }
+        composable(EClientNavigation.REPORTS.value) { ReportsScreen() }
     }
 }
 
