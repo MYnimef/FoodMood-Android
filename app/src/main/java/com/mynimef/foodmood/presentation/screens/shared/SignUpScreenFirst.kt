@@ -22,19 +22,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.maxkeppeker.sheets.core.models.base.UseCaseState
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
-import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.EAuthNavigation
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
-import java.time.LocalDate
 
 @Composable
 fun SignUpScreenFirst(
@@ -87,17 +84,18 @@ private fun CenterElements(
     setBirthday: (String) -> Unit,
     buttonActive: Boolean,
 ) {
-
     val calendarState = rememberUseCaseState()
 
-    CalendarDialog(state = calendarState,
+    CalendarDialog(
+        state = calendarState,
         config = CalendarConfig(
             monthSelection = true,
             yearSelection = true,
         ),
         selection = CalendarSelection.Date { date ->
             setBirthday(date.toString())
-        })
+        }
+    )
 
     Column(
         modifier = Modifier
@@ -125,17 +123,16 @@ private fun CenterElements(
         MyTextFieldLogin(
             value = birthday,
             label = stringResource(R.string.birthday),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             visualTransformation = VisualTransformation.None,
             trailingIcon = {
                 IconButton(
                     onClick = {
                         calendarState.show()
                     }
-                )
-                        {
-                            MyIcon(drawableId = R.drawable.ic_date_picker)
-                        }
+                ) {
+                    MyIcon(drawableId = R.drawable.ic_date_picker)
+                }
             },
             isError = false,
             onValueChange = setBirthday
