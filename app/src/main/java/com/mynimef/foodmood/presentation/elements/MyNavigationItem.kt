@@ -12,11 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 
-data class BottomNavigationItem(val icon: Int, val route: String)
+data class BottomNavigationItem(val icon: Int, val iconFill: Int, val route: String)
 
 @Composable
 fun MyNavigationItem(
     drawableId: Int,
+    drawableFillId: Int,
     selected: Boolean,
     normalColor: Color,
     selectedColor: Color,
@@ -33,7 +34,7 @@ fun MyNavigationItem(
         MyIcon(
             modifier = Modifier
                 .fillMaxSize(0.7f),
-            drawableId = drawableId
+            drawableId = if (selected) drawableFillId else drawableId
         )
     }
 }
