@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -14,21 +15,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.maxkeppeker.sheets.core.models.base.UseCaseState
+import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
+import com.maxkeppeler.sheets.calendar.models.CalendarConfig
+import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.EAuthNavigation
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import java.time.LocalDate
 
 @Composable
 fun SignUpScreenFirst(
@@ -40,6 +46,8 @@ fun SignUpScreenFirst(
         navigateTo = navigateTo,
         name = viewModel.name.collectAsState().value,
         setName= viewModel::setName,
+        birthday = viewModel.birthday.collectAsState().value,
+        setBirthday= viewModel::setBirthday,
         buttonActive = viewModel.buttonActive.collectAsState().value,
     )
 }
@@ -49,6 +57,8 @@ private fun SignUpScreenFirst(
     navigateTo: (route: String) -> Unit,
     name: String,
     setName: (String) -> Unit,
+    birthday: String,
+    setBirthday: (String) -> Unit,
     buttonActive: Boolean,
 ) {
     Box(
@@ -60,18 +70,34 @@ private fun SignUpScreenFirst(
             navigateTo = navigateTo,
             name = name,
             setName = setName,
+            birthday = birthday,
+            setBirthday = setBirthday,
             buttonActive = buttonActive
         )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CenterElements(
     navigateTo: (route: String) -> Unit,
     name: String,
     setName: (String) -> Unit,
+    birthday: String,
+    setBirthday: (String) -> Unit,
     buttonActive: Boolean,
 ) {
+
+    val calendarState = rememberUseCaseState()
+
+    CalendarDialog(state = calendarState,
+        config = CalendarConfig(
+            monthSelection = true,
+            yearSelection = true,
+        ),
+        selection = CalendarSelection.Date { date ->
+            setBirthday(date.toString())
+        })
 
     Column(
         modifier = Modifier
@@ -96,6 +122,25 @@ private fun CenterElements(
             onValueChange = setName
         )
 
+        MyTextFieldLogin(
+            value = birthday,
+            label = stringResource(R.string.birthday),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = VisualTransformation.None,
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        calendarState.show()
+                    }
+                )
+                        {
+                            MyIcon(drawableId = R.drawable.ic_date_picker)
+                        }
+            },
+            isError = false,
+            onValueChange = setBirthday
+        )
+
         MyLoginButton(
             text = stringResource(R.string.next),
             enabled = buttonActive,
@@ -110,11 +155,14 @@ private fun CenterElements(
 private fun SignUpFirstScreenPreview() {
     FoodMoodTheme {
         val name = remember { mutableStateOf("") }
+        val date = remember { mutableStateOf("") }
 
         SignUpScreenFirst(
             navigateTo = {},
             name = name.value,
             setName = { name.value = it },
+            birthday = date.value,
+            setBirthday = { date.value = it },
             buttonActive = true
         )
     }

@@ -72,15 +72,9 @@ fun MyFoodCard(
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
-            Column(modifier = Modifier.align(Alignment.TopEnd)) {
-                IconButton(
-                    modifier = Modifier.size(65.dp),
-                    onClick = {}) {
-                    MyIcon(
-                        drawableId = iconEmotionId,
-                        modifier = Modifier.padding(end = 10.dp, top = 14.dp)
-                    )
-                }
+            Column(modifier = Modifier.align(Alignment.TopEnd).padding(end = 15.dp)) {
+                MyEmotionButton(drawableId = iconEmotionId)
+
             }
         }
     }
