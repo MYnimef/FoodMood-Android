@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import com.mynimef.foodmood.presentation.extensions.noRippleClickable
 
 data class BottomNavigationItem(val icon: Int, val iconFill: Int, val route: String)
 
@@ -19,8 +20,6 @@ fun MyNavigationItem(
     drawableId: Int,
     drawableFillId: Int,
     selected: Boolean,
-    normalColor: Color,
-    selectedColor: Color,
     onClick: () -> Unit
 ) {
     Box(
@@ -28,7 +27,8 @@ fun MyNavigationItem(
             .clip(shape = CircleShape)
             .fillMaxHeight(0.7f)
             .aspectRatio(1f)
-            .clickable { onClick() },
+            .noRippleClickable (onClick = onClick)
+        ,
         contentAlignment = Alignment.Center
     ) {
         MyIcon(
