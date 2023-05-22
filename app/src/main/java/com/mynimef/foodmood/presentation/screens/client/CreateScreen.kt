@@ -12,7 +12,8 @@ import com.mynimef.foodmood.presentation.screens.trainer.CreateViewModel
 
 @Composable
 fun CreateScreen(
-    navigateTo: (route: EClientNavigation) -> Unit, ) {
+    navigateTo: (route: EClientNavigation) -> Unit,
+) {
     val viewModel: CreateViewModel = viewModel()
 
 }
