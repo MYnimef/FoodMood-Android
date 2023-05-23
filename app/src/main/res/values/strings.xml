@@ -33,6 +33,7 @@
     <string name="emotion_button">emotions</string>
     <string name="emotion_question">How do you feel?</string>
     <string name="food_question">What did you eat?</string>
+    <string name="write_here">Write here</string>
     <string name="pick">Pick\ntype</string>
 
     <string name="type_food_breakfast">Breakfast</string>
