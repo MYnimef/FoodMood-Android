@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -175,6 +176,14 @@ private fun CenterElements(
                     hint = stringResource(id = R.string.write_here), onValueChange = setTextFood
                 )
             }
+            Button(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 10.dp),
+                enabled = textEmotion.isNotEmpty(),
+                onClick = {},) {
+                Text(stringResource(id = R.string.complete))
+            }
         }
     }
 }
@@ -186,7 +195,7 @@ private fun CreateScreenSecondPreview() {
     FoodMoodTheme {
         CreateScreenSecond(
             emotion = "emotion",
-            textEmotion = "textEmotiontest",
+            textEmotion = "",
             setTextEmotion = {},
             textFood = "textEmotiontest",
             setTextFood = {},
