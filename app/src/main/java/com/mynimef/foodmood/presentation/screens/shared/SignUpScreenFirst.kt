@@ -118,7 +118,6 @@ private fun CenterElements(
             isError = false,
             visualTransformation = VisualTransformation.None,
             onValueChange = setName,
-            readOnly = false,
         )
 
         MyTextFieldLogin(

@@ -107,7 +107,6 @@ private fun CenterElements(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             isError = false,
             visualTransformation = VisualTransformation.None,
-            readOnly = false,
             onValueChange = setEmail
         )
 
@@ -117,7 +116,6 @@ private fun CenterElements(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
             isError = password.length !in 8..20 && password.isNotEmpty(),
-            readOnly = false,
             trailingIcon = {
                 IconButton(
                     onClick = { passwordVisible.value = !passwordVisible.value }
