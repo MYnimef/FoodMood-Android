@@ -63,19 +63,13 @@ fun ClientNavigationScreen() {
         }
     ) {
         Box(modifier = Modifier.padding(it)) {
-            MyMavHost(
-                modifier = Modifier
-                    .fillMaxSize()
-                ,
-                navController = navController
-            )
+            MyMavHost(navController = navController)
         }
     }
 }
 
 @Composable
 private fun MyMavHost(
-    modifier: Modifier,
     navController: NavHostController
 ) {
     val navigateTo = { route: ENavigationClient ->
@@ -86,7 +80,9 @@ private fun MyMavHost(
     }
 
     NavHost(
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxSize()
+        ,
         navController = navController,
         startDestination = ENavigationClient.HOME.value
     ) {

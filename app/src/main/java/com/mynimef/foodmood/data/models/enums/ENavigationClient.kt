@@ -4,8 +4,7 @@ enum class ENavigationClient(val value: String) {
     HOME("home"),
     CALENDAR("calendar"),
     CREATE("create"),
-    CHOICE("choice"),
     REPORTS("reports"),
     SETTINGS("settings"),
-    EMAILSEND("emailsend")
+    EMAIL_SEND("email_send")
 }
