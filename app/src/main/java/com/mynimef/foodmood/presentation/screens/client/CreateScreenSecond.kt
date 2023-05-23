@@ -143,7 +143,7 @@ private fun CenterElements(
                 }
             }
             Text(
-                text = stringResource(id = R.string.emotion_question),
+                text = stringResource(R.string.emotion_question),
                 modifier = Modifier.padding(bottom = 10.dp),
                 style = MaterialTheme.typography.titleMedium
             )
@@ -174,7 +174,8 @@ private fun CenterElements(
             ) {
                 MyTextFieldEmotionalCard(
                     value = foodDescription,
-                    hint = stringResource(id = R.string.write_here), onValueChange = setFoodDescription
+                    hint = stringResource(id = R.string.write_here),
+                    onValueChange = setFoodDescription,
                 )
             }
             Button(
