@@ -22,7 +22,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun MyTextFieldLogin(
     value: String,
     label: String,
-    readOnly: Boolean,
+    readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation,
     trailingIcon: @Composable (() -> Unit)? = null,

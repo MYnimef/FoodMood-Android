@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class HomeViewModel: ViewModel() {
-    private val _water = MutableStateFlow(0.0f)
+    private val _water = MutableStateFlow(0f)
     val water: StateFlow<Float> = _water.asStateFlow()
 
     fun setWater(value: Float) {

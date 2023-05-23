@@ -1,9 +1,10 @@
 package com.mynimef.foodmood.data.models.enums
 
-enum class ESignUp {
+enum class ECallback {
     SUCCESS,
+    UNAUTHORIZED,
     WRONG_INPUT,
-    ACCOUNT_EXISTS,
+    DATA_CONFLICT,
     NO_CONNECTION,
     UNKNOWN,
 }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,8 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -90,53 +87,57 @@ private fun CenterElements(
     mealType: ETypeMeal,
     setMealType: (ETypeMeal) -> Unit,
 ) {
-    Column() {
+    Column {
         MyDate()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 30.dp)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+            ,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
             Row(
                 modifier = Modifier
-                    .padding(top = 30.dp),
+                    .padding(top = 30.dp)
+                ,
             ) {
                 MyIcon(
                     drawableId = mealType.icon,
-                    modifier = Modifier.size(55.dp)
+                    modifier = Modifier.size(55.dp),
                 )
                 Text(
-                    stringResource(id = mealType.label),
+                    text = stringResource(id = mealType.label),
                     modifier = Modifier
                         .padding(start = 15.dp)
-                        .align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.titleMedium
+                        .align(Alignment.CenterVertically)
+                    ,
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 20.dp),
+                    .padding(vertical = 20.dp)
+                ,
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimaryContainer),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 6.dp),
-                    horizontalArrangement = Arrangement.Center
+                        .padding(horizontal = 6.dp)
+                    ,
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = 5.dp,
+                        alignment = Alignment.CenterHorizontally,
+                    )
                 ) {
                     MyEmotionButton(drawableId = ETypeEmotion.GREAT.icon)
-                    Spacer(modifier = Modifier.padding(horizontal = 5.dp))
                     MyEmotionButton(drawableId = ETypeEmotion.GOOD.icon)
-                    Spacer(modifier = Modifier.padding(horizontal = 5.dp))
                     MyEmotionButton(drawableId = ETypeEmotion.NORMAL.icon)
-                    Spacer(modifier = Modifier.padding(horizontal = 5.dp))
                     MyEmotionButton(drawableId = ETypeEmotion.BAD.icon)
-                    Spacer(modifier = Modifier.padding(horizontal = 5.dp))
                     MyEmotionButton(drawableId = ETypeEmotion.VERY_BAD.icon)
                 }
             }
@@ -181,15 +182,16 @@ private fun CenterElements(
 
 @Preview
 @Composable
-fun CreateScreenSecondPreview() {
+private fun CreateScreenSecondPreview() {
     FoodMoodTheme {
         CreateScreenSecond(
             emotion = "emotion",
             textEmotion = "textEmotiontest",
             setTextEmotion = {},
-             "textEmotiontest",
-            {},
-            ETypeMeal.DINNER, {}
+            textFood = "textEmotiontest",
+            setTextFood = {},
+            mealType = ETypeMeal.DINNER,
+            setMealType = {},
         )
     }
 }

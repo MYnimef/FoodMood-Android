@@ -6,8 +6,8 @@ import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
-import com.mynimef.foodmood.data.models.enums.ESignIn
-import com.mynimef.foodmood.data.models.enums.ESignUp
+import com.mynimef.foodmood.data.models.enums.ECallback
+import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
 import com.mynimef.foodmood.data.models.requests.RefreshTokenRequest
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
@@ -58,38 +58,38 @@ object Repository {
         }
     }
 
-    suspend fun signUp(request: SignUpRequest): ESignUp {
+    suspend fun signUp(request: SignUpRequest): ECallback {
         return try {
             val response = network.signUpClient(request)
             if (response.isSuccessful) {
                 signIn(response.body()!!)
-                ESignUp.SUCCESS
+                ECallback.SUCCESS
             } else {
                 when (response.code()) {
-                    403 -> ESignUp.WRONG_INPUT
-                    409 -> ESignUp.ACCOUNT_EXISTS
-                    else -> ESignUp.UNKNOWN
+                    403 -> ECallback.WRONG_INPUT
+                    409 -> ECallback.DATA_CONFLICT
+                    else -> ECallback.UNKNOWN
                 }
             }
         } catch (e: IOException) {
-            ESignUp.NO_CONNECTION
+            ECallback.NO_CONNECTION
         }
     }
 
-    suspend fun signIn(request: SignInRequest): ESignIn {
+    suspend fun signIn(request: SignInRequest): ECallback {
         return try {
             val response = network.signIn(request)
             if (response.isSuccessful) {
                 signIn(response.body()!!)
-                ESignIn.SUCCESS
+                ECallback.SUCCESS
             } else {
                 when (response.code()) {
-                    401 -> ESignIn.WRONG_PASSWORD
-                    else -> ESignIn.UNKNOWN
+                    401 -> ECallback.UNAUTHORIZED
+                    else -> ECallback.UNKNOWN
                 }
             }
         } catch (e: IOException) {
-            ESignIn.NO_CONNECTION
+            ECallback.NO_CONNECTION
         }
     }
 
@@ -109,7 +109,7 @@ object Repository {
         accessToken = response.accessToken
     }
 
-    private suspend fun refreshAccessToken(): Boolean {
+    private suspend fun refreshAccessToken(): ECallback {
         accessToken = null
         val request = RefreshTokenRequest(
             refreshToken = refreshToken
@@ -118,13 +118,47 @@ object Repository {
             val response = network.refreshToken(request)
             if (response.isSuccessful) {
                 accessToken = response.body()!!.accessToken
-                true
+                ECallback.SUCCESS
             } else {
                 setState(EAppState.NONE)
-                false
+                ECallback.UNAUTHORIZED
             }
         } catch (e: IOException) {
-            false
+            ECallback.NO_CONNECTION
         }
     }
+
+    private suspend fun <T> refreshAccessToken(
+        request: T,
+        handler: suspend (T) -> ECallback,
+    ): ECallback {
+        val response = refreshAccessToken()
+        return if (response == ECallback.SUCCESS) {
+            handler(request)
+        } else {
+            response
+        }
+    }
+
+    suspend fun clientAddCard(request: ClientAddCardRequest): ECallback {
+        if (accessToken == null) {
+            return refreshAccessToken(request = request, handler = ::clientAddCard)
+        }
+        return try {
+            val response = network.clientAddCard(accessToken!!, request)
+            if (response.isSuccessful) {
+                ECallback.SUCCESS
+            } else {
+                when(response.code()) {
+                    401 -> refreshAccessToken(request = request, handler = ::clientAddCard)
+                    403 -> ECallback.WRONG_INPUT
+                    409 -> ECallback.DATA_CONFLICT
+                    else -> ECallback.UNKNOWN
+                }
+            }
+        } catch (e: IOException) {
+            ECallback.NO_CONNECTION
+        }
+    }
+
 }

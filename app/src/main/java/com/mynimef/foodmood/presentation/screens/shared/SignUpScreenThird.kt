@@ -114,7 +114,6 @@ private fun CenterElements(
             visualTransformation = VisualTransformation.None,
             isError = false,
             onValueChange = setLogin,
-            readOnly = false
         )
 
         MyTextFieldLogin(
@@ -131,7 +130,6 @@ private fun CenterElements(
             },
             isError = password.length !in 8..20 && password.isNotEmpty(),
             onValueChange = setPassword,
-            readOnly = false
         )
 
         MyTextFieldLogin(
@@ -148,7 +146,6 @@ private fun CenterElements(
             },
             isError = repeatPassword.length !in 8..20 && repeatPassword.isNotEmpty() || (repeatPassword!=password && repeatPassword.isNotEmpty()),
             onValueChange = setRepeatPassword,
-            readOnly = false
         )
 
         MyLoginButton(
