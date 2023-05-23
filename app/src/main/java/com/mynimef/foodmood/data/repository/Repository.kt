@@ -26,6 +26,7 @@ object Repository {
     private val _appState = MutableStateFlow(EAppState.NONE)
     val appState = _appState.asStateFlow()
 
+    private var id: Long = 0
     private lateinit var refreshToken: String
     private var accessToken: String? = null
 
@@ -51,15 +52,13 @@ object Repository {
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
         _appState.value = state
         if (state != EAppState.NONE) {
-            val id = sharedPref.getLong("account_id", 0)
+            id = sharedPref.getLong("account_id", 0)
             refreshToken = database.getRefreshTokenById(id)
             refreshAccessToken()
+            if (state == EAppState.CLIENT) {
+                _client.value = database.getClient(id)
+            }
         }
-    }
-
-    suspend fun initClient() {
-        val id: Long = 0
-        _client.value = database.getClient(id)
     }
 
     suspend fun signUp(request: SignUpRequest): ECallback {
@@ -122,19 +121,18 @@ object Repository {
 
         when(_appState.value) {
             EAppState.CLIENT -> {
-                val id = _client.value.id
                 database.deleteAccount(id)
                 database.deleteClient(id)
             }
             EAppState.TRAINER -> {
-                val id = _trainer.value.id
                 database.deleteAccount(id)
             }
             else -> return
         }
 
+        id = 0
         with (sharedPref.edit()) {
-            putLong("account_id", 0)
+            putLong("account_id", id)
             apply()
         }
         setState(EAppState.NONE)
@@ -159,6 +157,17 @@ object Repository {
         }
     }
 
+    private suspend fun refreshAccessToken(
+        handler: suspend () -> ECallback,
+    ): ECallback {
+        val response = refreshAccessToken()
+        return if (response == ECallback.SUCCESS) {
+            handler()
+        } else {
+            response
+        }
+    }
+
     private suspend fun <T> refreshAccessToken(
         request: T,
         handler: suspend (T) -> ECallback,
@@ -168,6 +177,35 @@ object Repository {
             handler(request)
         } else {
             response
+        }
+    }
+
+    suspend fun getClient(): ECallback {
+        if (accessToken == null) {
+            return refreshAccessToken(handler = ::getClient)
+        }
+        return try {
+            val response = network.getClient(accessToken!!)
+            if (response.isSuccessful) {
+                val body = response.body()!!
+                val client = ClientEntity(
+                    id = id,
+                    name = body.name,
+                    trackFood = body.trackFood,
+                    trackWater = body.trackWater,
+                    trackWeight = body.trackWeight,
+                )
+                database.insertClient(client)
+                _client.value = client
+                ECallback.SUCCESS
+            } else {
+                when(response.code()) {
+                    401 -> refreshAccessToken(handler = ::getClient)
+                    else -> ECallback.UNKNOWN
+                }
+            }
+        } catch (e: IOException) {
+            ECallback.NO_CONNECTION
         }
     }
 
