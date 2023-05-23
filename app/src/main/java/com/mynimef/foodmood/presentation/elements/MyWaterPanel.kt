@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,35 +43,65 @@ fun MyWaterPanel( setWater: (Float) -> Unit) {
                 .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.Center
         ) {
-            MyWaterIcon(
+            MyChoiceCard(
+                modifier = Modifier.size(100.dp),
                 drawableId = R.drawable.ic_glass,
+                drawableFraction = 0.4f,
+                fontSize = 18.sp,
                 stringId = R.string.ml_100,
                 onClick = {
                     setWater(0.05f)
                 }
             )
-            Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-            MyWaterIcon(drawableId = R.drawable.ic_glass, stringId = R.string.ml_200,
+
+            MyChoiceCard(
+                modifier = Modifier.size(100.dp),
+                drawableId = R.drawable.ic_glass,
+                drawableFraction = 0.4f,
+                fontSize = 18.sp,
+                stringId = R.string.ml_200,
                 onClick = {
                     setWater(0.1f)
                 })
-            Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-            MyWaterIcon(drawableId = R.drawable.ic_cup, stringId = R.string.ml_300,
+
+            MyChoiceCard(
+                modifier = Modifier.size(100.dp),
+                drawableId = R.drawable.ic_cup,
+                drawableFraction = 0.4f,
+                fontSize = 18.sp,
+                stringId = R.string.ml_300,
                 onClick = {
                     setWater(0.15f)
                 })
-            Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-            MyWaterIcon(drawableId = R.drawable.ic_cup, stringId = R.string.ml_400,
+
+            MyChoiceCard(
+                modifier = Modifier.size(100.dp),
+                drawableId = R.drawable.ic_cup,
+                drawableFraction = 0.4f,
+                fontSize = 18.sp,
+                stringId = R.string.ml_400,
                 onClick = {
                     setWater(0.2f)
                 })
-            Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-            MyWaterIcon(drawableId = R.drawable.ic_bottle, stringId = R.string.ml_500,
+
+
+            MyChoiceCard(
+                modifier = Modifier.size(100.dp),
+                drawableId = R.drawable.ic_bottle,
+                stringId = R.string.ml_500,
+                drawableFraction = 0.4f,
+                fontSize = 18.sp,
                 onClick = {
                     setWater(0.25f)
                 })
-            Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-            MyWaterIcon(drawableId = R.drawable.ic_bottle, stringId = R.string.ml_600,
+
+
+            MyChoiceCard(
+                modifier = Modifier.size(100.dp),
+                drawableId = R.drawable.ic_bottle,
+                stringId = R.string.ml_600,
+                drawableFraction = 0.4f,
+                fontSize = 18.sp,
                 onClick = {
                     setWater(0.3f)
                 })

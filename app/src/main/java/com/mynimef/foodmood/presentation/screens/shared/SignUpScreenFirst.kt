@@ -117,12 +117,14 @@ private fun CenterElements(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             isError = false,
             visualTransformation = VisualTransformation.None,
-            onValueChange = setName
+            onValueChange = setName,
+            readOnly = false,
         )
 
         MyTextFieldLogin(
             value = birthday,
             label = stringResource(R.string.birthday),
+            readOnly = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             visualTransformation = VisualTransformation.None,
             trailingIcon = {
