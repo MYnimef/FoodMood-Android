@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +30,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.ETypeEmotion
+import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyEmotionButton
 import com.mynimef.foodmood.presentation.elements.MyIcon
@@ -42,8 +46,10 @@ fun CreateScreenSecond(
         emotion = viewModel.emotion.collectAsState().value,
         textEmotion = viewModel.textEmotion.collectAsState().value,
         setTextEmotion = viewModel::setTextEmotion,
-        textFood = viewModel.textEmotion.collectAsState().value,
-        setTextFood = viewModel::setTextEmotion,
+        textFood = viewModel.textFood.collectAsState().value,
+        setTextFood = viewModel::setTextFood,
+        mealType = viewModel.mealType.collectAsState().value,
+        setMealType = viewModel::setMealType,
     )
 }
 
@@ -54,6 +60,8 @@ private fun CreateScreenSecond(
     setTextEmotion: (String) -> Unit,
     textFood: String,
     setTextFood: (String) -> Unit,
+    mealType: ETypeMeal,
+    setMealType: (ETypeMeal) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -66,6 +74,8 @@ private fun CreateScreenSecond(
             setTextEmotion = setTextEmotion,
             textFood = textFood,
             setTextFood = setTextFood,
+            mealType = mealType,
+            setMealType = setMealType,
         )
     }
 }
@@ -77,14 +87,16 @@ private fun CenterElements(
     setTextEmotion: (String) -> Unit,
     textFood: String,
     setTextFood: (String) -> Unit,
+    mealType: ETypeMeal,
+    setMealType: (ETypeMeal) -> Unit,
 ) {
-    val passwordVisible = rememberSaveable { mutableStateOf(false) }
     Column() {
         MyDate()
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 30.dp),
+                .padding(horizontal = 30.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
@@ -93,11 +105,11 @@ private fun CenterElements(
                     .padding(top = 30.dp),
             ) {
                 MyIcon(
-                    drawableId = R.drawable.ic_food_breakfast,
+                    drawableId = mealType.icon,
                     modifier = Modifier.size(55.dp)
                 )
                 Text(
-                    "Breakfast",
+                    stringResource(id = mealType.label),
                     modifier = Modifier
                         .padding(start = 15.dp)
                         .align(Alignment.CenterVertically),
@@ -114,17 +126,18 @@ private fun CenterElements(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 6.dp)
+                        .padding(horizontal = 6.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    MyEmotionButton(drawableId = R.drawable.ic_mood_great)
+                    MyEmotionButton(drawableId = ETypeEmotion.GREAT.icon)
                     Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-                    MyEmotionButton(drawableId = R.drawable.ic_mood_good)
+                    MyEmotionButton(drawableId = ETypeEmotion.GOOD.icon)
                     Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-                    MyEmotionButton(drawableId = R.drawable.ic_mood_normal)
+                    MyEmotionButton(drawableId = ETypeEmotion.NORMAL.icon)
                     Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-                    MyEmotionButton(drawableId = R.drawable.ic_mood_bad)
+                    MyEmotionButton(drawableId = ETypeEmotion.BAD.icon)
                     Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-                    MyEmotionButton(drawableId = R.drawable.ic_mood_very_bad)
+                    MyEmotionButton(drawableId = ETypeEmotion.VERY_BAD.icon)
                 }
             }
             Text(
@@ -141,7 +154,7 @@ private fun CenterElements(
             ) {
                 MyTextFieldEmotionalCard(
                     value = textEmotion,
-                    label = "How do you feel?", onValueChange = setTextEmotion
+                    hint = stringResource(id = R.string.write_here), onValueChange = setTextEmotion
                 )
             }
             Text(
@@ -158,7 +171,7 @@ private fun CenterElements(
             ) {
                 MyTextFieldEmotionalCard(
                     value = textFood,
-                    label = "How do ypu feel?", onValueChange = setTextFood
+                    hint = stringResource(id = R.string.write_here), onValueChange = setTextFood
                 )
             }
         }
@@ -174,7 +187,9 @@ fun CreateScreenSecondPreview() {
             emotion = "emotion",
             textEmotion = "textEmotiontest",
             setTextEmotion = {},
-            "Food", {}
+             "textEmotiontest",
+            {},
+            ETypeMeal.DINNER, {}
         )
     }
 }

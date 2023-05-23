@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.elements
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -22,44 +23,20 @@ import java.lang.Error
 @Composable
 fun MyTextFieldEmotionalCard(
     value: String,
-    label: String,
-    onValueChange: (String) -> Unit
+    hint: String,
+    modifier: Modifier = Modifier,
+    maxLines: Int = 5,
+    onValueChange: (String) -> Unit,
 ) {
-    TextField(
+    BasicTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 20.dp),
-        value = value,
-        label =  { Text(label) },
-        singleLine = true,
+            .padding(10.dp),
+        value = if (value.isEmpty()) hint else value,
         onValueChange = onValueChange,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            cursorColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            focusedIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            disabledIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            disabledLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorLeadingIconColor = MaterialTheme.colorScheme.error,
-            focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            disabledTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorTrailingIconColor = MaterialTheme.colorScheme.error,
-            focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            unfocusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorLabelColor = MaterialTheme.colorScheme.error,
-            placeholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            disabledPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            focusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            unfocusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            disabledSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorSupportingTextColor = MaterialTheme.colorScheme.error
-        )
+        maxLines = maxLines,
+        minLines = 4,
+        textStyle = MaterialTheme.typography.bodyMedium
     )
 }
 
@@ -68,8 +45,8 @@ fun MyTextFieldEmotionalCard(
 fun MyTextFieldEmotionalCardPreview() {
     FoodMoodTheme {
         MyTextFieldEmotionalCard(
-            value = "email",
-            label = "email",
+            value = "",
+            "emailtest",
             onValueChange = {},
         )
     }
