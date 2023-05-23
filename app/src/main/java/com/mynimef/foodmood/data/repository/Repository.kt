@@ -7,6 +7,7 @@ import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.enums.ECallback
+import com.mynimef.foodmood.data.models.enums.ERole
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
 import com.mynimef.foodmood.data.models.requests.RefreshTokenRequest
 import com.mynimef.foodmood.data.models.requests.SignInRequest
@@ -94,16 +95,19 @@ object Repository {
     }
 
     private suspend fun signIn(response: SignInResponse) {
-        val id = database.insertAccount(AccountEntity(
-            refreshToken = response.refreshToken,
-        ))
+        val id = database.insertAccount(
+            AccountEntity(
+                role = response.role,
+                refreshToken = response.refreshToken,
+            )
+        )
         with (sharedPref.edit()) {
             putLong("account_id", id)
             apply()
         }
         setState(when (response.role) {
-            SignInResponse.Role.CLIENT -> EAppState.CLIENT
-            SignInResponse.Role.TRAINER -> EAppState.TRAINER
+            ERole.CLIENT -> EAppState.CLIENT
+            ERole.TRAINER -> EAppState.TRAINER
         })
         refreshToken = response.refreshToken
         accessToken = response.accessToken
