@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.EAuthNavigation
+import com.mynimef.foodmood.data.models.enums.ENavigationAuth
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
@@ -33,7 +33,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun SignInScreen(
-    navigateTo: (route: EAuthNavigation) -> Unit
+    navigateTo: (route: ENavigationAuth) -> Unit
 ) {
     val viewModel: SignInViewModel = viewModel()
 
@@ -50,7 +50,7 @@ fun SignInScreen(
 
 @Composable
 private fun SignInScreen(
-    navigateTo: (route: EAuthNavigation) -> Unit,
+    navigateTo: (route: ENavigationAuth) -> Unit,
     signIn: () -> Unit,
     email: String,
     setEmail: (String) -> Unit,
@@ -77,7 +77,7 @@ private fun SignInScreen(
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: EAuthNavigation) -> Unit,
+    navigateTo: (route: ENavigationAuth) -> Unit,
     signIn: () -> Unit,
     email: String,
     setEmail: (String) -> Unit,
@@ -135,7 +135,7 @@ private fun CenterElements(
         MyLoginButton(
             text = stringResource(R.string.signup)
         ) {
-            navigateTo(EAuthNavigation.SIGNUP)
+            navigateTo(ENavigationAuth.SIGN_UP)
         }
     }
 }

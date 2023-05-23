@@ -1,6 +1,6 @@
 package com.mynimef.foodmood.data.models.enums
 
-enum class EClientNavigation(val value: String) {
+enum class ENavigationClient(val value: String) {
     HOME("home"),
     CALENDAR("calendar"),
     CREATE("create"),

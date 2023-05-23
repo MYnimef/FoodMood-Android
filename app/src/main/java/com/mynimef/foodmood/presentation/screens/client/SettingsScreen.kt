@@ -19,14 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.composable
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.EClientNavigation
+import com.mynimef.foodmood.data.models.enums.ENavigationClient
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SettingsScreen(navigateTo: (route: EClientNavigation) -> Unit) {
+fun SettingsScreen(navigateTo: (route: ENavigationClient) -> Unit) {
 
     Box(
         modifier = Modifier
@@ -41,7 +40,7 @@ fun SettingsScreen(navigateTo: (route: EClientNavigation) -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CenterElements(
-    navigateTo: (route: EClientNavigation) -> Unit,
+    navigateTo: (route: ENavigationClient) -> Unit,
 
     ) {
 
@@ -62,11 +61,11 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo(EClientNavigation.HOME) }) {
+                onClick = { navigateTo(ENavigationClient.HOME) }) {
                 MyIcon(drawableId = R.drawable.ic_user)
             }
             TextButton(
-                onClick = { navigateTo(EClientNavigation.SETTINGS) },) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS) },) {
                 Text(stringResource(R.string.user_settings),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)
@@ -79,11 +78,11 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo(EClientNavigation.SETTINGS)}) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS)}) {
                 MyIcon(drawableId = R.drawable.ic_preference)
             }
             TextButton(
-                onClick = { navigateTo(EClientNavigation.SETTINGS) },) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS) },) {
                 Text(stringResource(R.string.prefrences),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)
@@ -96,11 +95,11 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo(EClientNavigation.SETTINGS)}) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS)}) {
                 MyIcon(drawableId = R.drawable.ic_notification)
             }
             TextButton(
-                onClick = { navigateTo(EClientNavigation.SETTINGS) },) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS) },) {
                 Text(stringResource(R.string.notifications),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)
@@ -113,11 +112,11 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo(EClientNavigation.SETTINGS)}) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS)}) {
                 MyIcon(drawableId = R.drawable.ic_language)
             }
             TextButton(
-                onClick = { navigateTo(EClientNavigation.SETTINGS) },) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS) },) {
                 Text(stringResource(R.string.language),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)
@@ -130,11 +129,11 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo(EClientNavigation.SETTINGS)}) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS)}) {
                 MyIcon(drawableId = R.drawable.ic_error)
             }
             TextButton(
-                onClick = { navigateTo(EClientNavigation.SETTINGS) },) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS) },) {
                 Text(stringResource(R.string.error),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)
@@ -147,11 +146,11 @@ private fun CenterElements(
         ) {
             IconButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = { navigateTo(EClientNavigation.SETTINGS)}) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS)}) {
                 MyIcon(drawableId = R.drawable.ic_idea)
             }
             TextButton(
-                onClick = { navigateTo(EClientNavigation.SETTINGS) },) {
+                onClick = { navigateTo(ENavigationClient.SETTINGS) },) {
                 Text(stringResource(R.string.idea),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium)

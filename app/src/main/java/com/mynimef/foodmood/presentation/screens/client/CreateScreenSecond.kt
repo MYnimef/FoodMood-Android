@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +27,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyEmotionButton
@@ -37,26 +35,26 @@ import com.mynimef.foodmood.presentation.elements.MyTextFieldEmotionalCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun EmotionCardScreen() {
-    val viewModel: EmotionCardViewModel = viewModel()
-
-  EmotionCardScreen(
-      emotion = viewModel.emotion.collectAsState().value,
-      textEmotion = viewModel.textEmotion.collectAsState().value,
-      setTextEmotion = viewModel::setTextEmotion,
-      textFood = viewModel.textEmotion.collectAsState().value,
-      setTextFood = viewModel::setTextEmotion,
-  )
+fun CreateScreenSecond(
+    viewModel: CreateViewModel
+) {
+    CreateScreenSecond(
+        emotion = viewModel.emotion.collectAsState().value,
+        textEmotion = viewModel.textEmotion.collectAsState().value,
+        setTextEmotion = viewModel::setTextEmotion,
+        textFood = viewModel.textEmotion.collectAsState().value,
+        setTextFood = viewModel::setTextEmotion,
+    )
 }
 
 @Composable
-private fun EmotionCardScreen(
+private fun CreateScreenSecond(
     emotion: String,
     textEmotion: String,
     setTextEmotion: (String) -> Unit,
     textFood: String,
     setTextFood: (String) -> Unit,
-    ) {
+) {
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -72,7 +70,6 @@ private fun EmotionCardScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CenterElements(
     emotion: String,
@@ -171,9 +168,9 @@ private fun CenterElements(
 
 @Preview
 @Composable
-fun EmotionCardPrev() {
+fun CreateScreenSecondPreview() {
     FoodMoodTheme {
-        EmotionCardScreen(
+        CreateScreenSecond(
             emotion = "emotion",
             textEmotion = "textEmotiontest",
             setTextEmotion = {},

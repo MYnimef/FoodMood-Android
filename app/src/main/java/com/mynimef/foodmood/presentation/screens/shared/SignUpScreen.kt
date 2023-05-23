@@ -9,11 +9,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.foodmood.data.models.enums.EAuthNavigation
+import com.mynimef.foodmood.data.models.enums.ENavigationAuth
 
 @Composable
 fun SignUpScreen(
-    navigateTo: (route: EAuthNavigation) -> Unit,
+    navigateTo: (route: ENavigationAuth) -> Unit,
 ) {
     val navController = rememberNavController()
     MyMavHost(
@@ -28,7 +28,7 @@ fun SignUpScreen(
 private fun MyMavHost(
     modifier: Modifier,
     navController: NavHostController,
-    parentNavigateTo: (route: EAuthNavigation) -> Unit,
+    parentNavigateTo: (route: ENavigationAuth) -> Unit,
 ) {
     val navigateTo = { route: String ->
         navController.navigate(route) {

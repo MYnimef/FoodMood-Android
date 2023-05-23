@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ETrainerNavigation
+import com.mynimef.foodmood.data.models.enums.ENavigationTrainer
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
@@ -60,11 +60,11 @@ private fun MyMavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = ETrainerNavigation.HOME.value
+        startDestination = ENavigationTrainer.HOME.value
     ) {
-        composable(ETrainerNavigation.HOME.value) { HomeScreen() }
-        composable(ETrainerNavigation.CREATE.value) { CreateScreen() }
-        composable(ETrainerNavigation.SETTINGS.value) { SettingsScreen() }
+        composable(ENavigationTrainer.HOME.value) { HomeScreen() }
+        composable(ENavigationTrainer.CREATE.value) { CreateScreen() }
+        composable(ENavigationTrainer.SETTINGS.value) { SettingsScreen() }
     }
 }
 
