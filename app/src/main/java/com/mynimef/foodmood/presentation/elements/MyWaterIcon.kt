@@ -49,10 +49,14 @@ fun MyWaterIcon(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun MyWaterIconPrev() {
     FoodMoodTheme {
-        MyWaterIcon(R.drawable.ic_bottle, R.string.type_food_dinner, {})
+        MyWaterIcon(
+            drawableId = R.drawable.ic_bottle,
+            stringId = R.string.type_food_dinner,
+            onClick = {}
+        )
     }
 }
