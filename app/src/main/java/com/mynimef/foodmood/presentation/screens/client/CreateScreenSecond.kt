@@ -42,11 +42,14 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun CreateScreenSecond(
     viewModel: CreateViewModel
 ) {
+    val client = viewModel.getClient().collectAsState().value
+
     CreateScreenSecond(
         mealType = viewModel.mealType.collectAsState().value,
         emotionType = viewModel.emotionType.collectAsState().value,
         emotionDescription = viewModel.emotionDescription.collectAsState().value,
         setEmotionDescription = viewModel::setTextEmotion,
+        trackFood = client.trackFood,
         foodDescription = viewModel.foodDescription.collectAsState().value,
         setFoodDescription = viewModel::setTextFood,
         onComplete = viewModel::create,
@@ -59,6 +62,7 @@ private fun CreateScreenSecond(
     emotionType: ETypeEmotion,
     emotionDescription: String,
     setEmotionDescription: (String) -> Unit,
+    trackFood: Boolean,
     foodDescription: String,
     setFoodDescription: (String) -> Unit,
     onComplete: () -> Unit,
@@ -73,6 +77,7 @@ private fun CreateScreenSecond(
             emotionType = emotionType,
             emotionDescription = emotionDescription,
             setEmotionDescription = setEmotionDescription,
+            trackFood = trackFood,
             foodDescription = foodDescription,
             setFoodDescription = setFoodDescription,
             onComplete = onComplete,
@@ -86,6 +91,7 @@ private fun CenterElements(
     emotionType: ETypeEmotion,
     emotionDescription: String,
     setEmotionDescription: (String) -> Unit,
+    trackFood: Boolean,
     foodDescription: String,
     setFoodDescription: (String) -> Unit,
     onComplete: () -> Unit,
@@ -150,13 +156,15 @@ private fun CenterElements(
                 hint = stringResource(id = R.string.write_here),
                 setDescription = setEmotionDescription,
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            EditDescription(
-                question = stringResource(id = R.string.food_question),
-                description = foodDescription,
-                hint = stringResource(id = R.string.write_here),
-                setDescription = setFoodDescription,
-            )
+            if (trackFood) {
+                Spacer(modifier = Modifier.height(10.dp))
+                EditDescription(
+                    question = stringResource(id = R.string.food_question),
+                    description = foodDescription,
+                    hint = stringResource(id = R.string.write_here),
+                    setDescription = setFoodDescription,
+                )
+            }
             Button(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -207,7 +215,8 @@ private fun CreateScreenSecondPreview() {
             emotionType = ETypeEmotion.NORMAL,
             emotionDescription = "",
             setEmotionDescription = {},
-            foodDescription = "textEmotiontest",
+            trackFood = true,
+            foodDescription = "",
             setFoodDescription = {},
             onComplete = {},
         )

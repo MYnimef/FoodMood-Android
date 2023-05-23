@@ -30,8 +30,8 @@ object Repository {
     private lateinit var refreshToken: String
     private var accessToken: String? = null
 
-    private val _client = MutableSharedFlow<ClientEntity>(replay = 1)
-    val client: SharedFlow<ClientEntity> = _client
+    private val _client = MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true))
+    val client = _client.asStateFlow()
 
     private val _trainer = MutableSharedFlow<TrainerEntity>(replay = 1)
     val trainer: SharedFlow<TrainerEntity> = _trainer

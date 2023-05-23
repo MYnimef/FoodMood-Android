@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
+import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.enums.ECallback
 import com.mynimef.foodmood.data.models.enums.ENavigationCreate
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
@@ -12,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -34,6 +36,10 @@ class CreateViewModel: ViewModel() {
 
     private val _foodDescription = MutableStateFlow("")
     val foodDescription: StateFlow<String> = _foodDescription.asStateFlow()
+
+    fun getClient(): StateFlow<ClientEntity> {
+        return Repository.client
+    }
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
