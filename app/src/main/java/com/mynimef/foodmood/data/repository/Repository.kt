@@ -2,8 +2,8 @@ package com.mynimef.foodmood.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.AccountEntity
+import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.enums.ECallback
@@ -13,9 +13,7 @@ import com.mynimef.foodmood.data.models.requests.RefreshTokenRequest
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.SignInResponse
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.IOException
 
@@ -34,8 +32,8 @@ object Repository {
     private val _client = MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true))
     val client = _client.asStateFlow()
 
-    private val _trainer = MutableSharedFlow<TrainerEntity>(replay = 1)
-    val trainer: SharedFlow<TrainerEntity> = _trainer
+    private val _trainer = MutableStateFlow(TrainerEntity(id = 0))
+    val trainer = _trainer.asStateFlow()
 
     private fun setState(state: EAppState) {
         _appState.value = state
@@ -113,6 +111,30 @@ object Repository {
         accessToken = response.accessToken
     }
 
+    private suspend fun signOut() {
+        refreshToken = ""
+        accessToken = null
+
+        when(_appState.value) {
+            EAppState.CLIENT -> {
+                val id = _client.value.id
+                database.deleteAccount(id)
+                database.deleteClient(id)
+            }
+            EAppState.TRAINER -> {
+                val id = _trainer.value.id
+                database.deleteAccount(id)
+            }
+            else -> return
+        }
+
+        with (sharedPref.edit()) {
+            putLong("account_id", 0)
+            apply()
+        }
+        setState(EAppState.NONE)
+    }
+
     private suspend fun refreshAccessToken(): ECallback {
         accessToken = null
         val request = RefreshTokenRequest(
@@ -124,7 +146,7 @@ object Repository {
                 accessToken = response.body()!!.accessToken
                 ECallback.SUCCESS
             } else {
-                setState(EAppState.NONE)
+                signOut()
                 ECallback.UNAUTHORIZED
             }
         } catch (e: IOException) {
