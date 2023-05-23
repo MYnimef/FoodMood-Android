@@ -105,7 +105,7 @@ object Repository {
             putLong("account_id", id)
             apply()
         }
-        setState(when (response.role) {
+        setState(when(response.role) {
             ERole.CLIENT -> EAppState.CLIENT
             ERole.TRAINER -> EAppState.TRAINER
         })
