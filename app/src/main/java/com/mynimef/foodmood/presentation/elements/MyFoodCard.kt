@@ -4,15 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,21 +24,30 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun MyFoodCard() {
+fun MyFoodCard(
+    iconEatId: Int,
+    typeEatId: Int,
+    textEmotion: String,
+    iconEmotionId: Int,) {
     Column() {
         Row() {
-            MyIcon(drawableId=R.drawable.ic_breakfast, 
-            modifier = Modifier.size(55.dp))
-            Text("Breakfast",
-                modifier = Modifier.padding(start = 15.dp).align(Alignment.CenterVertically),
-                style = MaterialTheme.typography.titleLarge)
+            MyIcon(drawableId=iconEatId,
+            modifier = Modifier
+                .size(55.dp)
+                .align(Alignment.CenterVertically))
+            Text(
+                stringResource(id = typeEatId),
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .align(Alignment.CenterVertically),
+                style = MaterialTheme.typography.titleMedium)
         }
         Box(
             modifier = Modifier
                 .clip(AbsoluteRoundedCornerShape(10.dp))
-                .width(330.dp)
-                .height(150.dp)
-                .background(color = MaterialTheme.colorScheme.primary)
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
         ) {
             Column() {
                 Button(
@@ -52,34 +59,28 @@ fun MyFoodCard() {
                     onClick = {}) {
                     Text(
                         text = stringResource(R.string.emotion_button),
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Text(
-                    text = "Saved text about emotions",
+                    text = textEmotion,
                     modifier = Modifier.padding(10.dp),
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
-            Column(modifier = Modifier.align(Alignment.TopEnd)) {
-                IconButton(
-                    modifier = Modifier.size(65.dp),
-                    onClick = {}) {
-                    MyIcon(
-                        drawableId = R.drawable.ic_great_mood,
-                        modifier = Modifier.padding(end = 10.dp, top = 14.dp)
-                    )
-                }
+            Column(modifier = Modifier.align(Alignment.TopEnd).padding(end = 15.dp)) {
+                MyEmotionButton(drawableId = iconEmotionId)
+
             }
         }
     }
 }
 
-
 @Preview
 @Composable
-fun MyFoodCardPrev() {
+private fun MyFoodCardPreview() {
     FoodMoodTheme {
-        MyFoodCard()
+        MyFoodCard(R.drawable.ic_food_breakfast, R.string.type_food_breakfast,"fvgeb", R.drawable.ic_mood_great)
     }
 }

@@ -18,35 +18,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.presentation.elements.MyLogInButton
+import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyRadioTextSelector
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun SignUpScreenSecond(
-    navigateTo: (route: String) -> Unit,
     viewModel: SignUpViewModel,
+    navigateTo: (route: String) -> Unit,
 ) {
     SignUpScreenSecond(
+        navigateTo = navigateTo,
         food = viewModel.food.collectAsState().value,
         triggerFood = viewModel::triggerFood,
         water = viewModel.water.collectAsState().value,
         triggerWater = viewModel::triggerWater,
         weight = viewModel.weight.collectAsState().value,
         triggerWeight = viewModel::triggerWeight,
-        signUp = viewModel::signUp,
     )
 }
 
 @Composable
 private fun SignUpScreenSecond(
+    navigateTo: (route: String) -> Unit,
     food: Boolean,
     triggerFood: () -> Unit,
     water: Boolean,
     triggerWater: () -> Unit,
     weight: Boolean,
     triggerWeight: () -> Unit,
-    signUp: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -54,26 +54,26 @@ private fun SignUpScreenSecond(
             .fillMaxSize()
     ) {
         CenterElements(
+            navigateTo = navigateTo,
             food = food,
             triggerFood = triggerFood,
             water = water,
             triggerWater = triggerWater,
             weight = weight,
             triggerWeight = triggerWeight,
-            signUp = signUp,
         )
     }
 }
 
 @Composable
 private fun CenterElements(
+    navigateTo: (route: String) -> Unit,
     food: Boolean,
     triggerFood: () -> Unit,
     water: Boolean,
     triggerWater: () -> Unit,
     weight: Boolean,
     triggerWeight: () -> Unit,
-    signUp: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -107,10 +107,11 @@ private fun CenterElements(
             selected = weight,
             onClick = triggerWeight,
         )
-        MyLogInButton(
-            text = stringResource(R.string.complete),
-            onClick = signUp
-        )
+        MyLoginButton(
+            text = stringResource(R.string.next),
+        ) {
+            navigateTo("third")
+        }
     }
 }
 
@@ -123,13 +124,13 @@ private fun SignUpSecondScreenPreview() {
         val weight = rememberSaveable { mutableStateOf(false) }
 
         SignUpScreenSecond(
+            navigateTo = {},
             food = food.value,
             triggerFood = { food.value = !food.value },
             water = water.value,
             triggerWater = { water.value = !water.value },
             weight = weight.value,
             triggerWeight = { weight.value = !weight.value },
-            signUp = {},
         )
     }
 }

@@ -6,8 +6,12 @@
     <string name="email">Email</string>
     <string name="signup">Create account</string>
     <string name="welcome_mess">Let\'s start!</string>
+    <string name="final_signup">Final step...</string>
+
     <string name="name">Name</string>
+    <string name="birthday">Birthday date</string>
     <string name="repeat_pass">Repeat password</string>
+
     <string name="next">Next</string>
     <string name="pref">What will you track?</string>
     <string name="emotion">Emotions after eating</string>
@@ -27,4 +31,13 @@
     <string name="water_notif">Set reminders to drink water</string>
     <string name="weight_kg">Weight in kg</string>
     <string name="emotion_button">emotions</string>
+    <string name="emotion_question">How do you feel?</string>
+    <string name="food_question">What did you eat?</string>
+    <string name="pick">Pick\ntype</string>
+
+    <string name="type_food_breakfast">Breakfast</string>
+    <string name="type_food_dinner">Dinner</string>
+    <string name="type_food_supper">Supper</string>
+    <string name="type_food_snack1">Snack 1</string>
+    <string name="type_food_snack2">Snack 2</string>
 </resources>

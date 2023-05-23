@@ -6,8 +6,12 @@
     <string name="email">Эл.почта</string>
     <string name="signup">Создать аккаунт</string>
     <string name="welcome_mess">Давайте познакомимся!</string>
+    <string name="final_signup">Последний шаг...</string>
+
     <string name="name">Имя</string>
     <string name="repeat_pass">Повторите пароль</string>
+    <string name="birthday">Дата рождения</string>
+
     <string name="next">Далее</string>
     <string name="pref">Что будем отслеживать?</string>
     <string name="emotion">Эмоции после еды</string>
@@ -27,4 +31,13 @@
     <string name="water_notif">Настроить напоминания пить воду</string>
     <string name="weight_kg">Вес в килограммах</string>
     <string name="emotion_button">эмоции</string>
+    <string name="emotion_question">Как ты себя чувствуешь?</string>
+    <string name="food_question">Что ты ел?</string>
+    <string name="pick">Выберите\nтип</string>
+
+    <string name="type_food_breakfast">Завтрак</string>
+    <string name="type_food_dinner">Обед</string>
+    <string name="type_food_supper">Ужин</string>
+    <string name="type_food_snack1">Перекус 1</string>
+    <string name="type_food_snack2">Перекус 2</string>
 </resources>

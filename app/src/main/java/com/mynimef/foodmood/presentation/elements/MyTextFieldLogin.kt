@@ -10,6 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,8 +23,9 @@ fun MyTextFieldLogin(
     value: String,
     label: String,
     keyboardOptions: KeyboardOptions,
-    visualTranfromation: VisualTransformation,
-    trailingIcon: @Composable() (() -> Unit)?,
+    visualTransformation: VisualTransformation,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean,
     onValueChange: (String) -> Unit
 ) {
     TextField(
@@ -34,8 +36,9 @@ fun MyTextFieldLogin(
         label =  { Text(label) },
         singleLine = true,
         keyboardOptions = keyboardOptions,
-        visualTransformation = visualTranfromation,
+        visualTransformation = visualTransformation,
         trailingIcon = trailingIcon,
+        isError = isError,
         onValueChange = onValueChange,
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -48,29 +51,36 @@ fun MyTextFieldLogin(
             focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            errorLeadingIconColor = MaterialTheme.colorScheme.error,
             focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            errorTrailingIconColor = MaterialTheme.colorScheme.error,
             focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            errorLabelColor = MaterialTheme.colorScheme.error,
             placeholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
             focusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer
+            errorSupportingTextColor = MaterialTheme.colorScheme.error
         )
     )
 }
 
 @Preview
 @Composable
-fun PrevMyTextFieldLogin() {
+fun MyTextFieldLoginPreview() {
     FoodMoodTheme {
-       // MyTextFieldLogin( "tncn", "email", KeyboardOptions(keyboardType = KeyboardType.Email), {})
+       MyTextFieldLogin(
+           value = "email",
+           label = "email",
+           keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+           visualTransformation = VisualTransformation.None,
+           isError = true,
+           onValueChange = {},
+       )
     }
 }
