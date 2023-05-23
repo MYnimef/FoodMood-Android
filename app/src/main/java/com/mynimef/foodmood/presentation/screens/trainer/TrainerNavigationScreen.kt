@@ -1,13 +1,10 @@
 package com.mynimef.foodmood.presentation.screens.trainer
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ETrainerNavigation
+import com.mynimef.foodmood.data.models.enums.ENavigationTrainer
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
@@ -37,12 +34,9 @@ fun TrainerNavigationScreen() {
     Scaffold(
         bottomBar = {
             MyNavigationBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary),
                 navController = navController,
-                bottomNavItems,
-                40.dp
+                items = bottomNavItems,
+                spaceSize = 40.dp
             )
         }
     ) {
@@ -66,11 +60,11 @@ private fun MyMavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = ETrainerNavigation.HOME.value
+        startDestination = ENavigationTrainer.HOME.value
     ) {
-        composable(ETrainerNavigation.HOME.value) { HomeScreen() }
-        composable(ETrainerNavigation.CREATE.value) { CreateScreen() }
-        composable(ETrainerNavigation.SETTINGS.value) { SettingsScreen() }
+        composable(ENavigationTrainer.HOME.value) { HomeScreen() }
+        composable(ENavigationTrainer.CREATE.value) { CreateScreen() }
+        composable(ENavigationTrainer.SETTINGS.value) { SettingsScreen() }
     }
 }
 

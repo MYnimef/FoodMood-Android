@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.foodmood.data.models.enums.EAuthNavigation
+import com.mynimef.foodmood.data.models.enums.ENavigationAuth
 
 @Composable
 fun AuthNavigationScreen() {
@@ -24,7 +24,7 @@ private fun MyMavHost(
     modifier: Modifier,
     navController: NavHostController,
 ) {
-    val navigateTo = { route: EAuthNavigation ->
+    val navigateTo = { route: ENavigationAuth ->
         navController.navigate(route.value) {
             launchSingleTop = true
             restoreState = true
@@ -33,12 +33,12 @@ private fun MyMavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = EAuthNavigation.SIGNIN.value
+        startDestination = ENavigationAuth.SIGN_IN.value
     ) {
-        composable(EAuthNavigation.SIGNIN.value) { SignInScreen(
+        composable(ENavigationAuth.SIGN_IN.value) { SignInScreen(
             navigateTo = navigateTo
         ) }
-        composable(EAuthNavigation.SIGNUP.value) { SignUpScreen(
+        composable(ENavigationAuth.SIGN_UP.value) { SignUpScreen(
             navigateTo = navigateTo
         ) }
     }

@@ -1,6 +1,5 @@
 package com.mynimef.foodmood.presentation.screens.client
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -30,8 +29,10 @@ fun NotificationsListItem(notification: Notification) {
 
 @Preview
 @Composable
-fun NotifItemPrev() {
+private fun NotificationItemPrev() {
     FoodMoodTheme {
-        NotificationsListItem(Notification(1, "9:00", "Time to drink water"))
+        NotificationsListItem(
+            Notification(1, "9:00", "Time to drink water")
+        )
     }
 }

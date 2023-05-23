@@ -15,14 +15,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.EClientNavigation
+import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyChoiceCard
 import com.mynimef.foodmood.presentation.elements.MyPolygonLayout
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun CardsChoiceScreen(
-    navigateTo: (route: EClientNavigation) -> Unit
+fun CreateScreenFirst(
+    viewModel: CreateViewModel
+) {
+    CreateScreenFirst(
+        setMealType = viewModel::setMealType
+    )
+}
+
+@Composable
+private fun CreateScreenFirst(
+    setMealType: (ETypeMeal) -> Unit,
 ) {
     Box(
        modifier = Modifier.fillMaxSize(),
@@ -42,31 +51,28 @@ fun CardsChoiceScreen(
                 drawableId = R.drawable.ic_food_breakfast,
                 stringId = R.string.type_food_breakfast,
             ) {
-                navigateTo(EClientNavigation.CREATE)
+                setMealType(ETypeMeal.BREAKFAST)
             }
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_dinner,
                 stringId = R.string.type_food_dinner,
             ) {
-                navigateTo(EClientNavigation.CREATE)
+                setMealType(ETypeMeal.DINNER)
             }
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_lunch,
                 stringId = R.string.type_food_snack2,
             ) {
-                navigateTo(EClientNavigation.CREATE)
             }
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_lunch,
                 stringId = R.string.type_food_snack1,
             ) {
-                navigateTo(EClientNavigation.CREATE)
             }
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_supper,
                 stringId = R.string.type_food_supper,
             ) {
-                navigateTo(EClientNavigation.CREATE)
             }
         }
     }
@@ -93,8 +99,8 @@ private fun MyChoiceCard(
 @Composable
 private fun CardsChoicePreview() {
     FoodMoodTheme {
-        CardsChoiceScreen(
-            navigateTo = {}
+        CreateScreenFirst(
+            setMealType = {}
         )
     }
 }
