@@ -1,5 +1,6 @@
 package com.mynimef.foodmood.presentation.screens.client
 
+import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.enums.ECallback
 import com.mynimef.foodmood.data.models.enums.ENavigationCreate
@@ -57,6 +58,7 @@ class CreateViewModel: ViewModel() {
                 emotionType = _emotionType.value,
                 emotionDescription = emotion.value,
                 foodDescription = _textFood.value,
+                timeZone = TimeZone.getDefault().id,
             )
             val response = Repository.clientAddCard(request)
             withContext(Dispatchers.Main) {

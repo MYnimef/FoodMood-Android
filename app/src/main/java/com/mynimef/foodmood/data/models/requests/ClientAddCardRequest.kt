@@ -9,4 +9,5 @@ data class ClientAddCardRequest(
     @SerializedName("emotion_type") val emotionType: ETypeEmotion,
     @SerializedName("emotion_description") val emotionDescription: String,
     @SerializedName("food_description") val foodDescription: String?,
+    @SerializedName("time_zone") val timeZone: String,
 )
