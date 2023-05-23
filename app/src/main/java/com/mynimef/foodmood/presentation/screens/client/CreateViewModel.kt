@@ -29,14 +29,11 @@ class CreateViewModel: ViewModel() {
     private val _emotionType = MutableStateFlow(ETypeEmotion.NORMAL)
     val emotionType: StateFlow<ETypeEmotion> = _emotionType.asStateFlow()
 
-    private val _emotion = MutableStateFlow("")
-    val emotion: StateFlow<String> = _emotion.asStateFlow()
+    private val _emotionDescription = MutableStateFlow("")
+    val emotionDescription: StateFlow<String> = _emotionDescription.asStateFlow()
 
-    private val _textEmotion = MutableStateFlow("")
-    val textEmotion: StateFlow<String> = _textEmotion.asStateFlow()
-
-    private val _textFood = MutableStateFlow("")
-    val textFood: StateFlow<String> = _textFood.asStateFlow()
+    private val _foodDescription = MutableStateFlow("")
+    val foodDescription: StateFlow<String> = _foodDescription.asStateFlow()
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
@@ -44,11 +41,11 @@ class CreateViewModel: ViewModel() {
     }
 
     fun setTextEmotion(value: String) {
-        _textEmotion.value = value
+        _emotionDescription.value = value
     }
 
     fun setTextFood(value: String) {
-        _textFood.value = value
+        _foodDescription.value = value
     }
 
     fun create() {
@@ -56,8 +53,8 @@ class CreateViewModel: ViewModel() {
             val request = ClientAddCardRequest(
                 mealType = _mealType.value,
                 emotionType = _emotionType.value,
-                emotionDescription = emotion.value,
-                foodDescription = _textFood.value,
+                emotionDescription = _emotionDescription.value,
+                foodDescription = _foodDescription.value,
                 timeZone = TimeZone.getDefault().id,
             )
             val response = Repository.clientAddCard(request)

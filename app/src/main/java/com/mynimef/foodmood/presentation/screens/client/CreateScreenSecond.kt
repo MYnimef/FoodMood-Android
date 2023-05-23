@@ -41,25 +41,25 @@ fun CreateScreenSecond(
     viewModel: CreateViewModel
 ) {
     CreateScreenSecond(
-        emotion = viewModel.emotion.collectAsState().value,
-        textEmotion = viewModel.textEmotion.collectAsState().value,
-        setTextEmotion = viewModel::setTextEmotion,
-        textFood = viewModel.textFood.collectAsState().value,
-        setTextFood = viewModel::setTextFood,
         mealType = viewModel.mealType.collectAsState().value,
-        setMealType = viewModel::setMealType,
+        emotionType = viewModel.emotionType.collectAsState().value,
+        emotionDescription = viewModel.emotionDescription.collectAsState().value,
+        setEmotionDescription = viewModel::setTextEmotion,
+        foodDescription = viewModel.foodDescription.collectAsState().value,
+        setFoodDescription = viewModel::setTextFood,
+        onComplete = viewModel::create,
     )
 }
 
 @Composable
 private fun CreateScreenSecond(
-    emotion: String,
-    textEmotion: String,
-    setTextEmotion: (String) -> Unit,
-    textFood: String,
-    setTextFood: (String) -> Unit,
     mealType: ETypeMeal,
-    setMealType: (ETypeMeal) -> Unit,
+    emotionType: ETypeEmotion,
+    emotionDescription: String,
+    setEmotionDescription: (String) -> Unit,
+    foodDescription: String,
+    setFoodDescription: (String) -> Unit,
+    onComplete: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -67,26 +67,26 @@ private fun CreateScreenSecond(
             .fillMaxSize()
     ) {
         CenterElements(
-            emotion = emotion,
-            textEmotion = textEmotion,
-            setTextEmotion = setTextEmotion,
-            textFood = textFood,
-            setTextFood = setTextFood,
             mealType = mealType,
-            setMealType = setMealType,
+            emotionType = emotionType,
+            emotionDescription = emotionDescription,
+            setEmotionDescription = setEmotionDescription,
+            foodDescription = foodDescription,
+            setFoodDescription = setFoodDescription,
+            onComplete = onComplete,
         )
     }
 }
 
 @Composable
 private fun CenterElements(
-    emotion: String,
-    textEmotion: String,
-    setTextEmotion: (String) -> Unit,
-    textFood: String,
-    setTextFood: (String) -> Unit,
     mealType: ETypeMeal,
-    setMealType: (ETypeMeal) -> Unit,
+    emotionType: ETypeEmotion,
+    emotionDescription: String,
+    setEmotionDescription: (String) -> Unit,
+    foodDescription: String,
+    setFoodDescription: (String) -> Unit,
+    onComplete: () -> Unit,
 ) {
     Column {
         MyDate()
@@ -155,8 +155,9 @@ private fun CenterElements(
                     .background(color = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 MyTextFieldEmotionalCard(
-                    value = textEmotion,
-                    hint = stringResource(id = R.string.write_here), onValueChange = setTextEmotion
+                    value = emotionDescription,
+                    hint = stringResource(id = R.string.write_here),
+                    onValueChange = setEmotionDescription,
                 )
             }
             Text(
@@ -172,16 +173,18 @@ private fun CenterElements(
                     .background(color = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 MyTextFieldEmotionalCard(
-                    value = textFood,
-                    hint = stringResource(id = R.string.write_here), onValueChange = setTextFood
+                    value = foodDescription,
+                    hint = stringResource(id = R.string.write_here), onValueChange = setFoodDescription
                 )
             }
             Button(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 10.dp),
-                enabled = textEmotion.isNotEmpty(),
-                onClick = {},) {
+                    .padding(vertical = 10.dp)
+                ,
+                enabled = emotionDescription.isNotEmpty(),
+                onClick = onComplete,
+            ) {
                 Text(stringResource(id = R.string.complete))
             }
         }
@@ -194,13 +197,13 @@ private fun CenterElements(
 private fun CreateScreenSecondPreview() {
     FoodMoodTheme {
         CreateScreenSecond(
-            emotion = "emotion",
-            textEmotion = "",
-            setTextEmotion = {},
-            textFood = "textEmotiontest",
-            setTextFood = {},
             mealType = ETypeMeal.DINNER,
-            setMealType = {},
+            emotionType = ETypeEmotion.NORMAL,
+            emotionDescription = "",
+            setEmotionDescription = {},
+            foodDescription = "textEmotiontest",
+            setFoodDescription = {},
+            onComplete = {}
         )
     }
 }
