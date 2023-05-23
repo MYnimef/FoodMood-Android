@@ -1,6 +1,5 @@
 package com.mynimef.foodmood.presentation.screens.client
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,12 +19,28 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavigationClient
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
+import com.mynimef.foodmood.presentation.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun ClientNavigationScreen() {
+    val viewModel: ClientNavigationViewModel = viewModel()
+    ClientNavigationScreen(
+        initClient = viewModel::initClient
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun ClientNavigationScreen(
+    initClient: () -> Unit,
+) {
+    OnLifecycleEvent { _, event ->
+        if (event == Lifecycle.Event.ON_CREATE) {
+            initClient()
+        }
+    }
+
     val navController = rememberNavController()
     val bottomNavItems = listOf(
         BottomNavigationItem(
@@ -99,6 +116,8 @@ private fun MyMavHost(
 @Composable
 private fun ClientNavigationScreenPreview() {
     FoodMoodTheme {
-        ClientNavigationScreen()
+        ClientNavigationScreen(
+            initClient = {},
+        )
     }
 }

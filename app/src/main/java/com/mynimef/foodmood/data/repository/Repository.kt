@@ -57,6 +57,11 @@ object Repository {
         }
     }
 
+    suspend fun initClient() {
+        val id: Long = 0
+        _client.value = database.getClient(id)
+    }
+
     suspend fun signUp(request: SignUpRequest): ECallback {
         return try {
             val response = network.signUpClient(request)
