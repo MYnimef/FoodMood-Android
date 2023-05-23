@@ -72,7 +72,7 @@ private fun MyChoiceCard(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun ChoiceItemPreview() {
     FoodMoodTheme {
