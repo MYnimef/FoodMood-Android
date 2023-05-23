@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -142,42 +144,19 @@ private fun CenterElements(
                     MyEmotionButton(drawableId = ETypeEmotion.VERY_BAD.icon)
                 }
             }
-            Text(
-                text = stringResource(R.string.emotion_question),
-                modifier = Modifier.padding(bottom = 10.dp),
-                style = MaterialTheme.typography.titleMedium
+            EditDescription(
+                question = stringResource(R.string.emotion_question),
+                description = emotionDescription,
+                hint = stringResource(id = R.string.write_here),
+                setDescription = setEmotionDescription,
             )
-            Box(
-                modifier = Modifier
-                    .clip(AbsoluteRoundedCornerShape(10.dp))
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.3f)
-                    .background(color = MaterialTheme.colorScheme.primaryContainer)
-            ) {
-                MyTextFieldEmotionalCard(
-                    value = emotionDescription,
-                    hint = stringResource(id = R.string.write_here),
-                    onValueChange = setEmotionDescription,
-                )
-            }
-            Text(
-                text = stringResource(id = R.string.food_question),
-                modifier = Modifier.padding(bottom = 10.dp, top = 20.dp),
-                style = MaterialTheme.typography.titleMedium
+            Spacer(modifier = Modifier.height(10.dp))
+            EditDescription(
+                question = stringResource(id = R.string.food_question),
+                description = foodDescription,
+                hint = stringResource(id = R.string.write_here),
+                setDescription = setFoodDescription,
             )
-            Box(
-                modifier = Modifier
-                    .clip(AbsoluteRoundedCornerShape(10.dp))
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.3f)
-                    .background(color = MaterialTheme.colorScheme.primaryContainer)
-            ) {
-                MyTextFieldEmotionalCard(
-                    value = foodDescription,
-                    hint = stringResource(id = R.string.write_here),
-                    onValueChange = setFoodDescription,
-                )
-            }
             Button(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -192,6 +171,32 @@ private fun CenterElements(
     }
 }
 
+@Composable
+private fun EditDescription(
+    question: String,
+    hint: String,
+    description: String,
+    setDescription: (String) -> Unit
+) {
+    Text(
+        text = question,
+        modifier = Modifier.padding(bottom = 10.dp, top = 10.dp),
+        style = MaterialTheme.typography.titleMedium
+    )
+    Box(
+        modifier = Modifier
+            .clip(AbsoluteRoundedCornerShape(10.dp))
+            .fillMaxWidth()
+            .fillMaxHeight(0.3f)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
+    ) {
+        MyTextFieldEmotionalCard(
+            value = description,
+            hint = hint,
+            onValueChange = setDescription,
+        )
+    }
+}
 
 @Preview
 @Composable
@@ -204,7 +209,7 @@ private fun CreateScreenSecondPreview() {
             setEmotionDescription = {},
             foodDescription = "textEmotiontest",
             setFoodDescription = {},
-            onComplete = {}
+            onComplete = {},
         )
     }
 }
