@@ -79,6 +79,7 @@ object Repository {
         network.refreshToken = ""
         network.accessToken = null
 
+        storage.database.deleteAllCards()
         storage.database.deleteAccount(id)
         when(appState.value) {
             EAppState.CLIENT -> storage.database.deleteClient(id)
