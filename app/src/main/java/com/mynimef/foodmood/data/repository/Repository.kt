@@ -3,6 +3,7 @@ package com.mynimef.foodmood.data.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.mynimef.foodmood.data.models.database.AccountEntity
+import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
@@ -50,15 +51,15 @@ object Repository {
         network = NetworkService()
 
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
-        _appState.value = state
         if (state != EAppState.NONE) {
             id = sharedPref.getLong("account_id", 0)
             refreshToken = database.getRefreshTokenById(id)
-            refreshAccessToken()
+
             if (state == EAppState.CLIENT) {
                 _client.value = database.getClient(id)
             }
         }
+        _appState.value = state
     }
 
     suspend fun signUp(request: SignUpRequest): ECallback {
@@ -216,6 +217,15 @@ object Repository {
         return try {
             val response = network.clientAddCard(accessToken!!, request)
             if (response.isSuccessful) {
+                val body = response.body()!!
+                database.insertCard(
+                    CardEntity(
+                        mealType = body.mealType,
+                        emotionType = body.emotionType,
+                        emotionDescription = body.emotionDescription,
+                        foodDescription = body.foodDescription,
+                    )
+                )
                 ECallback.SUCCESS
             } else {
                 when(response.code()) {
@@ -229,5 +239,7 @@ object Repository {
             ECallback.NO_CONNECTION
         }
     }
+
+    fun getCards() = database.getAllCards()
 
 }
