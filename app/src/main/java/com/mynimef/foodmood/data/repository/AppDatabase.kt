@@ -43,4 +43,8 @@ abstract class AppDatabase: RoomDatabase() {
     suspend fun getClient(id: Long) = clientDao().getClientById(id)
     suspend fun insertClient(client: ClientEntity) = clientDao().insert(client)
     suspend fun deleteClient(id: Long) = clientDao().deleteById(id)
+
+    suspend fun insertCard(card: CardEntity) = cardDao().insert(card)
+    suspend fun getAllCards() = cardDao().getAll()
+    suspend fun deleteAllCards() = cardDao().deleteAll()
 }

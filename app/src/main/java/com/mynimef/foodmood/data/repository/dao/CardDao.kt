@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.Flow
 interface CardDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(account: CardEntity): Long
-
-    @Query("DELETE FROM card")
-    fun deleteAll()
+    suspend fun insert(card: CardEntity): Long
 
     @Transaction
     @Query("SELECT * FROM card")
     fun getAll(): Flow<List<CardEntity>>
+
+    @Query("DELETE FROM card")
+    suspend fun deleteAll()
 
 }
