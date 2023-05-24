@@ -22,7 +22,7 @@ object Repository {
 
     private lateinit var sharedPref: SharedPreferences
     private lateinit var database: AppDatabase
-    private lateinit var network: NetworkService
+    private val network = NetworkService()
 
     private val _appState = MutableStateFlow(EAppState.NONE)
     val appState = _appState.asStateFlow()
@@ -31,11 +31,15 @@ object Repository {
     private lateinit var refreshToken: String
     private var accessToken: String? = null
 
-    private val _client = MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true))
-    val client = _client.asStateFlow()
+    private val _client by lazy {
+        MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true))
+    }
+    val client by lazy { _client.asStateFlow() }
 
-    private val _trainer = MutableStateFlow(TrainerEntity(id = 0))
-    val trainer = _trainer.asStateFlow()
+    private val _trainer by lazy {
+        MutableStateFlow(TrainerEntity(id = 0))
+    }
+    val trainer by lazy { _trainer.asStateFlow() }
 
     private fun setState(state: EAppState) {
         _appState.value = state
@@ -48,7 +52,6 @@ object Repository {
     suspend fun init(context: Context) {
         sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
         database = AppDatabase.init(context)
-        network = NetworkService()
 
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
         if (state != EAppState.NONE) {
