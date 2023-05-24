@@ -54,7 +54,6 @@ object Repository {
             id = sharedPref.getLong("account_id", 0)
             refreshToken = database.getRefreshTokenById(id)
 
-            refreshAccessToken()
             if (state == EAppState.CLIENT) {
                 _client.value = database.getClient(id)
             }
