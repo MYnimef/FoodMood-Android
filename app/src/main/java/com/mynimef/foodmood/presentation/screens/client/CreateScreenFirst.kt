@@ -63,16 +63,19 @@ private fun CreateScreenFirst(
                 drawableId = R.drawable.ic_food_lunch,
                 stringId = R.string.type_food_snack2,
             ) {
+                setMealType(ETypeMeal.LUNCH)
             }
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_lunch,
                 stringId = R.string.type_food_snack1,
             ) {
+                setMealType(ETypeMeal.BRUNCH)
             }
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_supper,
                 stringId = R.string.type_food_supper,
             ) {
+                setMealType(ETypeMeal.SUPPER)
             }
         }
     }

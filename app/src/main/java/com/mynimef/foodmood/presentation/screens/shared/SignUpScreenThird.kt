@@ -113,7 +113,7 @@ private fun CenterElements(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             visualTransformation = VisualTransformation.None,
             isError = false,
-            onValueChange = setLogin
+            onValueChange = setLogin,
         )
 
         MyTextFieldLogin(
@@ -129,7 +129,7 @@ private fun CenterElements(
                 }
             },
             isError = password.length !in 8..20 && password.isNotEmpty(),
-            onValueChange = setPassword
+            onValueChange = setPassword,
         )
 
         MyTextFieldLogin(
@@ -145,7 +145,7 @@ private fun CenterElements(
                 }
             },
             isError = repeatPassword.length !in 8..20 && repeatPassword.isNotEmpty() || (repeatPassword!=password && repeatPassword.isNotEmpty()),
-            onValueChange = setRepeatPassword
+            onValueChange = setRepeatPassword,
         )
 
         MyLoginButton(

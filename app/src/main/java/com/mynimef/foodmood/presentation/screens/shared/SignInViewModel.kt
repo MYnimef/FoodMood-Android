@@ -2,7 +2,7 @@ package com.mynimef.foodmood.presentation.screens.shared
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.models.enums.ESignIn
+import com.mynimef.foodmood.data.models.enums.ECallback
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
@@ -55,10 +55,10 @@ class SignInViewModel: ViewModel() {
             val response = Repository.signIn(request)
             withContext(Dispatchers.Main) {
                 when (response) {
-                    ESignIn.SUCCESS -> {}
-                    ESignIn.WRONG_PASSWORD -> {}
-                    ESignIn.NO_CONNECTION -> {}
-                    ESignIn.UNKNOWN -> {}
+                    ECallback.SUCCESS -> {}
+                    ECallback.UNAUTHORIZED -> {}
+                    ECallback.NO_CONNECTION -> {}
+                    else -> {}
                 }
             }
         }

@@ -22,6 +22,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun MyTextFieldLogin(
     value: String,
     label: String,
+    readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -32,6 +33,7 @@ fun MyTextFieldLogin(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 20.dp),
+        readOnly = readOnly,
         value = value,
         label =  { Text(label) },
         singleLine = true,
@@ -77,6 +79,7 @@ fun MyTextFieldLoginPreview() {
        MyTextFieldLogin(
            value = "email",
            label = "email",
+           readOnly = false,
            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
            visualTransformation = VisualTransformation.None,
            isError = true,

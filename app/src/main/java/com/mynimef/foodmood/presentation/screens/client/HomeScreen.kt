@@ -4,34 +4,44 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyFoodCard
-import com.mynimef.foodmood.presentation.screens.trainer.HomeViewModel
+import com.mynimef.foodmood.presentation.elements.MyWaterPanel
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun HomeScreen() {
     val viewModel: HomeViewModel = viewModel()
+    HomeScreen(
+        water = viewModel.water.collectAsState().value,
+        setWater = viewModel::setWater,
+    )
+}
 
-    val waterL = remember { mutableStateOf("") }
-    val weightKg = remember { mutableStateOf("") }
-
+@Composable
+private fun HomeScreen(
+    water: Float,
+    setWater: (Float) -> Unit,
+) {
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -39,13 +49,18 @@ fun HomeScreen() {
     ) {
         MyDate()
         Spacer(modifier = Modifier.height(20.dp))
-        CenterElements()
+        CenterElements(
+            progress = water,
+            setWater = setWater
+        )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CenterElements() {
+private fun CenterElements(
+    progress: Float,
+    setWater: (Float) -> Unit,
+) {
 
     Column(
         modifier = Modifier
@@ -55,6 +70,16 @@ private fun CenterElements() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
+        MyWaterPanel(setWater = setWater)
+        LinearProgressIndicator(
+            progress = progress,
+            color = MaterialTheme.colorScheme.tertiary,
+            trackColor = MaterialTheme.colorScheme.tertiaryContainer,
+            modifier = Modifier
+                .fillMaxHeight(0.3f)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+        )
         MyFoodCard(
            iconEatId = R.drawable.ic_food_breakfast,
            typeEatId = R.string.type_food_breakfast,
@@ -93,10 +118,13 @@ private fun CenterElements() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun HomePrev() {
+private fun HomeScreenPreview() {
     FoodMoodTheme {
-        HomeScreen()
+        HomeScreen(
+            water = 0f,
+            setWater = {},
+        )
     }
 }

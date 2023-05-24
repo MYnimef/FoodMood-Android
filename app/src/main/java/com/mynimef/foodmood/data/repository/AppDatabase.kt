@@ -5,11 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mynimef.foodmood.data.models.database.AccountEntity
+import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.repository.dao.AccountDao
+import com.mynimef.foodmood.data.repository.dao.ClientDao
 
-@Database(entities = [AccountEntity::class], version = 1)
+@Database(entities = [AccountEntity::class, ClientEntity::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     protected abstract fun accountDao(): AccountDao
+    protected abstract fun clientDao(): ClientDao
+
     companion object {
         fun init(applicationContext: Context): AppDatabase {
             return Room.databaseBuilder(
@@ -22,7 +26,11 @@ abstract class AppDatabase: RoomDatabase() {
         }
     }
 
-
     suspend fun getRefreshTokenById(id: Long) = accountDao().getRefreshTokenById(id)
     suspend fun insertAccount(account: AccountEntity) = accountDao().insert(account)
+    suspend fun deleteAccount(id: Long) = accountDao().deleteById(id)
+
+    suspend fun getClient(id: Long) = clientDao().getClientById(id)
+    suspend fun insertClient(client: ClientEntity) = clientDao().insert(client)
+    suspend fun deleteClient(id: Long) = clientDao().deleteById(id)
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -66,13 +67,14 @@ private fun MyChoiceCard(
                     .fillMaxWidth(),
                 text = stringResource(stringId),
                 fontSize = fontSize,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center
             )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun ChoiceItemPreview() {
     FoodMoodTheme {

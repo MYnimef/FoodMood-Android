@@ -21,7 +21,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun MyNavigationBar(
     navController: NavHostController,
     items: List<BottomNavigationItem>,
-    spaceSize: Dp
+    spaceSize: Dp,
+    roundedCorner: Dp = 0.dp,
 ) {
     NavigationBar(
         modifier = Modifier
@@ -37,7 +38,7 @@ fun MyNavigationBar(
                 .fillMaxSize()
                 .background(
                     color = MaterialTheme.colorScheme.primary,
-                    shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+                    shape = RoundedCornerShape(topStart = roundedCorner, topEnd = roundedCorner)
                 ),
             horizontalArrangement = Arrangement.spacedBy(spaceSize, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
