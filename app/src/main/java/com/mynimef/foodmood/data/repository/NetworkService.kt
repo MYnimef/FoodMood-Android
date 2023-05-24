@@ -32,4 +32,5 @@ class NetworkService {
 
     suspend fun getClient(token: String) = clientAPI.getClient(token)
     suspend fun clientAddCard(token: String, request: ClientAddCardRequest) = clientAPI.addCard(token, request)
+    suspend fun clientGetDayCards(day: Int, month: Int, year: Int) = clientAPI.getDateCards(day, month, year)
 }
