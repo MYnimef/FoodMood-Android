@@ -240,4 +240,6 @@ object Repository {
         }
     }
 
+    fun getCards() = database.getAllCards()
+
 }

@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -22,7 +22,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.database.CardEntity
+import com.mynimef.foodmood.data.models.enums.ETypeEmotion
+import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyFoodCard
 import com.mynimef.foodmood.presentation.elements.MyWaterPanel
@@ -34,6 +36,7 @@ fun HomeScreen() {
     HomeScreen(
         water = viewModel.water.collectAsState().value,
         setWater = viewModel::setWater,
+        cards = viewModel.getCards().collectAsState(initial = emptyList()).value
     )
 }
 
@@ -41,6 +44,7 @@ fun HomeScreen() {
 private fun HomeScreen(
     water: Float,
     setWater: (Float) -> Unit,
+    cards: List<CardEntity>,
 ) {
     Column(
         modifier = Modifier
@@ -51,7 +55,8 @@ private fun HomeScreen(
         Spacer(modifier = Modifier.height(20.dp))
         CenterElements(
             progress = water,
-            setWater = setWater
+            setWater = setWater,
+            cards = cards
         )
     }
 }
@@ -60,61 +65,39 @@ private fun HomeScreen(
 private fun CenterElements(
     progress: Float,
     setWater: (Float) -> Unit,
+    cards: List<CardEntity>,
 ) {
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 30.dp)
-            .verticalScroll(rememberScrollState()),
+            //.verticalScroll(rememberScrollState())
+        ,
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        MyWaterPanel(setWater = setWater)
-        LinearProgressIndicator(
-            progress = progress,
-            color = MaterialTheme.colorScheme.tertiary,
-            trackColor = MaterialTheme.colorScheme.tertiaryContainer,
-            modifier = Modifier
-                .fillMaxHeight(0.3f)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
-        )
-        MyFoodCard(
-           iconEatId = R.drawable.ic_food_breakfast,
-           typeEatId = R.string.type_food_breakfast,
-           textEmotion = "test",
-           iconEmotionId = R.drawable.ic_mood_great
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        MyFoodCard(
-            iconEatId = R.drawable.ic_food_lunch,
-            typeEatId = R.string.type_food_snack1,
-            textEmotion = "test",
-            iconEmotionId = R.drawable.ic_mood_great
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        MyFoodCard(
-            iconEatId = R.drawable.ic_food_dinner,
-            typeEatId = R.string.type_food_dinner,
-            textEmotion = "test",
-            iconEmotionId = R.drawable.ic_mood_great
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        MyFoodCard(
-            iconEatId = R.drawable.ic_food_lunch,
-            typeEatId = R.string.type_food_snack2,
-            textEmotion = "test",
-            iconEmotionId = R.drawable.ic_mood_great
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        MyFoodCard(
-            iconEatId = R.drawable.ic_food_supper,
-            typeEatId = R.string.type_food_supper,
-            textEmotion = "test",
-            iconEmotionId = R.drawable.ic_mood_great
-        )
-        Spacer(modifier = Modifier.height(20.dp))
+        item {
+            MyWaterPanel(setWater = setWater)
+            LinearProgressIndicator(
+                progress = progress,
+                color = MaterialTheme.colorScheme.tertiary,
+                trackColor = MaterialTheme.colorScheme.tertiaryContainer,
+                modifier = Modifier
+                    .fillMaxHeight(0.3f)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+            )
+        }
+        items(cards) { card ->
+            MyFoodCard(
+                iconEatId = card.mealType.icon,
+                typeEatId = card.mealType.label,
+                textEmotion = card.emotionDescription,
+                iconEmotionId = card.emotionType.icon,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+        }
     }
 }
 
@@ -122,9 +105,43 @@ private fun CenterElements(
 @Composable
 private fun HomeScreenPreview() {
     FoodMoodTheme {
+        val cards = listOf(
+            CardEntity(
+                mealType = ETypeMeal.BREAKFAST,
+                emotionType = ETypeEmotion.NORMAL,
+                emotionDescription = "nice",
+                foodDescription = "nice",
+            ),
+            CardEntity(
+                mealType = ETypeMeal.BRUNCH,
+                emotionType = ETypeEmotion.BAD,
+                emotionDescription = "nice",
+                foodDescription = "nice",
+            ),
+            CardEntity(
+                mealType = ETypeMeal.LUNCH,
+                emotionType = ETypeEmotion.VERY_BAD,
+                emotionDescription = "nice",
+                foodDescription = "nice",
+            ),
+            CardEntity(
+                mealType = ETypeMeal.SUPPER,
+                emotionType = ETypeEmotion.GOOD,
+                emotionDescription = "nice",
+                foodDescription = "nice",
+            ),
+            CardEntity(
+                mealType = ETypeMeal.DINNER,
+                emotionType = ETypeEmotion.GOOD,
+                emotionDescription = "nice",
+                foodDescription = "nice",
+            ),
+        )
+
         HomeScreen(
             water = 0f,
             setWater = {},
+            cards = cards,
         )
     }
 }
