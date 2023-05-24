@@ -14,6 +14,6 @@ class HomeViewModel: ViewModel() {
         _water.value += value
     }
 
-    fun getCards() = Repository.getCards()
+    fun getCards() = Repository.getCardsFromStorage()
 
 }

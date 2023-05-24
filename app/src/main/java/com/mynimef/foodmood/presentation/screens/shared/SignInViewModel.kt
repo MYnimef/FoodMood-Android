@@ -2,30 +2,30 @@ package com.mynimef.foodmood.presentation.screens.shared
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.models.enums.ECallback
+import com.mynimef.foodmood.data.models.ApiError
+import com.mynimef.foodmood.data.models.ApiException
+import com.mynimef.foodmood.data.models.ApiSuccess
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SignInViewModel: ViewModel() {
 
     private var job: Job? = null
 
     private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email.asStateFlow()
+    val email = _email.asStateFlow()
 
     private val _password = MutableStateFlow("")
-    val password: StateFlow<String> = _password.asStateFlow()
+    val password = _password.asStateFlow()
 
     private val _buttonActive = MutableStateFlow(false)
-    val buttonActive: StateFlow<Boolean> = _buttonActive.asStateFlow()
+    val buttonActive = _buttonActive.asStateFlow()
 
     private var emailCheck = false
     private var passwordCheck = false
@@ -52,14 +52,15 @@ class SignInViewModel: ViewModel() {
                 password = _password.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            val response = Repository.signIn(request)
-            withContext(Dispatchers.Main) {
-                when (response) {
-                    ECallback.SUCCESS -> {}
-                    ECallback.UNAUTHORIZED -> {}
-                    ECallback.NO_CONNECTION -> {}
-                    else -> {}
+            when (val result = Repository.signIn(request)) {
+                is ApiError -> {
+                    when (result.code) {
+                        401 -> {}
+                        else -> {}
+                    }
                 }
+                is ApiException -> {}
+                is ApiSuccess -> Repository.signIn(result.data)
             }
         }
     }

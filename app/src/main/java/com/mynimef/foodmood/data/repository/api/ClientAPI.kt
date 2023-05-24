@@ -23,6 +23,7 @@ interface ClientAPI {
 
     @GET("/api/client/card/get/{day}/{month}/{year}")
     suspend fun getDateCards(
+        @Header("Authorization") token: String,
         @Path("day") day: Int,
         @Path("month") month: Int,
         @Path("year") year: Int,

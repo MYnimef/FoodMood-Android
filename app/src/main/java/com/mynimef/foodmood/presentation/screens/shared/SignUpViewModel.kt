@@ -2,54 +2,54 @@ package com.mynimef.foodmood.presentation.screens.shared
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.models.enums.ECallback
-import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.data.models.ApiError
+import com.mynimef.foodmood.data.models.ApiException
+import com.mynimef.foodmood.data.models.ApiSuccess
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
+import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SignUpViewModel: ViewModel() {
 
     private var job: Job? = null
 
     private val _name = MutableStateFlow("")
-    val name: StateFlow<String> = _name.asStateFlow()
+    val name = _name.asStateFlow()
 
     private val _birthday = MutableStateFlow("")
-    val birthday: StateFlow<String> = _birthday.asStateFlow()
+    val birthday = _birthday.asStateFlow()
     
     private val _firstButtonActive = MutableStateFlow(false)
-    val firstButtonActive: StateFlow<Boolean> = _firstButtonActive.asStateFlow()
+    val firstButtonActive = _firstButtonActive.asStateFlow()
 
     private var nameCheck = false
     private var birthdayCheck = false
 
     private val _food = MutableStateFlow(false)
-    val food: StateFlow<Boolean> = _food.asStateFlow()
+    val food = _food.asStateFlow()
 
     private val _water = MutableStateFlow(false)
-    val water: StateFlow<Boolean> = _water.asStateFlow()
+    val water = _water.asStateFlow()
 
     private val _weight = MutableStateFlow(false)
-    val weight: StateFlow<Boolean> = _weight.asStateFlow()
+    val weight = _weight.asStateFlow()
 
     private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email.asStateFlow()
+    val email = _email.asStateFlow()
 
     private val _password = MutableStateFlow("")
-    val password: StateFlow<String> = _password.asStateFlow()
+    val password = _password.asStateFlow()
 
     private val _repeatPassword = MutableStateFlow("")
-    val repeatPassword: StateFlow<String> = _repeatPassword.asStateFlow()
+    val repeatPassword = _repeatPassword.asStateFlow()
 
     private val _secondButtonActive = MutableStateFlow(false)
-    val secondButtonActive: StateFlow<Boolean> = _secondButtonActive.asStateFlow()
+    val secondButtonActive = _secondButtonActive.asStateFlow()
 
     private var emailCheck = false
     private var passwordCheck = false
@@ -102,15 +102,15 @@ class SignUpViewModel: ViewModel() {
                 trackWeight = _weight.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            val response = Repository.signUp(request)
-            withContext(Dispatchers.Main) {
-                when (response) {
-                    ECallback.SUCCESS -> {}
-                    ECallback.WRONG_INPUT -> {}
-                    ECallback.DATA_CONFLICT -> {}
-                    ECallback.NO_CONNECTION -> {}
-                    else -> {}
+            when (val result = Repository.signUpClient(request)) {
+                is ApiError -> {
+                    when (result.code) {
+                        401 -> {}
+                        else -> {}
+                    }
                 }
+                is ApiException -> {}
+                is ApiSuccess -> Repository.signIn(result.data)
             }
         }
     }
