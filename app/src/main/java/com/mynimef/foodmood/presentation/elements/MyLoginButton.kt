@@ -32,7 +32,7 @@ fun MyLoginButton(
         enabled = enabled,
     ) {
         Text(text,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onPrimaryContainer)
     }
 }
