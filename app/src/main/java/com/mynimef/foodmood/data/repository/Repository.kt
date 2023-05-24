@@ -50,15 +50,16 @@ object Repository {
         network = NetworkService()
 
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
-        _appState.value = state
         if (state != EAppState.NONE) {
             id = sharedPref.getLong("account_id", 0)
             refreshToken = database.getRefreshTokenById(id)
+
             refreshAccessToken()
             if (state == EAppState.CLIENT) {
                 _client.value = database.getClient(id)
             }
         }
+        _appState.value = state
     }
 
     suspend fun signUp(request: SignUpRequest): ECallback {
