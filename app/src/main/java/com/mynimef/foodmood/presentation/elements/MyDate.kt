@@ -47,7 +47,7 @@ fun MyDate() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun MyDatePreview() {
     FoodMoodTheme {

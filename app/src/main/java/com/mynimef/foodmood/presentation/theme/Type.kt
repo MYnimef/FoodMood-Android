@@ -1,16 +1,9 @@
 package com.mynimef.foodmood.presentation.theme
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.GenericFontFamily
-import androidx.compose.ui.text.font.ResourceFont
 import androidx.compose.ui.text.font.toFontFamily
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
@@ -22,7 +15,8 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.sp),
+        letterSpacing = 0.sp
+    ),
 
     bodyMedium = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
@@ -50,6 +44,7 @@ val Typography = Typography(
         letterSpacing = 0.sp,
         color = Green
     ),
+
     titleMedium = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
         fontWeight = FontWeight.Medium,
@@ -58,6 +53,7 @@ val Typography = Typography(
         letterSpacing = 0.sp,
         color = DarkestGreen
     ),
+
     titleSmall = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
         fontWeight = FontWeight.Medium,

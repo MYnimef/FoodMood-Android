@@ -23,4 +23,7 @@ data class ClientEntity(
     @ColumnInfo(name = "track_weight")
     val trackWeight: Boolean,
 
+    @ColumnInfo(name = "water_amount")
+    var waterAmount: Float
+
 )

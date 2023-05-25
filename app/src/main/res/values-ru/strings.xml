@@ -20,7 +20,7 @@
     <string name="weight">Вес</string>
     <string name="complete">Завершить</string>
     <string name="settings">Настройки</string>
-    <string name="user_settings">Изменить данные профиля</string>
+    <string name="user_settings">Настройки аккаунта</string>
     <string name="prefrences">Предпочтения</string>
     <string name="notifications">Уведомления</string>
     <string name="language">Язык</string>
@@ -48,4 +48,15 @@
     <string name="ml_400">400 ml</string>
     <string name="ml_500">500 ml</string>
     <string name="ml_600">600 ml</string>
+
+    <string name="delete">Удалить аккаунт</string>
+    <string name="exit">Выйти из аккаунта</string>
+
+    <string name="emotion_chart">График эмоций</string>
+
+    <string name="toast_401_client">Ошибка аутентификации</string>
+    <string name="toast_401_signin">Неправильная почта или пароль</string>
+    <string name="toast_403">Некорректные входные данные</string>
+    <string name="toast_409">Аккаунт уже существует</string>
+    <string name="toast_no_con">Отсутствует соединение</string>
 </resources>

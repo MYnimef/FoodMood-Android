@@ -20,7 +20,7 @@
     <string name="weight">Weight</string>
     <string name="complete">Complete</string>
     <string name="settings">Settings</string>
-    <string name="user_settings">Change profile info</string>
+    <string name="user_settings">Account settings</string>
     <string name="prefrences">Preferences</string>
     <string name="notifications">Notifications</string>
     <string name="language">Language</string>
@@ -48,4 +48,15 @@
     <string name="ml_400">400 ml</string>
     <string name="ml_500">500 ml</string>
     <string name="ml_600">600 ml</string>
+
+    <string name="delete">Delete account</string>
+    <string name="exit">Log out</string>
+
+    <string name="emotion_chart">Emotion chart</string>
+
+    <string name="toast_401_client">Authentication failed</string>
+    <string name="toast_401_signin">Wrong email or password</string>
+    <string name="toast_403">Wrong input data</string>
+    <string name="toast_409">Account already exists</string>
+    <string name="toast_no_con">No connection</string>
 </resources>

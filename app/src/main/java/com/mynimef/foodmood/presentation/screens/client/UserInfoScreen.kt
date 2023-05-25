@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
+import com.mynimef.foodmood.presentation.elements.MySettingsButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
@@ -98,7 +99,8 @@ private fun CenterElements(
                     onClick = { nameEdit.value = !nameEdit.value }
                 ) {
                     MyIcon(
-                        drawableId = if (nameEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off)
+                        drawableId = if (nameEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off
+                    )
                 }
             },
             onValueChange = {
@@ -114,7 +116,8 @@ private fun CenterElements(
                     onClick = { loginEdit.value = !loginEdit.value }
                 ) {
                     MyIcon(
-                        drawableId = if (loginEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off)
+                        drawableId = if (loginEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off
+                    )
                 }
             },
             onValueChange = {
@@ -130,12 +133,27 @@ private fun CenterElements(
                     onClick = { passwordEdit.value = !passwordEdit.value }
                 ) {
                     MyIcon(
-                        drawableId = if (passwordEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off)
+                        drawableId = if (passwordEdit.value) R.drawable.ic_edit else R.drawable.ic_edit_off
+                    )
                 }
             },
             onValueChange = {
                 password.value = it
             })
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            MySettingsButton(text = R.string.exit) {
+
+            }
+            MySettingsButton(text = R.string.delete) {
+
+            }
+        }
     }
 }
 

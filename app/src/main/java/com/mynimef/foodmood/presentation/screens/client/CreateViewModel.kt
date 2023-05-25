@@ -2,8 +2,9 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.models.database.ClientEntity
-import com.mynimef.foodmood.data.models.enums.ECallback
+import com.mynimef.foodmood.data.models.ApiError
+import com.mynimef.foodmood.data.models.ApiException
+import com.mynimef.foodmood.data.models.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.ENavigationCreate
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
@@ -13,11 +14,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class CreateViewModel: ViewModel() {
 
@@ -26,31 +24,33 @@ class CreateViewModel: ViewModel() {
     lateinit var navigation: (ENavigationCreate) -> Unit
 
     private val _mealType = MutableStateFlow(ETypeMeal.BREAKFAST)
-    val mealType: StateFlow<ETypeMeal> = _mealType.asStateFlow()
+    val mealType = _mealType.asStateFlow()
 
     private val _emotionType = MutableStateFlow(ETypeEmotion.NORMAL)
-    val emotionType: StateFlow<ETypeEmotion> = _emotionType.asStateFlow()
+    val emotionType = _emotionType.asStateFlow()
 
     private val _emotionDescription = MutableStateFlow("")
-    val emotionDescription: StateFlow<String> = _emotionDescription.asStateFlow()
+    val emotionDescription = _emotionDescription.asStateFlow()
 
     private val _foodDescription = MutableStateFlow("")
-    val foodDescription: StateFlow<String> = _foodDescription.asStateFlow()
+    val foodDescription = _foodDescription.asStateFlow()
 
-    fun getClient(): StateFlow<ClientEntity> {
-        return Repository.client
-    }
+    fun getClient() = Repository.client
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
         navigation(ENavigationCreate.ADD_CARD)
     }
 
-    fun setTextEmotion(value: String) {
+    fun setEmotionType(value: ETypeEmotion) {
+        _emotionType.value = value
+    }
+
+    fun setEmotionDescription(value: String) {
         _emotionDescription.value = value
     }
 
-    fun setTextFood(value: String) {
+    fun setFoodDescription(value: String) {
         _foodDescription.value = value
     }
 
@@ -63,14 +63,15 @@ class CreateViewModel: ViewModel() {
                 foodDescription = _foodDescription.value,
                 timeZone = TimeZone.getDefault().id,
             )
-            val response = Repository.clientAddCard(request)
-            withContext(Dispatchers.Main) {
-                when (response) {
-                    ECallback.SUCCESS -> {}
-                    ECallback.UNAUTHORIZED -> {}
-                    ECallback.NO_CONNECTION -> {}
-                    else -> {}
+            when (val result = Repository.clientAddCard(request)) {
+                is ApiError -> {
+                    when (result.code) {
+                        401 -> Repository.signOut()
+                        else -> {}
+                    }
                 }
+                is ApiException -> {}
+                is ApiSuccess -> Repository.addCardToStorage(result.data)
             }
         }
     }

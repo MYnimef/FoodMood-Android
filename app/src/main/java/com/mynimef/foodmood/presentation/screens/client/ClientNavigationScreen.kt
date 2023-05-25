@@ -25,6 +25,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun ClientNavigationScreen() {
     val viewModel: ClientNavigationViewModel = viewModel()
+
     ClientNavigationScreen(
         initClient = viewModel::initClient
     )
