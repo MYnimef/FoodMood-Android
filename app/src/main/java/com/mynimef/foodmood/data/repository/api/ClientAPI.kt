@@ -1,8 +1,9 @@
 package com.mynimef.foodmood.data.repository.api
 
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
+import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
 import com.mynimef.foodmood.data.models.responses.CardResponse
-import com.mynimef.foodmood.data.models.responses.ClientResponse
+import com.mynimef.foodmood.data.models.responses.ClientInfoResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -12,8 +13,11 @@ import retrofit2.http.Path
 
 interface ClientAPI {
 
-    @GET("/api/client")
-    suspend fun getClient(@Header("Authorization") token: String): Response<ClientResponse>
+    @GET("/api/client/info/{time_zone}")
+    suspend fun getInfo(
+        @Header("Authorization") token: String,
+        @Path("time_zone") timeZone: String,
+    ): Response<ClientInfoResponse>
 
     @POST("/api/client/card/add")
     suspend fun addCard(
@@ -28,4 +32,11 @@ interface ClientAPI {
         @Path("month") month: Int,
         @Path("year") year: Int,
     ): Response<List<CardResponse>>
+
+    @POST("/api/client/water/increase")
+    fun increaseWater(
+        @Header("Authorization") token: String,
+        @Body request: WaterIncreaseRequest
+    ): Response<String>
+
 }

@@ -22,4 +22,7 @@ interface ClientDao {
     @Query("DELETE FROM client WHERE client.id = :id")
     suspend fun deleteById(id: Long)
 
+    @Query("UPDATE client SET water_amount = :waterAmount WHERE id = :id")
+    suspend fun updateWaterAmount(id: Long, waterAmount: Float)
+
 }

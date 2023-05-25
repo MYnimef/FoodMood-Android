@@ -11,8 +11,9 @@ import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
+import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
 import com.mynimef.foodmood.data.models.responses.CardResponse
-import com.mynimef.foodmood.data.models.responses.ClientResponse
+import com.mynimef.foodmood.data.models.responses.ClientInfoResponse
 import com.mynimef.foodmood.data.models.responses.SignInResponse
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,7 @@ object Repository {
     private val _appState = MutableStateFlow(EAppState.AUTH)
     val appState = _appState.asStateFlow()
 
-    private val _client by lazy { MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true)) }
+    private val _client by lazy { MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true, waterAmount = 0f)) }
     val client by lazy { _client.asStateFlow() }
 
     private val _trainer by lazy { MutableStateFlow(TrainerEntity(id = 0)) }
@@ -62,9 +63,10 @@ object Repository {
     suspend fun signUpClient(request: SignUpRequest) = network.signUpClient(request)
     suspend fun signIn(request: SignInRequest) = network.signIn(request)
 
-    suspend fun getClient() = network.getClient()
+    suspend fun clientGetInfo(timeZone: String) = network.clientGetInfo(timeZone)
     suspend fun clientAddCard(request: ClientAddCardRequest) = network.clientAddCard(request)
     suspend fun clientGetDayCards(day: Int, month: Int, year: Int) = network.clientGetDayCards(day, month, year)
+    suspend fun clientIncreaseWater(request: WaterIncreaseRequest) = network.clientIncreaseWater(request)
 
     suspend fun addCardToStorage(card: CardResponse) {
         val cardEntity = CardEntity(
@@ -111,16 +113,21 @@ object Repository {
         setState(EAppState.AUTH)
     }
 
-    suspend fun setClient(client: ClientResponse) {
+    suspend fun initClient(client: ClientInfoResponse) {
         val clientEntity = ClientEntity(
             id = id,
             name = client.name,
             trackFood = client.trackFood,
             trackWater = client.trackWater,
             trackWeight = client.trackWeight,
+            waterAmount = client.waterAmount,
         )
         storage.database.insertClient(clientEntity)
         _client.value = clientEntity
+        storage.database.deleteAllCards()
+        client.dayCards.forEach {
+            addCardToStorage(it)
+        }
     }
 
 }
