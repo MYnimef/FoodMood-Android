@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -73,7 +74,19 @@ fun MyFoodCard(
                 )
             }
             Column(modifier = Modifier.align(Alignment.TopEnd).padding(end = 15.dp)) {
-                MyEmotionButton(emotion = emotion, onClick = {})
+                IconButton(
+                    modifier = Modifier
+                        .padding(vertical = 10.dp)
+                        .size(60.dp)
+                    ,
+                    onClick = {  }
+                ) {
+                    MyIcon(
+                        drawableId = emotion.icon,
+                        modifier = Modifier
+                            .size(55.dp)
+                    )
+                }
             }
         }
     }

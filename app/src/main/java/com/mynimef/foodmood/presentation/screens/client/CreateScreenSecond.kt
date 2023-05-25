@@ -149,22 +149,27 @@ private fun CenterElements(
                 ) {
                     MyEmotionButton(
                         emotion = ETypeEmotion.GREAT,
+                        selectedEmotion = emotionType,
                         onClick = setEmotionType
                     )
                     MyEmotionButton(
                         emotion = ETypeEmotion.GOOD,
+                        selectedEmotion = emotionType,
                         onClick = setEmotionType
                     )
                     MyEmotionButton(
                         emotion = ETypeEmotion.NORMAL,
+                        selectedEmotion = emotionType,
                         onClick = setEmotionType
                     )
                     MyEmotionButton(
                         emotion = ETypeEmotion.BAD,
+                        selectedEmotion = emotionType,
                         onClick = setEmotionType
                     )
                     MyEmotionButton(
                         emotion = ETypeEmotion.VERY_BAD,
+                        selectedEmotion = emotionType,
                         onClick = setEmotionType
                     )
                 }
