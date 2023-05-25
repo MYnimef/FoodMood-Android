@@ -51,4 +51,12 @@
 
     <string name="delete">Delete account</string>
     <string name="exit">Log out</string>
+
+    <string name="emotion_chart">Emotion chart</string>
+
+    <string name="toast_401_client">Authentication failed</string>
+    <string name="toast_401_signin">Wrong email or password</string>
+    <string name="toast_403">Wrong input data</string>
+    <string name="toast_409">Account already exists</string>
+    <string name="toast_no_con">No connection</string>
 </resources>

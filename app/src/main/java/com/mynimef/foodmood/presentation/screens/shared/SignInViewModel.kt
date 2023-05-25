@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +21,7 @@ class SignInViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    private val _toastMessage = MutableSharedFlow<String>()
+    private val _toastMessage = MutableSharedFlow<EToast>()
     val toastMessage = _toastMessage.asSharedFlow()
 
     private val _email = MutableStateFlow("")
@@ -60,12 +61,12 @@ class SignInViewModel: ViewModel() {
             when (val result = Repository.signIn(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> _toastMessage.emit("Wrong email or password")
-                        403 -> _toastMessage.emit("Wrong input data")
+                        401 -> _toastMessage.emit(EToast.TOAST401SIGNIN)
+                        403 -> _toastMessage.emit(EToast.TOAST403)
                         else -> {}
                     }
                 }
-                is ApiException -> _toastMessage.emit("No connection")
+                is ApiException -> _toastMessage.emit(EToast.TOASTNOCON)
                 is ApiSuccess -> Repository.signIn(result.data)
             }
         }
