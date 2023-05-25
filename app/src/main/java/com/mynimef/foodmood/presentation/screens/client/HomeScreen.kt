@@ -119,7 +119,7 @@ private fun CenterElements(
                 iconEatId = card.mealType.icon,
                 typeEatId = card.mealType.label,
                 textEmotion = card.emotionDescription,
-                iconEmotionId = card.emotionType.icon,
+                emotion = card.emotionType,
             )
         }
         item {

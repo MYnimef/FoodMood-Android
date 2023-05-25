@@ -1,35 +1,28 @@
 package com.mynimef.foodmood.presentation.elements
 
-import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 
 @Composable
 fun MyEmotionButton(
-    drawableId: Int,
+    emotion: ETypeEmotion,
+    onClick: (ETypeEmotion) -> Unit,
 ) {
     IconButton(
         modifier = Modifier
             .padding(vertical = 10.dp)
-            .size(60.dp),
-        onClick = {  }) {
+            .size(60.dp)
+        ,
+        onClick = { onClick(emotion) }
+    ) {
         MyIcon(
-            drawableId =  drawableId,
+            drawableId = emotion.icon,
             modifier = Modifier.size(55.dp)
-            )
+        )
     }
 }

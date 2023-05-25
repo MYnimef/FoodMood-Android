@@ -21,16 +21,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun MyFoodCard(
+    modifier: Modifier = Modifier,
     iconEatId: Int,
     typeEatId: Int,
     textEmotion: String,
-    iconEmotionId: Int,) {
-    Column() {
-        Row() {
+    emotion: ETypeEmotion,
+) {
+    Column(modifier = modifier) {
+        Row {
             MyIcon(drawableId=iconEatId,
             modifier = Modifier
                 .size(55.dp)
@@ -70,8 +73,7 @@ fun MyFoodCard(
                 )
             }
             Column(modifier = Modifier.align(Alignment.TopEnd).padding(end = 15.dp)) {
-                MyEmotionButton(drawableId = iconEmotionId)
-
+                MyEmotionButton(emotion = emotion, onClick = {})
             }
         }
     }
@@ -81,6 +83,11 @@ fun MyFoodCard(
 @Composable
 private fun MyFoodCardPreview() {
     FoodMoodTheme {
-        MyFoodCard(R.drawable.ic_food_breakfast, R.string.type_food_breakfast,"fvgeb", R.drawable.ic_mood_great)
+        MyFoodCard(
+            iconEatId = R.drawable.ic_food_breakfast,
+            typeEatId = R.string.type_food_breakfast,
+            textEmotion = "fvgeb",
+            emotion = ETypeEmotion.BAD
+        )
     }
 }
