@@ -1,5 +1,6 @@
 package com.mynimef.foodmood.presentation.screens.shared
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,12 +12,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -29,6 +32,7 @@ import com.mynimef.foodmood.data.models.enums.ENavigationAuth
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
+import com.mynimef.foodmood.presentation.elements.MyToast
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -36,6 +40,7 @@ fun SignInScreen(
     navigateTo: (route: ENavigationAuth) -> Unit
 ) {
     val viewModel: SignInViewModel = viewModel()
+    MyToast(viewModel.toastMessage)
 
     SignInScreen(
         navigateTo = navigateTo,

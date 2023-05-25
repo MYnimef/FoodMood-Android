@@ -27,6 +27,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
+import com.mynimef.foodmood.presentation.elements.MyToast
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -34,6 +35,8 @@ fun SignUpScreenThird(
     navigateTo: (route: String) -> Unit,
     viewModel: SignUpViewModel,
 ) {
+    MyToast(viewModel.toastMessage)
+
     SignUpScreenThird(
         navigateTo = navigateTo,
         login = viewModel.email.collectAsState().value,

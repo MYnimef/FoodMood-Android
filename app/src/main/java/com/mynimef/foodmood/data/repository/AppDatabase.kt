@@ -1,8 +1,6 @@
 package com.mynimef.foodmood.data.repository
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.database.CardEntity
@@ -23,18 +21,6 @@ abstract class AppDatabase: RoomDatabase() {
     protected abstract fun accountDao(): AccountDao
     protected abstract fun clientDao(): ClientDao
     protected abstract fun cardDao(): CardDao
-
-    companion object {
-        fun init(applicationContext: Context): AppDatabase {
-            return Room.databaseBuilder(
-                context = applicationContext,
-                klass = AppDatabase::class.java,
-                name = "foodmood-database"
-            )
-                .fallbackToDestructiveMigration()
-                .build()
-        }
-    }
 
     suspend fun getRefreshTokenById(id: Long) = accountDao().getRefreshTokenById(id)
     suspend fun insertAccount(account: AccountEntity) = accountDao().insert(account)
