@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation.screens.shared
+package com.mynimef.foodmood.presentation.screens.auth
 
 import android.os.Build
 import androidx.lifecycle.ViewModel

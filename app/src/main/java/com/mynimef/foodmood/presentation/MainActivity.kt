@@ -5,9 +5,16 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
-import com.mynimef.foodmood.presentation.screens.shared.MainNavigationScreen
+import com.mynimef.foodmood.data.models.enums.EAppState
+import com.mynimef.foodmood.presentation.screens.client.ClientNavigationScreen
+import com.mynimef.foodmood.presentation.screens.auth.AuthNavigationScreen
+import com.mynimef.foodmood.presentation.screens.trainer.TrainerNavigationScreen
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import kotlinx.coroutines.launch
 
@@ -31,7 +38,18 @@ class MainActivity: ComponentActivity() {
 
         setContent {
             FoodMoodTheme {
-                MainNavigationScreen()
+                Crossfade(
+                    modifier = Modifier
+                        .fillMaxSize()
+                    ,
+                    targetState = viewModel.appState.collectAsState().value
+                ) { targetState ->
+                    when (targetState) {
+                        EAppState.AUTH -> AuthNavigationScreen()
+                        EAppState.CLIENT -> ClientNavigationScreen()
+                        EAppState.TRAINER -> TrainerNavigationScreen()
+                    }
+                }
             }
         }
     }

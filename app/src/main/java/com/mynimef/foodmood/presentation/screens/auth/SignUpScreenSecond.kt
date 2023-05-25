@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation.screens.shared
+package com.mynimef.foodmood.presentation.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

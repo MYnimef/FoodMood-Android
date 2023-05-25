@@ -4,6 +4,7 @@ import android.content.Context
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
+import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.enums.ERole
 import com.mynimef.foodmood.data.models.enums.EToast
@@ -14,37 +15,48 @@ import com.mynimef.foodmood.data.models.responses.CardResponse
 import com.mynimef.foodmood.data.models.responses.ClientResponse
 import com.mynimef.foodmood.data.models.responses.SignInResponse
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 object Repository {
 
-    private lateinit var storage: AppLocalStorage
+    private lateinit var storage: AppStorage
     private val network = AppNetwork()
 
     private var id: Long = 0
 
-    val appState by lazy { storage.appState.asStateFlow() }
-    val client by lazy { storage.client.asStateFlow() }
-    val trainer by lazy { storage.trainer.asStateFlow() }
+    private val _appState = MutableStateFlow(EAppState.AUTH)
+    val appState = _appState.asStateFlow()
+
+    private val _client by lazy { MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true)) }
+    val client by lazy { _client.asStateFlow() }
+
+    private val _trainer by lazy { MutableStateFlow(TrainerEntity(id = 0)) }
+    val trainer by lazy { _trainer.asStateFlow() }
 
     private val toastFlow = MutableSharedFlow<EToast>()
     fun getToastFlow() = toastFlow.asSharedFlow()
     suspend fun toast(value: EToast) = toastFlow.emit(value)
 
     suspend fun init(context: Context) {
-        storage = AppLocalStorage(context)
+        storage = AppStorage(context)
 
         val state = storage.getSavedState()
-        if (state != EAppState.NONE) {
+        if (state != EAppState.AUTH) {
             id = storage.getSavedId()
             network.refreshToken = storage.database.getRefreshTokenById(id)
 
             if (state == EAppState.CLIENT) {
-                storage.client.value = storage.database.getClient(id)
+                _client.value = storage.database.getClient(id)
             }
         }
-        storage.appState.value = state
+        _appState.value = state
+    }
+
+    private fun setState(state: EAppState) {
+        storage.setSavedState(state.value)
+        _appState.value = state
     }
 
     suspend fun signUpClient(request: SignUpRequest) = network.signUpClient(request)
@@ -53,7 +65,6 @@ object Repository {
     suspend fun getClient() = network.getClient()
     suspend fun clientAddCard(request: ClientAddCardRequest) = network.clientAddCard(request)
     suspend fun clientGetDayCards(day: Int, month: Int, year: Int) = network.clientGetDayCards(day, month, year)
-
 
     suspend fun addCardToStorage(card: CardResponse) {
         val cardEntity = CardEntity(
@@ -74,24 +85,21 @@ object Repository {
             )
         )
         storage.setSavedId(id)
-        storage.setState(when(response.role) {
+        network.refreshToken = response.refreshToken
+        network.accessToken = response.accessToken
+        setState(when(response.role) {
             ERole.CLIENT -> EAppState.CLIENT
             ERole.TRAINER -> EAppState.TRAINER
         })
-        network.refreshToken = response.refreshToken
-        network.accessToken = response.accessToken
     }
 
     suspend fun signOut() {
-        val state = appState.value
-        storage.setState(EAppState.NONE)
-
         network.refreshToken = ""
         network.accessToken = null
 
         storage.database.deleteAllCards()
         storage.database.deleteAccount(id)
-        when(state) {
+        when(appState.value) {
             EAppState.CLIENT -> storage.database.deleteClient(id)
             EAppState.TRAINER -> {}
             else -> return
@@ -99,6 +107,8 @@ object Repository {
 
         id = 0
         storage.setSavedId(id)
+
+        setState(EAppState.AUTH)
     }
 
     suspend fun setClient(client: ClientResponse) {
@@ -110,7 +120,7 @@ object Repository {
             trackWeight = client.trackWeight,
         )
         storage.database.insertClient(clientEntity)
-        storage.client.value = clientEntity
+        _client.value = clientEntity
     }
 
 }

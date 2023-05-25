@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation.screens.shared
+package com.mynimef.foodmood.presentation.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,40 +23,41 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavigationAuth
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SignInScreen(
-    navigateTo: (route: ENavigationAuth) -> Unit
+fun SignUpScreenThird(
+    navigateTo: (route: String) -> Unit,
+    viewModel: SignUpViewModel,
 ) {
-    val viewModel: SignInViewModel = viewModel()
-
-    SignInScreen(
+    SignUpScreenThird(
         navigateTo = navigateTo,
-        signIn = viewModel::signIn,
-        email = viewModel.email.collectAsState().value,
-        setEmail = viewModel::setEmail,
+        login = viewModel.email.collectAsState().value,
+        setLogin = viewModel::setEmail,
         password = viewModel.password.collectAsState().value,
         setPassword = viewModel::setPassword,
-        buttonActive = viewModel.buttonActive.collectAsState().value,
+        repeatPassword = viewModel.repeatPassword.collectAsState().value,
+        setRepeatPassword = viewModel::setRepeatPassword,
+        signUp = viewModel::signUp,
+        buttonActive = viewModel.secondButtonActive.collectAsState().value,
     )
 }
 
 @Composable
-private fun SignInScreen(
-    navigateTo: (route: ENavigationAuth) -> Unit,
-    signIn: () -> Unit,
-    email: String,
-    setEmail: (String) -> Unit,
+private fun SignUpScreenThird(
+    navigateTo: (route: String) -> Unit,
+    login: String,
+    setLogin: (String) -> Unit,
     password: String,
     setPassword: (String) -> Unit,
+    repeatPassword: String,
+    setRepeatPassword: (String) -> Unit,
     buttonActive: Boolean,
+    signUp: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -65,27 +66,32 @@ private fun SignInScreen(
     ) {
         CenterElements(
             navigateTo = navigateTo,
-            signIn = signIn,
-            email = email,
-            setEmail = setEmail,
+            login = login,
+            setLogin = setLogin,
             password = password,
             setPassword = setPassword,
-            buttonActive = buttonActive,
+            repeatPassword = repeatPassword,
+            setRepeatPassword = setRepeatPassword,
+            signUp = signUp,
+            buttonActive = buttonActive
         )
     }
 }
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: ENavigationAuth) -> Unit,
-    signIn: () -> Unit,
-    email: String,
-    setEmail: (String) -> Unit,
+    navigateTo: (route: String) -> Unit,
+    login: String,
+    setLogin: (String) -> Unit,
     password: String,
     setPassword: (String) -> Unit,
+    repeatPassword: String,
+    setRepeatPassword: (String) -> Unit,
     buttonActive: Boolean,
+    signUp: () -> Unit,
 ) {
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
+    val repeatPasswordVisible = rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -96,18 +102,18 @@ private fun CenterElements(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.welcome),
             modifier = Modifier.padding(bottom = 30.dp),
+            text = stringResource(R.string.final_signup),
             style = MaterialTheme.typography.titleLarge
         )
 
         MyTextFieldLogin(
-            value = email,
+            value = login,
             label = stringResource(R.string.email),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            isError = false,
             visualTransformation = VisualTransformation.None,
-            onValueChange = setEmail
+            isError = false,
+            onValueChange = setLogin,
         )
 
         MyTextFieldLogin(
@@ -115,7 +121,6 @@ private fun CenterElements(
             label = stringResource(R.string.password),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-            isError = password.length !in 8..20 && password.isNotEmpty(),
             trailingIcon = {
                 IconButton(
                     onClick = { passwordVisible.value = !passwordVisible.value }
@@ -123,40 +128,52 @@ private fun CenterElements(
                     MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
                 }
             },
-            onValueChange = setPassword
+            isError = password.length !in 8..20 && password.isNotEmpty(),
+            onValueChange = setPassword,
+        )
+
+        MyTextFieldLogin(
+            value = repeatPassword,
+            label = stringResource(R.string.repeat_pass),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (repeatPasswordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(
+                    onClick = { repeatPasswordVisible.value = !repeatPasswordVisible.value }
+                ) {
+                    MyIcon(drawableId = if (repeatPasswordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
+                }
+            },
+            isError = repeatPassword.length !in 8..20 && repeatPassword.isNotEmpty() || (repeatPassword!=password && repeatPassword.isNotEmpty()),
+            onValueChange = setRepeatPassword,
         )
 
         MyLoginButton(
-            text = stringResource(R.string.signin),
+            text = stringResource(R.string.complete),
             enabled = buttonActive,
-            onClick = signIn
+            onClick = signUp
         )
-
-        MyLoginButton(
-            text = stringResource(R.string.signup)
-        ) {
-            navigateTo(ENavigationAuth.SIGN_UP)
-        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun SignInScreenPreview() {
+private fun SignUpThirdScreenPreview() {
     FoodMoodTheme {
-        val email = remember { mutableStateOf("") }
+        val login = remember { mutableStateOf("") }
         val password = remember { mutableStateOf("") }
+        val repeatPassword = remember { mutableStateOf("") }
 
-        SignInScreen(
+        SignUpScreenThird(
             navigateTo = {},
-            signIn = {},
-            email = email.value,
-            setEmail = { email.value = it },
+            login = login.value,
+            setLogin = { login.value = it },
             password = password.value,
             setPassword = { password.value = it },
-            buttonActive = true,
+            repeatPassword = repeatPassword.value,
+            setRepeatPassword = { repeatPassword.value = it },
+            signUp = {},
+            buttonActive = true
         )
-
-        SignInScreen {}
     }
 }
