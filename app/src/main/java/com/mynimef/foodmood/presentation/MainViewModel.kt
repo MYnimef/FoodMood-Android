@@ -15,6 +15,7 @@ class MainViewModel: ViewModel() {
     private var job: Job? = null
 
     val toastFlow = Repository.getToastFlow()
+    val appState = Repository.appState
 
     private val _dataLoaded = MutableStateFlow(false)
     val dataLoaded = _dataLoaded.asStateFlow()
