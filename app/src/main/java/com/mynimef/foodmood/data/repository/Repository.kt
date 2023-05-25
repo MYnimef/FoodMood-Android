@@ -76,12 +76,15 @@ object Repository {
     }
 
     suspend fun signOut() {
+        val state = appState.value
+        storage.setState(EAppState.NONE)
+
         network.refreshToken = ""
         network.accessToken = null
 
         storage.database.deleteAllCards()
         storage.database.deleteAccount(id)
-        when(appState.value) {
+        when(state) {
             EAppState.CLIENT -> storage.database.deleteClient(id)
             EAppState.TRAINER -> {}
             else -> return
@@ -89,7 +92,6 @@ object Repository {
 
         id = 0
         storage.setSavedId(id)
-        storage.setState(EAppState.NONE)
     }
 
     suspend fun setClient(client: ClientResponse) {

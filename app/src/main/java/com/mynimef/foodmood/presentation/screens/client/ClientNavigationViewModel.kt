@@ -8,22 +8,30 @@ import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class ClientNavigationViewModel: ViewModel() {
 
     private var job: Job? = null
 
+    private val _toastMessage = MutableSharedFlow<String>()
+    val toastMessage = _toastMessage.asSharedFlow()
+
     fun initClient() {
         job = CoroutineScope(Dispatchers.IO).launch {
             when (val result = Repository.getClient()) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> Repository.signOut()
+                        401 -> {
+                            _toastMessage.emit("Authentication failed")
+                            Repository.signOut()
+                        }
                         else -> {}
                     }
                 }
-                is ApiException -> {}
+                is ApiException -> _toastMessage.emit("No connection")
                 is ApiSuccess -> Repository.setClient(result.data)
             }
         }

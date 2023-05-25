@@ -10,13 +10,18 @@ import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SignUpViewModel: ViewModel() {
 
     private var job: Job? = null
+
+    private val _toastMessage = MutableSharedFlow<String>()
+    val toastMessage = _toastMessage.asSharedFlow()
 
     private val _name = MutableStateFlow("")
     val name = _name.asStateFlow()
@@ -105,11 +110,12 @@ class SignUpViewModel: ViewModel() {
             when (val result = Repository.signUpClient(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> {}
+                        403 -> _toastMessage.emit("Wrong input data")
+                        409 -> _toastMessage.emit("Account already exists")
                         else -> {}
                     }
                 }
-                is ApiException -> {}
+                is ApiException -> _toastMessage.emit("No connection")
                 is ApiSuccess -> Repository.signIn(result.data)
             }
         }

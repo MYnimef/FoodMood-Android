@@ -67,6 +67,14 @@ class AppNetwork {
     private suspend fun <T: Any> handleAuthApi(
         execute: suspend (token: String) -> Response<T>,
     ): ApiResult<T> {
+        if (accessToken == null) {
+            val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(refreshToken)) }
+            if (refreshResult is ApiSuccess) {
+                accessToken = refreshResult.data.accessToken
+            } else {
+                return refreshResult as ApiResult<T>
+            }
+        }
         val result = handleApi { execute(accessToken!!) }
         if (result is ApiError && result.code == 401) {
             val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(refreshToken)) }
