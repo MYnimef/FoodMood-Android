@@ -15,7 +15,8 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.sp),
+        letterSpacing = 0.sp
+    ),
 
     bodyMedium = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
@@ -43,6 +44,7 @@ val Typography = Typography(
         letterSpacing = 0.sp,
         color = Green
     ),
+
     titleMedium = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
         fontWeight = FontWeight.Medium,
@@ -51,6 +53,7 @@ val Typography = Typography(
         letterSpacing = 0.sp,
         color = DarkestGreen
     ),
+
     titleSmall = TextStyle(
         fontFamily = Font(R.font.rubik).toFontFamily(),
         fontWeight = FontWeight.Medium,
