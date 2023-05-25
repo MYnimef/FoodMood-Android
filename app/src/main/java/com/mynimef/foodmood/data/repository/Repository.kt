@@ -6,12 +6,15 @@ import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.enums.ERole
+import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.responses.CardResponse
 import com.mynimef.foodmood.data.models.responses.ClientResponse
 import com.mynimef.foodmood.data.models.responses.SignInResponse
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 object Repository {
@@ -24,6 +27,10 @@ object Repository {
     val appState by lazy { storage.appState.asStateFlow() }
     val client by lazy { storage.client.asStateFlow() }
     val trainer by lazy { storage.trainer.asStateFlow() }
+
+    private val toastFlow = MutableSharedFlow<EToast>()
+    fun getToastFlow() = toastFlow.asSharedFlow()
+    suspend fun toast(value: EToast) = toastFlow.emit(value)
 
     suspend fun init(context: Context) {
         storage = AppLocalStorage(context)

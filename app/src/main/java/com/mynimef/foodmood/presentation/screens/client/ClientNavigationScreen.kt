@@ -19,14 +19,13 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavigationClient
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
-import com.mynimef.foodmood.presentation.elements.MyToast
 import com.mynimef.foodmood.presentation.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun ClientNavigationScreen() {
     val viewModel: ClientNavigationViewModel = viewModel()
-    MyToast(viewModel.toastMessage)
+
     ClientNavigationScreen(
         initClient = viewModel::initClient
     )
