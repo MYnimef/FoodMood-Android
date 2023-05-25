@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,6 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -33,19 +38,30 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun HomeScreen() {
     val viewModel: HomeViewModel = viewModel()
+
     HomeScreen(
         water = viewModel.water.collectAsState().value,
         setWater = viewModel::setWater,
-        cards = viewModel.getCards().collectAsState(initial = emptyList()).value
+        cards = viewModel.getCards().collectAsState(initial = emptyList()).value,
+        refreshing = viewModel.refreshing.collectAsState().value,
+        onRefresh = viewModel::update
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun HomeScreen(
     water: Float,
     setWater: (Float) -> Unit,
     cards: List<CardEntity>,
+    refreshing: Boolean,
+    onRefresh: () -> Unit,
 ) {
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = refreshing,
+        onRefresh = onRefresh
+    )
+
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -53,11 +69,22 @@ private fun HomeScreen(
     ) {
         MyDate()
         Spacer(modifier = Modifier.height(20.dp))
-        CenterElements(
-            progress = water,
-            setWater = setWater,
-            cards = cards
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pullRefresh(pullRefreshState)
+        ) {
+            CenterElements(
+                progress = water,
+                setWater = setWater,
+                cards = cards,
+            )
+            PullRefreshIndicator(
+                refreshing = refreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
     }
 }
 
@@ -142,6 +169,8 @@ private fun HomeScreenPreview() {
             water = 0f,
             setWater = {},
             cards = cards,
+            refreshing = false,
+            onRefresh = {}
         )
     }
 }
