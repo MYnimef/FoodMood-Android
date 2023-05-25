@@ -9,6 +9,7 @@ import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.models.enums.ERole
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
+import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
@@ -63,7 +64,7 @@ object Repository {
     suspend fun signUpClient(request: SignUpRequest) = network.signUpClient(request)
     suspend fun signIn(request: SignInRequest) = network.signIn(request)
 
-    suspend fun clientGetInfo(timeZone: String) = network.clientGetInfo(timeZone)
+    suspend fun clientGetInfo(request: ClientInfoRequest) = network.clientGetInfo(request)
     suspend fun clientAddCard(request: ClientAddCardRequest) = network.clientAddCard(request)
     suspend fun clientGetDayCards(day: Int, month: Int, year: Int) = network.clientGetDayCards(day, month, year)
     suspend fun clientIncreaseWater(request: WaterIncreaseRequest) = network.clientIncreaseWater(request)
@@ -114,6 +115,10 @@ object Repository {
     }
 
     suspend fun initClient(client: ClientInfoResponse) {
+        storage.database.deleteAllCards()
+        client.dayCards.forEach {
+            addCardToStorage(it)
+        }
         val clientEntity = ClientEntity(
             id = id,
             name = client.name,
@@ -124,10 +129,6 @@ object Repository {
         )
         storage.database.insertClient(clientEntity)
         _client.value = clientEntity
-        storage.database.deleteAllCards()
-        client.dayCards.forEach {
-            addCardToStorage(it)
-        }
     }
 
 }

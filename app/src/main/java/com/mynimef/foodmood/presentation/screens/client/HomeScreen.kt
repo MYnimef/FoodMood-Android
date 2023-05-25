@@ -67,14 +67,12 @@ private fun CenterElements(
     setWater: (Float) -> Unit,
     cards: List<CardEntity>,
 ) {
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 30.dp)
-            //.verticalScroll(rememberScrollState())
         ,
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.Start
     ) {
         item {
@@ -96,7 +94,9 @@ private fun CenterElements(
                 textEmotion = card.emotionDescription,
                 iconEmotionId = card.emotionType.icon,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+        }
+        item {
+            Spacer(modifier = Modifier.padding(vertical = 20.dp))
         }
     }
 }

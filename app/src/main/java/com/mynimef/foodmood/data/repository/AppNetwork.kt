@@ -5,6 +5,7 @@ import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiResult
 import com.mynimef.foodmood.data.models.ApiSuccess
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
+import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.RefreshTokenRequest
 import com.mynimef.foodmood.data.repository.api.AuthAPI
 import com.mynimef.foodmood.data.models.requests.SignInRequest
@@ -41,8 +42,8 @@ class AppNetwork {
     suspend fun signIn(request: SignInRequest) =
         handleApi { authAPI.signIn(request) }
 
-    suspend fun clientGetInfo(timeZone: String) =
-        handleAuthApi { clientAPI.getInfo(it, timeZone) }
+    suspend fun clientGetInfo(request: ClientInfoRequest) =
+        handleAuthApi { clientAPI.getInfo(it, request) }
     suspend fun clientAddCard(request: ClientAddCardRequest) =
         handleAuthApi { clientAPI.addCard(it, request) }
     suspend fun clientGetDayCards(day: Int, month: Int, year: Int) =
