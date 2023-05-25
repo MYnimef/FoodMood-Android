@@ -1,10 +1,8 @@
 package com.mynimef.foodmood.presentation.screens.shared
 
 
-import android.content.res.Resources
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
@@ -16,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -116,12 +113,12 @@ class SignUpViewModel: ViewModel() {
             when (val result = Repository.signUpClient(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        403 -> _toastMessage.emit(EToast.TOAST403)
-                        409 -> _toastMessage.emit(EToast.TOAST409)
+                        403 -> _toastMessage.emit(EToast.WRONG_INPUT)
+                        409 -> _toastMessage.emit(EToast.ACCOUNT_ALREADY_EXISTS)
                         else -> {}
                     }
                 }
-                is ApiException -> _toastMessage.emit(EToast.TOASTNOCON)
+                is ApiException -> _toastMessage.emit(EToast.NO_CONNECTION)
                 is ApiSuccess -> Repository.signIn(result.data)
             }
         }

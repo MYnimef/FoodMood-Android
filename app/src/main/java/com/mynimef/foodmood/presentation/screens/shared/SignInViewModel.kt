@@ -61,12 +61,12 @@ class SignInViewModel: ViewModel() {
             when (val result = Repository.signIn(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> _toastMessage.emit(EToast.TOAST401SIGNIN)
-                        403 -> _toastMessage.emit(EToast.TOAST403)
+                        401 -> _toastMessage.emit(EToast.WRONG_EMAIL_OR_PASSWORD)
+                        403 -> _toastMessage.emit(EToast.WRONG_INPUT)
                         else -> {}
                     }
                 }
-                is ApiException -> _toastMessage.emit(EToast.TOASTNOCON)
+                is ApiException -> _toastMessage.emit(EToast.NO_CONNECTION)
                 is ApiSuccess -> Repository.signIn(result.data)
             }
         }

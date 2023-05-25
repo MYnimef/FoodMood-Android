@@ -26,13 +26,13 @@ class ClientNavigationViewModel: ViewModel() {
                 is ApiError -> {
                     when (result.code) {
                         401 -> {
-                            _toastMessage.emit(EToast.TOAST401CLIENT)
+                            _toastMessage.emit(EToast.AUTH_FAILED)
                             Repository.signOut()
                         }
                         else -> {}
                     }
                 }
-                is ApiException -> _toastMessage.emit(EToast.TOASTNOCON)
+                is ApiException -> _toastMessage.emit(EToast.NO_CONNECTION)
                 is ApiSuccess -> Repository.setClient(result.data)
             }
         }
