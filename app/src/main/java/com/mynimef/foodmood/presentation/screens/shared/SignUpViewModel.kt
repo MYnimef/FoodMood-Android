@@ -1,10 +1,8 @@
 package com.mynimef.foodmood.presentation.screens.shared
 
 
-import android.content.res.Resources
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
@@ -14,10 +12,7 @@ import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -25,9 +20,6 @@ import kotlinx.coroutines.launch
 class SignUpViewModel: ViewModel() {
 
     private var job: Job? = null
-
-    private val _toastMessage = MutableSharedFlow<EToast>()
-    val toastMessage = _toastMessage.asSharedFlow()
 
     private val _name = MutableStateFlow("")
     val name = _name.asStateFlow()
@@ -116,12 +108,12 @@ class SignUpViewModel: ViewModel() {
             when (val result = Repository.signUpClient(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        403 -> _toastMessage.emit(EToast.TOAST403)
-                        409 -> _toastMessage.emit(EToast.TOAST409)
+                        403 -> Repository.toast(EToast.WRONG_INPUT)
+                        409 -> Repository.toast(EToast.ACCOUNT_ALREADY_EXISTS)
                         else -> {}
                     }
                 }
-                is ApiException -> _toastMessage.emit(EToast.TOASTNOCON)
+                is ApiException -> Repository.toast(EToast.NO_CONNECTION)
                 is ApiSuccess -> Repository.signIn(result.data)
             }
         }
