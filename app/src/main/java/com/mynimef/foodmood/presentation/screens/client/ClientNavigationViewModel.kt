@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,7 @@ class ClientNavigationViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    private val _toastMessage = MutableSharedFlow<String>()
+    private val _toastMessage = MutableSharedFlow<EToast>()
     val toastMessage = _toastMessage.asSharedFlow()
 
     fun initClient() {
@@ -25,13 +26,13 @@ class ClientNavigationViewModel: ViewModel() {
                 is ApiError -> {
                     when (result.code) {
                         401 -> {
-                            _toastMessage.emit("Authentication failed")
+                            _toastMessage.emit(EToast.TOAST401CLIENT)
                             Repository.signOut()
                         }
                         else -> {}
                     }
                 }
-                is ApiException -> _toastMessage.emit("No connection")
+                is ApiException -> _toastMessage.emit(EToast.TOASTNOCON)
                 is ApiSuccess -> Repository.setClient(result.data)
             }
         }

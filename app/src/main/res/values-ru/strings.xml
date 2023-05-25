@@ -51,4 +51,12 @@
 
     <string name="delete">Удалить аккаунт</string>
     <string name="exit">Выйти из аккаунта</string>
+
+    <string name="emotion_chart">График эмоций</string>
+
+    <string name="toast_401_client">Ошибка аутентификации</string>
+    <string name="toast_401_signin">Неправильная почта или пароль</string>
+    <string name="toast_403">Некорректные входные данные</string>
+    <string name="toast_409">Аккаунт уже существует</string>
+    <string name="toast_no_con">Отсутствует соединение</string>
 </resources>
