@@ -5,10 +5,12 @@ import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiResult
 import com.mynimef.foodmood.data.models.ApiSuccess
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
+import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.RefreshTokenRequest
 import com.mynimef.foodmood.data.repository.api.AuthAPI
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
+import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
 import com.mynimef.foodmood.data.repository.api.ClientAPI
 import retrofit2.HttpException
 import retrofit2.Response
@@ -27,6 +29,7 @@ class AppNetwork {
     init {
         val retrofit = Retrofit.Builder()
             .baseUrl("http://77.232.135.37:8080/")
+            //.baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -39,12 +42,14 @@ class AppNetwork {
     suspend fun signIn(request: SignInRequest) =
         handleApi { authAPI.signIn(request) }
 
-    suspend fun getClient() =
-        handleAuthApi { clientAPI.getClient(it) }
+    suspend fun clientGetInfo(request: ClientInfoRequest) =
+        handleAuthApi { clientAPI.getInfo(it, request) }
     suspend fun clientAddCard(request: ClientAddCardRequest) =
         handleAuthApi { clientAPI.addCard(it, request) }
     suspend fun clientGetDayCards(day: Int, month: Int, year: Int) =
         handleAuthApi { clientAPI.getDateCards(it, day, month, year) }
+    suspend fun clientIncreaseWater(request: WaterIncreaseRequest) =
+        handleAuthApi { clientAPI.increaseWater(it, request) }
 
     private suspend fun <T: Any> handleApi(
         execute: suspend () -> Response<T>

@@ -42,11 +42,15 @@ class CreateViewModel: ViewModel() {
         navigation(ENavigationCreate.ADD_CARD)
     }
 
-    fun setTextEmotion(value: String) {
+    fun setEmotionType(value: ETypeEmotion) {
+        _emotionType.value = value
+    }
+
+    fun setEmotionDescription(value: String) {
         _emotionDescription.value = value
     }
 
-    fun setTextFood(value: String) {
+    fun setFoodDescription(value: String) {
         _foodDescription.value = value
     }
 

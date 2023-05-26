@@ -47,11 +47,12 @@ fun CreateScreenSecond(
     CreateScreenSecond(
         mealType = viewModel.mealType.collectAsState().value,
         emotionType = viewModel.emotionType.collectAsState().value,
+        setEmotionType = viewModel::setEmotionType,
         emotionDescription = viewModel.emotionDescription.collectAsState().value,
-        setEmotionDescription = viewModel::setTextEmotion,
+        setEmotionDescription = viewModel::setEmotionDescription,
         trackFood = client.trackFood,
         foodDescription = viewModel.foodDescription.collectAsState().value,
-        setFoodDescription = viewModel::setTextFood,
+        setFoodDescription = viewModel::setFoodDescription,
         onComplete = viewModel::create,
     )
 }
@@ -60,6 +61,7 @@ fun CreateScreenSecond(
 private fun CreateScreenSecond(
     mealType: ETypeMeal,
     emotionType: ETypeEmotion,
+    setEmotionType: (ETypeEmotion) -> Unit,
     emotionDescription: String,
     setEmotionDescription: (String) -> Unit,
     trackFood: Boolean,
@@ -75,6 +77,7 @@ private fun CreateScreenSecond(
         CenterElements(
             mealType = mealType,
             emotionType = emotionType,
+            setEmotionType = setEmotionType,
             emotionDescription = emotionDescription,
             setEmotionDescription = setEmotionDescription,
             trackFood = trackFood,
@@ -89,6 +92,7 @@ private fun CreateScreenSecond(
 private fun CenterElements(
     mealType: ETypeMeal,
     emotionType: ETypeEmotion,
+    setEmotionType: (ETypeEmotion) -> Unit,
     emotionDescription: String,
     setEmotionDescription: (String) -> Unit,
     trackFood: Boolean,
@@ -143,11 +147,31 @@ private fun CenterElements(
                         alignment = Alignment.CenterHorizontally,
                     )
                 ) {
-                    MyEmotionButton(drawableId = ETypeEmotion.GREAT.icon)
-                    MyEmotionButton(drawableId = ETypeEmotion.GOOD.icon)
-                    MyEmotionButton(drawableId = ETypeEmotion.NORMAL.icon)
-                    MyEmotionButton(drawableId = ETypeEmotion.BAD.icon)
-                    MyEmotionButton(drawableId = ETypeEmotion.VERY_BAD.icon)
+                    MyEmotionButton(
+                        emotion = ETypeEmotion.GREAT,
+                        selectedEmotion = emotionType,
+                        onClick = setEmotionType
+                    )
+                    MyEmotionButton(
+                        emotion = ETypeEmotion.GOOD,
+                        selectedEmotion = emotionType,
+                        onClick = setEmotionType
+                    )
+                    MyEmotionButton(
+                        emotion = ETypeEmotion.NORMAL,
+                        selectedEmotion = emotionType,
+                        onClick = setEmotionType
+                    )
+                    MyEmotionButton(
+                        emotion = ETypeEmotion.BAD,
+                        selectedEmotion = emotionType,
+                        onClick = setEmotionType
+                    )
+                    MyEmotionButton(
+                        emotion = ETypeEmotion.VERY_BAD,
+                        selectedEmotion = emotionType,
+                        onClick = setEmotionType
+                    )
                 }
             }
             EditDescription(
@@ -213,6 +237,7 @@ private fun CreateScreenSecondPreview() {
         CreateScreenSecond(
             mealType = ETypeMeal.DINNER,
             emotionType = ETypeEmotion.NORMAL,
+            setEmotionType = {},
             emotionDescription = "",
             setEmotionDescription = {},
             trackFood = true,
