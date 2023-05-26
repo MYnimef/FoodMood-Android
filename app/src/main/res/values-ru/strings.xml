@@ -35,6 +35,9 @@
     <string name="food_question">Что ты ел?</string>
     <string name="pick">Выберите\nтип</string>
     <string name="write_here">Напиши здесь</string>
+    <string name="weight_title">Введите текущий вес</string>
+    <string name="cancel">Отменить</string>
+    <string name="enter">Ввести</string>
 
     <string name="type_food_breakfast">Завтрак</string>
     <string name="type_food_dinner">Обед</string>

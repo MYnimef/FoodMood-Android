@@ -22,11 +22,11 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun MyChoiceCard(
-    modifier: Modifier,
+    modifier: Modifier = Modifier.size(100.dp),
     drawableId: Int,
-    drawableFraction: Float,
+    drawableFraction: Float = 0.7f,
     stringId: Int,
-    fontSize: TextUnit,
+    fontSize: TextUnit = 18.sp,
     onClick: () -> Unit,
 ) {
     Box(modifier = modifier) {

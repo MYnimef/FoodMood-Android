@@ -35,6 +35,9 @@
     <string name="food_question">What did you eat?</string>
     <string name="write_here">Write here</string>
     <string name="pick">Pick\ntype</string>
+    <string name="weight_title">Enter the current weight</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter">Enter</string>
 
     <string name="type_food_breakfast">Breakfast</string>
     <string name="type_food_dinner">Dinner</string>

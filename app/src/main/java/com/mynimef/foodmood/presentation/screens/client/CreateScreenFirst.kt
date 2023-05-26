@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,17 +28,25 @@ fun CreateScreenFirst(
     viewModel: CreateViewModel
 ) {
     CreateScreenFirst(
-        setMealType = viewModel::setMealType
+        setMealType = viewModel::setMealType,
+        weight = viewModel.weight.collectAsState().value,
+        setWeight = viewModel::setWeight,
+        isDialogShown = viewModel.isDialogShown.collectAsState().value,
+        triggerDialogShown = viewModel::triggerDialogShown,
     )
 }
 
 @Composable
 private fun CreateScreenFirst(
     setMealType: (ETypeMeal) -> Unit,
+    weight: Float,
+    setWeight: (Float) -> Unit,
+    isDialogShown: Boolean,
+    triggerDialogShown: () -> Unit,
 ) {
     Box(
-       modifier = Modifier.fillMaxSize(),
-       contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = stringResource(id = R.string.pick),
@@ -65,6 +76,14 @@ private fun CreateScreenFirst(
             ) {
                 setMealType(ETypeMeal.LUNCH)
             }
+
+            MyChoiceCard(
+                drawableId = R.drawable.ic_weight,
+                stringId = R.string.weight,
+            ) {
+                triggerDialogShown()
+            }
+
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_lunch,
                 stringId = R.string.type_food_snack1,
@@ -78,32 +97,35 @@ private fun CreateScreenFirst(
                 setMealType(ETypeMeal.SUPPER)
             }
         }
+        if(isDialogShown){
+            MyWeight(
+                onDismiss = triggerDialogShown,
+                onConfirm = {
+                    //
+                },
+                weight = weight,
+                setWeight = setWeight
+            )
+        }
     }
-}
-
-@Composable
-private fun MyChoiceCard(
-    drawableId: Int,
-    stringId: Int,
-    onClick: () -> Unit,
-) {
-    MyChoiceCard(
-        modifier = Modifier
-            .size(100.dp),
-        drawableId = drawableId,
-        drawableFraction = 0.7f,
-        stringId = stringId,
-        fontSize = 18.sp,
-        onClick = onClick,
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun CardsChoicePreview() {
     FoodMoodTheme {
+        val weight = remember { mutableStateOf(0f) }
+        val isDialogShown = remember { mutableStateOf(false) }
         CreateScreenFirst(
-            setMealType = {}
+            weight = weight.value,
+            setWeight = {
+                weight.value = it
+            },
+            setMealType = {},
+            isDialogShown = isDialogShown.value,
+            triggerDialogShown = {
+                isDialogShown.value = !isDialogShown.value
+            }
         )
     }
 }
