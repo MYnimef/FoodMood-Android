@@ -119,7 +119,7 @@ private fun CenterElements(
             modifier = Modifier.padding(bottom = 30.dp),
             maxDate = LocalDate.now(),
         ) {
-            snappedDate -> setBirthday}
+            snappedDate -> setBirthday(snappedDate.toString())}
 
         MyLoginButton(
             text = stringResource(R.string.next),
