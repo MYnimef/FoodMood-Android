@@ -10,7 +10,7 @@
 
     <string name="name">Имя</string>
     <string name="repeat_pass">Повторите пароль</string>
-    <string name="birthday">Дата рождения</string>
+    <string name="birthday">Укажите дату рождения</string>
 
     <string name="next">Далее</string>
     <string name="pref">Что будем отслеживать?</string>
@@ -53,6 +53,7 @@
     <string name="exit">Выйти из аккаунта</string>
 
     <string name="emotion_chart">График эмоций</string>
+    <string name="calendar">Календарь</string>
 
     <string name="toast_401_client">Ошибка аутентификации</string>
     <string name="toast_401_signin">Неправильная почта или пароль</string>

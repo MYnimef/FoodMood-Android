@@ -1,5 +1,9 @@
 package com.mynimef.foodmood.presentation.screens.auth
 
+import MyDatePicker
+import android.app.DatePickerDialog
+import android.icu.util.LocaleData
+import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,16 +26,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
-import com.maxkeppeler.sheets.calendar.CalendarDialog
-import com.maxkeppeler.sheets.calendar.models.CalendarConfig
-import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import com.commandiron.wheel_picker_compose.WheelDatePicker
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavigationAuth
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import java.time.LocalDate
 
 @Composable
 fun SignUpScreenFirst(
@@ -84,19 +86,6 @@ private fun CenterElements(
     setBirthday: (String) -> Unit,
     buttonActive: Boolean,
 ) {
-    val calendarState = rememberUseCaseState()
-
-    CalendarDialog(
-        state = calendarState,
-        config = CalendarConfig(
-            monthSelection = true,
-            yearSelection = true,
-        ),
-        selection = CalendarSelection.Date { date ->
-            setBirthday(date.toString())
-        }
-    )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -120,24 +109,17 @@ private fun CenterElements(
             onValueChange = setName,
         )
 
-        MyTextFieldLogin(
-            value = birthday,
-            label = stringResource(R.string.birthday),
-            readOnly = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            visualTransformation = VisualTransformation.None,
-            trailingIcon = {
-                IconButton(
-                    onClick = {
-                        calendarState.show()
-                    }
-                ) {
-                    MyIcon(drawableId = R.drawable.ic_date_picker)
-                }
-            },
-            isError = false,
-            onValueChange = setBirthday
+        Text(
+            modifier = Modifier.padding(bottom = 30.dp).align(Alignment.Start),
+            text = stringResource(R.string.birthday),
+            style = MaterialTheme.typography.bodyLarge
         )
+
+        WheelDatePicker(
+            modifier = Modifier.padding(bottom = 30.dp),
+            maxDate = LocalDate.now(),
+        ) {
+            snappedDate -> setBirthday}
 
         MyLoginButton(
             text = stringResource(R.string.next),
