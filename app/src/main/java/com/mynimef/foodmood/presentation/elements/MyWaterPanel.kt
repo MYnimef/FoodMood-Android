@@ -73,6 +73,13 @@ fun MyWaterPanel( setWater: (Float) -> Unit) {
                 onClick = {
                     setWater(0.15f)
                 })
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 6.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
 
             MyChoiceCard(
                 modifier = Modifier.size(100.dp),
@@ -84,7 +91,6 @@ fun MyWaterPanel( setWater: (Float) -> Unit) {
                     setWater(0.2f)
                 })
 
-
             MyChoiceCard(
                 modifier = Modifier.size(100.dp),
                 drawableId = R.drawable.ic_bottle,
@@ -94,7 +100,6 @@ fun MyWaterPanel( setWater: (Float) -> Unit) {
                 onClick = {
                     setWater(0.25f)
                 })
-
 
             MyChoiceCard(
                 modifier = Modifier.size(100.dp),
@@ -106,7 +111,6 @@ fun MyWaterPanel( setWater: (Float) -> Unit) {
                     setWater(0.3f)
                 })
         }
-
     }
 }
 
