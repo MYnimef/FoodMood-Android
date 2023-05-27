@@ -1,6 +1,5 @@
 package com.mynimef.foodmood.presentation.screens.auth
 
-
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-
 
 class SignUpViewModel: ViewModel() {
 
