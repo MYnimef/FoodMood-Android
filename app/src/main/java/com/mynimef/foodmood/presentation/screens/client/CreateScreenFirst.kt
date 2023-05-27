@@ -3,7 +3,6 @@ package com.mynimef.foodmood.presentation.screens.client
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,11 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyChoiceCard
 import com.mynimef.foodmood.presentation.elements.MyPolygonLayout
+import com.mynimef.foodmood.presentation.elements.MyWeight
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
