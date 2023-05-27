@@ -55,6 +55,7 @@ fun MyChart(
     markCoordinates: Boolean = false,
     markColor: Color = Color.Red,
     markRadius: Float = 10f,
+    lineColor: Color = Color.Black,
     underColors: List<Color> = emptyList(),
     paddingSpace: Dp,
 ) {
@@ -184,7 +185,7 @@ fun MyChart(
 
             drawPath(
                 stroke,
-                color = Color.Black,
+                color = lineColor,
                 style = Stroke(
                     width = 5f,
                     cap = StrokeCap.Round
@@ -224,11 +225,8 @@ fun MyChartTextPreview() {
                 Pair(4f, 0f),
                 Pair(5f, 2f),
             ),
+            lineColor = Color.Blue,
             markCoordinates = true,
-            underColors = listOf(
-                Color.Cyan,
-                Color.Transparent,
-            ),
             paddingSpace = 2.dp,
         )
     }
