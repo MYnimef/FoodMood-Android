@@ -100,13 +100,13 @@ private fun CenterElements(
             RadioButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 selected = true, onClick = { },
-                colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primaryContainer))
+                colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary))
             TextButton( onClick = {},) {
                 Text(
                     stringResource(R.string.emotion),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primaryContainer)
+                    color = MaterialTheme.colorScheme.primary)
             }
         }
 

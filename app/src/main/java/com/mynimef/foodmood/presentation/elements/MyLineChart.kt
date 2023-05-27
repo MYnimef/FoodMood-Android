@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.Center
@@ -54,9 +55,9 @@ fun MyLineChart(
     iconScale: Float = 0.1f,
     coordinates: List<Pair<Float, Float>>,
     markCoordinates: Boolean = false,
-    markColor: Color = Color.Red,
+    markColor: Color = MaterialTheme.colorScheme.primary,
     markRadius: Dp = 4.dp,
-    lineColor: Color = Color.Black,
+    lineColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
     lineWidth: Dp = 2.dp,
     underColors: List<Color> = emptyList(),
     bottomPadding: Dp = 20.dp,
@@ -82,7 +83,7 @@ fun MyLineChart(
 
     Box(
         modifier = modifier
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 8.dp, vertical = 12.dp)
         ,
         contentAlignment = Center,
@@ -229,7 +230,7 @@ fun MyLineChartTextPreview() {
                 Pair(3f, 1f),
                 Pair(4f, 2f),
             ),
-            lineColor = Color.Blue,
+            lineColor = MaterialTheme.colorScheme.onPrimaryContainer,
             markCoordinates = true,
         )
     }
