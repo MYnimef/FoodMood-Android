@@ -56,6 +56,10 @@ private fun MyMavHost(
             navigateTo = navigateTo,
             viewModel = viewModel,
         ) }
+        composable("fourth") { SignUpScreenFourth(
+            navigateTo = navigateTo,
+            viewModel = viewModel,
+        ) }
     }
 }
 

@@ -53,6 +53,9 @@ class SignUpViewModel: ViewModel() {
     private val _secondButtonActive = MutableStateFlow(false)
     val secondButtonActive = _secondButtonActive.asStateFlow()
 
+    private val _thirdButtonActive = MutableStateFlow(false)
+    val thirdButtonActive = _thirdButtonActive.asStateFlow()
+
     private var emailCheck = false
     private var passwordCheck = false
 
@@ -64,10 +67,14 @@ class SignUpViewModel: ViewModel() {
     fun setBirthday(value: String) {
         _birthday.value = value
         birthdayCheck = value.isNotEmpty() && (value != LocalDate.now().toString())
-        checkFirstButtonActive()
+        checkSecondButtonActive()
     }
     private fun checkFirstButtonActive() {
-        _firstButtonActive.value = nameCheck && birthdayCheck
+        _firstButtonActive.value = nameCheck
+    }
+
+    private fun checkSecondButtonActive() {
+        _secondButtonActive.value = birthdayCheck
     }
 
     fun triggerFood() { _food.value = !_food.value }
@@ -77,20 +84,20 @@ class SignUpViewModel: ViewModel() {
     fun setEmail(value: String) {
         _email.value = value
         emailCheck = value.isNotEmpty()
-        checkSecondButtonActive()
+        checkThirdButtonActive()
     }
     fun setPassword(value: String) {
         _password.value = value
         passwordCheck = value.length >= 8 && value == _repeatPassword.value
-        checkSecondButtonActive()
+        checkThirdButtonActive()
     }
     fun setRepeatPassword(value: String) {
         _repeatPassword.value = value
         passwordCheck = value.length >= 8 && value == _password.value
-        checkSecondButtonActive()
+        checkThirdButtonActive()
     }
-    private fun checkSecondButtonActive() {
-        _secondButtonActive.value = emailCheck && passwordCheck
+    private fun checkThirdButtonActive() {
+        _thirdButtonActive.value = emailCheck && passwordCheck
     }
 
     fun signUp() {

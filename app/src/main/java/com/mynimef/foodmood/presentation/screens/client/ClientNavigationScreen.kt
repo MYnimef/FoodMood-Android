@@ -3,6 +3,7 @@ package com.mynimef.foodmood.presentation.screens.client
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ fun ClientNavigationScreen() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClientNavigationScreen(
     initClient: () -> Unit,
@@ -104,7 +106,7 @@ private fun MyMavHost(
     ) {
         composable(ENavigationClient.HOME.value) { HomeScreen() }
         composable(ENavigationClient.CREATE.value) { CreateScreen() }
-        composable(ENavigationClient.SETTINGS.value) { SettingsScreen(navigateTo = navigateTo) }
+        composable(ENavigationClient.SETTINGS.value) { SettingsScreen() }
         composable(ENavigationClient.CALENDAR.value) { CalendarScreen() }
         composable(ENavigationClient.REPORTS.value) { ReportsScreen() }
        // composable(EClientNavigation.EMAILSEND.value) { EmailSendScreen() }

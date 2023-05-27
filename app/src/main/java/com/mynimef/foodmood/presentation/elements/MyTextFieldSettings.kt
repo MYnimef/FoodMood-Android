@@ -60,7 +60,12 @@ fun MyTextFieldSettings(
             focusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unfocusedSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledSupportingTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            errorSupportingTextColor = MaterialTheme.colorScheme.error
+            errorSupportingTextColor = MaterialTheme.colorScheme.error,
+            errorTextColor = MaterialTheme.colorScheme.error,
+            disabledContainerColor = MaterialTheme.colorScheme.background,
+            errorContainerColor = MaterialTheme.colorScheme.background,
+            errorCursorColor = MaterialTheme.colorScheme.error,
+            errorIndicatorColor = MaterialTheme.colorScheme.error,
         )
     )
 }
