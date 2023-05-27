@@ -40,7 +40,7 @@ import com.mynimef.foodmood.presentation.theme.EmotionYellow
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun MyChart(
+fun MyLineChart(
     modifier : Modifier,
     xLabels: List<String>? = null,
     xIcons: List<Int>? = null,
@@ -197,9 +197,9 @@ fun MyChart(
 
 @Preview(showBackground = true)
 @Composable
-fun MyChartTextPreview() {
+fun MyLineChartTextPreview() {
     FoodMoodTheme {
-        MyChart(
+        MyLineChart(
             modifier = Modifier,
             xLabels = listOf(
                 "da",
@@ -234,9 +234,9 @@ fun MyChartTextPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun MyChartIconPreview() {
+fun MyLineChartIconPreview() {
     FoodMoodTheme {
-        MyChart(
+        MyLineChart(
             modifier = Modifier.size(200.dp, 200.dp),
             xLabels = listOf(
                 "da",
