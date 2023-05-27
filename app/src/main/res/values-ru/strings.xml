@@ -10,7 +10,7 @@
 
     <string name="name">Имя</string>
     <string name="repeat_pass">Повторите пароль</string>
-    <string name="birthday">Дата рождения</string>
+    <string name="birthday">Укажите дату рождения</string>
 
     <string name="next">Далее</string>
     <string name="pref">Что будем отслеживать?</string>
@@ -35,6 +35,9 @@
     <string name="food_question">Что ты ел?</string>
     <string name="pick">Выберите\nтип</string>
     <string name="write_here">Напиши здесь</string>
+    <string name="weight_title">Введите текущий вес</string>
+    <string name="cancel">Отменить</string>
+    <string name="enter">Ввести</string>
 
     <string name="type_food_breakfast">Завтрак</string>
     <string name="type_food_dinner">Обед</string>
@@ -53,6 +56,7 @@
     <string name="exit">Выйти из аккаунта</string>
 
     <string name="emotion_chart">График эмоций</string>
+    <string name="calendar">Календарь</string>
 
     <string name="toast_401_client">Ошибка аутентификации</string>
     <string name="toast_401_signin">Неправильная почта или пароль</string>
