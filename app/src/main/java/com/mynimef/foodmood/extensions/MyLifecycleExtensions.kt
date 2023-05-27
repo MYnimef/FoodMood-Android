@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation.extensions
+package com.mynimef.foodmood.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

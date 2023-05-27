@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
+import com.mynimef.foodmood.extensions.toInt
 import com.mynimef.foodmood.presentation.theme.EmotionDarkGreen
 import com.mynimef.foodmood.presentation.theme.EmotionGreen
 import com.mynimef.foodmood.presentation.theme.EmotionOrange
@@ -58,7 +59,8 @@ fun MyLineChart(
     lineColor: Color = Color.Black,
     lineWidth: Dp = 2.dp,
     underColors: List<Color> = emptyList(),
-    paddingSpace: Dp,
+    bottomPadding: Dp = 20.dp,
+    leftPadding: Dp = 20.dp,
 ) {
     val density = LocalDensity.current
     val textPaint = remember(density) {
@@ -88,18 +90,22 @@ fun MyLineChart(
         Canvas(
             modifier = Modifier.fillMaxSize(),
         ) {
-            val padding = paddingSpace.toPx()
+            val paddingLeft = leftPadding.toPx()
+            val paddingBottom = bottomPadding.toPx()
 
-            val xAxisSpace = (size.width - padding) / xSize
-            val yAxisSpace = size.height / ySize
+            val width = size.width - paddingLeft
+            val height = size.height - paddingBottom
+
+            val xAxisSpace = width / (xSize - (!xDiapason).toInt())
+            val yAxisSpace = height / (ySize - (!yDiapason).toInt())
 
             val iconSize = minOf(size.width, size.height) * iconScale
 
-            val xAxisIterator = if (xDiapason) 0.5f else 1f
+            val xAxisIterator = if (xDiapason) 0.5f else 0f
             xLabels?.forEachIndexed { index, value ->
                 drawContext.canvas.nativeCanvas.drawText(
                     value,
-                    xAxisSpace * (index + xAxisIterator),
+                    paddingLeft + xAxisSpace * (index - xAxisIterator),
                     size.height,
                     textPaint
                 )
@@ -111,26 +117,26 @@ fun MyLineChart(
                 ) { with(painter) { draw(Size(iconSize, iconSize)) } }
             }
 
-            val yAxisIterator = if (yDiapason) 0.5f else 1f
+            val yAxisIterator = if (yDiapason) 0.5f else 0f
             yLabels?.forEachIndexed { index, value ->
                 drawContext.canvas.nativeCanvas.drawText(
                     value,
-                    padding / 2f,
-                    size.height - yAxisSpace * (index + yAxisIterator),
+                    0f,
+                    height - yAxisSpace * (index - yAxisIterator),
                     textPaint
                 )
             }
             yPainters?.forEachIndexed { index, painter ->
                 translate(
-                    left = padding / 2f,
-                    top = size.height - yAxisSpace * (index + yAxisIterator) - iconSize / 2
+                    left = 0f,
+                    top = height - yAxisSpace * (index + yAxisIterator) - iconSize / 2
                 ) { with(painter) { draw(Size(iconSize, iconSize)) } }
             }
 
             val scaledCoordinates = mutableListOf<PointF>()
             coordinates.forEach {
-                val x = xAxisSpace * it.first
-                val y = size.height - yAxisSpace * it.second
+                val x = paddingLeft + xAxisSpace * it.first
+                val y = height - yAxisSpace * it.second
                 scaledCoordinates.add(PointF(x, y))
                 if (markCoordinates) {
                     drawCircle(
@@ -169,8 +175,8 @@ fun MyLineChart(
                 val fillPath = android.graphics.Path(stroke.asAndroidPath())
                     .asComposePath()
                     .apply {
-                        lineTo(size.width - padding, size.height)
-                        lineTo(xAxisSpace, size.height)
+                        lineTo(size.width, height)
+                        lineTo(paddingLeft, height)
                         close()
                     }
                 if (underColors.size == 1) {
@@ -181,7 +187,11 @@ fun MyLineChart(
                 } else {
                     drawPath(
                         path = fillPath,
-                        brush = Brush.verticalGradient(underColors),
+                        brush = Brush.verticalGradient(
+                            colors = underColors,
+                            startY = 0f,
+                            endY = height,
+                        ),
                     )
                 }
             }
@@ -202,35 +212,25 @@ fun MyLineChart(
 @Composable
 fun MyLineChartTextPreview() {
     FoodMoodTheme {
+        val xLabels = listOf("0", "1", "2", "3", "4")
+        val yLabels = listOf("0", "1", "2", "3", "4")
+
         MyLineChart(
             modifier = Modifier,
-            xLabels = listOf(
-                "da",
-                "2",
-                "3",
-                "4",
-                "5",
-            ),
-            xSize = 5,
-            yLabels = listOf(
-                "1",
-                "2",
-                "dada",
-                "4",
-                "5",
-            ),
-            ySize = 5,
+            xLabels = xLabels,
+            xSize = xLabels.size,
+            yLabels = yLabels,
+            ySize = yLabels.size,
             yDiapason = false,
             coordinates = listOf(
-                Pair(1f, 3f),
-                Pair(2.5f, 2f),
-                Pair(3f, 2f),
-                Pair(4f, 0f),
-                Pair(5f, 2f),
+                Pair(0f, 0f),
+                Pair(1.5f, 2f),
+                Pair(2.5f, 1.5f),
+                Pair(3f, 1f),
+                Pair(4f, 2f),
             ),
             lineColor = Color.Blue,
             markCoordinates = true,
-            paddingSpace = 2.dp,
         )
     }
 }
@@ -239,24 +239,21 @@ fun MyLineChartTextPreview() {
 @Composable
 fun MyLineChartIconPreview() {
     FoodMoodTheme {
+        val xLabels = listOf("0", "1", "2", "3", "4", "5")
+        val yIcons = ETypeEmotion.values().map { it.icon }
+
         MyLineChart(
             modifier = Modifier.size(200.dp, 200.dp),
-            xLabels = listOf(
-                "da",
-                "2",
-                "3",
-                "4",
-                "5",
-            ),
-            xSize = 5,
-            yIcons = ETypeEmotion.values().map { it.icon },
-            ySize = 5,
+            xLabels = xLabels,
+            xSize = xLabels.size,
+            yIcons = yIcons,
+            ySize = yIcons.size,
             yDiapason = true,
             coordinates = listOf(
-                Pair(1f, 5f),
-                Pair(2.5f, 2f),
-                Pair(3f, 2f),
-                Pair(4f, 0f),
+                Pair(0f, 2.5f),
+                Pair(1f, 3f),
+                Pair(3f, 5f),
+                Pair(4f, 3f),
                 Pair(5f, 2f),
             ),
             underColors = listOf(
@@ -266,7 +263,6 @@ fun MyLineChartIconPreview() {
                 EmotionOrange,
                 EmotionRed,
             ),
-            paddingSpace = 2.dp,
         )
     }
 }
