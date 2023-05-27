@@ -134,7 +134,7 @@ private fun CenterElements(
                     .fillMaxWidth()
                     .padding(vertical = 20.dp)
                 ,
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimaryContainer),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.2f)),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
             ) {
                 Row(
