@@ -45,8 +45,11 @@ fun MyChart(
     yIcons: List<Int>? = null,
     ySize: Int,
     yDiapason: Boolean = false,
-    coordinates: List<Pair<Float, Float>>,
     iconScale: Float = 0.1f,
+    coordinates: List<Pair<Float, Float>>,
+    markCoordinates: Boolean = false,
+    markColor: Color = Color.Red,
+    markRadius: Float = 10f,
     paddingSpace: Dp,
 ) {
     val density = LocalDensity.current
@@ -119,11 +122,13 @@ fun MyChart(
                 val x = xAxisSpace * it.first
                 val y = size.height - yAxisSpace * it.second
                 scaledCoordinates.add(PointF(x, y))
-                drawCircle(
-                    color = Color.Red,
-                    radius = 10f,
-                    center = Offset(x, y)
-                )
+                if (markCoordinates) {
+                    drawCircle(
+                        color = markColor,
+                        radius = markRadius,
+                        center = Offset(x, y)
+                    )
+                }
             }
 
             val controlPoints1 = mutableListOf<PointF>()
@@ -211,6 +216,7 @@ fun MyChartTextPreview() {
                 Pair(4f, 0f),
                 Pair(5f, 2f),
             ),
+            markCoordinates = true,
             paddingSpace = 2.dp,
         )
     }
