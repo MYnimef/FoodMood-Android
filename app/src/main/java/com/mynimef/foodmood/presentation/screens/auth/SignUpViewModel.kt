@@ -15,6 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 
 class SignUpViewModel: ViewModel() {
@@ -64,7 +65,7 @@ class SignUpViewModel: ViewModel() {
     }
     fun setBirthday(value: String) {
         _birthday.value = value
-        birthdayCheck = value.isNotEmpty()
+        birthdayCheck = value.isNotEmpty() && (value != LocalDate.now().toString())
         checkFirstButtonActive()
     }
     private fun checkFirstButtonActive() {

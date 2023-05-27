@@ -9,7 +9,7 @@
     <string name="final_signup">Final step...</string>
 
     <string name="name">Name</string>
-    <string name="birthday">Birthday date</string>
+    <string name="birthday">Set birthday date</string>
     <string name="repeat_pass">Repeat password</string>
 
     <string name="next">Next</string>
@@ -35,6 +35,9 @@
     <string name="food_question">What did you eat?</string>
     <string name="write_here">Write here</string>
     <string name="pick">Pick\ntype</string>
+    <string name="weight_title">Enter the current weight</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter">Enter</string>
 
     <string name="type_food_breakfast">Breakfast</string>
     <string name="type_food_dinner">Dinner</string>
@@ -53,6 +56,7 @@
     <string name="exit">Log out</string>
 
     <string name="emotion_chart">Emotion chart</string>
+    <string name="calendar">Calendar</string>
 
     <string name="toast_401_client">Authentication failed</string>
     <string name="toast_401_signin">Wrong email or password</string>

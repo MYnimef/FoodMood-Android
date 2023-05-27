@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -35,6 +36,16 @@ class CreateViewModel: ViewModel() {
     private val _foodDescription = MutableStateFlow("")
     val foodDescription = _foodDescription.asStateFlow()
 
+    private val _weight = MutableStateFlow(0.0f)
+    val weight: StateFlow<Float> = _weight.asStateFlow()
+
+    private val _isDialogShown = MutableStateFlow(false)
+    val isDialogShown = _isDialogShown.asStateFlow()
+
+    fun triggerDialogShown(){
+        _isDialogShown.value = !_isDialogShown.value
+    }
+
     fun getClient() = Repository.client
 
     fun setMealType(value: ETypeMeal) {
@@ -52,6 +63,10 @@ class CreateViewModel: ViewModel() {
 
     fun setFoodDescription(value: String) {
         _foodDescription.value = value
+    }
+
+    fun setWeight(value: Float) {
+        _weight.value = value
     }
 
     fun create() {
