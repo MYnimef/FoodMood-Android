@@ -32,6 +32,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
+import com.mynimef.foodmood.presentation.theme.EmotionDarkGreen
+import com.mynimef.foodmood.presentation.theme.EmotionGreen
+import com.mynimef.foodmood.presentation.theme.EmotionOrange
+import com.mynimef.foodmood.presentation.theme.EmotionRed
+import com.mynimef.foodmood.presentation.theme.EmotionYellow
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -50,6 +55,7 @@ fun MyChart(
     markCoordinates: Boolean = false,
     markColor: Color = Color.Red,
     markRadius: Float = 10f,
+    underColors: List<Color> = emptyList(),
     paddingSpace: Dp,
 ) {
     val density = LocalDensity.current
@@ -155,24 +161,26 @@ fun MyChart(
                 }
             }
 
-            /** filling the area under the path */
-            val fillPath = android.graphics.Path(stroke.asAndroidPath())
-                .asComposePath()
-                .apply {
-                    lineTo(size.width, size.height - yAxisSpace)
-                    lineTo(xAxisSpace, size.height - yAxisSpace)
-                    close()
+            if (underColors.isNotEmpty()) {
+                val fillPath = android.graphics.Path(stroke.asAndroidPath())
+                    .asComposePath()
+                    .apply {
+                        lineTo(size.width, size.height)
+                        lineTo(xAxisSpace, size.height)
+                        close()
+                    }
+                if (underColors.size == 1) {
+                    drawPath(
+                        path = fillPath,
+                        color = underColors.first()
+                    )
+                } else {
+                    drawPath(
+                        path = fillPath,
+                        brush = Brush.verticalGradient(underColors),
+                    )
                 }
-            drawPath(
-                fillPath,
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.Cyan,
-                        Color.Transparent,
-                    ),
-                    endY = size.height - yAxisSpace
-                ),
-            )
+            }
 
             drawPath(
                 stroke,
@@ -217,6 +225,10 @@ fun MyChartTextPreview() {
                 Pair(5f, 2f),
             ),
             markCoordinates = true,
+            underColors = listOf(
+                Color.Cyan,
+                Color.Transparent,
+            ),
             paddingSpace = 2.dp,
         )
     }
@@ -240,11 +252,18 @@ fun MyChartIconPreview() {
             ySize = 5,
             yDiapason = true,
             coordinates = listOf(
-                Pair(1f, 3f),
+                Pair(1f, 5f),
                 Pair(2.5f, 2f),
                 Pair(3f, 2f),
                 Pair(4f, 0f),
                 Pair(5f, 2f),
+            ),
+            underColors = listOf(
+                EmotionDarkGreen,
+                EmotionGreen,
+                EmotionYellow,
+                EmotionOrange,
+                EmotionRed,
             ),
             paddingSpace = 2.dp,
         )
