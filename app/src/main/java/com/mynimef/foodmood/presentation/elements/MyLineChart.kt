@@ -54,8 +54,9 @@ fun MyLineChart(
     coordinates: List<Pair<Float, Float>>,
     markCoordinates: Boolean = false,
     markColor: Color = Color.Red,
-    markRadius: Float = 10f,
+    markRadius: Dp = 4.dp,
     lineColor: Color = Color.Black,
+    lineWidth: Dp = 2.dp,
     underColors: List<Color> = emptyList(),
     paddingSpace: Dp,
 ) {
@@ -87,7 +88,9 @@ fun MyLineChart(
         Canvas(
             modifier = Modifier.fillMaxSize(),
         ) {
-            val xAxisSpace = (size.width - paddingSpace.toPx()) / xSize
+            val padding = paddingSpace.toPx()
+
+            val xAxisSpace = (size.width - padding) / xSize
             val yAxisSpace = size.height / ySize
 
             val iconSize = minOf(size.width, size.height) * iconScale
@@ -112,14 +115,14 @@ fun MyLineChart(
             yLabels?.forEachIndexed { index, value ->
                 drawContext.canvas.nativeCanvas.drawText(
                     value,
-                    paddingSpace.toPx() / 2f,
+                    padding / 2f,
                     size.height - yAxisSpace * (index + yAxisIterator),
                     textPaint
                 )
             }
             yPainters?.forEachIndexed { index, painter ->
                 translate(
-                    left = paddingSpace.toPx() / 2f,
+                    left = padding / 2f,
                     top = size.height - yAxisSpace * (index + yAxisIterator) - iconSize / 2
                 ) { with(painter) { draw(Size(iconSize, iconSize)) } }
             }
@@ -132,7 +135,7 @@ fun MyLineChart(
                 if (markCoordinates) {
                     drawCircle(
                         color = markColor,
-                        radius = markRadius,
+                        radius = markRadius.toPx(),
                         center = Offset(x, y)
                     )
                 }
@@ -166,7 +169,7 @@ fun MyLineChart(
                 val fillPath = android.graphics.Path(stroke.asAndroidPath())
                     .asComposePath()
                     .apply {
-                        lineTo(size.width, size.height)
+                        lineTo(size.width - padding, size.height)
                         lineTo(xAxisSpace, size.height)
                         close()
                     }
@@ -187,7 +190,7 @@ fun MyLineChart(
                 stroke,
                 color = lineColor,
                 style = Stroke(
-                    width = 5f,
+                    width = lineWidth.toPx(),
                     cap = StrokeCap.Round
                 )
             )
