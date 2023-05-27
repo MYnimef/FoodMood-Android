@@ -3,7 +3,6 @@ package com.mynimef.foodmood.presentation.screens.client
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +18,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavigationClient
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
-import com.mynimef.foodmood.presentation.extensions.OnLifecycleEvent
+import com.mynimef.foodmood.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -32,7 +31,6 @@ fun ClientNavigationScreen() {
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun ClientNavigationScreen(
     initClient: () -> Unit,
 ) {

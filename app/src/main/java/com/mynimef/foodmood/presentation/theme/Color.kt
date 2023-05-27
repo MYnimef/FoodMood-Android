@@ -18,3 +18,9 @@ val Red = Color(0xFFE07A5F)
 
 val LightYellow = Color(0xFFF2DEBF)
 val Yellow = Color(0xFFF2CC8F)
+
+val EmotionRed = Color(0xFFE85F66)
+val EmotionOrange = Color(0xFFFF9579)
+val EmotionYellow = Color(0xFFF2CC8F)
+val EmotionGreen = Color(0xFF92CEB1)
+val EmotionDarkGreen = Color(0xFF81B29A)
