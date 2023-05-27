@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,7 +69,6 @@ private fun SignUpScreenFirst(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CenterElements(
     navigateTo: (route: String) -> Unit,
@@ -113,7 +111,8 @@ private fun CenterElements(
             modifier = Modifier.padding(bottom = 30.dp),
             maxDate = LocalDate.now(),
         ) {
-            snappedDate -> setBirthday(snappedDate.toString())}
+            snappedDate -> setBirthday(snappedDate.toString())
+        }
 
         MyLoginButton(
             text = stringResource(R.string.next),
