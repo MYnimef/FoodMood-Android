@@ -25,20 +25,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavigationAuth
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SignInScreen(
-    navigateTo: (route: ENavigationAuth) -> Unit
-) {
+fun SignInScreen() {
     val viewModel: SignInViewModel = viewModel()
 
     SignInScreen(
-        navigateTo = navigateTo,
         signIn = viewModel::signIn,
         email = viewModel.email.collectAsState().value,
         setEmail = viewModel::setEmail,
@@ -50,7 +46,6 @@ fun SignInScreen(
 
 @Composable
 private fun SignInScreen(
-    navigateTo: (route: ENavigationAuth) -> Unit,
     signIn: () -> Unit,
     email: String,
     setEmail: (String) -> Unit,
@@ -64,7 +59,6 @@ private fun SignInScreen(
             .fillMaxSize()
     ) {
         CenterElements(
-            navigateTo = navigateTo,
             signIn = signIn,
             email = email,
             setEmail = setEmail,
@@ -77,7 +71,6 @@ private fun SignInScreen(
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: ENavigationAuth) -> Unit,
     signIn: () -> Unit,
     email: String,
     setEmail: (String) -> Unit,
@@ -135,7 +128,6 @@ private fun CenterElements(
         MyLoginButton(
             text = stringResource(R.string.signup)
         ) {
-            navigateTo(ENavigationAuth.SIGN_UP)
         }
     }
 }
@@ -148,7 +140,6 @@ private fun SignInScreenPreview() {
         val password = remember { mutableStateOf("") }
 
         SignInScreen(
-            navigateTo = {},
             signIn = {},
             email = email.value,
             setEmail = { email.value = it },
@@ -156,7 +147,5 @@ private fun SignInScreenPreview() {
             setPassword = { password.value = it },
             buttonActive = true,
         )
-
-        SignInScreen {}
     }
 }

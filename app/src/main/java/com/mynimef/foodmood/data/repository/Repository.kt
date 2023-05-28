@@ -6,6 +6,7 @@ import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.ENavClientBottomBar
 import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.data.models.enums.ERole
@@ -32,6 +33,8 @@ object Repository {
 
     private val _appState = MutableStateFlow(EAppState.AUTH)
     val appState = _appState.asStateFlow()
+
+    val authNavMain by lazy { MutableSharedFlow<ENavAuth>() }
 
     private val _client by lazy { MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true, waterAmount = 0f)) }
     val client by lazy { _client.asStateFlow() }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.repository.Repository
@@ -122,6 +123,12 @@ class SignUpViewModel: ViewModel() {
                 is ApiException -> Repository.toast(EToast.NO_CONNECTION)
                 is ApiSuccess -> Repository.signIn(result.data)
             }
+        }
+    }
+
+    fun navigateTo(nav: ENavAuth) {
+        job = CoroutineScope(Dispatchers.Main).launch {
+            Repository.authNavMain.emit(nav)
         }
     }
 

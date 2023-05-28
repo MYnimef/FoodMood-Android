@@ -31,7 +31,7 @@ fun ClientMainScreen() {
         var previous = ENavClientMain.BOTTOM_BAR
         viewModel.navigation.collect { next ->
             navController.navigate(next.route) {
-                if (next.isTop && !previous.isTop)
+                if (next.parentRoute == null && previous.parentRoute != null)
                     popUpTo(previous.parentRoute!!) { inclusive = true }
 
                 launchSingleTop = true

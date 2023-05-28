@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.Repository
@@ -67,8 +68,15 @@ class SignInViewModel: ViewModel() {
         }
     }
 
+    fun signUp() {
+        job = CoroutineScope(Dispatchers.Main).launch {
+            Repository.authNavMain.emit(ENavAuth.SIGN_UP)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         job?.cancel()
     }
+
 }
