@@ -6,6 +6,8 @@ import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
+import com.mynimef.foodmood.data.models.enums.ENavClientBottomBar
+import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.data.models.enums.ERole
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
@@ -33,6 +35,8 @@ object Repository {
 
     private val _client by lazy { MutableStateFlow(ClientEntity(id = 0, name = "", trackFood = true, trackWater = true, trackWeight = true, waterAmount = 0f)) }
     val client by lazy { _client.asStateFlow() }
+    val clientNavMain by lazy { MutableSharedFlow<ENavClientMain>() }
+    val clientNavBottomBar by lazy { MutableSharedFlow<ENavClientBottomBar>(replay = 1) }
 
     private val _trainer by lazy { MutableStateFlow(TrainerEntity(id = 0)) }
     val trainer by lazy { _trainer.asStateFlow() }
@@ -44,9 +48,9 @@ object Repository {
     suspend fun init(context: Context) {
         storage = AppStorage(context)
 
-        val state = storage.getSavedState()
+        val state = storage.getAppState()
         if (state != EAppState.AUTH) {
-            id = storage.getSavedId()
+            id = storage.getId()
             network.refreshToken = storage.database.getRefreshTokenById(id)
 
             if (state == EAppState.CLIENT) {
@@ -57,7 +61,7 @@ object Repository {
     }
 
     private fun setState(state: EAppState) {
-        storage.setSavedState(state.value)
+        storage.setAppState(state.value)
         _appState.value = state
     }
 
@@ -87,7 +91,7 @@ object Repository {
                 refreshToken = response.refreshToken,
             )
         )
-        storage.setSavedId(id)
+        storage.setId(id)
         network.refreshToken = response.refreshToken
         network.accessToken = response.accessToken
         setState(when(response.role) {
@@ -109,7 +113,7 @@ object Repository {
         }
 
         id = 0
-        storage.setSavedId(id)
+        storage.setId(id)
 
         setState(EAppState.AUTH)
     }

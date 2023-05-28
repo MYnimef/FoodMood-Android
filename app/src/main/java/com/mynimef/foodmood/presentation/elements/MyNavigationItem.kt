@@ -11,7 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import com.mynimef.foodmood.extensions.noRippleClickable
 
-data class BottomNavigationItem(val icon: Int, val iconFill: Int, val route: String)
+data class BottomNavigationItem(
+    val icon: Int,
+    val iconFill: Int = icon,
+    val route: String,
+    val onClick: () -> Unit
+)
 
 @Composable
 fun MyNavigationItem(

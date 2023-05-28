@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
-import com.mynimef.foodmood.data.models.enums.ENavigationCreate
+import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
@@ -21,8 +21,6 @@ import kotlinx.coroutines.launch
 class CreateViewModel: ViewModel() {
 
     private var job: Job? = null
-
-    lateinit var navigation: (ENavigationCreate) -> Unit
 
     private val _mealType = MutableStateFlow(ETypeMeal.BREAKFAST)
     val mealType = _mealType.asStateFlow()
@@ -50,7 +48,9 @@ class CreateViewModel: ViewModel() {
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
-        navigation(ENavigationCreate.ADD_CARD)
+        job = CoroutineScope(Dispatchers.Main).launch {
+            Repository.clientNavMain.emit(ENavClientMain.CREATE_EMOTION_CARD)
+        }
     }
 
     fun setEmotionType(value: ETypeEmotion) {
@@ -86,7 +86,10 @@ class CreateViewModel: ViewModel() {
                     }
                 }
                 is ApiException -> {}
-                is ApiSuccess -> Repository.addCardToStorage(result.data)
+                is ApiSuccess -> Repository.apply {
+                    addCardToStorage(result.data)
+                    clientNavMain.emit(ENavClientMain.BOTTOM_BAR)
+                }
             }
         }
     }

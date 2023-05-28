@@ -48,12 +48,8 @@ fun MyNavigationBar(
                     drawableId = item.icon,
                     drawableFillId = item.iconFill,
                     selected = currentRoute == item.route,
-                ) {
-                    navController.navigate(item.route) {
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
+                    onClick = item.onClick
+                )
             }
         }
     }

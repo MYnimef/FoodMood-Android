@@ -11,11 +11,14 @@ import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class ClientNavigationViewModel: ViewModel() {
+class ClientMainViewModel: ViewModel() {
 
     private var job: Job? = null
+
+    val navigation = Repository.clientNavMain.asSharedFlow()
 
     fun initClient() {
         job = CoroutineScope(Dispatchers.IO).launch {
@@ -24,9 +27,9 @@ class ClientNavigationViewModel: ViewModel() {
             )) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> {
-                            Repository.toast(EToast.AUTH_FAILED)
-                            Repository.signOut()
+                        401 -> Repository.apply {
+                            toast(EToast.AUTH_FAILED)
+                            signOut()
                         }
                         else -> {}
                     }
