@@ -31,7 +31,7 @@ import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun UserInfoScreen() {
+fun SettingsScreenUser() {
 
     val name = remember { mutableStateOf("") }
     val login = remember { mutableStateOf("") }
@@ -161,6 +161,6 @@ private fun CenterElements(
 @Composable
 fun UserInfoScreenPrev() {
     FoodMoodTheme {
-        UserInfoScreen()
+        SettingsScreenUser()
     }
 }

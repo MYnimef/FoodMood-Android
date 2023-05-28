@@ -35,7 +35,7 @@ import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun PrefSettingsScreen(navigateTo: (route: ENavigationSettings) -> Unit) {
+fun SettingsScreenPreferences(navigateTo: (route: ENavigationSettings) -> Unit) {
     val waterL = remember { mutableStateOf("") }
     val weightKg = remember { mutableStateOf("") }
 
@@ -100,13 +100,13 @@ private fun CenterElements(
             RadioButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 selected = true, onClick = { },
-                colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primaryContainer))
+                colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary))
             TextButton( onClick = {},) {
                 Text(
                     stringResource(R.string.emotion),
                     modifier = Modifier.align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primaryContainer)
+                    color = MaterialTheme.colorScheme.primary)
             }
         }
 
@@ -235,6 +235,6 @@ private fun CenterElements(
 @Composable
 fun PrefSettingsScreenPrev() {
     FoodMoodTheme {
-        PrefSettingsScreen {}
+        SettingsScreenPreferences {}
     }
 }
