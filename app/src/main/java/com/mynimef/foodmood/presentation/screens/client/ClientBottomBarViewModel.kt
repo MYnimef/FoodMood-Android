@@ -17,13 +17,13 @@ class ClientBottomBarViewModel: ViewModel() {
     val navigation = Repository.clientNavBottomBar.asSharedFlow()
 
     fun switchScreen(nav: ENavClientBottomBar) {
-        job = CoroutineScope(Dispatchers.IO).launch {
+        job = CoroutineScope(Dispatchers.Main).launch {
             Repository.clientNavBottomBar.emit(nav)
         }
     }
 
     fun switchScreen(nav: ENavClientMain) {
-        job = CoroutineScope(Dispatchers.IO).launch {
+        job = CoroutineScope(Dispatchers.Main).launch {
             Repository.clientNavMain.emit(nav)
         }
     }
