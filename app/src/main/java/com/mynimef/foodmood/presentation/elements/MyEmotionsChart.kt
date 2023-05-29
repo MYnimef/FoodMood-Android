@@ -27,7 +27,7 @@ import java.time.LocalDate
 
 
 @Composable
-private fun MyEmotionsChart(
+fun MyEmotionsChart(
     modifier: Modifier,
     emotionsDataX: List<Float>,
     emotionsDataY: List<Float>,
