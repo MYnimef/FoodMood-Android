@@ -31,11 +31,9 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun SignUpScreenFourth(
-    navigateTo: (route: String) -> Unit,
     viewModel: SignUpViewModel,
 ) {
     SignUpScreenFourth(
-        navigateTo = navigateTo,
         login = viewModel.email.collectAsState().value,
         setLogin = viewModel::setEmail,
         password = viewModel.password.collectAsState().value,
@@ -49,7 +47,6 @@ fun SignUpScreenFourth(
 
 @Composable
 private fun SignUpScreenFourth(
-    navigateTo: (route: String) -> Unit,
     login: String,
     setLogin: (String) -> Unit,
     password: String,
@@ -65,7 +62,6 @@ private fun SignUpScreenFourth(
             .fillMaxSize()
     ) {
         CenterElements(
-            navigateTo = navigateTo,
             login = login,
             setLogin = setLogin,
             password = password,
@@ -80,7 +76,6 @@ private fun SignUpScreenFourth(
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: String) -> Unit,
     login: String,
     setLogin: (String) -> Unit,
     password: String,
@@ -165,7 +160,6 @@ private fun SignUpFourthScreenPreview() {
         val repeatPassword = remember { mutableStateOf("") }
 
         SignUpScreenFourth(
-            navigateTo = {},
             login = login.value,
             setLogin = { login.value = it },
             password = password.value,

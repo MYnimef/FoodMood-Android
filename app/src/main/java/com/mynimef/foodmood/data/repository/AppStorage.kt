@@ -29,14 +29,14 @@ class AppStorage(context: Context) {
             .build()
     }
 
-    fun getSavedState() = EAppState.fromInt(sharedPref.getInt("app_state", 0))
-    fun setSavedState(state: Int) = with (sharedPref.edit()) {
+    fun getAppState() = EAppState.fromInt(sharedPref.getInt("app_state", 0))
+    fun setAppState(state: Int) = with (sharedPref.edit()) {
         putInt("app_state", state)
         apply()
     }
 
-    fun getSavedId() = sharedPref.getLong("account_id", 0)
-    fun setSavedId(id: Long) = with (sharedPref.edit()) {
+    fun getId() = sharedPref.getLong("account_id", 0)
+    fun setId(id: Long) = with (sharedPref.edit()) {
         putLong("account_id", id)
         apply()
     }

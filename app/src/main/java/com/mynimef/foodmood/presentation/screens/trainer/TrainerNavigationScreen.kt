@@ -20,6 +20,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun TrainerNavigationScreen() {
+    /*
     val navController = rememberNavController()
     val bottomNavItems = listOf(
         BottomNavigationItem(icon = R.drawable.ic_nav_home, iconFill = R.drawable.ic_nav_home_fill, route = "home"),
@@ -45,6 +46,8 @@ fun TrainerNavigationScreen() {
             )
         }
     }
+
+     */
 }
 
 @Composable

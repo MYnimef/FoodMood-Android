@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyRadioTextSelector
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
@@ -25,28 +26,27 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun SignUpScreenThird(
     viewModel: SignUpViewModel,
-    navigateTo: (route: String) -> Unit,
 ) {
     SignUpScreenThird(
-        navigateTo = navigateTo,
         food = viewModel.food.collectAsState().value,
         triggerFood = viewModel::triggerFood,
         water = viewModel.water.collectAsState().value,
         triggerWater = viewModel::triggerWater,
         weight = viewModel.weight.collectAsState().value,
         triggerWeight = viewModel::triggerWeight,
+        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_FOURTH) }
     )
 }
 
 @Composable
 private fun SignUpScreenThird(
-    navigateTo: (route: String) -> Unit,
     food: Boolean,
     triggerFood: () -> Unit,
     water: Boolean,
     triggerWater: () -> Unit,
     weight: Boolean,
     triggerWeight: () -> Unit,
+    onNext: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -54,26 +54,26 @@ private fun SignUpScreenThird(
             .fillMaxSize()
     ) {
         CenterElements(
-            navigateTo = navigateTo,
             food = food,
             triggerFood = triggerFood,
             water = water,
             triggerWater = triggerWater,
             weight = weight,
             triggerWeight = triggerWeight,
+            onNext = onNext
         )
     }
 }
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: String) -> Unit,
     food: Boolean,
     triggerFood: () -> Unit,
     water: Boolean,
     triggerWater: () -> Unit,
     weight: Boolean,
     triggerWeight: () -> Unit,
+    onNext: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -109,9 +109,8 @@ private fun CenterElements(
         )
         MyLoginButton(
             text = stringResource(R.string.next),
-        ) {
-            navigateTo("fourth")
-        }
+            onClick = onNext
+        )
     }
 }
 
@@ -124,13 +123,13 @@ private fun SignUpThirdScreenPreview() {
         val weight = rememberSaveable { mutableStateOf(false) }
 
         SignUpScreenThird(
-            navigateTo = {},
             food = food.value,
             triggerFood = { food.value = !food.value },
             water = water.value,
             triggerWater = { water.value = !water.value },
             weight = weight.value,
             triggerWeight = { weight.value = !weight.value },
+            onNext = {}
         )
     }
 }

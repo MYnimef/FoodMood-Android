@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,35 +15,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.commandiron.wheel_picker_compose.WheelDatePicker
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavigationAuth
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
-import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import java.time.LocalDate
 
 @Composable
 fun SignUpScreenSecond(
-    navigateTo: (route: String) -> Unit,
     viewModel: SignUpViewModel,
 ) {
     SignUpScreenSecond(
-        navigateTo = navigateTo,
         setBirthday= viewModel::setBirthday,
         buttonActive = viewModel.secondButtonActive.collectAsState().value,
+        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_THIRD) },
     )
 }
 
 @Composable
 private fun SignUpScreenSecond(
-    navigateTo: (route: String) -> Unit,
     setBirthday: (String) -> Unit,
     buttonActive: Boolean,
+    onNext: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -52,18 +47,18 @@ private fun SignUpScreenSecond(
             .fillMaxSize()
     ) {
         CenterElements(
-            navigateTo = navigateTo,
             setBirthday = setBirthday,
-            buttonActive = buttonActive
+            buttonActive = buttonActive,
+            onNext = onNext
         )
     }
 }
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: String) -> Unit,
     setBirthday: (String) -> Unit,
     buttonActive: Boolean,
+    onNext: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -89,9 +84,8 @@ private fun CenterElements(
         MyLoginButton(
             text = stringResource(R.string.next),
             enabled = buttonActive,
-        ) {
-            navigateTo("third")
-        }
+            onClick = onNext
+        )
     }
 }
 
@@ -102,9 +96,9 @@ private fun SignUpSecondScreenPreview() {
         val date = remember { mutableStateOf("") }
 
         SignUpScreenSecond(
-            navigateTo = {},
             setBirthday = { date.value = it },
-            buttonActive = true
+            buttonActive = true,
+            onNext = {}
         )
     }
 }
