@@ -36,6 +36,7 @@ fun SignInScreen() {
 
     SignInScreen(
         signIn = viewModel::signIn,
+        signUp = viewModel::signUp,
         email = viewModel.email.collectAsState().value,
         setEmail = viewModel::setEmail,
         password = viewModel.password.collectAsState().value,
@@ -47,6 +48,7 @@ fun SignInScreen() {
 @Composable
 private fun SignInScreen(
     signIn: () -> Unit,
+    signUp: () -> Unit,
     email: String,
     setEmail: (String) -> Unit,
     password: String,
@@ -60,6 +62,7 @@ private fun SignInScreen(
     ) {
         CenterElements(
             signIn = signIn,
+            signUp = signUp,
             email = email,
             setEmail = setEmail,
             password = password,
@@ -72,6 +75,7 @@ private fun SignInScreen(
 @Composable
 private fun CenterElements(
     signIn: () -> Unit,
+    signUp: () -> Unit,
     email: String,
     setEmail: (String) -> Unit,
     password: String,
@@ -126,9 +130,9 @@ private fun CenterElements(
         )
 
         MyLoginButton(
-            text = stringResource(R.string.signup)
-        ) {
-        }
+            text = stringResource(R.string.signup),
+            onClick = signUp,
+        )
     }
 }
 
@@ -141,6 +145,7 @@ private fun SignInScreenPreview() {
 
         SignInScreen(
             signIn = {},
+            signUp = {},
             email = email.value,
             setEmail = { email.value = it },
             password = password.value,

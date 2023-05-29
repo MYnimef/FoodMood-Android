@@ -5,7 +5,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.addOutline
 import androidx.compose.ui.graphics.asAndroidPath
 import androidx.compose.ui.graphics.asComposePath
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -45,6 +44,10 @@ fun DrawScope.drawPlot(
     lineStyle: PlotLineStyle,
     underColors: List<Color>,
 ) {
+    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+        return
+    }
+
     val scaledCoordinates = getScaledCoordinates(coordinates, borders)
     val stroke = getPath(scaledCoordinates)
     drawUnder(
@@ -69,6 +72,10 @@ fun DrawScope.drawPlot(
     borders: PlotBorders,
     lineStyle: PlotLineStyle,
 ) {
+    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+        return
+    }
+
     val scaledCoordinates = getScaledCoordinates(coordinates, borders)
     val stroke = getPath(scaledCoordinates)
     drawPath(
@@ -88,6 +95,10 @@ fun DrawScope.drawPlot(
     markStyle: PlotMarkStyle,
     underColors: List<Color>,
 ) {
+    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+        return
+    }
+
     val scaledCoordinates = getScaledCoordinates(coordinates, borders)
     val stroke = getPath(scaledCoordinates)
     drawUnder(
@@ -120,6 +131,10 @@ fun DrawScope.drawPlot(
     lineStyle: PlotLineStyle,
     markStyle: PlotMarkStyle,
 ) {
+    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+        return
+    }
+
     val scaledCoordinates = getScaledCoordinates(coordinates, borders)
     val stroke = getPath(scaledCoordinates)
 
