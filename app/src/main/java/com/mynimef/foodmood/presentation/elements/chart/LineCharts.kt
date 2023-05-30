@@ -33,12 +33,14 @@ data class PlotLabels(
     val labels: List<String>,
     val fontSize: TextUnit = 12.sp,
     val fontColor: Color,
+    val padding: Dp,
     val diapason: Boolean = false,
 )
 
 data class PlotIcons(
     val icons: List<Int>,
     val iconsSize: Dp,
+    val padding: Dp = iconsSize * 1.5f,
     val diapason: Boolean = false,
 )
 
@@ -47,7 +49,7 @@ fun LineChart(
     modifier : Modifier,
     xLabels: PlotLabels,
     yIcons: PlotIcons,
-    yAxisLines: AxisLines,
+    verticalLines: AxisLines,
     coordinates: PlotCoordinates,
     lineStyle: PlotLineStyle = PlotLineStyle(),
     markStyle: PlotMarkStyle,
@@ -74,10 +76,9 @@ fun LineChart(
             modifier = Modifier.fillMaxSize(),
         ) {
             val yIconsSize = yIcons.iconsSize.toPx()
-            val xFontSize = xLabels.fontSize.toPx()
 
-            val paddingX = yIconsSize * 1.5f
-            val paddingY = xFontSize * 1.5f
+            val paddingX = yIcons.padding.toPx()
+            val paddingY = xLabels.padding.toPx()
 
             val width = size.width - paddingX
             val height = size.height - paddingY
@@ -112,8 +113,8 @@ fun LineChart(
                 ),
                 width = width,
                 start = paddingX,
-                lines = yAxisLines,
-                offset = paddingY,
+                heightPosition = size.height,
+                lines = verticalLines,
             )
         }
     }
@@ -136,6 +137,7 @@ private fun Preview3() {
                 labels = xLabels,
                 fontSize = 8.sp,
                 fontColor = Color.Black,
+                padding = 10.dp,
                 diapason = false
             ),
             yIcons = PlotIcons(
@@ -143,7 +145,9 @@ private fun Preview3() {
                 iconsSize = 20.dp,
                 diapason = true
             ),
-            yAxisLines = AxisLines(),
+            verticalLines = AxisLines(
+                offset = 10.dp
+            ),
             coordinates = PlotCoordinates(
                 values = listOf(
                     Pair(0f, 5f),

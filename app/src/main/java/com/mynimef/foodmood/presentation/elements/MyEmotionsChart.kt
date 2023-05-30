@@ -25,7 +25,6 @@ import com.mynimef.foodmood.presentation.theme.EmotionYellow
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import java.time.LocalDate
 
-
 @Composable
 private fun MyEmotionsChart(
     modifier: Modifier,
@@ -48,6 +47,7 @@ private fun MyEmotionsChart(
             labels = xLabels,
             fontSize = 8.sp,
             fontColor = Color.Black,
+            padding = 15.dp,
             diapason = false
         ),
         yIcons = PlotIcons(
@@ -55,7 +55,9 @@ private fun MyEmotionsChart(
             iconsSize = 20.dp,
             diapason = true
         ),
-        yAxisLines = AxisLines(),
+        verticalLines = AxisLines(
+            offset = 15.dp
+        ),
         coordinates = PlotCoordinates(
             values = emotionsData,
             minX = 0f,
