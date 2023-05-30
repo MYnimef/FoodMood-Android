@@ -47,11 +47,11 @@ fun LineChart(
     modifier : Modifier,
     xLabels: PlotLabels,
     yIcons: PlotIcons,
-    yAxisLines: AxisLines = AxisLines(),
+    yAxisLines: AxisLines,
     coordinates: PlotCoordinates,
     lineStyle: PlotLineStyle = PlotLineStyle(),
-    markStyle: PlotMarkStyle = PlotMarkStyle(),
-    underColors: List<Color> = emptyList(),
+    markStyle: PlotMarkStyle,
+    underColors: List<Color>,
 ) {
     val density = LocalDensity.current
     val textPaint = remember(density) {
@@ -143,14 +143,21 @@ private fun Preview3() {
                 iconsSize = 20.dp,
                 diapason = true
             ),
+            yAxisLines = AxisLines(),
             coordinates = PlotCoordinates(
-                x = listOf(0f, 1f, 3f, 4f, 9f),
+                values = listOf(
+                    Pair(0f, 5f),
+                    Pair(1f, 3f),
+                    Pair(3f, 5f),
+                    Pair(4f, 3f),
+                    Pair(9f, 5f)
+                ),
                 minX = 0f,
                 maxX = 9f,
-                y = listOf(5f, 3f, 5f, 3f, 5f),
                 minY = 0f,
                 maxY = 5f,
             ),
+            markStyle = PlotMarkStyle(),
             underColors = listOf(
                 EmotionDarkGreen,
                 EmotionGreen,

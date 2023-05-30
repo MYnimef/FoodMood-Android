@@ -13,10 +13,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 data class PlotCoordinates(
-    val x: List<Float>,
-    val minX: Float = x.first(),
-    val maxX: Float = x.last(),
-    val y: List<Float>,
+    val values: List<Pair<Float, Float>>,
+    val minX: Float = values.first().first,
+    val maxX: Float = values.last().first,
     val minY: Float,
     val maxY: Float,
 )
@@ -44,7 +43,7 @@ fun DrawScope.drawPlot(
     lineStyle: PlotLineStyle,
     underColors: List<Color>,
 ) {
-    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+    if (coordinates.values.isEmpty()) {
         return
     }
 
@@ -72,7 +71,7 @@ fun DrawScope.drawPlot(
     borders: PlotBorders,
     lineStyle: PlotLineStyle,
 ) {
-    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+    if (coordinates.values.isEmpty()) {
         return
     }
 
@@ -95,7 +94,7 @@ fun DrawScope.drawPlot(
     markStyle: PlotMarkStyle,
     underColors: List<Color>,
 ) {
-    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+    if (coordinates.values.isEmpty()) {
         return
     }
 
@@ -131,7 +130,7 @@ fun DrawScope.drawPlot(
     lineStyle: PlotLineStyle,
     markStyle: PlotMarkStyle,
 ) {
-    if (coordinates.x.isEmpty() || coordinates.y.isEmpty()) {
+    if (coordinates.values.isEmpty()) {
         return
     }
 
@@ -163,14 +162,14 @@ private fun getScaledCoordinates(
     val rangeY = coordinates.maxY - coordinates.minY
 
     val scaledCoordinates = mutableListOf<Pair<Float, Float>>()
-    for (i in 0 until minOf(coordinates.x.size, coordinates.y.size)) {
-        val x = coordinates.x[i]
-        val y = coordinates.y[i]
+    coordinates.values.forEach {
+        val x = it.first
+        val y = it.second
 
         scaledCoordinates.add(
             Pair(
                 borders.startX + borders.width * (x - coordinates.minX) / rangeX,
-                borders.endY - borders.height * (y- coordinates.minY) / rangeY,
+                borders.endY - borders.height * (y - coordinates.minY) / rangeY,
             )
         )
     }
