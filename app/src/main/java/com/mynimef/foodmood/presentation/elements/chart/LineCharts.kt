@@ -33,12 +33,14 @@ data class PlotLabels(
     val labels: List<String>,
     val fontSize: TextUnit = 12.sp,
     val fontColor: Color,
+    val padding: Dp,
     val diapason: Boolean = false,
 )
 
 data class PlotIcons(
     val icons: List<Int>,
     val iconsSize: Dp,
+    val padding: Dp = iconsSize * 1.5f,
     val diapason: Boolean = false,
 )
 
@@ -47,11 +49,11 @@ fun LineChart(
     modifier : Modifier,
     xLabels: PlotLabels,
     yIcons: PlotIcons,
-    yAxisLines: AxisLines = AxisLines(),
+    verticalLines: AxisLines,
     coordinates: PlotCoordinates,
     lineStyle: PlotLineStyle = PlotLineStyle(),
-    markStyle: PlotMarkStyle = PlotMarkStyle(),
-    underColors: List<Color> = emptyList(),
+    markStyle: PlotMarkStyle,
+    underColors: List<Color>,
 ) {
     val density = LocalDensity.current
     val textPaint = remember(density) {
@@ -74,10 +76,9 @@ fun LineChart(
             modifier = Modifier.fillMaxSize(),
         ) {
             val yIconsSize = yIcons.iconsSize.toPx()
-            val xFontSize = xLabels.fontSize.toPx()
 
-            val paddingX = yIconsSize * 1.5f
-            val paddingY = xFontSize * 1.5f
+            val paddingX = yIcons.padding.toPx()
+            val paddingY = xLabels.padding.toPx()
 
             val width = size.width - paddingX
             val height = size.height - paddingY
@@ -112,8 +113,8 @@ fun LineChart(
                 ),
                 width = width,
                 start = paddingX,
-                lines = yAxisLines,
-                offset = paddingY,
+                heightPosition = size.height,
+                lines = verticalLines,
             )
         }
     }
@@ -136,6 +137,7 @@ private fun Preview3() {
                 labels = xLabels,
                 fontSize = 8.sp,
                 fontColor = Color.Black,
+                padding = 10.dp,
                 diapason = false
             ),
             yIcons = PlotIcons(
@@ -143,14 +145,23 @@ private fun Preview3() {
                 iconsSize = 20.dp,
                 diapason = true
             ),
+            verticalLines = AxisLines(
+                offset = 10.dp
+            ),
             coordinates = PlotCoordinates(
-                x = listOf(0f, 1f, 3f, 4f, 9f),
+                values = listOf(
+                    Pair(0f, 5f),
+                    Pair(1f, 3f),
+                    Pair(3f, 5f),
+                    Pair(4f, 3f),
+                    Pair(9f, 5f)
+                ),
                 minX = 0f,
                 maxX = 9f,
-                y = listOf(5f, 3f, 5f, 3f, 5f),
                 minY = 0f,
                 maxY = 5f,
             ),
+            markStyle = PlotMarkStyle(),
             underColors = listOf(
                 EmotionDarkGreen,
                 EmotionGreen,

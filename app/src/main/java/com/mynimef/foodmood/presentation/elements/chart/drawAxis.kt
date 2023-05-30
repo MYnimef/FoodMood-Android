@@ -25,14 +25,16 @@ data class AxisVectors(
 )
 
 data class AxisLines(
-    val color: Color =  Color(0x40000000),
+    val color: Color = Color(0x40000000),
     val width: Dp = 1.dp,
+    val offset: Dp,
 )
 
 fun DrawScope.drawAxisX(
     axis: AxisLabels,
     width: Float,
     start: Float,
+    heightPosition: Float,
 ) {
     val delta = getDelta(axis.labels.size, width, axis.diapason)
     val iterator = getIterator(axis.diapason)
@@ -41,7 +43,12 @@ fun DrawScope.drawAxisX(
         val x = start + delta * (index + iterator)
         val y = size.height
 
-        drawContext.canvas.nativeCanvas.drawText(value, x, y, axis.paint)
+        drawContext.canvas.nativeCanvas.drawText(
+            value,
+            x,
+            heightPosition,
+            axis.paint
+        )
     }
 }
 
@@ -49,13 +56,13 @@ fun DrawScope.drawAxisX(
     axis: AxisLabels,
     width: Float,
     start: Float,
+    heightPosition: Float,
     lines: AxisLines,
-    offset: Float,
 ) {
     val delta = getDelta(axis.labels.size, width, axis.diapason)
     val iterator = getIterator(axis.diapason)
 
-    val y = size.height - offset
+    val y = size.height - lines.offset.toPx()
     axis.labels.forEachIndexed { index, value ->
         val x = start + delta * (index + iterator)
 
@@ -66,7 +73,12 @@ fun DrawScope.drawAxisX(
             strokeWidth = lines.width.toPx()
         )
 
-        drawContext.canvas.nativeCanvas.drawText(value, x, size.height, axis.paint)
+        drawContext.canvas.nativeCanvas.drawText(
+            value,
+            x,
+            heightPosition,
+            axis.paint
+        )
     }
 }
 
@@ -93,7 +105,6 @@ fun DrawScope.drawAxisX(
     width: Float,
     start: Float,
     lines: AxisLines,
-    offset: Float,
 ) {
     val delta = getDelta(axis.icons.size, width, axis.diapason)
     val iterator = getIterator(axis.diapason)
@@ -134,7 +145,6 @@ fun DrawScope.drawAxisY(
     axis: AxisLabels,
     height: Float,
     lines: AxisLines,
-    offset: Float,
 ) {
     val delta = getDelta(axis.labels.size, height, axis.diapason)
     val iterator = getIterator(axis.diapason)
@@ -145,7 +155,7 @@ fun DrawScope.drawAxisY(
 
         drawLine(
             color = lines.color,
-            start = Offset(x = offset, y = y),
+            start = Offset(x = lines.offset.toPx(), y = y),
             end = Offset(x = size.width, y = y),
             strokeWidth = lines.width.toPx()
         )
@@ -175,7 +185,6 @@ fun DrawScope.drawAxisY(
     axis: AxisVectors,
     height: Float,
     lines: AxisLines,
-    offset: Float,
 ) {
     val delta = getDelta(axis.icons.size, height, axis.diapason)
     val iterator = getIterator(axis.diapason)
@@ -186,7 +195,7 @@ fun DrawScope.drawAxisY(
 
         drawLine(
             color = lines.color,
-            start = Offset(x = offset, y = y),
+            start = Offset(x = lines.offset.toPx(), y = y),
             end = Offset(x = size.width, y = y),
             strokeWidth = lines.width.toPx()
         )

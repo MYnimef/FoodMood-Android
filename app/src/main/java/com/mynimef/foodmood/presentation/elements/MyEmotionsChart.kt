@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypePeriod
+import com.mynimef.foodmood.presentation.elements.chart.AxisLines
 import com.mynimef.foodmood.presentation.elements.chart.LineChart
 import com.mynimef.foodmood.presentation.elements.chart.PlotCoordinates
 import com.mynimef.foodmood.presentation.elements.chart.PlotIcons
@@ -25,12 +26,10 @@ import com.mynimef.foodmood.presentation.theme.EmotionYellow
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import java.time.LocalDate
 
-
 @Composable
 fun MyEmotionsChart(
     modifier: Modifier,
-    emotionsDataX: List<Float>,
-    emotionsDataY: List<Float>,
+    emotionsData: List<Pair<Float, Float>>,
     periodType: ETypePeriod,
 ) {
     val date = LocalDate.now()
@@ -49,6 +48,7 @@ fun MyEmotionsChart(
             labels = xLabels,
             fontSize = 8.sp,
             fontColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            padding = 15.dp,
             diapason = false
         ),
         yIcons = PlotIcons(
@@ -56,11 +56,13 @@ fun MyEmotionsChart(
             iconsSize = 20.dp,
             diapason = true
         ),
+        verticalLines = AxisLines(
+            offset = 15.dp
+        ),
         coordinates = PlotCoordinates(
-            x = emotionsDataX,
+            values = emotionsData,
             minX = 0f,
             maxX = period.toFloat(),
-            y = emotionsDataY,
             minY = 0f,
             maxY = 5f,
         ),
@@ -86,10 +88,17 @@ fun MyEmotionsChart(
 @Composable
 private fun MyEmotionsChartPreview() {
     FoodMoodTheme {
+        val data = listOf(
+            Pair(0f, 5f),
+            Pair(3f, 3f),
+            Pair(5f, 1f),
+            Pair(9f, 3f),
+            Pair(15f, 2f),
+        )
+
         MyEmotionsChart(
             modifier = Modifier.size(2000.dp, 200.dp).padding(20.dp),
-            emotionsDataX = listOf(0f, 3f, 5f, 9f, 15f),
-            emotionsDataY = listOf(5f, 3f, 1f, 3f, 2f),
+            emotionsData = data,
             periodType = ETypePeriod.DAYS_31
         )
     }
