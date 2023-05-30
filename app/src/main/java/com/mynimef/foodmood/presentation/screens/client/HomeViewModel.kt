@@ -32,17 +32,19 @@ class HomeViewModel: ViewModel() {
                 TimeZone.getDefault().id,
             )
             when (val result = network.clientIncreaseWater(request)) {
-                is ApiError -> {}
+                is ApiError -> {
+                    when (result.code) {
+                        401 -> signOut()
+                        else -> {}
+                    }
+                }
                 is ApiException -> {}
                 is ApiSuccess -> {
-                    val prev = storage.client.value!!
-                    val next = prev.copy(waterAmount = prev.waterAmount + amount)
-                    storage.insertClient(next)
+                    storage.insertClient(
+                        storage.client.value!!.copy(waterAmount = result.data.totalAmount)
+                    )
                 }
             }
-            val prev = storage.client.value!!
-            val next = prev.copy(waterAmount = prev.waterAmount + amount)
-            storage.insertClient(next)
         }
     }
 

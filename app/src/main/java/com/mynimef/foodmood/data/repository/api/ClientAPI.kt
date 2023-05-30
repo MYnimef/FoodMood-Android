@@ -5,6 +5,7 @@ import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
 import com.mynimef.foodmood.data.models.responses.CardResponse
 import com.mynimef.foodmood.data.models.responses.ClientInfoResponse
+import com.mynimef.foodmood.data.models.responses.WaterIncreaseResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -35,9 +36,9 @@ interface ClientAPI {
     ): Response<List<CardResponse>>
 
     @POST("/api/client/water/increase")
-    fun increaseWater(
+    suspend fun increaseWater(
         @Header("Authorization") token: String,
         @Body request: WaterIncreaseRequest
-    ): Response<String>
+    ): Response<WaterIncreaseResponse>
 
 }
