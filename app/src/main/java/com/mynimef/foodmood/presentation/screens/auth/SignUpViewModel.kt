@@ -101,7 +101,7 @@ class SignUpViewModel: ViewModel() {
         _thirdButtonActive.value = emailCheck && passwordCheck
     }
 
-    fun signUp() {
+    fun signUp() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignUpRequest(
                 name = _name.value,
@@ -112,23 +112,23 @@ class SignUpViewModel: ViewModel() {
                 trackWeight = _weight.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            when (val result = Repository.signUpClient(request)) {
+            when (val result = network.signUpClient(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        403 -> Repository.toast(EToast.WRONG_INPUT)
-                        409 -> Repository.toast(EToast.ACCOUNT_ALREADY_EXISTS)
+                        403 -> toastFlow.emit(EToast.WRONG_INPUT)
+                        409 -> toastFlow.emit(EToast.ACCOUNT_ALREADY_EXISTS)
                         else -> {}
                     }
                 }
-                is ApiException -> Repository.toast(EToast.NO_CONNECTION)
-                is ApiSuccess -> Repository.signIn(result.data)
+                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> signIn(result.data)
             }
         }
     }
 
-    fun navigateTo(nav: ENavAuth) {
+    fun navigateTo(nav: ENavAuth) = with(Repository) {
         job = CoroutineScope(Dispatchers.Main).launch {
-            Repository.authNavMain.emit(nav)
+            authNavMain.emit(nav)
         }
     }
 

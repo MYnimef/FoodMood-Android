@@ -39,19 +39,25 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun HomeScreen() {
     val viewModel: HomeViewModel = viewModel()
 
-    HomeScreen(
-        water = viewModel.water.collectAsState().value,
-        setWater = viewModel::setWater,
-        cards = viewModel.getCards().collectAsState(initial = emptyList()).value,
-        refreshing = viewModel.refreshing.collectAsState().value,
-        onRefresh = viewModel::update
-    )
+    val client = viewModel.client.collectAsState().value
+
+    if (client != null) {
+        HomeScreen(
+            trackWater = client.trackWater,
+            waterAmount = client.waterAmount,
+            setWater = viewModel::setWater,
+            cards = viewModel.getCards().collectAsState(initial = emptyList()).value,
+            refreshing = viewModel.refreshing.collectAsState().value,
+            onRefresh = viewModel::update
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun HomeScreen(
-    water: Float,
+    trackWater: Boolean,
+    waterAmount: Float,
     setWater: (Float) -> Unit,
     cards: List<CardEntity>,
     refreshing: Boolean,
@@ -75,7 +81,8 @@ private fun HomeScreen(
                 .pullRefresh(pullRefreshState)
         ) {
             CenterElements(
-                progress = water,
+                trackWater = trackWater,
+                waterAmount = waterAmount,
                 setWater = setWater,
                 cards = cards,
             )
@@ -90,7 +97,8 @@ private fun HomeScreen(
 
 @Composable
 private fun CenterElements(
-    progress: Float,
+    trackWater: Boolean,
+    waterAmount: Float,
     setWater: (Float) -> Unit,
     cards: List<CardEntity>,
 ) {
@@ -102,17 +110,19 @@ private fun CenterElements(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        item {
-            MyWaterPanel(setWater = setWater)
-            LinearProgressIndicator(
-                progress = progress,
-                color = MaterialTheme.colorScheme.tertiary,
-                trackColor = MaterialTheme.colorScheme.tertiaryContainer,
-                modifier = Modifier
-                    .fillMaxHeight(0.3f)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
-            )
+        if (trackWater) {
+            item {
+                MyWaterPanel(setWater = setWater)
+                LinearProgressIndicator(
+                    progress = waterAmount,
+                    color = MaterialTheme.colorScheme.tertiary,
+                    trackColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    modifier = Modifier
+                        .fillMaxHeight(0.3f)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+                )
+            }
         }
         items(cards) { card ->
             MyFoodCard(
@@ -166,7 +176,8 @@ private fun HomeScreenPreview() {
         )
 
         HomeScreen(
-            water = 0f,
+            trackWater = true,
+            waterAmount = 0f,
             setWater = {},
             cards = cards,
             refreshing = false,
