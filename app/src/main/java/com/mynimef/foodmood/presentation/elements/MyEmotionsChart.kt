@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.elements
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +27,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import java.time.LocalDate
 
 @Composable
-private fun MyEmotionsChart(
+fun MyEmotionsChart(
     modifier: Modifier,
     emotionsData: List<Pair<Float, Float>>,
     periodType: ETypePeriod,
@@ -46,7 +47,7 @@ private fun MyEmotionsChart(
         xLabels = PlotLabels(
             labels = xLabels,
             fontSize = 8.sp,
-            fontColor = Color.Black,
+            fontColor = MaterialTheme.colorScheme.onPrimaryContainer,
             padding = 15.dp,
             diapason = false
         ),
@@ -66,12 +67,12 @@ private fun MyEmotionsChart(
             maxY = 5f,
         ),
         lineStyle = PlotLineStyle(
-            color = Color.Black,
-            width = 2.dp
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            width = 1.dp
         ),
         markStyle = PlotMarkStyle(
-            color = Color.Red,
-            radius = 4.dp,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            radius = 2.dp,
         ),
         underColors = listOf(
             EmotionDarkGreen,
