@@ -38,15 +38,15 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun HomeScreen() {
     val viewModel: HomeViewModel = viewModel()
-
     val client = viewModel.client.collectAsState().value
+    val cardsState = viewModel.getCards().collectAsState(initial = emptyList())
 
     if (client != null) {
         HomeScreen(
             trackWater = client.trackWater,
             waterAmount = client.waterAmount,
             setWater = viewModel::setWater,
-            cards = viewModel.getCards().collectAsState(initial = emptyList()).value,
+            cardsProvider = { cardsState.value },
             refreshing = viewModel.refreshing.collectAsState().value,
             onRefresh = viewModel::update
         )
@@ -59,7 +59,7 @@ private fun HomeScreen(
     trackWater: Boolean,
     waterAmount: Float,
     setWater: (Float) -> Unit,
-    cards: List<CardEntity>,
+    cardsProvider: () -> List<CardEntity>,
     refreshing: Boolean,
     onRefresh: () -> Unit,
 ) {
@@ -84,7 +84,7 @@ private fun HomeScreen(
                 trackWater = trackWater,
                 waterAmount = waterAmount,
                 setWater = setWater,
-                cards = cards,
+                cardsProvider = cardsProvider,
             )
             PullRefreshIndicator(
                 refreshing = refreshing,
@@ -100,7 +100,7 @@ private fun CenterElements(
     trackWater: Boolean,
     waterAmount: Float,
     setWater: (Float) -> Unit,
-    cards: List<CardEntity>,
+    cardsProvider: () -> List<CardEntity>,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -124,7 +124,7 @@ private fun CenterElements(
                 )
             }
         }
-        items(cards) { card ->
+        items(cardsProvider()) { card ->
             MyFoodCard(
                 iconEatId = card.mealType.icon,
                 typeEatId = card.mealType.label,
@@ -179,7 +179,7 @@ private fun HomeScreenPreview() {
             trackWater = true,
             waterAmount = 0f,
             setWater = {},
-            cards = cards,
+            cardsProvider = { cards },
             refreshing = false,
             onRefresh = {}
         )

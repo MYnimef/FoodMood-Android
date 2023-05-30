@@ -56,15 +56,18 @@ class AppStorage(context: Context) {
         apply()
     }
 
-    fun setId(id: Long) = with (sharedPref.edit()) {
-        putLong("account_id", id)
-        apply()
+    fun setId(id: Long) {
+        with (sharedPref.edit()) {
+            putLong("account_id", id)
+            apply()
+        }
+        this.id = id
     }
 
     suspend fun getRefreshToken() =
         database.accountDao().getRefreshTokenById(id)
     suspend fun insertAccount(account: AccountEntity) {
-        id = database.accountDao().insert(account)
+        setId(database.accountDao().insert(account))
     }
     suspend fun deleteAccount(id: Long) =
         database.accountDao().deleteById(id)
