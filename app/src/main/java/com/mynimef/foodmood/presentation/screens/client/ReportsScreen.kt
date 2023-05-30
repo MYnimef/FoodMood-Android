@@ -2,12 +2,14 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +32,8 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun ReportsScreen() {
     val viewModel: ReportsViewModel = viewModel()
     ReportsScreen(
-        period = ETypePeriod.DAYS_31,
+        period = viewModel.period.collectAsState().value,
+        setPeriod = viewModel::setPeriod,
         coordinate = viewModel.coordinate.collectAsState().value,
     )
     OnLifecycleEvent { _, event ->
@@ -43,14 +46,9 @@ fun ReportsScreen() {
 @Composable
 private fun ReportsScreen(
     period: ETypePeriod,
-    coordinate: List<Coordinate>,
+    setPeriod: (ETypePeriod) -> Unit,
+    coordinate: List<Pair<Float, Float>>,
 ) {
-    val emotionX = mutableListOf<Float>()
-    val emotionY = mutableListOf<Float>()
-    coordinate.forEach {
-        emotionX.add(it.x)
-        emotionY.add(it.y)
-    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,15 +60,34 @@ private fun ReportsScreen(
     ) {
         Text(
             stringResource(R.string.emotion_chart),
-            modifier = Modifier.padding(bottom = 30.dp, top = 70.dp),
+            modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
             style = MaterialTheme.typography.titleLarge
         )
-
+        Row(
+            modifier = Modifier
+                .padding(bottom = 35.dp),
+            horizontalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                onClick = { setPeriod(ETypePeriod.DAYS_7) }) {
+                Text(text = stringResource(id = R.string.days_7))
+            }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                onClick = { setPeriod(ETypePeriod.DAYS_31) }) {
+                Text(text = stringResource(id = R.string.days_31))
+            }
+        }
         MyEmotionsChart(
             modifier = Modifier
                 .fillMaxWidth(1f)
                 .aspectRatio(2f),
-            emotionsData = emptyList(),
+            emotionsData = coordinate,
             periodType = period,
         )
     }

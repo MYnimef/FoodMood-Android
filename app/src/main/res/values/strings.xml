@@ -63,4 +63,7 @@
     <string name="toast_403">Wrong input data</string>
     <string name="toast_409">Account already exists</string>
     <string name="toast_no_con">No connection</string>
+
+    <string name="days_7">7 days</string>
+    <string name="days_31">31 days</string>
 </resources>
