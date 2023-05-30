@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -67,8 +68,8 @@ private fun ReportsScreen(
 
         MyEmotionsChart(
             modifier = Modifier
-                .fillMaxSize(0.93f)
-                .aspectRatio(1.86f),
+                .fillMaxWidth(1f)
+                .aspectRatio(2f),
             emotionsData = emptyList(),
             periodType = period,
         )

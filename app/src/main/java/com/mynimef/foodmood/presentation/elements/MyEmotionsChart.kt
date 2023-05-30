@@ -42,8 +42,11 @@ fun MyEmotionsChart(
     )
     val yIcons = ETypeEmotion.values().map { it.icon }
 
+    val iconSize = 20.dp
+    val paddingY = iconSize * 1.5f
+
     LineChart(
-        modifier = modifier,
+        modifier = modifier.padding(end = paddingY),
         xLabels = PlotLabels(
             labels = xLabels,
             fontSize = 8.sp,
@@ -53,7 +56,8 @@ fun MyEmotionsChart(
         ),
         yIcons = PlotIcons(
             icons = yIcons,
-            iconsSize = 20.dp,
+            iconsSize = iconSize,
+            padding = paddingY,
             diapason = true
         ),
         verticalLines = AxisLines(
