@@ -40,7 +40,7 @@ fun MyWaterChart(
     val averageY: Float
 
     if (waterData.isNotEmpty()) {
-        maxY = waterData.maxBy{ pair -> pair.second}.second
+        maxY = (waterData.maxBy{ pair -> pair.second}.second)*1.2f
         minY = 0 + maxY/3
         averageY = minY + maxY/3
     } else {
@@ -84,7 +84,7 @@ fun MyWaterChart(
             minX = 0f,
             maxX = period.toFloat(),
             minY = 0f,
-            maxY = maxY*1.5f,
+            maxY = maxY,
         ),
         lineStyle = PlotLineStyle(
             color = MaterialTheme.colorScheme.onPrimaryContainer,
