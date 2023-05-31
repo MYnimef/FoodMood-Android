@@ -31,6 +31,7 @@ import com.mynimef.foodmood.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.extensions.noRippleClickable
 import com.mynimef.foodmood.presentation.elements.MyEmotionsChart
 import com.mynimef.foodmood.presentation.elements.MyWaterChart
+import com.mynimef.foodmood.presentation.elements.MyWeightChart
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 
@@ -42,6 +43,7 @@ fun ReportsScreen() {
         setPeriod = viewModel::setPeriod,
         coordinatesEmotions = viewModel.coordinatesEmotions.collectAsState().value,
         coordinatesWater = viewModel.coordinatesWater.collectAsState().value,
+        coordinatesWeight = viewModel.coordinatesWeight.collectAsState().value,
     )
     OnLifecycleEvent { _, event ->
         if (event == Lifecycle.Event.ON_CREATE) {
@@ -56,6 +58,7 @@ private fun ReportsScreen(
     setPeriod: (ETypePeriod) -> Unit,
     coordinatesEmotions: List<Pair<Float, Float>>,
     coordinatesWater: List<Pair<Float, Float>>,
+    coordinatesWeight: List<Pair<Float, Float>>,
 ) {
     Column() {
         Row(
@@ -133,6 +136,18 @@ private fun ReportsScreen(
                 .fillMaxWidth(1f)
                 .aspectRatio(2f),
             waterData = coordinatesWater,
+            periodType = period,
+        )
+        Text(
+            stringResource(R.string.weight),
+            modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
+            style = MaterialTheme.typography.titleLarge
+        )
+        MyWeightChart(
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .aspectRatio(2f),
+            weightData = coordinatesWeight,
             periodType = period,
         )
     }

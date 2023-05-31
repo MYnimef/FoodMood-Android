@@ -19,6 +19,9 @@ class ReportsViewModel: ViewModel() {
     private val _coordinatesWater = MutableStateFlow(emptyList<Pair<Float, Float>>())
     val coordinatesWater = _coordinatesWater.asStateFlow()
 
+    private val _coordinatesWeight = MutableStateFlow(emptyList<Pair<Float, Float>>())
+    val coordinatesWeight = _coordinatesWeight.asStateFlow()
+
 
     private val _period = MutableStateFlow(ETypePeriod.DAYS_7)
     val period = _period.asStateFlow()
@@ -44,12 +47,12 @@ class ReportsViewModel: ViewModel() {
                 Pair(9f, 2000f),
                 Pair(15f, 500f),
             )
-            _coordinatesWater.value = listOf(
-                Pair(0f, 1000f),
-                Pair(3f, 200f),
-                Pair(5f, 100f),
-                Pair(9f, 2000f),
-                Pair(15f, 500f),
+            _coordinatesWeight.value = listOf(
+                Pair(0f, 50.8f),
+                Pair(4f, 50.25f),
+                Pair(7f, 49.24f),
+                Pair(12f, 49.8f),
+                Pair(15f, 50.3f),
             )
         }
     }

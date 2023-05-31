@@ -26,7 +26,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun MyWeight(
+fun MyWeightCard(
     weight: Float,
     setWeight: (Float) -> Unit,
     onDismiss:()->Unit,
@@ -99,6 +99,6 @@ fun MyWeight(
 @Composable
 fun MyWeightPrev() {
     FoodMoodTheme {
-        MyWeight(20.0f,{}, {}, {})
+        MyWeightCard(20.0f,{}, {}, {})
     }
 }
