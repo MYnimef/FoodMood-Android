@@ -7,6 +7,7 @@ import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
+import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
 import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,35 +20,61 @@ class HomeViewModel: ViewModel() {
 
     private var job: Job? = null
 
+    val client = Repository.storage.client
+
     private val _refreshing = MutableStateFlow(false)
     val refreshing = _refreshing.asStateFlow()
 
-    private val _water = MutableStateFlow(0f)
-    val water = _water.asStateFlow()
-
-    fun setWater(value: Float) {
-        _water.value += value
+    fun setWater(amount: Float) = with(Repository) {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            val request = WaterIncreaseRequest(
+                amount = amount,
+                TimeZone.getDefault().id,
+            )
+            when (val result = network.clientIncreaseWater(request)) {
+                is ApiError -> {
+                    when (result.code) {
+                        401 -> signOut()
+                        else -> {}
+                    }
+                }
+                is ApiException -> {}
+                is ApiSuccess -> {
+                    storage.insertClient(
+                        storage.client.value!!.copy(waterAmount = result.data.totalAmount)
+                    )
+                }
+            }
+        }
     }
 
-    fun getCards() = Repository.getCardsFromStorage()
+    fun getCards() = Repository.storage.getAllCards()
 
-    fun update() {
+    fun update() = with(Repository) {
         _refreshing.value = true
         job = CoroutineScope(Dispatchers.IO).launch {
-            when (val result = Repository.clientGetInfo(
-                ClientInfoRequest(TimeZone.getDefault().id)
-            )) {
+            val request = ClientInfoRequest(
+                timeZone = TimeZone.getDefault().id
+            )
+            when (val result = network.clientGetInfo(request)) {
                 is ApiError -> {
                     when (result.code) {
                         401 -> {
-                            Repository.toast(EToast.AUTH_FAILED)
-                            Repository.signOut()
+                            toastFlow.emit(EToast.AUTH_FAILED)
+                            signOut()
                         }
                         else -> {}
                     }
                 }
-                is ApiException -> Repository.toast(EToast.NO_CONNECTION)
-                is ApiSuccess -> Repository.initClient(result.data)
+                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> {
+                    val data = result.data
+                    storage.deleteAllCards()
+                    data.dayCards.forEach {
+                        storage.insertCard(it.toCardEntity())
+                    }
+                    storage.insertClient(data.toClientEntity())
+                }
             }
             _refreshing.value = false
         }

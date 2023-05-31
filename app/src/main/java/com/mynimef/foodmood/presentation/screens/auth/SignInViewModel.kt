@@ -47,30 +47,30 @@ class SignInViewModel: ViewModel() {
         _buttonActive.value = emailCheck && passwordCheck
     }
 
-    fun signIn() {
+    fun signIn() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignInRequest(
                 email = _email.value,
                 password = _password.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            when (val result = Repository.signIn(request)) {
+            when (val result = network.signIn(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> Repository.toast(EToast.WRONG_EMAIL_OR_PASSWORD)
-                        403 -> Repository.toast(EToast.WRONG_INPUT)
+                        401 -> toastFlow.emit(EToast.WRONG_EMAIL_OR_PASSWORD)
+                        403 -> toastFlow.emit(EToast.WRONG_INPUT)
                         else -> {}
                     }
                 }
-                is ApiException -> Repository.toast(EToast.NO_CONNECTION)
-                is ApiSuccess -> Repository.signIn(result.data)
+                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> signIn(result.data)
             }
         }
     }
 
-    fun signUp() {
+    fun signUp() = with(Repository) {
         job = CoroutineScope(Dispatchers.Main).launch {
-            Repository.authNavMain.emit(ENavAuth.SIGN_UP)
+            authNavMain.emit(ENavAuth.SIGN_UP)
         }
     }
 

@@ -20,22 +20,30 @@ class ClientMainViewModel: ViewModel() {
 
     val navigation = Repository.clientNavMain.asSharedFlow()
 
-    fun initClient() {
+    fun initClient() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            when (val result = Repository.clientGetInfo(
+
+            when (val result = network.clientGetInfo(
                 ClientInfoRequest(TimeZone.getDefault().id)
             )) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> Repository.apply {
-                            toast(EToast.AUTH_FAILED)
+                        401 ->  {
+                            toastFlow.emit(EToast.AUTH_FAILED)
                             signOut()
                         }
                         else -> {}
                     }
                 }
-                is ApiException -> Repository.toast(EToast.NO_CONNECTION)
-                is ApiSuccess -> Repository.initClient(result.data)
+                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> {
+                    val data = result.data
+                    storage.deleteAllCards()
+                    data.dayCards.forEach {
+                        storage.insertCard(it.toCardEntity())
+                    }
+                    storage.insertClient(data.toClientEntity())
+                }
             }
         }
     }
