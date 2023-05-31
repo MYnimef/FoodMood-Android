@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mynimef.foodmood.presentation.theme.DarkBrown
 
 data class PlotCoordinates(
     val values: List<Pair<Float, Float>>,
@@ -28,13 +29,13 @@ data class PlotBorders(
 )
 
 data class PlotLineStyle(
-    val color: Color = Color.Black,
-    val width: Dp = 4.dp,
+    val color: Color = DarkBrown,
+    val width: Dp = 2.dp,
 )
 
 data class PlotMarkStyle(
-    val color: Color = Color.Red,
-    val radius: Dp = 4.dp,
+    val color: Color = DarkBrown,
+    val radius: Dp = 3.dp,
 )
 
 fun DrawScope.drawPlot(

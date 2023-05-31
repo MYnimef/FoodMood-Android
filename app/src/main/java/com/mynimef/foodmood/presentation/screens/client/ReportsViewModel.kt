@@ -13,8 +13,12 @@ import kotlinx.coroutines.launch
 class ReportsViewModel: ViewModel() {
     private var job: Job? = null
 
-    private val _coordinates = MutableStateFlow(emptyList<Pair<Float, Float>>())
-    val coordinate = _coordinates.asStateFlow()
+    private val _coordinatesEmotions = MutableStateFlow(emptyList<Pair<Float, Float>>())
+    val coordinatesEmotions = _coordinatesEmotions.asStateFlow()
+
+    private val _coordinatesWater = MutableStateFlow(emptyList<Pair<Float, Float>>())
+    val coordinatesWater = _coordinatesWater.asStateFlow()
+
 
     private val _period = MutableStateFlow(ETypePeriod.DAYS_7)
     val period = _period.asStateFlow()
@@ -26,12 +30,26 @@ class ReportsViewModel: ViewModel() {
     fun plot() {
         job = CoroutineScope(Dispatchers.IO).launch {
             delay(10000)
-            _coordinates.value = listOf(
+            _coordinatesEmotions.value = listOf(
                 Pair(0f, 5f),
                 Pair(3f, 3f),
                 Pair(5f, 1f),
                 Pair(9f, 3f),
                 Pair(15f, 2f),
+            )
+            _coordinatesWater.value = listOf(
+                Pair(0f, 1000f),
+                Pair(3f, 200f),
+                Pair(5f, 100f),
+                Pair(9f, 2000f),
+                Pair(15f, 500f),
+            )
+            _coordinatesWater.value = listOf(
+                Pair(0f, 1000f),
+                Pair(3f, 200f),
+                Pair(5f, 100f),
+                Pair(9f, 2000f),
+                Pair(15f, 500f),
             )
         }
     }
