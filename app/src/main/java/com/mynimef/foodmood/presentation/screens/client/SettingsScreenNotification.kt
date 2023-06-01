@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,8 +13,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +25,7 @@ import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun NotificationsScreen() {
+fun SettingsScreenNotification() {
     val notifications = remember {
         listOf<Notification>(
             Notification(1, "09:00", "Time to drink water"),
@@ -93,6 +90,6 @@ private fun CenterElements(
 @Composable
 fun NotifScreenPrev() {
     FoodMoodTheme {
-        NotificationsScreen()
+        SettingsScreenNotification()
     }
 }

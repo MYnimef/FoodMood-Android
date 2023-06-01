@@ -1,10 +1,8 @@
 package com.mynimef.foodmood.presentation.screens.trainer
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,10 +18,9 @@ import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainerNavigationScreen() {
+    /*
     val navController = rememberNavController()
     val bottomNavItems = listOf(
         BottomNavigationItem(icon = R.drawable.ic_nav_home, iconFill = R.drawable.ic_nav_home_fill, route = "home"),
@@ -49,6 +46,8 @@ fun TrainerNavigationScreen() {
             )
         }
     }
+
+     */
 }
 
 @Composable

@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.mynimef.foodmood.data.models.enums.EAppState
-import com.mynimef.foodmood.presentation.screens.client.ClientNavigationScreen
-import com.mynimef.foodmood.presentation.screens.auth.AuthNavigationScreen
+import com.mynimef.foodmood.presentation.screens.auth.AuthMainScreen
+import com.mynimef.foodmood.presentation.screens.client.ClientMainScreen
 import com.mynimef.foodmood.presentation.screens.trainer.TrainerNavigationScreen
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import kotlinx.coroutines.launch
@@ -45,8 +45,8 @@ class MainActivity: ComponentActivity() {
                     targetState = viewModel.appState.collectAsState().value
                 ) { targetState ->
                     when (targetState) {
-                        EAppState.AUTH -> AuthNavigationScreen()
-                        EAppState.CLIENT -> ClientNavigationScreen()
+                        EAppState.AUTH -> AuthMainScreen()
+                        EAppState.CLIENT -> ClientMainScreen()
                         EAppState.TRAINER -> TrainerNavigationScreen()
                     }
                 }

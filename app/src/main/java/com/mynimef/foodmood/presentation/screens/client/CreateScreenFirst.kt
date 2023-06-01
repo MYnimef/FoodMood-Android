@@ -1,26 +1,31 @@
 package com.mynimef.foodmood.presentation.screens.client
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyChoiceCard
 import com.mynimef.foodmood.presentation.elements.MyPolygonLayout
+import com.mynimef.foodmood.presentation.elements.MyWeight
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -54,9 +59,23 @@ private fun CreateScreenFirst(
             textAlign = TextAlign.Center,
         )
 
+        var scale by remember { mutableStateOf(0.5f) }
+
+        val scaleAnimate = animateFloatAsState(
+            targetValue = scale,
+            animationSpec = tween(
+                durationMillis = 500
+            )
+        )
+
+        LaunchedEffect(Unit) {
+            scale = 1f
+        }
+
         MyPolygonLayout(
             modifier = Modifier
-                .padding(horizontal = 60.dp)
+                .scale(scaleAnimate.value)
+                .padding(60.dp)
         ) {
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_breakfast,
@@ -97,7 +116,8 @@ private fun CreateScreenFirst(
                 setMealType(ETypeMeal.SUPPER)
             }
         }
-        if(isDialogShown){
+
+        if (isDialogShown) {
             MyWeight(
                 onDismiss = triggerDialogShown,
                 onConfirm = {

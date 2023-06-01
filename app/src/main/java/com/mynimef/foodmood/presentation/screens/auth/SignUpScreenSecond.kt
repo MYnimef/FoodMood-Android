@@ -11,42 +11,35 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.commandiron.wheel_picker_compose.WheelDatePicker
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
-import com.mynimef.foodmood.presentation.elements.MyRadioTextSelector
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import java.time.LocalDate
 
 @Composable
 fun SignUpScreenSecond(
     viewModel: SignUpViewModel,
-    navigateTo: (route: String) -> Unit,
 ) {
     SignUpScreenSecond(
-        navigateTo = navigateTo,
-        food = viewModel.food.collectAsState().value,
-        triggerFood = viewModel::triggerFood,
-        water = viewModel.water.collectAsState().value,
-        triggerWater = viewModel::triggerWater,
-        weight = viewModel.weight.collectAsState().value,
-        triggerWeight = viewModel::triggerWeight,
+        setBirthday= viewModel::setBirthday,
+        buttonActive = viewModel.secondButtonActive.collectAsState().value,
+        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_THIRD) },
     )
 }
 
 @Composable
 private fun SignUpScreenSecond(
-    navigateTo: (route: String) -> Unit,
-    food: Boolean,
-    triggerFood: () -> Unit,
-    water: Boolean,
-    triggerWater: () -> Unit,
-    weight: Boolean,
-    triggerWeight: () -> Unit,
+    setBirthday: (String) -> Unit,
+    buttonActive: Boolean,
+    onNext: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -54,64 +47,45 @@ private fun SignUpScreenSecond(
             .fillMaxSize()
     ) {
         CenterElements(
-            navigateTo = navigateTo,
-            food = food,
-            triggerFood = triggerFood,
-            water = water,
-            triggerWater = triggerWater,
-            weight = weight,
-            triggerWeight = triggerWeight,
+            setBirthday = setBirthday,
+            buttonActive = buttonActive,
+            onNext = onNext
         )
     }
 }
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: String) -> Unit,
-    food: Boolean,
-    triggerFood: () -> Unit,
-    water: Boolean,
-    triggerWater: () -> Unit,
-    weight: Boolean,
-    triggerWeight: () -> Unit,
+    setBirthday: (String) -> Unit,
+    buttonActive: Boolean,
+    onNext: () -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp),
+            .padding(horizontal = 30.dp)
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             modifier = Modifier.padding(bottom = 30.dp),
-            text = stringResource(R.string.pref),
-            style = MaterialTheme.typography.titleLarge,
+            text = stringResource(R.string.birthday),
+            style = MaterialTheme.typography.titleLarge
         )
-        MyRadioTextSelector(
-            text = stringResource(R.string.emotion),
-            selected = true,
-            onClick = {},
-        )
-        MyRadioTextSelector(
-            text = stringResource(R.string.food),
-            selected = food,
-            onClick = triggerFood,
-        )
-        MyRadioTextSelector(
-            text = stringResource(R.string.water),
-            selected = water,
-            onClick = triggerWater,
-        )
-        MyRadioTextSelector(
-            text = stringResource(R.string.weight),
-            selected = weight,
-            onClick = triggerWeight,
-        )
+
+        WheelDatePicker(
+            modifier = Modifier.padding(bottom = 30.dp),
+            maxDate = LocalDate.now(),
+        ) {
+                snappedDate -> setBirthday(snappedDate.toString())
+        }
+
         MyLoginButton(
             text = stringResource(R.string.next),
-        ) {
-            navigateTo("third")
-        }
+            enabled = buttonActive,
+            onClick = onNext
+        )
     }
 }
 
@@ -119,18 +93,12 @@ private fun CenterElements(
 @Composable
 private fun SignUpSecondScreenPreview() {
     FoodMoodTheme {
-        val food = rememberSaveable { mutableStateOf(false) }
-        val water = rememberSaveable { mutableStateOf(false) }
-        val weight = rememberSaveable { mutableStateOf(false) }
+        val date = remember { mutableStateOf("") }
 
         SignUpScreenSecond(
-            navigateTo = {},
-            food = food.value,
-            triggerFood = { food.value = !food.value },
-            water = water.value,
-            triggerWater = { water.value = !water.value },
-            weight = weight.value,
-            triggerWeight = { weight.value = !weight.value },
+            setBirthday = { date.value = it },
+            buttonActive = true,
+            onNext = {}
         )
     }
 }

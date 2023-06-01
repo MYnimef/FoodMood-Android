@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.Repository
@@ -46,24 +47,30 @@ class SignInViewModel: ViewModel() {
         _buttonActive.value = emailCheck && passwordCheck
     }
 
-    fun signIn() {
+    fun signIn() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignInRequest(
                 email = _email.value,
                 password = _password.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            when (val result = Repository.signIn(request)) {
+            when (val result = network.signIn(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> Repository.toast(EToast.WRONG_EMAIL_OR_PASSWORD)
-                        403 -> Repository.toast(EToast.WRONG_INPUT)
+                        401 -> toastFlow.emit(EToast.WRONG_EMAIL_OR_PASSWORD)
+                        403 -> toastFlow.emit(EToast.WRONG_INPUT)
                         else -> {}
                     }
                 }
-                is ApiException -> Repository.toast(EToast.NO_CONNECTION)
-                is ApiSuccess -> Repository.signIn(result.data)
+                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> signIn(result.data)
             }
+        }
+    }
+
+    fun signUp() = with(Repository) {
+        job = CoroutineScope(Dispatchers.Main).launch {
+            authNavMain.emit(ENavAuth.SIGN_UP)
         }
     }
 
@@ -71,4 +78,5 @@ class SignInViewModel: ViewModel() {
         super.onCleared()
         job?.cancel()
     }
+
 }

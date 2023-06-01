@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation.extensions
+package com.mynimef.foodmood.extensions
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

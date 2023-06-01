@@ -11,28 +11,39 @@ import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class ClientNavigationViewModel: ViewModel() {
+class ClientMainViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    fun initClient() {
+    val navigation = Repository.clientNavMain.asSharedFlow()
+
+    fun initClient() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            when (val result = Repository.clientGetInfo(
+
+            when (val result = network.clientGetInfo(
                 ClientInfoRequest(TimeZone.getDefault().id)
             )) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> {
-                            Repository.toast(EToast.AUTH_FAILED)
-                            Repository.signOut()
+                        401 ->  {
+                            toastFlow.emit(EToast.AUTH_FAILED)
+                            signOut()
                         }
                         else -> {}
                     }
                 }
-                is ApiException -> Repository.toast(EToast.NO_CONNECTION)
-                is ApiSuccess -> Repository.initClient(result.data)
+                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> {
+                    val data = result.data
+                    storage.deleteAllCards()
+                    data.dayCards.forEach {
+                        storage.insertCard(it.toCardEntity())
+                    }
+                    storage.insertClient(data.toClientEntity())
+                }
             }
         }
     }

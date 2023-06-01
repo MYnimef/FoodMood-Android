@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -14,7 +15,7 @@ class MainViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    val toastFlow = Repository.getToastFlow()
+    val toastFlow = Repository.toastFlow.asSharedFlow()
     val appState = Repository.appState
 
     private val _dataLoaded = MutableStateFlow(false)

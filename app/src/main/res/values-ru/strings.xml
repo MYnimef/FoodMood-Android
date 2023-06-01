@@ -63,4 +63,7 @@
     <string name="toast_403">Некорректные входные данные</string>
     <string name="toast_409">Аккаунт уже существует</string>
     <string name="toast_no_con">Отсутствует соединение</string>
+
+    <string name="days_7">7 дней</string>
+    <string name="days_31">31 день</string>
 </resources>

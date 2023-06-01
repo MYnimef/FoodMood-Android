@@ -20,38 +20,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.commandiron.wheel_picker_compose.WheelDatePicker
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavigationAuth
+import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
-import java.time.LocalDate
 
 @Composable
-fun SignUpScreenFirst(
-    parentNavigateTo: (route: ENavigationAuth) -> Unit,
-    navigateTo: (route: String) -> Unit,
-    viewModel: SignUpViewModel,
-) {
+fun SignUpScreenFirst(viewModel: SignUpViewModel) {
     SignUpScreenFirst(
-        navigateTo = navigateTo,
         name = viewModel.name.collectAsState().value,
         setName= viewModel::setName,
-        birthday = viewModel.birthday.collectAsState().value,
-        setBirthday= viewModel::setBirthday,
         buttonActive = viewModel.firstButtonActive.collectAsState().value,
+        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_SECOND) }
     )
 }
 
 @Composable
 private fun SignUpScreenFirst(
-    navigateTo: (route: String) -> Unit,
     name: String,
     setName: (String) -> Unit,
-    birthday: String,
-    setBirthday: (String) -> Unit,
     buttonActive: Boolean,
+    onNext: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -59,24 +49,20 @@ private fun SignUpScreenFirst(
             .fillMaxSize()
     ) {
         CenterElements(
-            navigateTo = navigateTo,
             name = name,
             setName = setName,
-            birthday = birthday,
-            setBirthday = setBirthday,
-            buttonActive = buttonActive
+            buttonActive = buttonActive,
+            onNext = onNext,
         )
     }
 }
 
 @Composable
 private fun CenterElements(
-    navigateTo: (route: String) -> Unit,
     name: String,
     setName: (String) -> Unit,
-    birthday: String,
-    setBirthday: (String) -> Unit,
     buttonActive: Boolean,
+    onNext: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -101,25 +87,11 @@ private fun CenterElements(
             onValueChange = setName,
         )
 
-        Text(
-            modifier = Modifier.padding(bottom = 30.dp).align(Alignment.Start),
-            text = stringResource(R.string.birthday),
-            style = MaterialTheme.typography.bodyLarge
-        )
-
-        WheelDatePicker(
-            modifier = Modifier.padding(bottom = 30.dp),
-            maxDate = LocalDate.now(),
-        ) {
-            snappedDate -> setBirthday(snappedDate.toString())
-        }
-
         MyLoginButton(
             text = stringResource(R.string.next),
             enabled = buttonActive,
-        ) {
-            navigateTo("second")
-        }
+            onClick = onNext,
+        )
     }
 }
 
@@ -128,15 +100,12 @@ private fun CenterElements(
 private fun SignUpFirstScreenPreview() {
     FoodMoodTheme {
         val name = remember { mutableStateOf("") }
-        val date = remember { mutableStateOf("") }
 
         SignUpScreenFirst(
-            navigateTo = {},
             name = name.value,
             setName = { name.value = it },
-            birthday = date.value,
-            setBirthday = { date.value = it },
-            buttonActive = true
+            buttonActive = true,
+            onNext = {}
         )
     }
 }

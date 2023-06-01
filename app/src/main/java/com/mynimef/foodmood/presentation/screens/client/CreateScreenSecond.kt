@@ -44,17 +44,19 @@ fun CreateScreenSecond(
 ) {
     val client = viewModel.getClient().collectAsState().value
 
-    CreateScreenSecond(
-        mealType = viewModel.mealType.collectAsState().value,
-        emotionType = viewModel.emotionType.collectAsState().value,
-        setEmotionType = viewModel::setEmotionType,
-        emotionDescription = viewModel.emotionDescription.collectAsState().value,
-        setEmotionDescription = viewModel::setEmotionDescription,
-        trackFood = client.trackFood,
-        foodDescription = viewModel.foodDescription.collectAsState().value,
-        setFoodDescription = viewModel::setFoodDescription,
-        onComplete = viewModel::create,
-    )
+    if (client != null) {
+        CreateScreenSecond(
+            mealType = viewModel.mealType.collectAsState().value,
+            emotionType = viewModel.emotionType.collectAsState().value,
+            setEmotionType = viewModel::setEmotionType,
+            emotionDescription = viewModel.emotionDescription.collectAsState().value,
+            setEmotionDescription = viewModel::setEmotionDescription,
+            trackFood = client.trackFood,
+            foodDescription = viewModel.foodDescription.collectAsState().value,
+            setFoodDescription = viewModel::setFoodDescription,
+            onComplete = viewModel::create,
+        )
+    }
 }
 
 @Composable
@@ -134,7 +136,7 @@ private fun CenterElements(
                     .fillMaxWidth()
                     .padding(vertical = 20.dp)
                 ,
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimaryContainer),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.2f)),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
             ) {
                 Row(

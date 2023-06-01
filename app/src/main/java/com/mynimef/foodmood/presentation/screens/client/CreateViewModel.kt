@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
-import com.mynimef.foodmood.data.models.enums.ENavigationCreate
+import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
@@ -21,8 +21,6 @@ import kotlinx.coroutines.launch
 class CreateViewModel: ViewModel() {
 
     private var job: Job? = null
-
-    lateinit var navigation: (ENavigationCreate) -> Unit
 
     private val _mealType = MutableStateFlow(ETypeMeal.BREAKFAST)
     val mealType = _mealType.asStateFlow()
@@ -46,11 +44,13 @@ class CreateViewModel: ViewModel() {
         _isDialogShown.value = !_isDialogShown.value
     }
 
-    fun getClient() = Repository.client
+    fun getClient() = Repository.storage.client
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
-        navigation(ENavigationCreate.ADD_CARD)
+        job = CoroutineScope(Dispatchers.Main).launch {
+            Repository.clientNavMain.emit(ENavClientMain.CREATE_EMOTION_CARD)
+        }
     }
 
     fun setEmotionType(value: ETypeEmotion) {
@@ -69,7 +69,7 @@ class CreateViewModel: ViewModel() {
         _weight.value = value
     }
 
-    fun create() {
+    fun create() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = ClientAddCardRequest(
                 mealType = _mealType.value,
@@ -78,15 +78,18 @@ class CreateViewModel: ViewModel() {
                 foodDescription = _foodDescription.value,
                 timeZone = TimeZone.getDefault().id,
             )
-            when (val result = Repository.clientAddCard(request)) {
+            when (val result = network.clientAddCard(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> Repository.signOut()
+                        401 -> signOut()
                         else -> {}
                     }
                 }
                 is ApiException -> {}
-                is ApiSuccess -> Repository.addCardToStorage(result.data)
+                is ApiSuccess -> {
+                    storage.insertCard(result.data.toCardEntity())
+                    clientNavMain.emit(ENavClientMain.BOTTOM_BAR)
+                }
             }
         }
     }
