@@ -43,156 +43,80 @@ private fun SettingsScreen(
             .fillMaxSize()
     ) {
         Text(
-            stringResource(R.string.settings),
-            modifier = Modifier.padding(bottom = 30.dp, top = 70.dp, start = 30.dp),
+            text = stringResource(R.string.settings),
+            modifier = Modifier
+                .padding(bottom = 30.dp, top = 70.dp, start = 30.dp)
+            ,
             style = MaterialTheme.typography.titleLarge
         )
         Column(
             modifier = Modifier
-                .padding(start = 30.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.Start
+                .padding(start = 30.dp)
+            ,
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
             ) {
-            Row() {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .noRippleClickable(
-                            onClick = { setSettings(ENavClientMain.SETTINGS_USER_INFO) })
-                        .padding(bottom = 20.dp)
-                        .fillMaxWidth(0.15f)
-                ) {
-                    MyIcon(
-                        modifier = Modifier
-                            .align(Alignment.CenterStart),
-                        drawableId = R.drawable.ic_user)
-                }
-                TextButton(
-                    onClick = { setSettings(ENavClientMain.SETTINGS_USER_INFO) },
-                ) {
-                    Text(
-                        stringResource(R.string.user_settings),
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-            Row() {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .noRippleClickable(
-                            onClick = { setSettings(ENavClientMain.SETTINGS_PREFERENCES) })
-                        .padding(bottom = 20.dp)
-                        .fillMaxWidth(0.15f)
-                ) {
-                    MyIcon(
-                        drawableId = R.drawable.ic_preference)
-                }
-                TextButton(
-                    onClick = { setSettings(ENavClientMain.SETTINGS_PREFERENCES) },
-                ) {
-                    Text(
-                        stringResource(R.string.prefrences),
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-            Row() {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .noRippleClickable(
-                            onClick = { setSettings(ENavClientMain.SETTINGS_NOTIFICATIONS) })
-                        .padding(bottom = 20.dp)
-                        .fillMaxWidth(0.15f)
-                ) {
-                    MyIcon(
-                        drawableId = R.drawable.ic_notification)
-                }
-                TextButton(
-                    onClick = { setSettings(ENavClientMain.SETTINGS_NOTIFICATIONS) },
-                ) {
-                    Text(
-                        stringResource(R.string.notifications),
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-            Row() {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .noRippleClickable(
-                            onClick = { })
-                        .padding(bottom = 20.dp)
-                        .fillMaxWidth(0.15f)
-                ) {
-                    MyIcon(
-                        drawableId = R.drawable.ic_language)
-                }
-                TextButton(
-                    onClick = { },
-                ) {
-                    Text(
-                        stringResource(R.string.language),
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-            Row() {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .noRippleClickable(
-                            onClick = { })
-                        .padding(bottom = 20.dp)
-                        .fillMaxWidth(0.15f)
-                ) {
-                    MyIcon(
-                        drawableId = R.drawable.ic_error)
-                }
-                TextButton(
-                    onClick = { },
-                ) {
-                    Text(
-                        stringResource(R.string.error),
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-            Row() {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .noRippleClickable(
-                            onClick = { })
-                        .padding(bottom = 20.dp)
-                        .fillMaxWidth(0.15f)
-                ) {
-                    MyIcon(
-                        drawableId = R.drawable.ic_idea)
-                }
-                TextButton(
-                    onClick = { },
-                ) {
-                    Text(
-                        stringResource(R.string.idea),
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
+            SettingsElement(
+                drawableId = R.drawable.ic_user,
+                text = stringResource(R.string.user_settings),
+                onClick = { setSettings(ENavClientMain.SETTINGS_USER_INFO) }
+            )
+            SettingsElement(
+                drawableId = R.drawable.ic_preference,
+                text = stringResource(R.string.prefrences),
+                onClick = { setSettings(ENavClientMain.SETTINGS_PREFERENCES) }
+            )
+            SettingsElement(
+                drawableId = R.drawable.ic_notification,
+                text = stringResource(R.string.notifications),
+                onClick = { setSettings(ENavClientMain.SETTINGS_NOTIFICATIONS) }
+            )
+            SettingsElement(
+                drawableId = R.drawable.ic_language,
+                text = stringResource(R.string.language),
+                onClick = {}
+            )
+            SettingsElement(
+                drawableId = R.drawable.ic_error,
+                text = stringResource(R.string.error),
+                onClick = {}
+            )
+            SettingsElement(
+                drawableId = R.drawable.ic_idea,
+                text = stringResource(R.string.idea),
+                onClick = {}
+            )
+        }
+    }
+}
+
+@Composable
+private fun SettingsElement(
+    drawableId: Int,
+    text: String,
+    onClick: () -> Unit,
+) {
+    Row() {
+        Box(
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .noRippleClickable(
+                    onClick = onClick
+                )
+                .padding(bottom = 20.dp)
+                .fillMaxWidth(0.15f)
+        ) {
+            MyIcon(drawableId = drawableId)
+        }
+        TextButton(
+            onClick = onClick,
+        ) {
+            Text(
+                text = text,
+                modifier = Modifier.align(Alignment.CenterVertically),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
         }
     }
 }
