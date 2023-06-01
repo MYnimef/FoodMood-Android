@@ -34,7 +34,7 @@ import com.mynimef.foodmood.presentation.theme.LightBlue
 
 data class PlotLabels(
     val labels: List<String>,
-    val fontSize: TextUnit = 14.sp,
+    val fontSize: TextUnit = 12.sp,
     val fontColor: Color,
     val padding: Dp,
     val diapason: Boolean = false,

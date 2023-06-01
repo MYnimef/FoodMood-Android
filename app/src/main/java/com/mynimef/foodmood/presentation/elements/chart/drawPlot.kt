@@ -29,13 +29,13 @@ data class PlotBorders(
 )
 
 data class PlotLineStyle(
-    val color: Color = DarkBrown,
+    val color: Color = Color.Black,
     val width: Dp = 2.dp,
 )
 
 data class PlotMarkStyle(
-    val color: Color = DarkBrown,
-    val radius: Dp = 3.dp,
+    val color: Color = Color.Red,
+    val radius: Dp = 4.dp,
 )
 
 fun DrawScope.drawPlot(
