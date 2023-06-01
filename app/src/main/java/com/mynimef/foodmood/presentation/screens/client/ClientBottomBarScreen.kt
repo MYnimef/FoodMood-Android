@@ -16,7 +16,6 @@ import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavClientBottomBar
 import com.mynimef.foodmood.data.models.enums.ENavClientMain
-import com.mynimef.foodmood.data.models.enums.ENavigationClient
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 
@@ -45,7 +44,7 @@ fun ClientBottomBarScreen() {
         ),
         BottomNavigationItem(
             icon = R.drawable.ic_nav_create,
-            route = ENavigationClient.CREATE.value,
+            route = ENavClientMain.CREATE.route,
             onClick = { viewModel.switchScreen(ENavClientMain.CREATE) }
         ),
         getItem(
@@ -71,7 +70,7 @@ fun ClientBottomBarScreen() {
             NavHost(
                 modifier = Modifier.fillMaxSize(),
                 navController = navController,
-                startDestination = ENavigationClient.HOME.value,
+                startDestination = ENavClientBottomBar.HOME.route,
                 builder = NavGraphBuilder::clientBottomBar,
             )
         }
@@ -91,16 +90,16 @@ private fun getItem(
 }
 
 private fun NavGraphBuilder.clientBottomBar() {
-    composable(route = ENavigationClient.HOME.value) {
+    composable(route = ENavClientBottomBar.HOME.route) {
         HomeScreen()
     }
-    composable(route = ENavigationClient.CALENDAR.value) {
+    composable(route = ENavClientBottomBar.CALENDAR.route) {
         CalendarScreen()
     }
-    composable(route = ENavigationClient.REPORTS.value) {
+    composable(route = ENavClientBottomBar.REPORTS.route) {
         ReportsScreen()
     }
-    composable(route = ENavigationClient.SETTINGS.value) {
+    composable(route = ENavClientBottomBar.SETTINGS.route) {
         SettingsScreen()
     }
 }

@@ -59,17 +59,17 @@ private fun SettingsScreen(
             SettingsElement(
                 drawableId = R.drawable.ic_user,
                 text = stringResource(R.string.user_settings),
-                onClick = { setSettings(ENavClientMain.SETTINGS_USER_INFO) }
+                onClick = { setSettings(ENavClientMain.SET_UP_ACCOUNT) }
             )
             SettingsElement(
                 drawableId = R.drawable.ic_preference,
                 text = stringResource(R.string.prefrences),
-                onClick = { setSettings(ENavClientMain.SETTINGS_PREFERENCES) }
+                onClick = { setSettings(ENavClientMain.SET_UP_PREFERENCES) }
             )
             SettingsElement(
                 drawableId = R.drawable.ic_notification,
                 text = stringResource(R.string.notifications),
-                onClick = { setSettings(ENavClientMain.SETTINGS_NOTIFICATIONS) }
+                onClick = { setSettings(ENavClientMain.SET_UP_NOTIFICATIONS) }
             )
             SettingsElement(
                 drawableId = R.drawable.ic_language,

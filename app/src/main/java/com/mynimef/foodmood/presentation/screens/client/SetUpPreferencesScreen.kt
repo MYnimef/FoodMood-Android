@@ -28,13 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavigationSettings
+import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SettingsScreenPreferences() {
+fun SetUpPreferencesScreen() {
     val waterL = remember { mutableStateOf("") }
     val weightKg = remember { mutableStateOf("") }
 
@@ -55,7 +55,7 @@ fun SettingsScreenPreferences() {
 private fun CenterElements(
     waterL: MutableState<String>,
     weightKg: MutableState<String>,
-    navigateTo: (route: ENavigationSettings) -> Unit,
+    navigateTo: (route: ENavClientMain) -> Unit,
     ) {
 
     val food = rememberSaveable { mutableStateOf(false) }
@@ -175,7 +175,7 @@ private fun CenterElements(
             .fillMaxWidth()
             .padding(bottom = 20.dp)) {
             TextButton(
-                onClick = {navigateTo(ENavigationSettings.NOTIFICATION) },) {
+                onClick = {  },) {
                 Text(
                     stringResource(R.string.water_notif),
                     modifier = Modifier.align(Alignment.CenterVertically),
@@ -230,8 +230,8 @@ private fun CenterElements(
 
 @Preview
 @Composable
-private fun SettingsScreenPreferencesPreview() {
+private fun SetUpPreferencesScreenPreview() {
     FoodMoodTheme {
-        SettingsScreenPreferences()
+        SetUpPreferencesScreen()
     }
 }
