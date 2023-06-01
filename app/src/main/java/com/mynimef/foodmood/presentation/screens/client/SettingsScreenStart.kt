@@ -20,166 +20,189 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.data.models.enums.ENavigationSettings
 import com.mynimef.foodmood.extensions.noRippleClickable
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SettingsScreenStart(navigateTo: (route: ENavigationSettings) -> Unit) {
+fun SettingsScreenStart(viewModel: SettingsViewModel) {
+    SettingsScreenStart(
+        setSettings = viewModel::setSettingsType,
+    )
+}
 
-    Box(
+@Composable
+private fun SettingsScreenStart(
+    setSettings: (route: ENavClientMain) -> Unit,
+) {
+    Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
-        CenterElements(
-            navigateTo = navigateTo)
+        Text(
+            stringResource(R.string.settings),
+            modifier = Modifier.padding(bottom = 30.dp, top = 70.dp, start = 30.dp),
+            style = MaterialTheme.typography.titleLarge
+        )
+        Column(
+            modifier = Modifier
+                .padding(start = 30.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .noRippleClickable(
+                            onClick = { setSettings(ENavClientMain.SETTINGS_USER_INFO) })
+                        .padding(bottom = 20.dp)
+                        .fillMaxWidth(0.15f)
+                ) {
+                    MyIcon(
+                        modifier = Modifier
+                            .align(Alignment.CenterStart),
+                        drawableId = R.drawable.ic_user)
+                }
+                TextButton(
+                    onClick = { setSettings(ENavClientMain.SETTINGS_USER_INFO) },
+                ) {
+                    Text(
+                        stringResource(R.string.user_settings),
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .noRippleClickable(
+                            onClick = { setSettings(ENavClientMain.SETTINGS_PREFERENCES) })
+                        .padding(bottom = 20.dp)
+                        .fillMaxWidth(0.15f)
+                ) {
+                    MyIcon(
+                        drawableId = R.drawable.ic_preference)
+                }
+                TextButton(
+                    onClick = { setSettings(ENavClientMain.SETTINGS_PREFERENCES) },
+                ) {
+                    Text(
+                        stringResource(R.string.prefrences),
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .noRippleClickable(
+                            onClick = { setSettings(ENavClientMain.SETTINGS_NOTIFICATIONS) })
+                        .padding(bottom = 20.dp)
+                        .fillMaxWidth(0.15f)
+                ) {
+                    MyIcon(
+                        drawableId = R.drawable.ic_notification)
+                }
+                TextButton(
+                    onClick = { setSettings(ENavClientMain.SETTINGS_NOTIFICATIONS) },
+                ) {
+                    Text(
+                        stringResource(R.string.notifications),
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .noRippleClickable(
+                            onClick = { })
+                        .padding(bottom = 20.dp)
+                        .fillMaxWidth(0.15f)
+                ) {
+                    MyIcon(
+                        drawableId = R.drawable.ic_language)
+                }
+                TextButton(
+                    onClick = { },
+                ) {
+                    Text(
+                        stringResource(R.string.language),
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .noRippleClickable(
+                            onClick = { })
+                        .padding(bottom = 20.dp)
+                        .fillMaxWidth(0.15f)
+                ) {
+                    MyIcon(
+                        drawableId = R.drawable.ic_error)
+                }
+                TextButton(
+                    onClick = { },
+                ) {
+                    Text(
+                        stringResource(R.string.error),
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .noRippleClickable(
+                            onClick = { })
+                        .padding(bottom = 20.dp)
+                        .fillMaxWidth(0.15f)
+                ) {
+                    MyIcon(
+                        drawableId = R.drawable.ic_idea)
+                }
+                TextButton(
+                    onClick = { },
+                ) {
+                    Text(
+                        stringResource(R.string.idea),
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+        }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun CenterElements(
-    navigateTo: (route: ENavigationSettings) -> Unit,
 
-    ) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 30.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
-    ) {
-        Text(stringResource(R.string.settings),
-            modifier = Modifier.padding(bottom = 30.dp, top = 70.dp),
-            style = MaterialTheme.typography.titleLarge)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .noRippleClickable (
-                        onClick = { navigateTo(ENavigationSettings.USER_INFO) })) {
-                MyIcon(drawableId = R.drawable.ic_user)
-            }
-            TextButton(
-                onClick = { navigateTo(ENavigationSettings.USER_INFO) },) {
-                Text(stringResource(R.string.user_settings),
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .noRippleClickable (
-                        onClick = { navigateTo(ENavigationSettings.PREFERENCES) })) {
-                MyIcon(drawableId = R.drawable.ic_preference)
-            }
-            TextButton(
-                onClick = { navigateTo(ENavigationSettings.PREFERENCES) },) {
-                Text(stringResource(R.string.prefrences),
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .noRippleClickable (
-                        onClick = { navigateTo(ENavigationSettings.NOTIFICATION) })) {
-                MyIcon(drawableId = R.drawable.ic_notification)
-            }
-            TextButton(
-                onClick = { navigateTo(ENavigationSettings.NOTIFICATION) },) {
-                Text(stringResource(R.string.notifications),
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        ) {
-            IconButton(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = {}) {
-                MyIcon(drawableId = R.drawable.ic_language)
-            }
-            TextButton(
-                onClick = { },) {
-                Text(stringResource(R.string.language),
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .noRippleClickable (
-                        onClick = { })) {
-                MyIcon(drawableId = R.drawable.ic_error)
-            }
-            TextButton(
-                onClick = { },) {
-                Text(stringResource(R.string.error),
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .noRippleClickable (
-                        onClick = {  })) {
-                MyIcon(drawableId = R.drawable.ic_idea)
-            }
-            TextButton(
-                onClick = { },) {
-                Text(stringResource(R.string.idea),
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-    }
-}
 
 @Preview
 @Composable
 fun SettingsPrev() {
     FoodMoodTheme {
-        SettingsScreenStart {}
+        SettingsScreenStart({})
     }
 }

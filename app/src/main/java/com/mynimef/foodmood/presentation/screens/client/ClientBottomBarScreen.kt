@@ -9,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +18,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavClientBottomBar
 import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.data.models.enums.ENavigationClient
+import com.mynimef.foodmood.extensions.sharedViewModel
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
 
@@ -72,8 +74,7 @@ fun ClientBottomBarScreen() {
                 modifier = Modifier.fillMaxSize(),
                 navController = navController,
                 startDestination = ENavigationClient.HOME.value,
-                builder = NavGraphBuilder::clientBottomBar,
-            )
+            ) { clientBottomBar(navController) }
         }
     }
 }
@@ -90,17 +91,19 @@ private fun getItem(
     )
 }
 
-private fun NavGraphBuilder.clientBottomBar() {
+private fun NavGraphBuilder.clientBottomBar(navController: NavController) {
     composable(route = ENavigationClient.HOME.value) {
         HomeScreen()
     }
-    composable(route = ENavigationClient.SETTINGS.value) {
-        SettingsScreen()
-    }
+
     composable(route = ENavigationClient.CALENDAR.value) {
         CalendarScreen()
     }
     composable(route = ENavigationClient.REPORTS.value) {
         ReportsScreen()
+    }
+
+    composable(route = ENavigationClient.SETTINGS.value) {
+        SettingsScreenStart(viewModel = it.sharedViewModel(navController = navController))
     }
 }
