@@ -29,7 +29,7 @@ fun SettingsScreen() {
     val viewModel: SettingsViewModel = viewModel()
 
     SettingsScreen(
-        setSettings = viewModel::setSettingsType,
+        setSettings = viewModel::navigateTo,
     )
 }
 
