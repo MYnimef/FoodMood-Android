@@ -34,7 +34,6 @@ import com.mynimef.foodmood.presentation.elements.MyWaterChart
 import com.mynimef.foodmood.presentation.elements.MyWeightChart
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
-
 @Composable
 fun ReportsScreen() {
     val viewModel: ReportsViewModel = viewModel()
@@ -156,7 +155,7 @@ private fun ReportsScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun ReportsPreview() {
+private fun ReportsScreenPreview() {
     FoodMoodTheme {
         ReportsScreen()
     }
