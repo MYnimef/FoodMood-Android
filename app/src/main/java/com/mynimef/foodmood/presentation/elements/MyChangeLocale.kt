@@ -26,7 +26,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun MyWeight(
+fun MyChangeLocale(
     weight: Float,
     setWeight: (Float) -> Unit,
     onDismiss:()->Unit,
@@ -97,8 +97,8 @@ fun MyWeight(
 
 @Preview
 @Composable
-fun MyWeightPrev() {
+fun MyChangeLocalePrev() {
     FoodMoodTheme {
-        MyWeight(20.0f,{}, {}, {})
+        MyChangeLocale(20.0f,{}, {}, {})
     }
 }

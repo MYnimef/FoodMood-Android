@@ -25,7 +25,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyChoiceCard
 import com.mynimef.foodmood.presentation.elements.MyPolygonLayout
-import com.mynimef.foodmood.presentation.elements.MyWeight
+import com.mynimef.foodmood.presentation.elements.MyWeightCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -118,7 +118,7 @@ private fun CreateScreenFirst(
         }
 
         if (isDialogShown) {
-            MyWeight(
+            MyWeightCard(
                 onDismiss = triggerDialogShown,
                 onConfirm = {
                     //

@@ -43,8 +43,7 @@ private fun MyMavHost(
         navController = navController,
         startDestination = ENavigationSettings.SETTINGS_LIST.value
     ) {
-        composable(ENavigationSettings.SETTINGS_LIST.value) { SettingsScreenStart(navigateTo = navigateTo) }
-        composable(ENavigationSettings.USER_INFO.value) { SettingsScreenUser() }
+       // composable(ENavigationSettings.SETTINGS_LIST.value) { SettingsScreenStart(navigateTo = navigateTo) }
         composable(ENavigationSettings.PREFERENCES.value) { SettingsScreenPreferences(navigateTo = navigateTo)}
         composable(ENavigationSettings.NOTIFICATION.value) { SettingsScreenNotification()}
     }
