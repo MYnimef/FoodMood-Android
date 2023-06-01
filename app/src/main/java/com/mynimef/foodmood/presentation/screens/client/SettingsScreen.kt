@@ -29,13 +29,13 @@ fun SettingsScreen() {
     val viewModel: SettingsViewModel = viewModel()
 
     SettingsScreen(
-        setSettings = viewModel::navigateTo,
+        navigateTo = viewModel::navigateTo,
     )
 }
 
 @Composable
 private fun SettingsScreen(
-    setSettings: (route: ENavClientMain) -> Unit,
+    navigateTo: (ENavClientMain) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -53,36 +53,36 @@ private fun SettingsScreen(
             modifier = Modifier
                 .padding(start = 30.dp)
             ,
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
+            verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
+            horizontalAlignment = Alignment.Start,
             ) {
             SettingsElement(
-                drawableId = R.drawable.ic_user,
+                drawableId = R.drawable.ic_set_up_account,
                 text = stringResource(R.string.user_settings),
-                onClick = { setSettings(ENavClientMain.SET_UP_ACCOUNT) }
+                onClick = { navigateTo(ENavClientMain.SET_UP_ACCOUNT) }
             )
             SettingsElement(
-                drawableId = R.drawable.ic_preference,
+                drawableId = R.drawable.ic_set_up_preferences,
                 text = stringResource(R.string.prefrences),
-                onClick = { setSettings(ENavClientMain.SET_UP_PREFERENCES) }
+                onClick = { navigateTo(ENavClientMain.SET_UP_PREFERENCES) }
             )
             SettingsElement(
-                drawableId = R.drawable.ic_notification,
+                drawableId = R.drawable.ic_set_up_notifications,
                 text = stringResource(R.string.notifications),
-                onClick = { setSettings(ENavClientMain.SET_UP_NOTIFICATIONS) }
+                onClick = { navigateTo(ENavClientMain.SET_UP_NOTIFICATIONS) }
             )
             SettingsElement(
-                drawableId = R.drawable.ic_language,
+                drawableId = R.drawable.ic_set_up_language,
                 text = stringResource(R.string.language),
                 onClick = {}
             )
             SettingsElement(
-                drawableId = R.drawable.ic_error,
+                drawableId = R.drawable.ic_set_up_error,
                 text = stringResource(R.string.error),
                 onClick = {}
             )
             SettingsElement(
-                drawableId = R.drawable.ic_idea,
+                drawableId = R.drawable.ic_set_up_idea,
                 text = stringResource(R.string.idea),
                 onClick = {}
             )
@@ -103,10 +103,14 @@ private fun SettingsElement(
                 .noRippleClickable(
                     onClick = onClick
                 )
-                .padding(bottom = 20.dp)
                 .fillMaxWidth(0.15f)
         ) {
-            MyIcon(drawableId = drawableId)
+            MyIcon(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                ,
+                drawableId = drawableId
+            )
         }
         TextButton(
             onClick = onClick,

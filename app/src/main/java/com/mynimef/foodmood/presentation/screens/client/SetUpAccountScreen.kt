@@ -73,7 +73,7 @@ private fun CenterElements(
                 .padding(bottom = 5.dp)
         ) {
             MyIcon(
-                drawableId = R.drawable.ic_user,
+                drawableId = R.drawable.ic_set_up_account,
                 modifier = Modifier
                     .padding(bottom = 30.dp, top = 70.dp)
                     .align(Alignment.CenterVertically)
