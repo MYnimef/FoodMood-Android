@@ -2,9 +2,9 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavClientMain
-import com.mynimef.foodmood.extensions.noRippleClickable
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
@@ -51,11 +50,11 @@ private fun SettingsScreen(
         )
         Column(
             modifier = Modifier
-                .padding(start = 30.dp)
+                .padding(start = 30.dp, end = 30.dp,)
             ,
             verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
-            horizontalAlignment = Alignment.Start,
-            ) {
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             SettingsElement(
                 drawableId = R.drawable.ic_set_up_account,
                 text = stringResource(R.string.user_settings),
@@ -96,28 +95,25 @@ private fun SettingsElement(
     text: String,
     onClick: () -> Unit,
 ) {
-    Row() {
-        Box(
+    TextButton(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = onClick,
+    ) {
+        Row(
             modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .noRippleClickable(
-                    onClick = onClick
-                )
-                .fillMaxWidth(0.15f)
+                .fillMaxWidth()
+            ,
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
+            Spacer(modifier = Modifier.padding(start = 5.dp))
             MyIcon(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                ,
                 drawableId = drawableId
             )
-        }
-        TextButton(
-            onClick = onClick,
-        ) {
+            Spacer(modifier = Modifier.padding(start = 20.dp))
             Text(
-                text = text,
                 modifier = Modifier.align(Alignment.CenterVertically),
+                text = text,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )

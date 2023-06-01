@@ -20,7 +20,7 @@
     <string name="weight">Вес</string>
     <string name="complete">Завершить</string>
     <string name="settings">Настройки</string>
-    <string name="user_settings">Настройки аккаунта</string>
+    <string name="user_settings">Аккаунт</string>
     <string name="prefrences">Предпочтения</string>
     <string name="notifications">Уведомления</string>
     <string name="language">Язык</string>
