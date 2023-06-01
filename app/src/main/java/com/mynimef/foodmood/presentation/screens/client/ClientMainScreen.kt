@@ -74,18 +74,18 @@ private fun NavGraphBuilder.clientMain(navController: NavController) {
     composable(
         route = ENavClientMain.SETTINGS_USER_INFO.route
     ) {
-            SettingsScreenUser()
-        }
-        composable(
-            route = ENavClientMain.SETTINGS_PREFERENCES.route
-        ) {
-            SettingsScreenPreferences(navigateTo = {})
-        }
-        composable(
-            route = ENavClientMain.SETTINGS_NOTIFICATIONS.route
-        ) {
-            SettingsScreenNotification()
-        }
+        SettingsScreenUser()
+    }
+    composable(
+        route = ENavClientMain.SETTINGS_PREFERENCES.route
+    ) {
+        SettingsScreenPreferences()
+    }
+    composable(
+        route = ENavClientMain.SETTINGS_NOTIFICATIONS.route
+    ) {
+        SettingsScreenNotification()
+    }
 
 }
 

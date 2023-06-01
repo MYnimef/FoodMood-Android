@@ -35,7 +35,7 @@ import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SettingsScreenPreferences(navigateTo: (route: ENavigationSettings) -> Unit) {
+fun SettingsScreenPreferences() {
     val waterL = remember { mutableStateOf("") }
     val weightKg = remember { mutableStateOf("") }
 
@@ -46,7 +46,7 @@ fun SettingsScreenPreferences(navigateTo: (route: ENavigationSettings) -> Unit) 
     ) {
         CenterElements(
             waterL = waterL,
-            navigateTo = navigateTo,
+            navigateTo = {},
             weightKg = weightKg
         )
     }
@@ -233,8 +233,8 @@ private fun CenterElements(
 
 @Preview
 @Composable
-fun PrefSettingsScreenPrev() {
+private fun PrefSettingsScreenPreview() {
     FoodMoodTheme {
-        SettingsScreenPreferences {}
+        SettingsScreenPreferences()
     }
 }
