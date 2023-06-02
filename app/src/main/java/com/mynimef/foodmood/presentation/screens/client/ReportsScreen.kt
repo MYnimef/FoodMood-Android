@@ -46,7 +46,7 @@ fun ReportsScreen() {
     )
     OnLifecycleEvent { _, event ->
         if (event == Lifecycle.Event.ON_CREATE) {
-            viewModel.plot()
+            viewModel.getData()
         }
     }
 }
