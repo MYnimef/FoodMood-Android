@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -107,10 +108,13 @@ private fun SettingsElement(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Spacer(modifier = Modifier.padding(start = 5.dp))
-            MyIcon(
-                drawableId = drawableId
-            )
-            Spacer(modifier = Modifier.padding(start = 20.dp))
+            Box(modifier = Modifier.fillMaxWidth(0.15f)) {
+                MyIcon(
+                    modifier = Modifier.align(Alignment.Center),
+                    drawableId = drawableId,
+                )
+            }
+            Spacer(modifier = Modifier.padding(start = 15.dp))
             Text(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 text = text,
