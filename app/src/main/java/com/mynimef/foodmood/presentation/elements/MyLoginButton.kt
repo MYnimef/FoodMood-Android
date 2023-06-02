@@ -31,9 +31,11 @@ fun MyLoginButton(
         ),
         enabled = enabled,
     ) {
-        Text(text,
+        Text(
+            text = text,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimaryContainer)
+            color = MaterialTheme.colorScheme.onPrimaryContainer
+        )
     }
 }
 

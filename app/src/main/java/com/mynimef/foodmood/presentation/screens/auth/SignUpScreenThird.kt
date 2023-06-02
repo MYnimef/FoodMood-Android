@@ -79,7 +79,7 @@ private fun CenterElements(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 30.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(space = 30.dp, alignment = Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
