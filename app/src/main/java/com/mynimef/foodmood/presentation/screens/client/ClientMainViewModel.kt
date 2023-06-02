@@ -26,14 +26,12 @@ class ClientMainViewModel: ViewModel() {
             when (val result = network.clientGetInfo(
                 ClientInfoRequest(TimeZone.getDefault().id)
             )) {
-                is ApiError -> {
-                    when (result.code) {
-                        401 ->  {
-                            toastFlow.emit(EToast.AUTH_FAILED)
-                            signOut()
-                        }
-                        else -> {}
+                is ApiError -> when (result.code) {
+                    401 ->  {
+                        toastFlow.emit(EToast.AUTH_FAILED)
+                        signOut()
                     }
+                    else -> {}
                 }
                 is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
                 is ApiSuccess -> {

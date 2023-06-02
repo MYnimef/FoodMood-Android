@@ -1,9 +1,11 @@
 package com.mynimef.foodmood.data.repository.api
 
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
+import com.mynimef.foodmood.data.models.requests.ClientDataRequest
 import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
 import com.mynimef.foodmood.data.models.responses.CardResponse
+import com.mynimef.foodmood.data.models.responses.ClientDataResponse
 import com.mynimef.foodmood.data.models.responses.ClientInfoResponse
 import com.mynimef.foodmood.data.models.responses.WaterIncreaseResponse
 import retrofit2.Response
@@ -40,5 +42,11 @@ interface ClientAPI {
         @Header("Authorization") token: String,
         @Body request: WaterIncreaseRequest
     ): Response<WaterIncreaseResponse>
+
+    @POST("/api/client/data")
+    suspend fun getData(
+        @Header("Authorization") token: String,
+        @Body request: ClientDataRequest
+    ): Response<ClientDataResponse>
 
 }

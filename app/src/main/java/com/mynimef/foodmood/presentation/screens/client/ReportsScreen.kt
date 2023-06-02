@@ -37,53 +37,59 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun ReportsScreen() {
     val viewModel: ReportsViewModel = viewModel()
-    ReportsScreen(
-        period = viewModel.period.collectAsState().value,
-        setPeriod = viewModel::setPeriod,
-        coordinatesEmotions = viewModel.coordinatesEmotions.collectAsState().value,
-        coordinatesWater = viewModel.coordinatesWater.collectAsState().value,
-        coordinatesWeight = viewModel.coordinatesWeight.collectAsState().value,
-    )
+    val periodState = viewModel.period.collectAsState()
+    val coordinatesEmotionsState = viewModel.coordinatesEmotions.collectAsState()
+    val coordinatesWaterState = viewModel.coordinatesWater.collectAsState()
+    val coordinatesWeightState = viewModel.coordinatesWeight.collectAsState()
+
     OnLifecycleEvent { _, event ->
         if (event == Lifecycle.Event.ON_CREATE) {
-            viewModel.plot()
+            viewModel.getData()
         }
     }
+
+    ReportsScreen(
+        periodProvider = { periodState.value },
+        setPeriod = viewModel::setPeriod,
+        coordinatesEmotionsProvider = { coordinatesEmotionsState.value },
+        coordinatesWaterProvider = { coordinatesWaterState.value },
+        coordinatesWeightProvider = { coordinatesWeightState.value },
+    )
 }
 
 @Composable
 private fun ReportsScreen(
-    period: ETypePeriod,
+    periodProvider: () -> ETypePeriod,
     setPeriod: (ETypePeriod) -> Unit,
-    coordinatesEmotions: List<Pair<Float, Float>>,
-    coordinatesWater: List<Pair<Float, Float>>,
-    coordinatesWeight: List<Pair<Float, Float>>,
+    coordinatesEmotionsProvider: () -> List<Pair<Float, Float>>,
+    coordinatesWaterProvider: () -> List<Pair<Float, Float>>,
+    coordinatesWeightProvider: () -> List<Pair<Float, Float>>,
 ) {
     Column() {
         Row(
             modifier = Modifier
-                .padding(vertical = 35.dp, horizontal = 30.dp),
+                .padding(vertical = 35.dp, horizontal = 30.dp)
+            ,
             horizontalArrangement = Arrangement.spacedBy(3.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(topStart = 10.dp, bottomStart = 10.dp))
-                .fillMaxWidth()
-                .weight(1f)
-                .noRippleClickable(
-                    onClick = { setPeriod(ETypePeriod.DAYS_7) }
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(topStart = 10.dp, bottomStart = 10.dp))
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .noRippleClickable(
+                        onClick = { setPeriod(ETypePeriod.DAYS_7) }
+                    )
+                    .background(color = MaterialTheme.colorScheme.primary),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier.padding(vertical = 5.dp),
+                    text = stringResource(id = R.string.days_7),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    textAlign = TextAlign.Center
                 )
-                .background(color = MaterialTheme.colorScheme.primary),
-            contentAlignment = Alignment.Center
-        )
-        {
-            Text(
-                modifier = Modifier.padding(vertical = 5.dp),
-                text = stringResource(id = R.string.days_7),
-                color = MaterialTheme.colorScheme.onPrimary,
-                textAlign = TextAlign.Center
-            )
-        }
+            }
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(topEnd = 10.dp, bottomEnd = 10.dp))
@@ -94,8 +100,7 @@ private fun ReportsScreen(
                     )
                     .background(color = MaterialTheme.colorScheme.primary),
                 contentAlignment = Alignment.Center
-            )
-            {
+            ) {
                 Text(
                     modifier = Modifier.padding(vertical = 5.dp),
                     text = stringResource(id = R.string.days_31),
@@ -103,54 +108,86 @@ private fun ReportsScreen(
                     textAlign = TextAlign.Center
                 )
             }
-    }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 30.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
-    ) {
-        Text(
-            stringResource(R.string.emotion_chart),
-            modifier = Modifier.padding(bottom = 30.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
-
-        MyEmotionsChart(
+        }
+        Column(
             modifier = Modifier
-                .fillMaxWidth(1f)
-                .aspectRatio(2f),
-            emotionsData = coordinatesEmotions,
-            periodType = period,
-        )
-        Text(
-            stringResource(R.string.water),
-            modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
-        MyWaterChart(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .aspectRatio(2f),
-            waterData = coordinatesWater,
-            periodType = period,
-        )
-        Text(
-            stringResource(R.string.weight),
-            modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
-        MyWeightChart(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .aspectRatio(2f),
-            weightData = coordinatesWeight,
-            periodType = period,
-        )
+                .fillMaxSize()
+                .padding(horizontal = 30.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
+        ) {
+            EmotionData(
+                coordinatesProvider = coordinatesEmotionsProvider,
+                periodProvider = periodProvider,
+            )
+            WaterData(
+                coordinatesProvider = coordinatesWaterProvider,
+                periodProvider = periodProvider,
+            )
+            WeightData(
+                coordinatesProvider = coordinatesWeightProvider,
+                periodProvider = periodProvider,
+            )
+        }
     }
 }
+
+@Composable
+private fun EmotionData(
+    coordinatesProvider: () -> List<Pair<Float, Float>>,
+    periodProvider: () -> ETypePeriod,
+) {
+    Text(
+        text = stringResource(R.string.emotion_chart),
+        modifier = Modifier.padding(bottom = 30.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
+    MyEmotionsChart(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .aspectRatio(2f),
+        emotionsData = coordinatesProvider(),
+        periodType = periodProvider(),
+    )
+}
+
+@Composable
+private fun WaterData(
+    coordinatesProvider: () -> List<Pair<Float, Float>>,
+    periodProvider: () -> ETypePeriod,
+) {
+    Text(
+        text = stringResource(R.string.water),
+        modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
+    MyWaterChart(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .aspectRatio(2f),
+        waterData = coordinatesProvider(),
+        periodType = periodProvider(),
+    )
+}
+
+@Composable
+private fun WeightData(
+    coordinatesProvider: () -> List<Pair<Float, Float>>,
+    periodProvider: () -> ETypePeriod,
+) {
+    Text(
+        text = stringResource(R.string.weight),
+        modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
+    MyWeightChart(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .aspectRatio(2f),
+        weightData = coordinatesProvider(),
+        periodType = periodProvider(),
+    )
 }
 
 @Preview(showBackground = true)
