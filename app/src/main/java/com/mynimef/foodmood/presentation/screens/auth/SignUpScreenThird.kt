@@ -27,12 +27,16 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun SignUpScreenThird(
     viewModel: SignUpViewModel,
 ) {
+    val foodState = viewModel.food.collectAsState()
+    val waterState = viewModel.water.collectAsState()
+    val weightState = viewModel.weight.collectAsState()
+
     SignUpScreenThird(
-        food = viewModel.food.collectAsState().value,
+        foodProvider = { foodState.value },
         triggerFood = viewModel::triggerFood,
-        water = viewModel.water.collectAsState().value,
+        waterProvider = { waterState.value },
         triggerWater = viewModel::triggerWater,
-        weight = viewModel.weight.collectAsState().value,
+        weightProvider = { weightState.value },
         triggerWeight = viewModel::triggerWeight,
         onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_FOURTH) }
     )
@@ -40,11 +44,11 @@ fun SignUpScreenThird(
 
 @Composable
 private fun SignUpScreenThird(
-    food: Boolean,
+    foodProvider: () -> Boolean,
     triggerFood: () -> Unit,
-    water: Boolean,
+    waterProvider: () -> Boolean,
     triggerWater: () -> Unit,
-    weight: Boolean,
+    weightProvider: () -> Boolean,
     triggerWeight: () -> Unit,
     onNext: () -> Unit,
 ) {
@@ -54,11 +58,11 @@ private fun SignUpScreenThird(
             .fillMaxSize()
     ) {
         CenterElements(
-            food = food,
+            foodProvider = foodProvider,
             triggerFood = triggerFood,
-            water = water,
+            waterProvider = waterProvider,
             triggerWater = triggerWater,
-            weight = weight,
+            weightProvider = weightProvider,
             triggerWeight = triggerWeight,
             onNext = onNext
         )
@@ -67,11 +71,11 @@ private fun SignUpScreenThird(
 
 @Composable
 private fun CenterElements(
-    food: Boolean,
+    foodProvider: () -> Boolean,
     triggerFood: () -> Unit,
-    water: Boolean,
+    waterProvider: () -> Boolean,
     triggerWater: () -> Unit,
-    weight: Boolean,
+    weightProvider: () -> Boolean,
     triggerWeight: () -> Unit,
     onNext: () -> Unit,
 ) {
@@ -89,22 +93,22 @@ private fun CenterElements(
         )
         MyRadioTextSelector(
             text = stringResource(R.string.emotion),
-            selected = true,
+            selectedProvider = { true },
             onClick = {},
         )
         MyRadioTextSelector(
             text = stringResource(R.string.food),
-            selected = food,
+            selectedProvider = foodProvider,
             onClick = triggerFood,
         )
         MyRadioTextSelector(
             text = stringResource(R.string.water),
-            selected = water,
+            selectedProvider = waterProvider,
             onClick = triggerWater,
         )
         MyRadioTextSelector(
             text = stringResource(R.string.weight),
-            selected = weight,
+            selectedProvider = weightProvider,
             onClick = triggerWeight,
         )
         MyLoginButton(
@@ -123,11 +127,11 @@ private fun SignUpThirdScreenPreview() {
         val weight = rememberSaveable { mutableStateOf(false) }
 
         SignUpScreenThird(
-            food = food.value,
+            foodProvider = { food.value },
             triggerFood = { food.value = !food.value },
-            water = water.value,
+            waterProvider = { water.value },
             triggerWater = { water.value = !water.value },
-            weight = weight.value,
+            weightProvider = { weight.value },
             triggerWeight = { weight.value = !weight.value },
             onNext = {}
         )

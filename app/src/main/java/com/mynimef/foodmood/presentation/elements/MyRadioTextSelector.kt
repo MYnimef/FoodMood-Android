@@ -9,6 +9,8 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,9 +19,11 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun MyRadioTextSelector(
     text: String,
-    selected: Boolean,
+    selectedProvider: () -> Boolean,
     onClick: () -> Unit
 ) {
+    val selected = selectedProvider()
+
     TextButton(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,8 +59,12 @@ fun MyRadioTextSelector(
 @Composable
 private fun MyRadioTextSelector() {
     FoodMoodTheme {
-        MyRadioTextSelector(text = "sample", selected = false) {
+        val selectedState = remember { mutableStateOf(false) }
 
-        }
+        MyRadioTextSelector(
+            text = "sample",
+            selectedProvider = { selectedState.value },
+            onClick = {},
+        )
     }
 }
