@@ -35,34 +35,44 @@ class ReportsViewModel: ViewModel() {
     private val _period = MutableStateFlow(ETypePeriod.DAYS_7)
     val period = _period.asStateFlow()
 
-    fun setPeriod(value: ETypePeriod) {
-        _period.value = value
+    fun setPeriod(value: ETypePeriod) = with(Repository) {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            _coordinatesEmotions.value = emptyList()
+            _coordinatesWater.value = emptyList()
+            _coordinatesWeight.value = emptyList()
+            _period.value = value
+            getDataFrom()
+        }
     }
 
     fun getData() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            val request = ClientDataRequest(
-                timeZone = TimeZone.getDefault().id,
-                days = _period.value.period.toLong(),
-            )
-            when (val result = network.clientGetData(request)) {
-                is ApiError -> when (result.code) {
-                    401 ->  {
-                        toastFlow.emit(EToast.AUTH_FAILED)
-                        signOut()
-                    }
-                    else -> {}
+            getDataFrom()
+        }
+    }
+
+    private suspend fun getDataFrom() = with(Repository) {
+        val request = ClientDataRequest(
+            timeZone = TimeZone.getDefault().id,
+            days = _period.value.period.toLong(),
+        )
+        when (val result = network.clientGetData(request)) {
+            is ApiError -> when (result.code) {
+                401 ->  {
+                    toastFlow.emit(EToast.AUTH_FAILED)
+                    signOut()
                 }
-                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
-                is ApiSuccess -> {
-                    val data = result.data
-                    _coordinatesEmotions.value = convertData(data.emotionData)
-                    data.waterData?.let {
-                        _coordinatesWater.value = convertData(it)
-                    }
-                    data.weightData?.let {
-                        _coordinatesWeight.value = convertData(it)
-                    }
+                else -> {}
+            }
+            is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+            is ApiSuccess -> {
+                val data = result.data
+                _coordinatesEmotions.value = convertData(data.emotionData)
+                data.waterData?.let {
+                    _coordinatesWater.value = convertData(it)
+                }
+                data.weightData?.let {
+                    _coordinatesWeight.value = convertData(it)
                 }
             }
         }
