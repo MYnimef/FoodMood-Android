@@ -105,7 +105,8 @@ private fun SettingsElement(
                 .fillMaxWidth()
             ,
             horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
+            ,
         ) {
             Spacer(modifier = Modifier.padding(start = 5.dp))
             Box(modifier = Modifier.fillMaxWidth(0.15f)) {

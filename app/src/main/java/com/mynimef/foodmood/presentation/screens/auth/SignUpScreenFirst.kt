@@ -29,8 +29,10 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun SignUpScreenFirst(viewModel: SignUpViewModel) {
+    val nameState = viewModel.name.collectAsState()
+
     SignUpScreenFirst(
-        name = viewModel.name.collectAsState().value,
+        nameProvider = { nameState.value },
         setName= viewModel::setName,
         buttonActive = viewModel.firstButtonActive.collectAsState().value,
         onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_SECOND) }
@@ -39,7 +41,7 @@ fun SignUpScreenFirst(viewModel: SignUpViewModel) {
 
 @Composable
 private fun SignUpScreenFirst(
-    name: String,
+    nameProvider: () -> String,
     setName: (String) -> Unit,
     buttonActive: Boolean,
     onNext: () -> Unit,
@@ -50,7 +52,7 @@ private fun SignUpScreenFirst(
             .fillMaxSize()
     ) {
         CenterElements(
-            name = name,
+            nameProvider = nameProvider,
             setName = setName,
             buttonActive = buttonActive,
             onNext = onNext,
@@ -60,7 +62,7 @@ private fun SignUpScreenFirst(
 
 @Composable
 private fun CenterElements(
-    name: String,
+    nameProvider: () -> String,
     setName: (String) -> Unit,
     buttonActive: Boolean,
     onNext: () -> Unit,
@@ -82,7 +84,7 @@ private fun CenterElements(
         )
 
         MyTextFieldLogin(
-            value = name,
+            value = nameProvider(),
             label = stringResource(R.string.name),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             isError = false,
@@ -105,7 +107,7 @@ private fun SignUpFirstScreenPreview() {
         val name = remember { mutableStateOf("") }
 
         SignUpScreenFirst(
-            name = name.value,
+            nameProvider = { name.value },
             setName = { name.value = it },
             buttonActive = true,
             onNext = {}
