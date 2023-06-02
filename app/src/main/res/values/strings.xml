@@ -52,6 +52,8 @@
     <string name="ml_500">500 ml</string>
     <string name="ml_600">600 ml</string>
 
+    <string name="change">Change account</string>
+    <string name="change_hint">You can connect multiple accounts with different email</string>
     <string name="delete">Delete account</string>
     <string name="exit">Log out</string>
 

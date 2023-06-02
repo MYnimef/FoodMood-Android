@@ -145,12 +145,32 @@ private fun CenterElements(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            MySettingsButton(text = R.string.exit) {
-
-            }
-            MySettingsButton(text = R.string.delete) {
-
-            }
+            MySettingsButton(
+                modifier = Modifier
+                    .padding(top = 15.dp, bottom = 10.dp)
+                    .fillMaxWidth()
+                ,
+                text = R.string.change,
+                onClick = {},
+                hint = R.string.change_hint,
+                color = MaterialTheme.colorScheme.tertiary
+            )
+            MySettingsButton(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+                    .fillMaxWidth()
+                ,
+                text = R.string.exit,
+                onClick = {},
+            )
+            MySettingsButton(
+                modifier = Modifier
+                    .padding(top = 5.dp, bottom = 10.dp)
+                    .fillMaxWidth()
+                ,
+                text = R.string.delete,
+                onClick = {},
+            )
         }
     }
 }

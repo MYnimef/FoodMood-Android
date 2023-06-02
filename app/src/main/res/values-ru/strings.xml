@@ -52,6 +52,8 @@
     <string name="ml_500">500 ml</string>
     <string name="ml_600">600 ml</string>
 
+    <string name="change">Сменить аккаунт</string>
+    <string name="change_hint">Вы можете подключить несколько аккаунтов с разными логинами</string>
     <string name="delete">Удалить аккаунт</string>
     <string name="exit">Выйти из аккаунта</string>
 
