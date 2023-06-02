@@ -21,9 +21,9 @@ class MainViewModel: ViewModel() {
     private val _dataLoaded = MutableStateFlow(false)
     val dataLoaded = _dataLoaded.asStateFlow()
 
-    fun initData(context: Context) {
+    fun initData(context: Context) = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            Repository.init(context)
+            init(context)
             _dataLoaded.value = true
         }
     }

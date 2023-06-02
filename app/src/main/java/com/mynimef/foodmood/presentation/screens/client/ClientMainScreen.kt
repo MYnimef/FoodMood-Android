@@ -70,5 +70,22 @@ private fun NavGraphBuilder.clientMain(navController: NavController) {
     ) {
         ClientBottomBarScreen()
     }
+
+    composable(
+        route = ENavClientMain.SET_UP_ACCOUNT.route
+    ) {
+        SetUpAccountScreen()
+    }
+    composable(
+        route = ENavClientMain.SET_UP_PREFERENCES.route
+    ) {
+        SetUpPreferencesScreen()
+    }
+    composable(
+        route = ENavClientMain.SET_UP_NOTIFICATIONS.route
+    ) {
+        SetUpNotificationsScreen()
+    }
+
 }
 

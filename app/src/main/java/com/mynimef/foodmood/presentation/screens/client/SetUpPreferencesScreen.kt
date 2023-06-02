@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -29,13 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavigationSettings
+import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SettingsScreenPreferences(navigateTo: (route: ENavigationSettings) -> Unit) {
+fun SetUpPreferencesScreen() {
     val waterL = remember { mutableStateOf("") }
     val weightKg = remember { mutableStateOf("") }
 
@@ -46,18 +45,17 @@ fun SettingsScreenPreferences(navigateTo: (route: ENavigationSettings) -> Unit) 
     ) {
         CenterElements(
             waterL = waterL,
-            navigateTo = navigateTo,
+            navigateTo = {},
             weightKg = weightKg
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CenterElements(
     waterL: MutableState<String>,
     weightKg: MutableState<String>,
-    navigateTo: (route: ENavigationSettings) -> Unit,
+    navigateTo: (route: ENavClientMain) -> Unit,
     ) {
 
     val food = rememberSaveable { mutableStateOf(false) }
@@ -78,7 +76,7 @@ private fun CenterElements(
                 .padding(bottom = 5.dp)
         ) {
             MyIcon(
-                drawableId = R.drawable.ic_preference,
+                drawableId = R.drawable.ic_set_up_preferences,
                 modifier = Modifier
                     .padding(bottom = 30.dp, top = 70.dp)
                     .align(Alignment.CenterVertically)
@@ -177,7 +175,7 @@ private fun CenterElements(
             .fillMaxWidth()
             .padding(bottom = 20.dp)) {
             TextButton(
-                onClick = {navigateTo(ENavigationSettings.NOTIFICATION) },) {
+                onClick = {  },) {
                 Text(
                     stringResource(R.string.water_notif),
                     modifier = Modifier.align(Alignment.CenterVertically),
@@ -230,11 +228,10 @@ private fun CenterElements(
     }
 }
 
-
 @Preview
 @Composable
-fun PrefSettingsScreenPrev() {
+private fun SetUpPreferencesScreenPreview() {
     FoodMoodTheme {
-        SettingsScreenPreferences {}
+        SetUpPreferencesScreen()
     }
 }

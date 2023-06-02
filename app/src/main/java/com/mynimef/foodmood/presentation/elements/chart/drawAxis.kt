@@ -144,12 +144,13 @@ fun DrawScope.drawAxisY(
 fun DrawScope.drawAxisY(
     axis: AxisLabels,
     height: Float,
+    paddingY: Float = 0f,
     lines: AxisLines,
 ) {
     val delta = getDelta(axis.labels.size, height, axis.diapason)
     val iterator = getIterator(axis.diapason)
 
-    val x = 0f
+    val x = paddingY/2
     axis.labels.forEachIndexed { index, value ->
         val y = height - delta * (index - iterator)
 

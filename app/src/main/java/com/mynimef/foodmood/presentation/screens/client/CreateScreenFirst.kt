@@ -25,7 +25,7 @@ import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyChoiceCard
 import com.mynimef.foodmood.presentation.elements.MyPolygonLayout
-import com.mynimef.foodmood.presentation.elements.MyWeight
+import com.mynimef.foodmood.presentation.elements.MyWeightCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -80,45 +80,37 @@ private fun CreateScreenFirst(
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_breakfast,
                 stringId = R.string.type_food_breakfast,
-            ) {
-                setMealType(ETypeMeal.BREAKFAST)
-            }
+                onClick = { setMealType(ETypeMeal.BREAKFAST) }
+            )
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_dinner,
                 stringId = R.string.type_food_dinner,
-            ) {
-                setMealType(ETypeMeal.DINNER)
-            }
+                onClick = { setMealType(ETypeMeal.DINNER) }
+            )
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_lunch,
                 stringId = R.string.type_food_snack2,
-            ) {
-                setMealType(ETypeMeal.LUNCH)
-            }
-
+                onClick = { setMealType(ETypeMeal.LUNCH) }
+            )
             MyChoiceCard(
                 drawableId = R.drawable.ic_weight,
                 stringId = R.string.weight,
-            ) {
-                triggerDialogShown()
-            }
-
+                onClick = triggerDialogShown
+            )
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_lunch,
                 stringId = R.string.type_food_snack1,
-            ) {
-                setMealType(ETypeMeal.BRUNCH)
-            }
+                onClick = { setMealType(ETypeMeal.BRUNCH) }
+            )
             MyChoiceCard(
                 drawableId = R.drawable.ic_food_supper,
                 stringId = R.string.type_food_supper,
-            ) {
-                setMealType(ETypeMeal.SUPPER)
-            }
+                onClick = { setMealType(ETypeMeal.SUPPER) }
+            )
         }
 
         if (isDialogShown) {
-            MyWeight(
+            MyWeightCard(
                 onDismiss = triggerDialogShown,
                 onConfirm = {
                     //

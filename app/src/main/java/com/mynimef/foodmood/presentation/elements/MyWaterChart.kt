@@ -5,29 +5,25 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypePeriod
 import com.mynimef.foodmood.presentation.elements.chart.AxisLines
 import com.mynimef.foodmood.presentation.elements.chart.LineChart
 import com.mynimef.foodmood.presentation.elements.chart.PlotCoordinates
-import com.mynimef.foodmood.presentation.elements.chart.PlotIcons
 import com.mynimef.foodmood.presentation.elements.chart.PlotLabels
 import com.mynimef.foodmood.presentation.elements.chart.PlotLineStyle
 import com.mynimef.foodmood.presentation.elements.chart.PlotMarkStyle
-import com.mynimef.foodmood.presentation.theme.EmotionDarkGreen
-import com.mynimef.foodmood.presentation.theme.EmotionGreen
-import com.mynimef.foodmood.presentation.theme.EmotionOrange
-import com.mynimef.foodmood.presentation.theme.EmotionRed
-import com.mynimef.foodmood.presentation.theme.EmotionYellow
+import com.mynimef.foodmood.presentation.theme.Blue
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import com.mynimef.foodmood.presentation.theme.LightBlue
 import java.time.LocalDate
 
 @Composable
-fun MyEmotionsChart(
+fun MyWaterChart(
     modifier: Modifier,
-    emotionsData: List<Pair<Float, Float>>,
+    waterData: List<Pair<Float, Float>>,
     periodType: ETypePeriod,
 ) {
     val date = LocalDate.now()
@@ -38,7 +34,27 @@ fun MyEmotionsChart(
         date.minusDays((period / 2).toLong()).toString(),
         date.toString(),
     )
-    val yIcons = ETypeEmotion.values().map { it.icon }
+
+    val maxY: Float
+    val minY: Float
+    val averageY: Float
+
+    if (waterData.isNotEmpty()) {
+        maxY = (waterData.maxBy{ pair -> pair.second}.second)*1.2f
+        minY = 0 + maxY/3
+        averageY = minY + maxY/3
+    } else {
+        maxY = 2100f
+        minY = 700f
+        averageY = 1400f
+    }
+
+    val yLabels = listOf(
+        "0",
+        minY.toInt().toString(),
+        averageY.toInt().toString(),
+        maxY.toInt().toString(),
+    )
 
     val iconSize = 20.dp
     val paddingY = iconSize * 1.5f
@@ -51,21 +67,24 @@ fun MyEmotionsChart(
             padding = 15.dp,
             diapason = false
         ),
-        yIcons = PlotIcons(
-            icons = yIcons,
-            iconsSize = iconSize,
+        yLabels = PlotLabels(
+            labels = yLabels,
+            fontColor = MaterialTheme.colorScheme.onPrimaryContainer,
             padding = paddingY,
-            diapason = true
+            diapason = false
         ),
         verticalLines = AxisLines(
             offset = 15.dp
         ),
+        horizontalLines = AxisLines(
+            offset = 15.dp
+        ),
         coordinates = PlotCoordinates(
-            values = emotionsData,
+            values = waterData,
             minX = 0f,
             maxX = period.toFloat(),
             minY = 0f,
-            maxY = 5f,
+            maxY = maxY,
         ),
         lineStyle = PlotLineStyle(
             color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -76,11 +95,9 @@ fun MyEmotionsChart(
             radius = 2.dp,
         ),
         underColors = listOf(
-            EmotionDarkGreen,
-            EmotionGreen,
-            EmotionYellow,
-            EmotionOrange,
-            EmotionRed,
+            Blue,
+            LightBlue,
+            Color.Unspecified,
         ),
     )
 }
@@ -90,16 +107,16 @@ fun MyEmotionsChart(
 private fun MyEmotionsChartPreview() {
     FoodMoodTheme {
         val data = listOf(
-            Pair(0f, 5f),
+            Pair(0f, 9f),
             Pair(3f, 3f),
             Pair(5f, 1f),
             Pair(9f, 3f),
             Pair(15f, 2f),
         )
 
-        MyEmotionsChart(
+        MyWaterChart(
             modifier = Modifier.size(2000.dp, 200.dp).padding(20.dp),
-            emotionsData = data,
+            waterData = data,
             periodType = ETypePeriod.DAYS_31
         )
     }

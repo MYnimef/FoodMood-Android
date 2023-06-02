@@ -5,6 +5,7 @@ import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiResult
 import com.mynimef.foodmood.data.models.ApiSuccess
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
+import com.mynimef.foodmood.data.models.requests.ClientDataRequest
 import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.RefreshTokenRequest
 import com.mynimef.foodmood.data.repository.api.AuthAPI
@@ -50,6 +51,8 @@ class AppNetwork {
         handleAuthApi { clientAPI.getDateCards(it, day, month, year) }
     suspend fun clientIncreaseWater(request: WaterIncreaseRequest) =
         handleAuthApi { clientAPI.increaseWater(it, request) }
+    suspend fun clientGetData(request: ClientDataRequest) =
+        handleAuthApi { clientAPI.getData(it, request) }
 
     private suspend fun <T: Any> handleApi(
         execute: suspend () -> Response<T>

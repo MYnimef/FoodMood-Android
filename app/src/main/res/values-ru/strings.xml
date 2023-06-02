@@ -20,7 +20,7 @@
     <string name="weight">Вес</string>
     <string name="complete">Завершить</string>
     <string name="settings">Настройки</string>
-    <string name="user_settings">Настройки аккаунта</string>
+    <string name="user_settings">Аккаунт</string>
     <string name="prefrences">Предпочтения</string>
     <string name="notifications">Уведомления</string>
     <string name="language">Язык</string>
@@ -52,6 +52,8 @@
     <string name="ml_500">500 ml</string>
     <string name="ml_600">600 ml</string>
 
+    <string name="change">Сменить аккаунт</string>
+    <string name="change_hint">Вы можете подключить несколько аккаунтов с разными логинами</string>
     <string name="delete">Удалить аккаунт</string>
     <string name="exit">Выйти из аккаунта</string>
 

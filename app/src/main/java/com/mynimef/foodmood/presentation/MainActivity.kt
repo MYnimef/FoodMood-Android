@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.presentation.screens.auth.AuthMainScreen
@@ -35,6 +36,8 @@ class MainActivity: ComponentActivity() {
                 Toast.makeText(this@MainActivity, message.text, Toast.LENGTH_LONG).show()
             }
         }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             FoodMoodTheme {
