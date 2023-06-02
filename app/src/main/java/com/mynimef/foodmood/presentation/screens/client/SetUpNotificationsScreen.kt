@@ -25,9 +25,9 @@ import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SettingsScreenNotification() {
+fun SetUpNotificationsScreen() {
     val notifications = remember {
-        listOf<Notification>(
+        listOf(
             Notification(1, "09:00", "Time to drink water"),
             Notification(1, "14:00", "Time to eat"),
             Notification(1, "18:00", "Some very very very big text")
@@ -60,7 +60,7 @@ private fun CenterElements(
                 .padding(bottom = 5.dp)
         ) {
             MyIcon(
-                drawableId = R.drawable.ic_notification,
+                drawableId = R.drawable.ic_set_up_notifications,
                 modifier = Modifier
                     .padding(bottom = 30.dp, top = 70.dp)
                     .align(Alignment.CenterVertically)
@@ -88,8 +88,8 @@ private fun CenterElements(
 
 @Preview
 @Composable
-fun NotifScreenPrev() {
+private fun SetUpNotificationsScreenPreview() {
     FoodMoodTheme {
-        SettingsScreenNotification()
+        SetUpNotificationsScreen()
     }
 }

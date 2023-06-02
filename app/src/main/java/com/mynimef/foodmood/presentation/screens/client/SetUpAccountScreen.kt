@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,7 +30,7 @@ import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SettingsScreenUser() {
+fun SetUpAccountScreen() {
 
     val name = remember { mutableStateOf("") }
     val login = remember { mutableStateOf("") }
@@ -50,7 +49,6 @@ fun SettingsScreenUser() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CenterElements(
     name: MutableState<String>,
@@ -75,7 +73,7 @@ private fun CenterElements(
                 .padding(bottom = 5.dp)
         ) {
             MyIcon(
-                drawableId = R.drawable.ic_user,
+                drawableId = R.drawable.ic_set_up_account,
                 modifier = Modifier
                     .padding(bottom = 30.dp, top = 70.dp)
                     .align(Alignment.CenterVertically)
@@ -159,8 +157,8 @@ private fun CenterElements(
 
 @Preview
 @Composable
-fun UserInfoScreenPrev() {
+private fun SetUpAccountScreenPreview() {
     FoodMoodTheme {
-        SettingsScreenUser()
+        SetUpAccountScreen()
     }
 }
