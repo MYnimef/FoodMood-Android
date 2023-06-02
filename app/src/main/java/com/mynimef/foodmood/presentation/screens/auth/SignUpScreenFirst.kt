@@ -20,10 +20,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavAuth
-import com.mynimef.foodmood.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
@@ -100,7 +98,6 @@ private fun CenterElements(
 @Preview(showBackground = true)
 @Composable
 private fun SignUpFirstScreenPreview() {
-
     FoodMoodTheme {
         val name = remember { mutableStateOf("") }
 
