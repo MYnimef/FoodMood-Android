@@ -37,27 +37,33 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun ReportsScreen() {
     val viewModel: ReportsViewModel = viewModel()
-    ReportsScreen(
-        period = viewModel.period.collectAsState().value,
-        setPeriod = viewModel::setPeriod,
-        coordinatesEmotions = viewModel.coordinatesEmotions.collectAsState().value,
-        coordinatesWater = viewModel.coordinatesWater.collectAsState().value,
-        coordinatesWeight = viewModel.coordinatesWeight.collectAsState().value,
-    )
+    val periodState = viewModel.period.collectAsState()
+    val coordinatesEmotionsState = viewModel.coordinatesEmotions.collectAsState()
+    val coordinatesWaterState = viewModel.coordinatesWater.collectAsState()
+    val coordinatesWeightState = viewModel.coordinatesWeight.collectAsState()
+
     OnLifecycleEvent { _, event ->
         if (event == Lifecycle.Event.ON_CREATE) {
             viewModel.getData()
         }
     }
+
+    ReportsScreen(
+        periodProvider = { periodState.value },
+        setPeriod = viewModel::setPeriod,
+        coordinatesEmotionsProvider = { coordinatesEmotionsState.value },
+        coordinatesWaterProvider = { coordinatesWaterState.value },
+        coordinatesWeightProvider = { coordinatesWeightState.value },
+    )
 }
 
 @Composable
 private fun ReportsScreen(
-    period: ETypePeriod,
+    periodProvider: () -> ETypePeriod,
     setPeriod: (ETypePeriod) -> Unit,
-    coordinatesEmotions: List<Pair<Float, Float>>,
-    coordinatesWater: List<Pair<Float, Float>>,
-    coordinatesWeight: List<Pair<Float, Float>>,
+    coordinatesEmotionsProvider: () -> List<Pair<Float, Float>>,
+    coordinatesWaterProvider: () -> List<Pair<Float, Float>>,
+    coordinatesWeightProvider: () -> List<Pair<Float, Float>>,
 ) {
     Column() {
         Row(
@@ -111,45 +117,77 @@ private fun ReportsScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = stringResource(R.string.emotion_chart),
-                modifier = Modifier.padding(bottom = 30.dp),
-                style = MaterialTheme.typography.titleLarge
+            EmotionData(
+                coordinatesProvider = coordinatesEmotionsProvider,
+                periodProvider = periodProvider,
             )
-
-            MyEmotionsChart(
-                modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .aspectRatio(2f),
-                emotionsData = coordinatesEmotions,
-                periodType = period,
+            WaterData(
+                coordinatesProvider = coordinatesWaterProvider,
+                periodProvider = periodProvider,
             )
-            Text(
-                text = stringResource(R.string.water),
-                modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
-                style = MaterialTheme.typography.titleLarge
-            )
-            MyWaterChart(
-                modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .aspectRatio(2f),
-                waterData = coordinatesWater,
-                periodType = period,
-            )
-            Text(
-                text = stringResource(R.string.weight),
-                modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
-                style = MaterialTheme.typography.titleLarge
-            )
-            MyWeightChart(
-                modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .aspectRatio(2f),
-                weightData = coordinatesWeight,
-                periodType = period,
+            WeightData(
+                coordinatesProvider = coordinatesWeightProvider,
+                periodProvider = periodProvider,
             )
         }
     }
+}
+
+@Composable
+private fun EmotionData(
+    coordinatesProvider: () -> List<Pair<Float, Float>>,
+    periodProvider: () -> ETypePeriod,
+) {
+    Text(
+        text = stringResource(R.string.emotion_chart),
+        modifier = Modifier.padding(bottom = 30.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
+    MyEmotionsChart(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .aspectRatio(2f),
+        emotionsData = coordinatesProvider(),
+        periodType = periodProvider(),
+    )
+}
+
+@Composable
+private fun WaterData(
+    coordinatesProvider: () -> List<Pair<Float, Float>>,
+    periodProvider: () -> ETypePeriod,
+) {
+    Text(
+        text = stringResource(R.string.water),
+        modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
+    MyWaterChart(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .aspectRatio(2f),
+        waterData = coordinatesProvider(),
+        periodType = periodProvider(),
+    )
+}
+
+@Composable
+private fun WeightData(
+    coordinatesProvider: () -> List<Pair<Float, Float>>,
+    periodProvider: () -> ETypePeriod,
+) {
+    Text(
+        text = stringResource(R.string.weight),
+        modifier = Modifier.padding(bottom = 30.dp, top = 35.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
+    MyWeightChart(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .aspectRatio(2f),
+        weightData = coordinatesProvider(),
+        periodType = periodProvider(),
+    )
 }
 
 @Preview(showBackground = true)
