@@ -19,9 +19,11 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun MyEmotionButton(
     emotion: ETypeEmotion,
-    selectedEmotion: ETypeEmotion,
+    selectedEmotionProvider: () -> ETypeEmotion,
     onClick: (ETypeEmotion) -> Unit,
 ) {
+    val selectedEmotion = selectedEmotionProvider()
+
     Box(
         modifier = Modifier
             .padding(vertical = 10.dp)
@@ -44,7 +46,7 @@ private fun MyEmotionButtonPreview() {
     FoodMoodTheme {
         MyEmotionButton(
             emotion = ETypeEmotion.BAD,
-            selectedEmotion = ETypeEmotion.BAD,
+            selectedEmotionProvider = { ETypeEmotion.BAD },
             onClick = {},
         )
     }
