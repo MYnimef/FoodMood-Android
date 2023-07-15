@@ -29,8 +29,8 @@ class AppNetwork {
 
     init {
         val retrofit = Retrofit.Builder()
-            //.baseUrl("http://77.232.135.37:8080/")
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("http://91.240.254.42:8080/")
+            //.baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
