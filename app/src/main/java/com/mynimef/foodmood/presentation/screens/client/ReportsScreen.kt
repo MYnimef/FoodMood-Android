@@ -68,7 +68,7 @@ private fun ReportsScreen(
             modifier = Modifier
                 .padding(vertical = 35.dp, horizontal = 30.dp)
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(30.dp)
             ,
             options = periods.map { stringResource(it.label) },
             selectedOption = periods.indexOf(periodProvider()),
