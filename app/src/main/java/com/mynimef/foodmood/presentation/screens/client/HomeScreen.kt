@@ -3,7 +3,6 @@ package com.mynimef.foodmood.presentation.screens.client
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,30 +67,24 @@ private fun HomeScreen(
         onRefresh = onRefresh
     )
 
-    Column(
+    Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .pullRefresh(pullRefreshState)
     ) {
+        CenterElements(
+            trackWater = trackWater,
+            waterAmount = waterAmount,
+            setWater = setWater,
+            cardsProvider = cardsProvider,
+        )
         MyDate()
-        Spacer(modifier = Modifier.height(20.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .pullRefresh(pullRefreshState)
-        ) {
-            CenterElements(
-                trackWater = trackWater,
-                waterAmount = waterAmount,
-                setWater = setWater,
-                cardsProvider = cardsProvider,
-            )
-            PullRefreshIndicator(
-                refreshing = refreshing,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
-        }
+        PullRefreshIndicator(
+            refreshing = refreshing,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
@@ -110,6 +103,9 @@ private fun CenterElements(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.Start
     ) {
+        item {
+            Spacer(modifier = Modifier.height(65.dp))
+        }
         if (trackWater) {
             item {
                 MyWaterPanel(setWater = setWater)
