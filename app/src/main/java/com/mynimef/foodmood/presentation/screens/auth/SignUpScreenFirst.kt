@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
@@ -30,11 +31,12 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun SignUpScreenFirst(viewModel: SignUpViewModel) {
     val nameState = viewModel.name.collectAsState()
+    val buttonState = viewModel.firstButtonActive.collectAsState()
 
     SignUpScreenFirst(
         nameProvider = { nameState.value },
         setName= viewModel::setName,
-        buttonActive = viewModel.firstButtonActive.collectAsState().value,
+        buttonActiveProvider = { buttonState.value },
         onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_SECOND) }
     )
 }
@@ -43,7 +45,7 @@ fun SignUpScreenFirst(viewModel: SignUpViewModel) {
 private fun SignUpScreenFirst(
     nameProvider: () -> String,
     setName: (String) -> Unit,
-    buttonActive: Boolean,
+    buttonActiveProvider: () -> Boolean,
     onNext: () -> Unit,
 ) {
     Box(
@@ -54,7 +56,7 @@ private fun SignUpScreenFirst(
         CenterElements(
             nameProvider = nameProvider,
             setName = setName,
-            buttonActive = buttonActive,
+            buttonActiveProvider = buttonActiveProvider,
             onNext = onNext,
         )
     }
@@ -64,7 +66,7 @@ private fun SignUpScreenFirst(
 private fun CenterElements(
     nameProvider: () -> String,
     setName: (String) -> Unit,
-    buttonActive: Boolean,
+    buttonActiveProvider: () -> Boolean,
     onNext: () -> Unit,
 ) {
     Column(
@@ -80,24 +82,45 @@ private fun CenterElements(
         Text(
             modifier = Modifier.padding(bottom = 30.dp),
             text = stringResource(R.string.welcome_mess),
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )
-
-        MyTextFieldLogin(
-            value = nameProvider(),
-            label = stringResource(R.string.name),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            isError = false,
-            visualTransformation = VisualTransformation.None,
-            onValueChange = setName,
+        Element1(
+            nameProvider = nameProvider,
+            setName = setName,
         )
-
-        MyLoginButton(
-            text = stringResource(R.string.next),
-            enabled = buttonActive,
-            onClick = onNext,
+        Element2(
+            buttonActiveProvider = buttonActiveProvider,
+            onNext = onNext,
         )
     }
+}
+
+@Composable
+private fun Element1(
+    nameProvider: () -> String,
+    setName: (String) -> Unit,
+) {
+    MyTextFieldLogin(
+        value = nameProvider(),
+        label = stringResource(R.string.name),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        isError = false,
+        visualTransformation = VisualTransformation.None,
+        onValueChange = setName,
+    )
+}
+
+@Composable
+private fun Element2(
+    buttonActiveProvider: () -> Boolean,
+    onNext: () -> Unit,
+) {
+    MyLoginButton(
+        text = stringResource(R.string.next),
+        enabled = buttonActiveProvider(),
+        onClick = onNext,
+    )
 }
 
 @Preview(showBackground = true)
@@ -109,7 +132,7 @@ private fun SignUpFirstScreenPreview() {
         SignUpScreenFirst(
             nameProvider = { name.value },
             setName = { name.value = it },
-            buttonActive = true,
+            buttonActiveProvider = { true },
             onNext = {}
         )
     }

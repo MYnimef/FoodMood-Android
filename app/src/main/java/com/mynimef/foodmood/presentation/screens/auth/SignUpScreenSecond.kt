@@ -3,6 +3,7 @@ package com.mynimef.foodmood.presentation.screens.auth
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -16,8 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.commandiron.wheel_picker_compose.WheelDatePicker
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavAuth
@@ -68,22 +73,28 @@ private fun CenterElements(
             .background(MaterialTheme.colorScheme.background)
             .imePadding()
         ,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            modifier = Modifier.padding(bottom = 30.dp),
             text = stringResource(R.string.birthday),
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )
-
-        WheelDatePicker(
-            modifier = Modifier.padding(bottom = 30.dp),
-            maxDate = LocalDate.now(),
-        ) {
-                snappedDate -> setBirthday(snappedDate.toString())
+        BoxWithConstraints {
+            WheelDatePicker(
+                textStyle = TextStyle(
+                    fontSize = 20.sp
+                ),
+                size = DpSize(
+                    width = maxWidth,
+                    height = 200.dp
+                ),
+                maxDate = LocalDate.now(),
+            ) { snappedDate ->
+                setBirthday(snappedDate.toString())
+            }
         }
-
         MyLoginButton(
             text = stringResource(R.string.next),
             enabled = buttonActive,
