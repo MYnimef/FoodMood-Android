@@ -39,14 +39,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
-private const val AnimationDurationMillis = 250
-
 @Stable
 private class MultiSelectorState(
     options: List<String>,
     selectedOption: Int,
     private val selectedColor: Color,
     private val unselectedColor: Color,
+    animationDuration: Int,
 ) {
 
     val selectedIndex: Float
@@ -67,7 +66,7 @@ private class MultiSelectorState(
 
     private val numOptions = options.size
     private val animationSpec = tween<Float>(
-        durationMillis = AnimationDurationMillis,
+        durationMillis = animationDuration,
         easing = FastOutSlowInEasing,
     )
 
@@ -105,21 +104,6 @@ private class MultiSelectorState(
     }
 }
 
-@Composable
-private fun rememberMultiSelectorState(
-    options: List<String>,
-    selectedOption: Int,
-    selectedColor: Color,
-    unSelectedColor: Color,
-) = remember {
-    MultiSelectorState(
-        options,
-        selectedOption,
-        selectedColor,
-        unSelectedColor,
-    )
-}
-
 private enum class MultiSelectorOption {
     Option,
     Background,
@@ -135,16 +119,18 @@ fun MultiSelector(
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     selectedBackgroundColor: Color = MaterialTheme.colorScheme.primary,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
+    animationDuration: Int = 250,
 ) {
     require(options.size >= 2) { "This composable requires at least 2 options" }
     require(options.size >= selectedOption) { "Invalid selected option [$selectedOption]" }
 
-    val state = rememberMultiSelectorState(
+    val state = remember { MultiSelectorState(
         options = options,
         selectedOption = selectedOption,
         selectedColor = selectedTextColor,
-        unSelectedColor = textColor,
-    )
+        unselectedColor = textColor,
+        animationDuration = animationDuration,
+    ) }
 
     LaunchedEffect(key1 = options, key2 = selectedOption) {
         state.selectOption(this, selectedOption)
