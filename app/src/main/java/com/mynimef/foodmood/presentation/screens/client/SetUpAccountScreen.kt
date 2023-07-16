@@ -23,15 +23,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MySettingsButton
 import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
+
 @Composable
 fun SetUpAccountScreen() {
+    val viewModel: SetUpAccountViewModel = viewModel()
 
+    SetUpAccountScreen(
+        signOutClick = viewModel::signOut
+    )
+}
+
+@Composable
+private fun SetUpAccountScreen(
+    signOutClick: () -> Unit,
+) {
     val name = remember { mutableStateOf("") }
     val login = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -44,7 +56,8 @@ fun SetUpAccountScreen() {
         CenterElements(
             name = name,
             login = login,
-            password = password
+            password = password,
+            signOutClick = signOutClick,
         )
     }
 }
@@ -53,7 +66,8 @@ fun SetUpAccountScreen() {
 private fun CenterElements(
     name: MutableState<String>,
     login: MutableState<String>,
-    password: MutableState<String>
+    password: MutableState<String>,
+    signOutClick: () -> Unit,
 ) {
     val nameEdit = rememberSaveable { mutableStateOf(false) }
     val loginEdit = rememberSaveable { mutableStateOf(false) }
@@ -161,7 +175,7 @@ private fun CenterElements(
                     .fillMaxWidth()
                 ,
                 text = R.string.exit,
-                onClick = {},
+                onClick = signOutClick,
             )
             MySettingsButton(
                 modifier = Modifier
@@ -179,6 +193,8 @@ private fun CenterElements(
 @Composable
 private fun SetUpAccountScreenPreview() {
     FoodMoodTheme {
-        SetUpAccountScreen()
+        SetUpAccountScreen(
+            signOutClick = {},
+        )
     }
 }

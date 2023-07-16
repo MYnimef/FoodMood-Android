@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +25,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,17 +47,22 @@ fun CreateScreenSecond(
     viewModel: CreateViewModel
 ) {
     val client = viewModel.getClient().collectAsState().value
+    val emotion = viewModel.emotionType.collectAsState()
+    val emotionDescription = viewModel.emotionDescription.collectAsState()
+    val foodDescription = viewModel.foodDescription.collectAsState()
+    val isActive = viewModel.buttonCompleteActive.collectAsState()
 
     if (client != null) {
         CreateScreenSecond(
             mealType = viewModel.mealType.collectAsState().value,
-            emotionType = viewModel.emotionType.collectAsState().value,
+            emotionTypeProvider = { emotion.value },
             setEmotionType = viewModel::setEmotionType,
-            emotionDescription = viewModel.emotionDescription.collectAsState().value,
+            emotionDescriptionProvider = { emotionDescription.value },
             setEmotionDescription = viewModel::setEmotionDescription,
             trackFood = client.trackFood,
-            foodDescription = viewModel.foodDescription.collectAsState().value,
+            foodDescriptionProvider = { foodDescription.value },
             setFoodDescription = viewModel::setFoodDescription,
+            isActiveProvider = { isActive.value },
             onComplete = viewModel::create,
         )
     }
@@ -62,146 +71,148 @@ fun CreateScreenSecond(
 @Composable
 private fun CreateScreenSecond(
     mealType: ETypeMeal,
-    emotionType: ETypeEmotion,
+    emotionTypeProvider: () -> ETypeEmotion,
     setEmotionType: (ETypeEmotion) -> Unit,
-    emotionDescription: String,
+    emotionDescriptionProvider: () -> String,
     setEmotionDescription: (String) -> Unit,
     trackFood: Boolean,
-    foodDescription: String,
+    foodDescriptionProvider: () -> String,
     setFoodDescription: (String) -> Unit,
+    isActiveProvider: () -> Boolean,
     onComplete: () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .statusBarsPadding()
+        ,
     ) {
         CenterElements(
             mealType = mealType,
-            emotionType = emotionType,
+            emotionTypeProvider = emotionTypeProvider,
             setEmotionType = setEmotionType,
-            emotionDescription = emotionDescription,
+            emotionDescriptionProvider = emotionDescriptionProvider,
             setEmotionDescription = setEmotionDescription,
             trackFood = trackFood,
-            foodDescription = foodDescription,
+            foodDescriptionProvider = foodDescriptionProvider,
             setFoodDescription = setFoodDescription,
+            isActiveProvider = isActiveProvider,
             onComplete = onComplete,
         )
+        MyDate()
     }
 }
 
 @Composable
 private fun CenterElements(
     mealType: ETypeMeal,
-    emotionType: ETypeEmotion,
+    emotionTypeProvider: () -> ETypeEmotion,
     setEmotionType: (ETypeEmotion) -> Unit,
-    emotionDescription: String,
+    emotionDescriptionProvider: () -> String,
     setEmotionDescription: (String) -> Unit,
     trackFood: Boolean,
-    foodDescription: String,
+    foodDescriptionProvider: () -> String,
     setFoodDescription: (String) -> Unit,
+    isActiveProvider: () -> Boolean,
     onComplete: () -> Unit,
 ) {
-    Column {
-        MyDate()
-        Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 30.dp)
+            .imePadding()
+            .verticalScroll(rememberScrollState())
+        ,
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start,
+    ) {
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 30.dp)
-                .verticalScroll(rememberScrollState())
+                .padding(top = 75.dp)
             ,
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
+        ) {
+            MyIcon(
+                drawableId = mealType.icon,
+                modifier = Modifier.size(55.dp),
+            )
+            Text(
+                text = stringResource(id = mealType.label),
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .align(Alignment.CenterVertically)
+                ,
+                style = MaterialTheme.typography.titleMedium,
+            )
+        }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp)
+            ,
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.2f)),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
         ) {
             Row(
                 modifier = Modifier
-                    .padding(top = 30.dp)
-                ,
-            ) {
-                MyIcon(
-                    drawableId = mealType.icon,
-                    modifier = Modifier.size(55.dp),
-                )
-                Text(
-                    text = stringResource(id = mealType.label),
-                    modifier = Modifier
-                        .padding(start = 15.dp)
-                        .align(Alignment.CenterVertically)
-                    ,
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
-            Card(
-                modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 20.dp)
+                    .padding(horizontal = 6.dp)
                 ,
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.2f)),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 6.dp)
-                    ,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = 5.dp,
-                        alignment = Alignment.CenterHorizontally,
-                    )
-                ) {
-                    MyEmotionButton(
-                        emotion = ETypeEmotion.GREAT,
-                        selectedEmotion = emotionType,
-                        onClick = setEmotionType
-                    )
-                    MyEmotionButton(
-                        emotion = ETypeEmotion.GOOD,
-                        selectedEmotion = emotionType,
-                        onClick = setEmotionType
-                    )
-                    MyEmotionButton(
-                        emotion = ETypeEmotion.NORMAL,
-                        selectedEmotion = emotionType,
-                        onClick = setEmotionType
-                    )
-                    MyEmotionButton(
-                        emotion = ETypeEmotion.BAD,
-                        selectedEmotion = emotionType,
-                        onClick = setEmotionType
-                    )
-                    MyEmotionButton(
-                        emotion = ETypeEmotion.VERY_BAD,
-                        selectedEmotion = emotionType,
-                        onClick = setEmotionType
-                    )
-                }
-            }
-            EditDescription(
-                question = stringResource(R.string.emotion_question),
-                description = emotionDescription,
-                hint = stringResource(id = R.string.write_here),
-                setDescription = setEmotionDescription,
-            )
-            if (trackFood) {
-                Spacer(modifier = Modifier.height(10.dp))
-                EditDescription(
-                    question = stringResource(id = R.string.food_question),
-                    description = foodDescription,
-                    hint = stringResource(id = R.string.write_here),
-                    setDescription = setFoodDescription,
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 5.dp,
+                    alignment = Alignment.CenterHorizontally,
                 )
-            }
-            Button(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 10.dp)
-                ,
-                enabled = emotionDescription.isNotEmpty(),
-                onClick = onComplete,
             ) {
-                Text(stringResource(id = R.string.complete))
+                MyEmotionButton(
+                    emotion = ETypeEmotion.GREAT,
+                    selectedEmotionProvider = emotionTypeProvider,
+                    onClick = setEmotionType
+                )
+                MyEmotionButton(
+                    emotion = ETypeEmotion.GOOD,
+                    selectedEmotionProvider = emotionTypeProvider,
+                    onClick = setEmotionType
+                )
+                MyEmotionButton(
+                    emotion = ETypeEmotion.NORMAL,
+                    selectedEmotionProvider = emotionTypeProvider,
+                    onClick = setEmotionType
+                )
+                MyEmotionButton(
+                    emotion = ETypeEmotion.BAD,
+                    selectedEmotionProvider = emotionTypeProvider,
+                    onClick = setEmotionType
+                )
+                MyEmotionButton(
+                    emotion = ETypeEmotion.VERY_BAD,
+                    selectedEmotionProvider = emotionTypeProvider,
+                    onClick = setEmotionType
+                )
             }
         }
+        EditDescription(
+            question = stringResource(R.string.emotion_question),
+            descriptionProvider = emotionDescriptionProvider,
+            hint = stringResource(id = R.string.write_here),
+            setDescription = setEmotionDescription,
+        )
+        if (trackFood) {
+            Spacer(modifier = Modifier.height(10.dp))
+            EditDescription(
+                question = stringResource(id = R.string.food_question),
+                descriptionProvider = foodDescriptionProvider,
+                hint = stringResource(id = R.string.write_here),
+                setDescription = setFoodDescription,
+            )
+        }
+        CompleteButton(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(vertical = 10.dp)
+            ,
+            isActiveProvider = isActiveProvider,
+            onClick = onComplete,
+        )
     }
 }
 
@@ -209,8 +220,8 @@ private fun CenterElements(
 private fun EditDescription(
     question: String,
     hint: String,
-    description: String,
-    setDescription: (String) -> Unit
+    descriptionProvider: () -> String,
+    setDescription: (String) -> Unit,
 ) {
     Text(
         text = question,
@@ -225,10 +236,25 @@ private fun EditDescription(
             .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
         MyTextFieldEmotionalCard(
-            value = description,
+            value = descriptionProvider(),
             hint = hint,
             onValueChange = setDescription,
         )
+    }
+}
+
+@Composable
+private fun CompleteButton(
+    modifier: Modifier,
+    isActiveProvider: () -> Boolean,
+    onClick: () -> Unit,
+) {
+    Button(
+        modifier = modifier,
+        enabled = isActiveProvider(),
+        onClick = onClick,
+    ) {
+        Text(stringResource(id = R.string.complete))
     }
 }
 
@@ -236,15 +262,20 @@ private fun EditDescription(
 @Composable
 private fun CreateScreenSecondPreview() {
     FoodMoodTheme {
+        val emotionType = remember { mutableStateOf(ETypeEmotion.NORMAL) }
+        val emotionDescription = remember { mutableStateOf("") }
+        val foodDescription = remember { mutableStateOf("") }
+
         CreateScreenSecond(
             mealType = ETypeMeal.DINNER,
-            emotionType = ETypeEmotion.NORMAL,
-            setEmotionType = {},
-            emotionDescription = "",
-            setEmotionDescription = {},
+            emotionTypeProvider = { emotionType.value },
+            setEmotionType = { emotionType.value = it },
+            emotionDescriptionProvider = { emotionDescription.value },
+            setEmotionDescription = { emotionDescription.value = it },
             trackFood = true,
-            foodDescription = "",
-            setFoodDescription = {},
+            foodDescriptionProvider = { foodDescription.value },
+            setFoodDescription = { foodDescription.value = it },
+            isActiveProvider = { true },
             onComplete = {},
         )
     }

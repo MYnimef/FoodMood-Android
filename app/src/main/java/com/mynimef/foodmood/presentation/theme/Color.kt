@@ -6,7 +6,7 @@ val Biege = Color(0xFFF4F3ED)
 
 val DarkestGreen = Color(0xFF5B8E7D)
 val DarkGreen = Color(0xFF81B29A)
-val Green = Color(0xCC81B29A)
+val Green = Color(0xFF98BFAB)
 val LightGreen = Color(0x3381B29A)
 
 val Blue = Color(0xFF9398C5)
