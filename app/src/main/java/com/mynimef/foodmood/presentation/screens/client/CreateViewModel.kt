@@ -34,6 +34,9 @@ class CreateViewModel: ViewModel() {
     private val _foodDescription = MutableStateFlow("")
     val foodDescription = _foodDescription.asStateFlow()
 
+    private val _buttonCompleteActive = MutableStateFlow(false)
+    val buttonCompleteActive = _buttonCompleteActive.asStateFlow()
+
     private val _weight = MutableStateFlow(0.0f)
     val weight: StateFlow<Float> = _weight.asStateFlow()
 
@@ -59,6 +62,7 @@ class CreateViewModel: ViewModel() {
 
     fun setEmotionDescription(value: String) {
         _emotionDescription.value = value
+        _buttonCompleteActive.value = value.isNotEmpty()
     }
 
     fun setFoodDescription(value: String) {
