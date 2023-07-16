@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -80,14 +81,13 @@ private fun CreateScreenSecond(
     isActiveProvider: () -> Boolean,
     onComplete: () -> Unit,
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .statusBarsPadding()
         ,
     ) {
-        MyDate()
         CenterElements(
             mealType = mealType,
             emotionTypeProvider = emotionTypeProvider,
@@ -100,6 +100,7 @@ private fun CreateScreenSecond(
             isActiveProvider = isActiveProvider,
             onComplete = onComplete,
         )
+        MyDate()
     }
 }
 
@@ -120,6 +121,7 @@ private fun CenterElements(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 30.dp)
+            .imePadding()
             .verticalScroll(rememberScrollState())
         ,
         verticalArrangement = Arrangement.Top,
@@ -127,7 +129,7 @@ private fun CenterElements(
     ) {
         Row(
             modifier = Modifier
-                .padding(top = 30.dp)
+                .padding(top = 75.dp)
             ,
         ) {
             MyIcon(
