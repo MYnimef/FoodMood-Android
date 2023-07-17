@@ -97,7 +97,7 @@ fun MyWeightCard(
 
 @Preview
 @Composable
-fun MyWeightPrev() {
+private fun MyWeightCardPreview() {
     FoodMoodTheme {
         MyWeightCard(20.0f,{}, {}, {})
     }

@@ -42,7 +42,7 @@ fun MyTextFieldEmotionalCard(
 
 @Preview(showBackground = true)
 @Composable
-fun MyTextFieldEmotionalCardPreview() {
+private fun MyTextFieldEmotionalCardPreview() {
     FoodMoodTheme {
         MyTextFieldEmotionalCard(
             value = "",
