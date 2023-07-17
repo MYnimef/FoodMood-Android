@@ -1,22 +1,22 @@
-# Общие сведения о приложении "Food Mood"
-## Описание приложения
-Мобильное приложение “Food Mood” предназначено для людей, стремящихся к улучшению своего пищевого поведения и эмоционального благополучия. Приложение представляет собой платформу, которая обеспечивает возможность отслеживать требуемые показатели, а также взаимодействовать со специалистами.
-Приложение предоставляет следующие функции для пользователя:
-* Авторизация и аутентификация
-* Создание карточек эмоций
-* Заполнение приема воды
-* Заполнение текущего веса
-* Отслеживание показателей на протяжении разных периодов времени
-* Взаимодействие со специалистами
+# General information about the Food Mood app
+## App Description
+The "Food Mood" mobile application is designed for people seeking to improve their eating behavior and emotional well-being. It is a platform that provides the ability to track the required indicators, as well as interact with specialists.
+The app provides the following features for the user:
+* Authorization and authentication
+* Create emotion cards
+* Water intake tracking
+* Current weight tracking
+* Track metrics over different periods of time
+* Interaction with specialists
 
-## Требования к программным и аппаратным средствам
-Приложение предназначено для работы на мобильных устройствах под управлением операционной системы Android 10.0 или более поздней версии.
+## Software and hardware requirements
+The app is designed to run on mobile devices running Android 10.0 or later.
 
-## Установка приложения
-Для установки приложения скачайте .apk-файл в разделе релизов.
+## Installing the app
+To install the app, download the .apk file in the releases section.
 
-# Работа с приложением "Food Mood"
-## Запуск приложения
-Для запуска приложения нажмите на соответствующую иконку, которая расположена в меню мобильного устройства. При нажатии на эту иконку открывается окно авторизации, в котором пользователю необходимо ввести адрес электронной почты и пароль.
+# Working with the "Food Mood" app
+## Runiing the app
+To launch the app, click on the corresponding icon, which is located in the menu of the mobile device. Clicking on this icon opens an authorization window in which the user needs to enter an email address and password.
 
-При нажатии на кнопку "Создать аккаунт" пользователь перенаправляется в окно регистрации, где ему необходимо ввести фамилию, имя, номер телефона, адрес электронной почты, пароль и повторение пароля.
+By clicking on the "Create an account" button, the user is redirected to the registration window, where he needs to enter the last name, first name, phone number, email address and twice the password.
