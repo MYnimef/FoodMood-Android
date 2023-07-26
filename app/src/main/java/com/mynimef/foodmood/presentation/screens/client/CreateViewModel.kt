@@ -50,11 +50,7 @@ class CreateViewModel: ViewModel() {
         _isDialogShown.value = !_isDialogShown.value
     }
 
-    fun getClient() = Repository.storage.client.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = null
-    )
+    fun getClient() = Repository.storage.client
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value

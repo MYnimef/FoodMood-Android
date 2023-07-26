@@ -46,7 +46,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun CreateScreenSecond(
     viewModel: CreateViewModel
 ) {
-    val client = viewModel.getClient().collectAsState().value
+    val client = viewModel.getClient().collectAsState(null).value
     val emotion = viewModel.emotionType.collectAsState()
     val emotionDescription = viewModel.emotionDescription.collectAsState()
     val foodDescription = viewModel.foodDescription.collectAsState()

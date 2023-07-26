@@ -37,7 +37,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun HomeScreen() {
     val viewModel: HomeViewModel = viewModel()
-    val client = viewModel.client.collectAsState().value
+    val client = viewModel.client.collectAsState(null).value
     val cardsState = viewModel.getCards().collectAsState(initial = emptyList())
 
     if (client != null) {

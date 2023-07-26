@@ -23,11 +23,7 @@ class HomeViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    val client = Repository.storage.client.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = null
-    )
+    val client = Repository.storage.client
 
     private val _refreshing = MutableStateFlow(false)
     val refreshing = _refreshing.asStateFlow()
