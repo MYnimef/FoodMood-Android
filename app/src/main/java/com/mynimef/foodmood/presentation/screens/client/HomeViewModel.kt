@@ -47,9 +47,7 @@ class HomeViewModel: ViewModel() {
                 }
                 is ApiException -> {}
                 is ApiSuccess -> {
-                    storage.insertClient(
-                        client.value!!.copy(waterAmount = result.data.totalAmount)
-                    )
+                    storage.updateWaterAmountClient(result.data.totalAmount)
                 }
             }
         }

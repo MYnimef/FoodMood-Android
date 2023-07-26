@@ -66,6 +66,7 @@ class AppStorage(context: Context) {
     suspend fun insertClient(client: ClientEntity) = database.clientDao().insert(client.copy(id = id.value))
     suspend fun deleteClient(id: Long) = database.clientDao().deleteById(id)
     suspend fun deleteClient() = database.clientDao().deleteById(id.value)
+    suspend fun updateWaterAmountClient(waterAmount: Float) = database.clientDao().updateWaterAmount(id = id.value, waterAmount = waterAmount)
 
     suspend fun insertCard(card: CardEntity) = database.cardDao().insert(card)
     fun getAllCards() = database.cardDao().getAll()
