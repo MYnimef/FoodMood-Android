@@ -33,12 +33,6 @@ class AppStorage(context: Context) {
         }
     }
 
-    val client by lazy {
-        combine(id, getAllClients()) { id, clients ->
-            clients.find { it.id == id }
-        }
-    }
-
     suspend fun initApp(): EAppState {
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
         return state
@@ -63,6 +57,7 @@ class AppStorage(context: Context) {
     suspend fun deleteAccount() = database.accountDao().deleteById(id.value)
 
     fun getAllClients() = database.clientDao().getAll()
+    fun getClient() = database.clientDao().getClientById(id.value)
     suspend fun insertClient(client: ClientEntity) = database.clientDao().insert(client.copy(id = id.value))
     suspend fun deleteClient(id: Long) = database.clientDao().deleteById(id)
     suspend fun deleteClient() = database.clientDao().deleteById(id.value)

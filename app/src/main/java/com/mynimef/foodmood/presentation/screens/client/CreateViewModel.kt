@@ -50,7 +50,7 @@ class CreateViewModel: ViewModel() {
         _isDialogShown.value = !_isDialogShown.value
     }
 
-    fun getClient() = Repository.storage.client
+    fun getClient() = Repository.storage.getClient()
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
