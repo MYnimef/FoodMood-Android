@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
+import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.repository.dao.AccountDao
 import com.mynimef.foodmood.data.repository.dao.CardDao
@@ -63,6 +64,7 @@ class AppStorage(context: Context) {
         entities = [
             AccountEntity::class,
             ClientEntity::class,
+            TrainerEntity::class,
             CardEntity::class,
         ],
         version = 1
