@@ -23,7 +23,7 @@ object Repository {
 
     val authNavMain by lazy { MutableSharedFlow<ENavAuth>() }
 
-    val clientNavMain by lazy { MutableSharedFlow<ENavClientMain>(replay = 1) }
+    val clientNavMain by lazy { MutableSharedFlow<ENavClientMain>() }
     val clientNavBottomBar by lazy { MutableSharedFlow<ENavClientBottomBar>(replay = 1) }
 
     val toastFlow = MutableSharedFlow<EToast>()
