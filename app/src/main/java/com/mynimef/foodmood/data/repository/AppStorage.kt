@@ -11,8 +11,6 @@ import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.repository.dao.AccountDao
 import com.mynimef.foodmood.data.repository.dao.CardDao
 import com.mynimef.foodmood.data.repository.dao.ClientDao
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
 
 class AppStorage(context: Context) {
 
@@ -25,13 +23,7 @@ class AppStorage(context: Context) {
         .fallbackToDestructiveMigration()
         .build()
 
-    private val id = MutableStateFlow(sharedPref.getLong("account_id", 0))
-
-    val trainer by lazy {
-        combine(id, getAllClients()) { id, trainers ->
-            trainers.find { it.id == id }
-        }
-    }
+    private var id = sharedPref.getLong("account_id", 0)
 
     suspend fun initApp(): EAppState {
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
@@ -48,20 +40,20 @@ class AppStorage(context: Context) {
             putLong("account_id", id)
             apply()
         }
-        this.id.value = id
+        this.id = id
     }
 
-    suspend fun getRefreshToken() = database.accountDao().getRefreshTokenById(id.value)
+    suspend fun getRefreshToken() = database.accountDao().getRefreshTokenById(id)
     suspend fun insertAccount(account: AccountEntity) = setId(database.accountDao().insert(account))
     suspend fun deleteAccount(id: Long) = database.accountDao().deleteById(id)
-    suspend fun deleteAccount() = database.accountDao().deleteById(id.value)
+    suspend fun deleteAccount() = database.accountDao().deleteById(id)
 
     fun getAllClients() = database.clientDao().getAll()
-    fun getClient() = database.clientDao().getClientById(id.value)
-    suspend fun insertClient(client: ClientEntity) = database.clientDao().insert(client.copy(id = id.value))
+    fun getClient() = database.clientDao().getClientById(id)
+    suspend fun insertClient(client: ClientEntity) = database.clientDao().insert(client.copy(id = id))
     suspend fun deleteClient(id: Long) = database.clientDao().deleteById(id)
-    suspend fun deleteClient() = database.clientDao().deleteById(id.value)
-    suspend fun updateWaterAmountClient(waterAmount: Float) = database.clientDao().updateWaterAmount(id = id.value, waterAmount = waterAmount)
+    suspend fun deleteClient() = database.clientDao().deleteById(id)
+    suspend fun updateWaterAmountClient(waterAmount: Float) = database.clientDao().updateWaterAmount(id = id, waterAmount = waterAmount)
 
     suspend fun insertCard(card: CardEntity) = database.cardDao().insert(card)
     fun getAllCards() = database.cardDao().getAll()
