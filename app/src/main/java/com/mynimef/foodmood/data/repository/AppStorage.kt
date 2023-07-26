@@ -8,26 +8,31 @@ import androidx.room.RoomDatabase
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
-import com.mynimef.foodmood.data.models.database.TrainerEntity
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.repository.dao.AccountDao
 import com.mynimef.foodmood.data.repository.dao.CardDao
 import com.mynimef.foodmood.data.repository.dao.ClientDao
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 
 class AppStorage(context: Context) {
 
     private val sharedPref: SharedPreferences
     private val database: AppDatabase
 
-    private var id: Long = 0
+    private val id = MutableStateFlow(0L)
 
-    private val _client by lazy { MutableStateFlow<ClientEntity?>(null) }
-    val client by lazy { _client.asStateFlow() }
+    val trainer by lazy {
+        combine(id, getAllClients()) { id, trainers ->
+            trainers.find { it.id == id }
+        }
+    }
 
-    private val _trainer by lazy { MutableStateFlow<TrainerEntity?>(null) }
-    val trainer by lazy { _trainer.asStateFlow() }
+    val client by lazy {
+        combine(id, getAllClients()) { id, clients ->
+            clients.find { it.id == id }
+        }
+    }
 
     init {
         sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
@@ -38,16 +43,11 @@ class AppStorage(context: Context) {
         )
             .fallbackToDestructiveMigration()
             .build()
-        id = sharedPref.getLong("account_id", 0)
+        id.value = sharedPref.getLong("account_id", 0)
     }
 
     suspend fun initApp(): EAppState {
         val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
-        when(state) {
-            EAppState.AUTH -> {}
-            EAppState.CLIENT -> _client.emit(database.clientDao().getClientById(id))
-            EAppState.TRAINER -> {}
-        }
         return state
     }
 
@@ -61,27 +61,28 @@ class AppStorage(context: Context) {
             putLong("account_id", id)
             apply()
         }
-        this.id = id
+        this.id.value = id
     }
 
     suspend fun getRefreshToken() =
-        database.accountDao().getRefreshTokenById(id)
+        database.accountDao().getRefreshTokenById(id.value)
     suspend fun insertAccount(account: AccountEntity) {
         setId(database.accountDao().insert(account))
     }
     suspend fun deleteAccount(id: Long) =
         database.accountDao().deleteById(id)
     suspend fun deleteAccount() =
-        database.accountDao().deleteById(id)
+        database.accountDao().deleteById(id.value)
 
+    fun getAllClients() =
+        database.clientDao().getAll()
     suspend fun insertClient(client: ClientEntity) {
-        database.clientDao().insert(client.copy(id = id))
-        _client.value = client
+        database.clientDao().insert(client.copy(id = id.value))
     }
     suspend fun deleteClient(id: Long) =
         database.clientDao().deleteById(id)
     suspend fun deleteClient() =
-        database.clientDao().deleteById(id)
+        database.clientDao().deleteById(id.value)
 
     suspend fun insertCard(card: CardEntity) =
         database.cardDao().insert(card)
