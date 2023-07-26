@@ -1,7 +1,6 @@
 package com.mynimef.foodmood.data.repository
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -17,10 +16,16 @@ import kotlinx.coroutines.flow.combine
 
 class AppStorage(context: Context) {
 
-    private val sharedPref: SharedPreferences
-    private val database: AppDatabase
+    private val sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
+    private val database = Room.databaseBuilder(
+        context = context,
+        klass = AppDatabase::class.java,
+        name = "foodmood-database"
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 
-    private val id = MutableStateFlow(0L)
+    private val id = MutableStateFlow(sharedPref.getLong("account_id", 0))
 
     val trainer by lazy {
         combine(id, getAllClients()) { id, trainers ->
@@ -32,18 +37,6 @@ class AppStorage(context: Context) {
         combine(id, getAllClients()) { id, clients ->
             clients.find { it.id == id }
         }
-    }
-
-    init {
-        sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
-        database =  Room.databaseBuilder(
-            context = context,
-            klass = AppDatabase::class.java,
-            name = "foodmood-database"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
-        id.value = sharedPref.getLong("account_id", 0)
     }
 
     suspend fun initApp(): EAppState {
