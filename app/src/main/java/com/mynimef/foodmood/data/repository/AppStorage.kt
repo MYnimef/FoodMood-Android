@@ -57,32 +57,19 @@ class AppStorage(context: Context) {
         this.id.value = id
     }
 
-    suspend fun getRefreshToken() =
-        database.accountDao().getRefreshTokenById(id.value)
-    suspend fun insertAccount(account: AccountEntity) {
-        setId(database.accountDao().insert(account))
-    }
-    suspend fun deleteAccount(id: Long) =
-        database.accountDao().deleteById(id)
-    suspend fun deleteAccount() =
-        database.accountDao().deleteById(id.value)
+    suspend fun getRefreshToken() = database.accountDao().getRefreshTokenById(id.value)
+    suspend fun insertAccount(account: AccountEntity) = setId(database.accountDao().insert(account))
+    suspend fun deleteAccount(id: Long) = database.accountDao().deleteById(id)
+    suspend fun deleteAccount() = database.accountDao().deleteById(id.value)
 
-    fun getAllClients() =
-        database.clientDao().getAll()
-    suspend fun insertClient(client: ClientEntity) {
-        database.clientDao().insert(client.copy(id = id.value))
-    }
-    suspend fun deleteClient(id: Long) =
-        database.clientDao().deleteById(id)
-    suspend fun deleteClient() =
-        database.clientDao().deleteById(id.value)
+    fun getAllClients() = database.clientDao().getAll()
+    suspend fun insertClient(client: ClientEntity) = database.clientDao().insert(client.copy(id = id.value))
+    suspend fun deleteClient(id: Long) = database.clientDao().deleteById(id)
+    suspend fun deleteClient() = database.clientDao().deleteById(id.value)
 
-    suspend fun insertCard(card: CardEntity) =
-        database.cardDao().insert(card)
-    fun getAllCards() =
-        database.cardDao().getAll()
-    suspend fun deleteAllCards() =
-        database.cardDao().deleteAll()
+    suspend fun insertCard(card: CardEntity) = database.cardDao().insert(card)
+    fun getAllCards() = database.cardDao().getAll()
+    suspend fun deleteAllCards() = database.cardDao().deleteAll()
 
     @Database(
         entities = [
