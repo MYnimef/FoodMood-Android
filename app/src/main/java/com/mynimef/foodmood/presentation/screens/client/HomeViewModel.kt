@@ -25,7 +25,7 @@ class HomeViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    val client = Repository.storage.getClient()
+    private val client = Repository.storage.getClient()
         .distinctUntilChanged()
         .stateIn(
             viewModelScope,
