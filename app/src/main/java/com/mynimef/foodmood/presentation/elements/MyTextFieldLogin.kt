@@ -79,7 +79,7 @@ fun MyTextFieldLogin(
 
 @Preview
 @Composable
-fun MyTextFieldLoginPreview() {
+private fun MyTextFieldLoginPreview() {
     FoodMoodTheme {
        MyTextFieldLogin(
            value = "email",

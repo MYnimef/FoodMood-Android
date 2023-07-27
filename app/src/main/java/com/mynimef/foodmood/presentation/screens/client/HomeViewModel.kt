@@ -20,7 +20,7 @@ class HomeViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    val client = Repository.storage.client
+    val client = Repository.storage.getClient()
 
     private val _refreshing = MutableStateFlow(false)
     val refreshing = _refreshing.asStateFlow()
@@ -40,9 +40,7 @@ class HomeViewModel: ViewModel() {
                 }
                 is ApiException -> {}
                 is ApiSuccess -> {
-                    storage.insertClient(
-                        storage.client.value!!.copy(waterAmount = result.data.totalAmount)
-                    )
+                    storage.updateWaterAmountClient(result.data.totalAmount)
                 }
             }
         }

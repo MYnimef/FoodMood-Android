@@ -81,7 +81,7 @@ private fun MyChoiceCard(
 
 @Preview(showBackground = true)
 @Composable
-private fun ChoiceItemPreview() {
+private fun MyChoiceCardPreview() {
     FoodMoodTheme {
         MyChoiceCard(
             modifier = Modifier
