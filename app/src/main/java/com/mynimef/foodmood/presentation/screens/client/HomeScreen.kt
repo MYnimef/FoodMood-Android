@@ -17,6 +17,8 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -140,7 +142,7 @@ private fun CenterElements(
             )
         }
         item {
-            Spacer(modifier = Modifier.padding(vertical = 20.dp))
+            Spacer(modifier = Modifier.height(65.dp))
         }
     }
 }
@@ -182,10 +184,12 @@ private fun HomeScreenPreview() {
             ),
         )
 
+        val waterAmount = remember { mutableStateOf(0f) }
+
         HomeScreen(
             trackWaterProvider = { true },
-            waterAmountProvider = { 0f },
-            setWater = {},
+            waterAmountProvider = { waterAmount.value },
+            setWater = { waterAmount.value += it },
             cardsProvider = { cards },
             refreshing = false,
             onRefresh = {}
