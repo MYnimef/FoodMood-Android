@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
 @Composable
 fun MyFoodCard(
@@ -48,7 +49,7 @@ fun MyFoodCard(
         }
         Box(
             modifier = Modifier
-                .clip(AbsoluteRoundedCornerShape(10.dp))
+                .clip(AbsoluteSmoothCornerShape(10.dp, 100))
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(color = MaterialTheme.colorScheme.primaryContainer)

@@ -127,15 +127,9 @@ private fun CenterElements(
         }
         if (trackWater) {
             item {
-                MyWaterPanel(setWater = setWater)
-                LinearProgressIndicator(
-                    progress = waterAmount,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    trackColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    modifier = Modifier
-                        .fillMaxHeight(0.3f)
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+                MyWaterPanel(
+                    waterAmount = waterAmount,
+                    setWater = setWater,
                 )
             }
         }

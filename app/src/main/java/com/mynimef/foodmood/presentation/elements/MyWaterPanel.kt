@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,14 +17,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.data.models.enums.ETypeWater
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
 @Composable
 fun MyWaterPanel(
+    waterAmount: Float,
     setWater: (Float) -> Unit
 ) {
     Column(
         modifier = Modifier
-            .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+            .clip(
+                AbsoluteSmoothCornerShape(10.dp, 100)
+            )
             .background(color = MaterialTheme.colorScheme.primaryContainer)
     ) {
         WaterLine(
@@ -42,6 +46,14 @@ fun MyWaterPanel(
                 ETypeWater.BOTTLE_BIG
             ),
             setWater = setWater
+        )
+        LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxWidth()
+            ,
+            progress = waterAmount,
+            color = MaterialTheme.colorScheme.tertiary,
+            trackColor = MaterialTheme.colorScheme.tertiaryContainer,
         )
     }
 }
@@ -79,10 +91,13 @@ private fun WaterLine(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun MyWaterPanelPrev() {
+private fun MyWaterPanelPreview() {
     FoodMoodTheme {
-        MyWaterPanel( {})
+        MyWaterPanel(
+            waterAmount = 0f,
+            setWater = {},
+        )
     }
 }
