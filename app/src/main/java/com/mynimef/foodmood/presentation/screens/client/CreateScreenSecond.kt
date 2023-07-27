@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyEmotionButton
+import com.mynimef.foodmood.presentation.elements.MyGradient
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyTextFieldEmotionalCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
@@ -100,6 +102,14 @@ private fun CreateScreenSecond(
             isActiveProvider = isActiveProvider,
             onComplete = onComplete,
         )
+        MyGradient(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp)
+            ,
+            colorTop = MaterialTheme.colorScheme.background,
+            colorBottom = Color.Transparent
+        )
         MyDate()
     }
 }
@@ -129,7 +139,7 @@ private fun CenterElements(
     ) {
         Row(
             modifier = Modifier
-                .padding(top = 75.dp)
+                .padding(top = 65.dp)
             ,
         ) {
             MyIcon(
