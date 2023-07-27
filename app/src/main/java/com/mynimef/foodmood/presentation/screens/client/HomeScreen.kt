@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,6 +32,7 @@ import com.mynimef.foodmood.data.models.enums.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyFoodCard
+import com.mynimef.foodmood.presentation.elements.MyGradient
 import com.mynimef.foodmood.presentation.elements.MyWaterPanel
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
@@ -78,6 +80,23 @@ private fun HomeScreen(
             waterAmount = waterAmount,
             setWater = setWater,
             cardsProvider = cardsProvider,
+        )
+        MyGradient(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp)
+            ,
+            colorTop = MaterialTheme.colorScheme.background,
+            colorBottom = Color.Transparent
+        )
+        MyGradient(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp)
+                .align(Alignment.BottomCenter)
+            ,
+            colorTop = Color.Transparent,
+            colorBottom = MaterialTheme.colorScheme.background
         )
         MyDate()
         PullRefreshIndicator(
