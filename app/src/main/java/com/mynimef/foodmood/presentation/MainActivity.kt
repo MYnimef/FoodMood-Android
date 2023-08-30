@@ -45,7 +45,8 @@ class MainActivity: ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                     ,
-                    targetState = viewModel.appState.collectAsState().value
+                    targetState = viewModel.appState.collectAsState().value,
+                    label = "main",
                 ) { targetState ->
                     when (targetState) {
                         EAppState.AUTH -> AuthMainScreen()

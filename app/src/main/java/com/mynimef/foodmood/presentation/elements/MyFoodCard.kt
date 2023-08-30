@@ -92,7 +92,7 @@ fun MyFoodCard(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun MyFoodCardPreview() {
     FoodMoodTheme {

@@ -72,6 +72,7 @@ class AppNetwork {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private suspend fun <T: Any> handleAuthApi(
         execute: suspend (token: String) -> Response<T>,
     ): ApiResult<T> {

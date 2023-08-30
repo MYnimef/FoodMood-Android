@@ -67,7 +67,8 @@ class AppStorage(context: Context) {
             TrainerEntity::class,
             CardEntity::class,
         ],
-        version = 1
+        version = 1,
+        exportSchema = false
     )
     abstract class AppDatabase: RoomDatabase() {
         abstract fun accountDao(): AccountDao
