@@ -29,12 +29,14 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun MyWeightCard(
     weight: Float,
     setWeight: (Float) -> Unit,
-    onDismiss:()->Unit,
-    onConfirm:()->Unit) {
+    onDismiss:() -> Unit,
+    onConfirm:() -> Unit)
+{
     Dialog(
         onDismissRequest = {},
         properties = DialogProperties(
-            usePlatformDefaultWidth = false)
+            usePlatformDefaultWidth = false
+        )
     ) {
         Column(
             modifier = Modifier
@@ -43,9 +45,10 @@ fun MyWeightCard(
                     color = MaterialTheme.colorScheme.background,
                     shape = RoundedCornerShape(10.dp)
                 )
-                .padding(15.dp),
+                .padding(15.dp)
+            ,
             verticalArrangement = Arrangement.Center
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.weight_title),
                 style = MaterialTheme.typography.titleMedium,

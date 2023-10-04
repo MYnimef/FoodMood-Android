@@ -16,7 +16,6 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.enums.ETypeEmotion
@@ -38,17 +38,17 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun HomeScreen() {
     val viewModel: HomeViewModel = viewModel()
 
-    val trackWater = viewModel.trackWater.collectAsState()
-    val waterAmount = viewModel.waterAmount.collectAsState()
-    val cardsState = viewModel.cards.collectAsState()
+    val trackWater = viewModel.trackWater.collectAsStateWithLifecycle()
+    val waterAmount = viewModel.waterAmount.collectAsStateWithLifecycle()
+    val cardsState = viewModel.cards.collectAsStateWithLifecycle()
 
-    if (viewModel.dataLoaded.collectAsState().value) {
+    if (viewModel.dataLoaded.collectAsStateWithLifecycle().value) {
         HomeScreen(
             trackWaterProvider = { trackWater.value },
             waterAmountProvider = { waterAmount.value },
             setWater = viewModel::setWater,
             cardsProvider = { cardsState.value },
-            refreshing = viewModel.refreshing.collectAsState().value,
+            refreshing = viewModel.refreshing.collectAsStateWithLifecycle().value,
             onRefresh = viewModel::update
         )
     }

@@ -7,10 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.presentation.screens.auth.AuthMainScreen
@@ -45,7 +45,7 @@ class MainActivity: ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                     ,
-                    targetState = viewModel.appState.collectAsState().value,
+                    targetState = viewModel.appState.collectAsStateWithLifecycle().value,
                     label = "main",
                 ) { targetState ->
                     when (targetState) {

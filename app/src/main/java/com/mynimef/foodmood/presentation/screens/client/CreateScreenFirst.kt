@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyChoiceCard
@@ -34,9 +34,9 @@ fun CreateScreenFirst(
 ) {
     CreateScreenFirst(
         setMealType = viewModel::setMealType,
-        weight = viewModel.weight.collectAsState().value,
+        weight = viewModel.weight.collectAsStateWithLifecycle().value,
         setWeight = viewModel::setWeight,
-        isDialogShown = viewModel.isDialogShown.collectAsState().value,
+        isDialogShown = viewModel.isDialogShown.collectAsStateWithLifecycle().value,
         triggerDialogShown = viewModel::triggerDialogShown,
     )
 }

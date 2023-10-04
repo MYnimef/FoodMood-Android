@@ -2,7 +2,6 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -12,7 +11,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,6 +22,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
@@ -35,14 +34,18 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun SignInScreen() {
     val viewModel: SignInViewModel = viewModel()
 
+    val emailState = viewModel.email.collectAsStateWithLifecycle()
+    val passwordState = viewModel.password.collectAsStateWithLifecycle()
+    val buttonActive = viewModel.buttonActive.collectAsStateWithLifecycle()
+
     SignInScreen(
         signIn = viewModel::signIn,
         signUp = viewModel::signUp,
-        email = viewModel.email.collectAsState().value,
+        email = emailState.value,
         setEmail = viewModel::setEmail,
-        password = viewModel.password.collectAsState().value,
+        password = passwordState.value,
         setPassword = viewModel::setPassword,
-        buttonActive = viewModel.buttonActive.collectAsState().value,
+        buttonActive = buttonActive.value,
     )
 }
 
@@ -56,40 +59,13 @@ private fun SignInScreen(
     setPassword: (String) -> Unit,
     buttonActive: Boolean,
 ) {
-    Box(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-    ) {
-        CenterElements(
-            signIn = signIn,
-            signUp = signUp,
-            email = email,
-            setEmail = setEmail,
-            password = password,
-            setPassword = setPassword,
-            buttonActive = buttonActive,
-        )
-    }
-}
-
-@Composable
-private fun CenterElements(
-    signIn: () -> Unit,
-    signUp: () -> Unit,
-    email: String,
-    setEmail: (String) -> Unit,
-    password: String,
-    setPassword: (String) -> Unit,
-    buttonActive: Boolean,
-) {
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(horizontal = 30.dp)
-            .background(MaterialTheme.colorScheme.background)
             .imePadding()
         ,
         verticalArrangement = Arrangement.Center,
