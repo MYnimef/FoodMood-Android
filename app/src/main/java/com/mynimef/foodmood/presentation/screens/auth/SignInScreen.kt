@@ -4,46 +4,41 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
-import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
+import com.mynimef.foodmood.presentation.elements.fields.MyEmailField
+import com.mynimef.foodmood.presentation.elements.fields.MyPasswordField
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun SignInScreen() {
     val viewModel: SignInViewModel = viewModel()
 
-    val emailState = viewModel.email.collectAsStateWithLifecycle()
-    val passwordState = viewModel.password.collectAsStateWithLifecycle()
+    val emailValuesState = viewModel.emailValues.collectAsStateWithLifecycle()
+    val passwordValuesState = viewModel.passwordValues.collectAsStateWithLifecycle()
     val buttonActive = viewModel.buttonActive.collectAsStateWithLifecycle()
 
     SignInScreen(
         signIn = viewModel::signIn,
         signUp = viewModel::signUp,
-        email = emailState.value,
+        emailValuesProvider = { emailValuesState.value },
         setEmail = viewModel::setEmail,
-        password = passwordState.value,
+        passwordValuesProvider = { passwordValuesState.value },
         setPassword = viewModel::setPassword,
         buttonActive = buttonActive.value,
     )
@@ -53,14 +48,12 @@ fun SignInScreen() {
 private fun SignInScreen(
     signIn: () -> Unit,
     signUp: () -> Unit,
-    email: String,
+    emailValuesProvider: () -> Pair<String, Boolean>,
     setEmail: (String) -> Unit,
-    password: String,
+    passwordValuesProvider: () -> Pair<String, Boolean>,
     setPassword: (String) -> Unit,
     buttonActive: Boolean,
 ) {
-    val passwordVisible = rememberSaveable { mutableStateOf(false) }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,38 +69,29 @@ private fun SignInScreen(
             modifier = Modifier.padding(bottom = 30.dp),
             style = MaterialTheme.typography.titleLarge
         )
-
-        MyTextFieldLogin(
-            value = email,
+        MyEmailField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 20.dp)
+            ,
             label = stringResource(R.string.email),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            isError = false,
-            visualTransformation = VisualTransformation.None,
+            valuesProvider = emailValuesProvider,
             onValueChange = setEmail
         )
-
-        MyTextFieldLogin(
-            value = password,
+        MyPasswordField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 20.dp)
+            ,
             label = stringResource(R.string.password),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-            isError = password.length !in 8..20 && password.isNotEmpty(),
-            trailingIcon = {
-                IconButton(
-                    onClick = { passwordVisible.value = !passwordVisible.value }
-                ) {
-                    MyIcon(drawableId = if (passwordVisible.value) R.drawable.ic_visibility else R.drawable.ic_visibility_off)
-                }
-            },
-            onValueChange = setPassword
+            valuesProvider = passwordValuesProvider,
+            onValueChange = setPassword,
         )
-
         MyLoginButton(
             text = stringResource(R.string.signin),
             enabled = buttonActive,
             onClick = signIn
         )
-
         MyLoginButton(
             text = stringResource(R.string.signup),
             onClick = signUp,
@@ -117,19 +101,23 @@ private fun SignInScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun SignInScreenPreview() {
-    FoodMoodTheme {
-        val email = remember { mutableStateOf("") }
-        val password = remember { mutableStateOf("") }
+private fun SignInScreenPreview() = FoodMoodTheme {
+    val emailPairState = remember { mutableStateOf("" to false) }
+    val passwordPairState = remember { mutableStateOf("" to false) }
 
-        SignInScreen(
-            signIn = {},
-            signUp = {},
-            email = email.value,
-            setEmail = { email.value = it },
-            password = password.value,
-            setPassword = { password.value = it },
-            buttonActive = true,
-        )
-    }
+    SignInScreen(
+        signIn = {},
+        signUp = {},
+        emailValuesProvider = { emailPairState.value },
+        setEmail = {
+            val isError = false
+            emailPairState.value = it to isError
+                   },
+        passwordValuesProvider = { passwordPairState.value },
+        setPassword = {
+            val isError = it.length < 8
+            passwordPairState.value = it to isError
+                      },
+        buttonActive = true
+    )
 }

@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.foodmood.presentation.elements.MyIcon
-import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
+import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable

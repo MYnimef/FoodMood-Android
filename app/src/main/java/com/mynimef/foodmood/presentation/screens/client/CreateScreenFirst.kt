@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -124,20 +125,19 @@ private fun CreateScreenFirst(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardsChoicePreview() {
-    FoodMoodTheme {
-        val weight = remember { mutableStateOf(0f) }
-        val isDialogShown = remember { mutableStateOf(false) }
-        CreateScreenFirst(
-            weight = weight.value,
-            setWeight = {
-                weight.value = it
-            },
-            setMealType = {},
-            isDialogShown = isDialogShown.value,
-            triggerDialogShown = {
-                isDialogShown.value = !isDialogShown.value
-            }
-        )
-    }
+private fun CardsChoicePreview() = FoodMoodTheme {
+    val weight = remember { mutableFloatStateOf(0f) }
+    val isDialogShown = remember { mutableStateOf(false) }
+
+    CreateScreenFirst(
+        weight = weight.value,
+        setWeight = {
+            weight.value = it
+                    },
+        setMealType = {},
+        isDialogShown = isDialogShown.value,
+        triggerDialogShown = {
+            isDialogShown.value = !isDialogShown.value
+        }
+    )
 }
