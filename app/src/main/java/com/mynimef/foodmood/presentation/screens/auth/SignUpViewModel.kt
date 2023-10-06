@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
@@ -13,7 +14,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -45,20 +50,26 @@ class SignUpViewModel: ViewModel() {
     private val _email = MutableStateFlow("")
     val email = _email.asStateFlow()
 
-    private val _password = MutableStateFlow("")
-    val password = _password.asStateFlow()
+    private val _passwordValues = MutableStateFlow("" to false)
+    val passwordValues = _passwordValues.asStateFlow()
 
-    private val _repeatPassword = MutableStateFlow("")
-    val repeatPassword = _repeatPassword.asStateFlow()
+    private val _repeatPasswordValues = MutableStateFlow("" to false)
+    val repeatPasswordValues = _repeatPasswordValues.asStateFlow()
+
+    val thirdButtonActive = combine(passwordValues, repeatPasswordValues) { f1, f2 ->
+        !(f1.second || f2.second)
+    }
+        .distinctUntilChanged()
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false
+        )
 
     private val _secondButtonActive = MutableStateFlow(false)
     val secondButtonActive = _secondButtonActive.asStateFlow()
 
-    private val _thirdButtonActive = MutableStateFlow(false)
-    val thirdButtonActive = _thirdButtonActive.asStateFlow()
-
     private var emailCheck = false
-    private var passwordCheck = false
 
     fun setName(value: String) {
         _name.value = value
@@ -78,27 +89,27 @@ class SignUpViewModel: ViewModel() {
         _secondButtonActive.value = birthdayCheck
     }
 
-    fun triggerFood() { _food.value = !_food.value }
-    fun triggerWater() { _water.value = !_water.value }
-    fun triggerWeight() { _weight.value = !_weight.value }
+    fun triggerFood() {
+        _food.value = !_food.value
+    }
+    fun triggerWater() {
+        _water.value = !_water.value
+    }
+    fun triggerWeight() {
+        _weight.value = !_weight.value
+    }
 
     fun setEmail(value: String) {
         _email.value = value
         emailCheck = value.isNotEmpty()
-        checkThirdButtonActive()
     }
     fun setPassword(value: String) {
-        _password.value = value
-        passwordCheck = value.length >= 8 && value == _repeatPassword.value
-        checkThirdButtonActive()
+        val isError = value.length < 8
+        _passwordValues.value = value to isError
     }
     fun setRepeatPassword(value: String) {
-        _repeatPassword.value = value
-        passwordCheck = value.length >= 8 && value == _password.value
-        checkThirdButtonActive()
-    }
-    private fun checkThirdButtonActive() {
-        _thirdButtonActive.value = emailCheck && passwordCheck
+        val isError = value.length < 8 || value != passwordValues.value.first
+        _repeatPasswordValues.value = value to isError
     }
 
     fun signUp() = with(Repository) {
@@ -106,7 +117,7 @@ class SignUpViewModel: ViewModel() {
             val request = SignUpRequest(
                 name = _name.value,
                 email = _email.value,
-                password = _password.value,
+                password = _passwordValues.value.first,
                 trackFood = _food.value,
                 trackWater = _water.value,
                 trackWeight = _weight.value,
@@ -136,4 +147,5 @@ class SignUpViewModel: ViewModel() {
         super.onCleared()
         job?.cancel()
     }
+
 }

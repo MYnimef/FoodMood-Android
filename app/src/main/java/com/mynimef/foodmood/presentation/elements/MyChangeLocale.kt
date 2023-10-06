@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -97,8 +98,6 @@ fun MyChangeLocale(
 
 @Preview
 @Composable
-fun MyChangeLocalePrev() {
-    FoodMoodTheme {
-        MyChangeLocale(20.0f,{}, {}, {})
-    }
+private fun MyChangeLocalePreview() = FoodMoodTheme {
+    MyChangeLocale(20.0f,{}, {}, {})
 }

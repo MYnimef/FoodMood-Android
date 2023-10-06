@@ -41,7 +41,7 @@ import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyEmotionButton
 import com.mynimef.foodmood.presentation.elements.MyGradient
 import com.mynimef.foodmood.presentation.elements.MyIcon
-import com.mynimef.foodmood.presentation.elements.MyTextFieldEmotionalCard
+import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldEmotionalCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
-import com.mynimef.foodmood.presentation.elements.MyTextFieldLogin
+import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable

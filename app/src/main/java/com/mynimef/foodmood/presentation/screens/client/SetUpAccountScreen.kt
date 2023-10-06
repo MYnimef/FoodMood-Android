@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.elements.MySettingsButton
-import com.mynimef.foodmood.presentation.elements.MyTextFieldSettings
+import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 
