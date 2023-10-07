@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.presentation.elements
+package com.mynimef.foodmood.presentation.elements.fields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

@@ -57,11 +57,3 @@ private fun MyMavHost(
         composable(ENavigationTrainer.SETTINGS.value) { SettingsScreen() }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun TrainerNavigationScreenPreview() {
-    FoodMoodTheme {
-        TrainerNavigationScreen()
-    }
-}

@@ -48,20 +48,20 @@ private fun NavGraphBuilder.authMain(navController: NavController) {
         SignInScreen()
     }
     navigation(
-        startDestination = ENavAuth.SIGN_UP_FIRST.route,
+        startDestination = ENavAuth.SIGN_UP_1.route,
         route = ENavAuth.SIGN_UP.route
     ) {
-        composable(route = ENavAuth.SIGN_UP_FIRST.route) {
-            SignUpScreenFirst(viewModel = it.sharedViewModel(navController))
+        composable(route = ENavAuth.SIGN_UP_1.route) {
+            SignUpScreen_1(viewModel = it.sharedViewModel(navController))
         }
-        composable(route = ENavAuth.SIGN_UP_SECOND.route) {
-            SignUpScreenSecond(viewModel = it.sharedViewModel(navController))
+        composable(route = ENavAuth.SIGN_UP_2.route) {
+            SignUpScreen_2(viewModel = it.sharedViewModel(navController))
         }
-        composable(route = ENavAuth.SIGN_UP_THIRD.route) {
-            SignUpScreenThird(viewModel = it.sharedViewModel(navController))
+        composable(route = ENavAuth.SIGN_UP_3.route) {
+            SignUpScreen_3(viewModel = it.sharedViewModel(navController))
         }
-        composable(route = ENavAuth.SIGN_UP_FOURTH.route) {
-            SignUpScreenFourth(viewModel = it.sharedViewModel(navController))
+        composable(route = ENavAuth.SIGN_UP_4.route) {
+            SignUpScreen_4(viewModel = it.sharedViewModel(navController))
         }
     }
 }

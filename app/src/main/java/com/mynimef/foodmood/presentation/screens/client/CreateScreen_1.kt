@@ -9,8 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyChoiceCard
@@ -29,20 +30,20 @@ import com.mynimef.foodmood.presentation.elements.MyWeightCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun CreateScreenFirst(
+fun CreateScreen_1(
     viewModel: CreateViewModel
 ) {
-    CreateScreenFirst(
+    CreateScreen_1(
         setMealType = viewModel::setMealType,
-        weight = viewModel.weight.collectAsState().value,
+        weight = viewModel.weight.collectAsStateWithLifecycle().value,
         setWeight = viewModel::setWeight,
-        isDialogShown = viewModel.isDialogShown.collectAsState().value,
+        isDialogShown = viewModel.isDialogShown.collectAsStateWithLifecycle().value,
         triggerDialogShown = viewModel::triggerDialogShown,
     )
 }
 
 @Composable
-private fun CreateScreenFirst(
+private fun CreateScreen_1(
     setMealType: (ETypeMeal) -> Unit,
     weight: Float,
     setWeight: (Float) -> Unit,
@@ -124,20 +125,19 @@ private fun CreateScreenFirst(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardsChoicePreview() {
-    FoodMoodTheme {
-        val weight = remember { mutableStateOf(0f) }
-        val isDialogShown = remember { mutableStateOf(false) }
-        CreateScreenFirst(
-            weight = weight.value,
-            setWeight = {
-                weight.value = it
-            },
-            setMealType = {},
-            isDialogShown = isDialogShown.value,
-            triggerDialogShown = {
-                isDialogShown.value = !isDialogShown.value
-            }
-        )
-    }
+private fun CreateScreen_1_Preview() = FoodMoodTheme {
+    val weight = remember { mutableFloatStateOf(0f) }
+    val isDialogShown = remember { mutableStateOf(false) }
+
+    CreateScreen_1(
+        weight = weight.value,
+        setWeight = {
+            weight.value = it
+                    },
+        setMealType = {},
+        isDialogShown = isDialogShown.value,
+        triggerDialogShown = {
+            isDialogShown.value = !isDialogShown.value
+        }
+    )
 }

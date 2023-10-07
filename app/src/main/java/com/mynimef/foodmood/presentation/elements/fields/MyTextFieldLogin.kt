@@ -1,7 +1,6 @@
-package com.mynimef.foodmood.presentation.elements
+package com.mynimef.foodmood.presentation.elements.fields
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -12,27 +11,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun MyTextFieldLogin(
+    modifier: Modifier = Modifier,
     value: String,
     label: String,
     readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation,
     trailingIcon: @Composable (() -> Unit)? = null,
-    isError: Boolean,
+    isError: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     TextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 20.dp),
+        modifier = modifier,
         readOnly = readOnly,
         value = value,
-        label =  { Text(label) },
+        label =  { Text(text = label) },
         singleLine = true,
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
@@ -79,16 +76,15 @@ fun MyTextFieldLogin(
 
 @Preview
 @Composable
-private fun MyTextFieldLoginPreview() {
-    FoodMoodTheme {
-       MyTextFieldLogin(
-           value = "email",
-           label = "email",
-           readOnly = false,
-           keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-           visualTransformation = VisualTransformation.None,
-           isError = true,
-           onValueChange = {},
-       )
-    }
+private fun MyTextFieldLoginPreview() = FoodMoodTheme {
+    MyTextFieldLogin(
+        modifier = Modifier.fillMaxWidth(),
+        value = "email",
+        label = "email",
+        readOnly = false,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        visualTransformation = VisualTransformation.None,
+        isError = true,
+        onValueChange = {}
+    )
 }

@@ -23,18 +23,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun MyWeightCard(
     weight: Float,
     setWeight: (Float) -> Unit,
-    onDismiss:()->Unit,
-    onConfirm:()->Unit) {
+    onDismiss:() -> Unit,
+    onConfirm:() -> Unit)
+{
     Dialog(
         onDismissRequest = {},
         properties = DialogProperties(
-            usePlatformDefaultWidth = false)
+            usePlatformDefaultWidth = false
+        )
     ) {
         Column(
             modifier = Modifier
@@ -43,9 +46,10 @@ fun MyWeightCard(
                     color = MaterialTheme.colorScheme.background,
                     shape = RoundedCornerShape(10.dp)
                 )
-                .padding(15.dp),
+                .padding(15.dp)
+            ,
             verticalArrangement = Arrangement.Center
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.weight_title),
                 style = MaterialTheme.typography.titleMedium,

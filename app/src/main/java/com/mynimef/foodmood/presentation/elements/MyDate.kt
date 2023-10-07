@@ -33,12 +33,14 @@ fun MyDate() {
             .clip(RoundedCornerShape(bottomEnd = 10.dp))
             .width(150.dp)
             .height(45.dp)
-            .background(color = MaterialTheme.colorScheme.primary),
+            .background(color = MaterialTheme.colorScheme.primary)
+        ,
         contentAlignment = Alignment.Center
     ) {
         Text(
             modifier = Modifier
-                .fillMaxWidth(0.7f),
+                .fillMaxWidth(0.7f)
+            ,
             text = date.toString(),
             color = MaterialTheme.colorScheme.onPrimary,
             maxLines = 1,
@@ -49,8 +51,6 @@ fun MyDate() {
 
 @Preview(showBackground = true)
 @Composable
-private fun MyDatePreview() {
-    FoodMoodTheme {
-        MyDate()
-    }
+private fun MyDatePreview() = FoodMoodTheme {
+    MyDate()
 }

@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
@@ -9,49 +10,51 @@ import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.domain.passwordChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SignInViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    private val _email = MutableStateFlow("")
-    val email = _email.asStateFlow()
+    private val _emailPair = MutableStateFlow("" to true)
+    val emailPair = _emailPair.asStateFlow()
 
-    private val _password = MutableStateFlow("")
-    val password = _password.asStateFlow()
+    private val _passwordPair = MutableStateFlow("" to true)
+    val passwordPair = _passwordPair.asStateFlow()
 
-    private val _buttonActive = MutableStateFlow(false)
-    val buttonActive = _buttonActive.asStateFlow()
-
-    private var emailCheck = false
-    private var passwordCheck = false
+    val buttonActive = combine(
+        emailPair,
+        passwordPair
+    ) { f1, f2 ->
+        f1.second && f1.first.isNotEmpty() && f2.second && f2.first.isNotEmpty()
+    }
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false
+        )
 
     fun setEmail(value: String) {
-        _email.value = value
-        emailCheck = value.isNotEmpty()
-        checkButtonActive()
+        _emailPair.value = value to passwordChecker(value)
     }
     fun setPassword(value: String) {
-        _password.value = value
-        passwordCheck = value.length >= 8
-        checkButtonActive()
-    }
-
-    private fun checkButtonActive() {
-        _buttonActive.value = emailCheck && passwordCheck
+        _passwordPair.value = value to passwordChecker(value)
     }
 
     fun signIn() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignInRequest(
-                email = _email.value,
-                password = _password.value,
+                email = _emailPair.value.first,
+                password = _passwordPair.value.first,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
             when (val result = network.signIn(request)) {

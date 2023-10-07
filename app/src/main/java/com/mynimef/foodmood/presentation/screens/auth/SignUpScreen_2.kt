@@ -2,7 +2,6 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.commandiron.wheel_picker_compose.WheelDatePicker
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavAuth
@@ -31,46 +30,29 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import java.time.LocalDate
 
 @Composable
-fun SignUpScreenSecond(
+fun SignUpScreen_2(
     viewModel: SignUpViewModel,
 ) {
-    SignUpScreenSecond(
+    val buttonActiveState = viewModel.secondButtonActive.collectAsStateWithLifecycle()
+
+    SignUpScreen_2(
         setBirthday= viewModel::setBirthday,
-        buttonActive = viewModel.secondButtonActive.collectAsState().value,
-        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_THIRD) },
+        buttonActiveProvider = { buttonActiveState.value },
+        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_3) },
     )
 }
 
 @Composable
-private fun SignUpScreenSecond(
+private fun SignUpScreen_2(
     setBirthday: (String) -> Unit,
-    buttonActive: Boolean,
-    onNext: () -> Unit,
-) {
-    Box(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-    ) {
-        CenterElements(
-            setBirthday = setBirthday,
-            buttonActive = buttonActive,
-            onNext = onNext
-        )
-    }
-}
-
-@Composable
-private fun CenterElements(
-    setBirthday: (String) -> Unit,
-    buttonActive: Boolean,
+    buttonActiveProvider: () -> Boolean,
     onNext: () -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp)
             .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 30.dp)
             .imePadding()
         ,
         verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.CenterVertically),
@@ -97,7 +79,7 @@ private fun CenterElements(
         }
         MyLoginButton(
             text = stringResource(R.string.next),
-            enabled = buttonActive,
+            enabledProvider = buttonActiveProvider,
             onClick = onNext
         )
     }
@@ -105,14 +87,12 @@ private fun CenterElements(
 
 @Preview(showBackground = true)
 @Composable
-private fun SignUpSecondScreenPreview() {
-    FoodMoodTheme {
-        val date = remember { mutableStateOf("") }
+private fun SignUpScreen_2_Preview() = FoodMoodTheme {
+    val date = remember { mutableStateOf("") }
 
-        SignUpScreenSecond(
-            setBirthday = { date.value = it },
-            buttonActive = true,
-            onNext = {}
-        )
-    }
+    SignUpScreen_2(
+        setBirthday = { date.value = it },
+        buttonActiveProvider = { true },
+        onNext = {}
+    )
 }

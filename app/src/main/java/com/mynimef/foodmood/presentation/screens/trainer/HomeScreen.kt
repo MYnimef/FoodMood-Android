@@ -32,8 +32,6 @@ fun HomeScreen() {
 
 @Preview
 @Composable
-private fun HomeScreenPreview() {
-    FoodMoodTheme {
-        HomeScreen()
-    }
+private fun HomeScreenPreview() = FoodMoodTheme {
+    HomeScreen()
 }

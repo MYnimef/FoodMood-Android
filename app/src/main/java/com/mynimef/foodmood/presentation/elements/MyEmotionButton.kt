@@ -28,13 +28,20 @@ fun MyEmotionButton(
         modifier = Modifier
             .padding(vertical = 10.dp)
             .size(60.dp)
-            .noRippleClickable (onClick = { onClick(emotion) })
+            .noRippleClickable(onClick = { onClick(emotion) })
     ) {
         if (emotion == selectedEmotion) {
-            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f), CircleShape))
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f),
+                    CircleShape
+                ))
         }
         MyIcon(
-            modifier = Modifier.align(Alignment.Center).size(55.dp),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .size(55.dp),
             drawableId = emotion.icon,
         )
     }
@@ -42,12 +49,10 @@ fun MyEmotionButton(
 
 @Preview(showBackground = true)
 @Composable
-private fun MyEmotionButtonPreview() {
-    FoodMoodTheme {
-        MyEmotionButton(
-            emotion = ETypeEmotion.BAD,
-            selectedEmotionProvider = { ETypeEmotion.BAD },
-            onClick = {},
-        )
-    }
+private fun MyEmotionButtonPreview() = FoodMoodTheme {
+    MyEmotionButton(
+        emotion = ETypeEmotion.BAD,
+        selectedEmotionProvider = { ETypeEmotion.BAD },
+        onClick = {}
+    )
 }

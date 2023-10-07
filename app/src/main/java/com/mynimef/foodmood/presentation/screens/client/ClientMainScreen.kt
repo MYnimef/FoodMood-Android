@@ -57,12 +57,12 @@ private fun NavGraphBuilder.clientMain(navController: NavController) {
         composable(
             route = ENavClientMain.CREATE_PICK_TYPE.route
         ) {
-            CreateScreenFirst(viewModel = it.sharedViewModel(navController))
+            CreateScreen_1(viewModel = it.sharedViewModel(navController))
         }
         composable(
             route = ENavClientMain.CREATE_EMOTION_CARD.route
         ) {
-            CreateScreenSecond(viewModel = it.sharedViewModel(navController))
+            CreateScreen_2(viewModel = it.sharedViewModel(navController))
         }
     }
     composable(
@@ -86,6 +86,5 @@ private fun NavGraphBuilder.clientMain(navController: NavController) {
     ) {
         SetUpNotificationsScreen()
     }
-
 }
 

@@ -41,11 +41,11 @@ import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyEmotionButton
 import com.mynimef.foodmood.presentation.elements.MyGradient
 import com.mynimef.foodmood.presentation.elements.MyIcon
-import com.mynimef.foodmood.presentation.elements.MyTextFieldEmotionalCard
+import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldEmotionalCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun CreateScreenSecond(
+fun CreateScreen_2(
     viewModel: CreateViewModel
 ) {
     val client = viewModel.client.collectAsState().value
@@ -55,7 +55,7 @@ fun CreateScreenSecond(
     val isActive = viewModel.buttonCompleteActive.collectAsState()
 
     if (client != null) {
-        CreateScreenSecond(
+        CreateScreen_2(
             mealType = viewModel.mealType.collectAsState().value,
             emotionTypeProvider = { emotion.value },
             setEmotionType = viewModel::setEmotionType,
@@ -71,7 +71,7 @@ fun CreateScreenSecond(
 }
 
 @Composable
-private fun CreateScreenSecond(
+private fun CreateScreen_2(
     mealType: ETypeMeal,
     emotionTypeProvider: () -> ETypeEmotion,
     setEmotionType: (ETypeEmotion) -> Unit,
@@ -268,25 +268,23 @@ private fun CompleteButton(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun CreateScreenSecondPreview() {
-    FoodMoodTheme {
-        val emotionType = remember { mutableStateOf(ETypeEmotion.NORMAL) }
-        val emotionDescription = remember { mutableStateOf("") }
-        val foodDescription = remember { mutableStateOf("") }
+private fun CreateScreen_2_Preview() = FoodMoodTheme {
+    val emotionType = remember { mutableStateOf(ETypeEmotion.NORMAL) }
+    val emotionDescription = remember { mutableStateOf("") }
+    val foodDescription = remember { mutableStateOf("") }
 
-        CreateScreenSecond(
-            mealType = ETypeMeal.DINNER,
-            emotionTypeProvider = { emotionType.value },
-            setEmotionType = { emotionType.value = it },
-            emotionDescriptionProvider = { emotionDescription.value },
-            setEmotionDescription = { emotionDescription.value = it },
-            trackFood = true,
-            foodDescriptionProvider = { foodDescription.value },
-            setFoodDescription = { foodDescription.value = it },
-            isActiveProvider = { true },
-            onComplete = {},
-        )
-    }
+    CreateScreen_2(
+        mealType = ETypeMeal.DINNER,
+        emotionTypeProvider = { emotionType.value },
+        setEmotionType = { emotionType.value = it },
+        emotionDescriptionProvider = { emotionDescription.value },
+        setEmotionDescription = { emotionDescription.value = it },
+        trackFood = true,
+        foodDescriptionProvider = { foodDescription.value },
+        setFoodDescription = { foodDescription.value = it },
+        isActiveProvider = { true },
+        onComplete = {}
+    )
 }
