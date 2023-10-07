@@ -33,11 +33,11 @@ import java.time.LocalDate
 fun SignUpScreen_2(
     viewModel: SignUpViewModel,
 ) {
-    val isButtonActiveState = viewModel.secondButtonActive.collectAsStateWithLifecycle()
+    val buttonActiveState = viewModel.secondButtonActive.collectAsStateWithLifecycle()
 
     SignUpScreen_2(
         setBirthday= viewModel::setBirthday,
-        buttonActive = isButtonActiveState.value,
+        buttonActiveProvider = { buttonActiveState.value },
         onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_3) },
     )
 }
@@ -45,7 +45,7 @@ fun SignUpScreen_2(
 @Composable
 private fun SignUpScreen_2(
     setBirthday: (String) -> Unit,
-    buttonActive: Boolean,
+    buttonActiveProvider: () -> Boolean,
     onNext: () -> Unit,
 ) {
     Column(
@@ -79,7 +79,7 @@ private fun SignUpScreen_2(
         }
         MyLoginButton(
             text = stringResource(R.string.next),
-            enabled = buttonActive,
+            enabledProvider = buttonActiveProvider,
             onClick = onNext
         )
     }
@@ -92,7 +92,7 @@ private fun SignUpScreen_2_Preview() = FoodMoodTheme {
 
     SignUpScreen_2(
         setBirthday = { date.value = it },
-        buttonActive = true,
+        buttonActiveProvider = { true },
         onNext = {}
     )
 }
