@@ -2,14 +2,12 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -17,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
@@ -24,53 +23,26 @@ import com.mynimef.foodmood.presentation.elements.MyRadioTextSelector
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SignUpScreenThird(
+fun SignUpScreen_3(
     viewModel: SignUpViewModel,
 ) {
-    val foodState = viewModel.food.collectAsState()
-    val waterState = viewModel.water.collectAsState()
-    val weightState = viewModel.weight.collectAsState()
+    val foodState = viewModel.food.collectAsStateWithLifecycle()
+    val waterState = viewModel.water.collectAsStateWithLifecycle()
+    val weightState = viewModel.weight.collectAsStateWithLifecycle()
 
-    SignUpScreenThird(
+    SignUpScreen_3(
         foodProvider = { foodState.value },
         triggerFood = viewModel::triggerFood,
         waterProvider = { waterState.value },
         triggerWater = viewModel::triggerWater,
         weightProvider = { weightState.value },
         triggerWeight = viewModel::triggerWeight,
-        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_FOURTH) }
+        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_4) }
     )
 }
 
 @Composable
-private fun SignUpScreenThird(
-    foodProvider: () -> Boolean,
-    triggerFood: () -> Unit,
-    waterProvider: () -> Boolean,
-    triggerWater: () -> Unit,
-    weightProvider: () -> Boolean,
-    triggerWeight: () -> Unit,
-    onNext: () -> Unit,
-) {
-    Box(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-    ) {
-        CenterElements(
-            foodProvider = foodProvider,
-            triggerFood = triggerFood,
-            waterProvider = waterProvider,
-            triggerWater = triggerWater,
-            weightProvider = weightProvider,
-            triggerWeight = triggerWeight,
-            onNext = onNext
-        )
-    }
-}
-
-@Composable
-private fun CenterElements(
+private fun SignUpScreen_3(
     foodProvider: () -> Boolean,
     triggerFood: () -> Unit,
     waterProvider: () -> Boolean,
@@ -82,7 +54,9 @@ private fun CenterElements(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp),
+            .background(color = MaterialTheme.colorScheme.background)
+            .padding(horizontal = 30.dp)
+        ,
         verticalArrangement = Arrangement.spacedBy(space = 30.dp, alignment = Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -120,20 +94,18 @@ private fun CenterElements(
 
 @Preview(showBackground = true)
 @Composable
-private fun SignUpThirdScreenPreview() {
-    FoodMoodTheme {
-        val food = rememberSaveable { mutableStateOf(false) }
-        val water = rememberSaveable { mutableStateOf(false) }
-        val weight = rememberSaveable { mutableStateOf(false) }
+private fun SignUpScreen_3_Preview() = FoodMoodTheme {
+    val food = rememberSaveable { mutableStateOf(false) }
+    val water = rememberSaveable { mutableStateOf(false) }
+    val weight = rememberSaveable { mutableStateOf(false) }
 
-        SignUpScreenThird(
-            foodProvider = { food.value },
-            triggerFood = { food.value = !food.value },
-            waterProvider = { water.value },
-            triggerWater = { water.value = !water.value },
-            weightProvider = { weight.value },
-            triggerWeight = { weight.value = !weight.value },
-            onNext = {}
-        )
-    }
+    SignUpScreen_3(
+        foodProvider = { food.value },
+        triggerFood = { food.value = !food.value },
+        waterProvider = { water.value },
+        triggerWater = { water.value = !water.value },
+        weightProvider = { weight.value },
+        triggerWeight = { weight.value = !weight.value },
+        onNext = {}
+    )
 }

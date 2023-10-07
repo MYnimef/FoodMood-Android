@@ -2,7 +2,6 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -11,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,6 +20,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
@@ -29,41 +28,20 @@ import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SignUpScreenFirst(viewModel: SignUpViewModel) {
-    val nameState = viewModel.name.collectAsState()
-    val buttonState = viewModel.firstButtonActive.collectAsState()
+fun SignUpScreen_1(viewModel: SignUpViewModel) {
+    val nameState = viewModel.name.collectAsStateWithLifecycle()
+    val buttonState = viewModel.firstButtonActive.collectAsStateWithLifecycle()
 
-    SignUpScreenFirst(
+    SignUpScreen_1(
         nameProvider = { nameState.value },
         setName= viewModel::setName,
         buttonActiveProvider = { buttonState.value },
-        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_SECOND) }
+        onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_2) }
     )
 }
 
 @Composable
-private fun SignUpScreenFirst(
-    nameProvider: () -> String,
-    setName: (String) -> Unit,
-    buttonActiveProvider: () -> Boolean,
-    onNext: () -> Unit,
-) {
-    Box(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-    ) {
-        CenterElements(
-            nameProvider = nameProvider,
-            setName = setName,
-            buttonActiveProvider = buttonActiveProvider,
-            onNext = onNext,
-        )
-    }
-}
-
-@Composable
-private fun CenterElements(
+private fun SignUpScreen_1(
     nameProvider: () -> String,
     setName: (String) -> Unit,
     buttonActiveProvider: () -> Boolean,
@@ -72,8 +50,8 @@ private fun CenterElements(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp)
             .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 30.dp)
             .imePadding()
         ,
         verticalArrangement = Arrangement.Center,
@@ -125,15 +103,13 @@ private fun Element2(
 
 @Preview(showBackground = true)
 @Composable
-private fun SignUpFirstScreenPreview() {
-    FoodMoodTheme {
-        val name = remember { mutableStateOf("") }
+private fun SignUpScreen_1_Preview() = FoodMoodTheme {
+    val name = remember { mutableStateOf("") }
 
-        SignUpScreenFirst(
-            nameProvider = { name.value },
-            setName = { name.value = it },
-            buttonActiveProvider = { true },
-            onNext = {}
-        )
-    }
+    SignUpScreen_1(
+        nameProvider = { name.value },
+        setName = { name.value = it },
+        buttonActiveProvider = { true },
+        onNext = {}
+    )
 }

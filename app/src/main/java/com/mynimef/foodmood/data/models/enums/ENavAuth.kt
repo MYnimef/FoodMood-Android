@@ -5,9 +5,9 @@ enum class ENavAuth(val route: String, val parentRoute: String? = null) {
     SIGN_IN(route = "sign_in"),
 
     SIGN_UP(route = "sign_up"),
-    SIGN_UP_FIRST(route = "sign_up_first", parentRoute = "sign_up"),
-    SIGN_UP_SECOND(route = "sign_up_second", parentRoute = "sign_up"),
-    SIGN_UP_THIRD(route = "sign_up_third", parentRoute = "sign_up"),
-    SIGN_UP_FOURTH(route = "sign_up_fourth", parentRoute = "sign_up"),
+    SIGN_UP_1(route = "sign_up_1", parentRoute = "sign_up"),
+    SIGN_UP_2(route = "sign_up_2", parentRoute = "sign_up"),
+    SIGN_UP_3(route = "sign_up_3", parentRoute = "sign_up"),
+    SIGN_UP_4(route = "sign_up_4", parentRoute = "sign_up"),
 
 }

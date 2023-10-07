@@ -29,13 +29,13 @@ import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldLogin
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun SignUpScreenFourth(
+fun SignUpScreen_4(
     viewModel: SignUpViewModel,
 ) {
     val passwordValuesState = viewModel.passwordValues.collectAsStateWithLifecycle()
     val repeatPasswordValuesState = viewModel.repeatPasswordValues.collectAsStateWithLifecycle()
 
-    SignUpScreenFourth(
+    SignUpScreen_4(
         login = viewModel.email.collectAsState().value,
         setLogin = viewModel::setEmail,
         passwordValuesProvider = { passwordValuesState.value },
@@ -48,7 +48,7 @@ fun SignUpScreenFourth(
 }
 
 @Composable
-private fun SignUpScreenFourth(
+private fun SignUpScreen_4(
     login: String,
     setLogin: (String) -> Unit,
     passwordValuesProvider: () -> Pair<String, Boolean>,
@@ -113,12 +113,12 @@ private fun SignUpScreenFourth(
 
 @Preview(showBackground = true)
 @Composable
-private fun SignUpFourthScreenPreview() = FoodMoodTheme {
+private fun SignUpScreen_4_Preview() = FoodMoodTheme {
     val login = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val repeatPassword = remember { mutableStateOf("") }
 
-    SignUpScreenFourth(
+    SignUpScreen_4(
         login = login.value,
         setLogin = { login.value = it },
         passwordValuesProvider = { password.value to false },
