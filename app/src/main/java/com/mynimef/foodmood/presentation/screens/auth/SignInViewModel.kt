@@ -10,6 +10,7 @@ import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.domain.emailChecker
 import com.mynimef.foodmood.domain.passwordChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,17 +36,18 @@ class SignInViewModel: ViewModel() {
         emailPair,
         passwordPair
     ) { f1, f2 ->
-        f1.second && f1.first.isNotEmpty() && f2.second && f2.first.isNotEmpty()
+        f1.second && f2.second && f1.first.isNotEmpty() && f2.first.isNotEmpty()
     }
         .stateIn(
-            viewModelScope,
+            scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = false
         )
 
     fun setEmail(value: String) {
-        _emailPair.value = value to passwordChecker(value)
+        _emailPair.value = value to emailChecker(value)
     }
+
     fun setPassword(value: String) {
         _passwordPair.value = value to passwordChecker(value)
     }

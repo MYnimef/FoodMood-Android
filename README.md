@@ -16,7 +16,7 @@ The app is designed to run on mobile devices running Android 10.0 or later.
 To install the app, download the .apk file in the releases section.
 
 # Working with the "Food Mood" app
-## Runiing the app
+## Running the app
 To launch the app, click on the corresponding icon, which is located in the menu of the mobile device. Clicking on this icon opens an authorization window in which the user needs to enter an email address and password.
 
 By clicking on the "Create an account" button, the user is redirected to the registration window, where he needs to enter the last name, first name, phone number, email address and twice the password.

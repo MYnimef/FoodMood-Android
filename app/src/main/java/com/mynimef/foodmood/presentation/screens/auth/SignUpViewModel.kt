@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
@@ -16,7 +17,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -56,8 +60,18 @@ class SignUpViewModel: ViewModel() {
     private val _secondButtonActive = MutableStateFlow(false)
     val secondButtonActive = _secondButtonActive.asStateFlow()
 
-    private val _thirdButtonActive = MutableStateFlow(false)
-    val thirdButtonActive = _thirdButtonActive.asStateFlow()
+    val thirdButtonActive = combine(
+        emailPair,
+        passwordPair,
+        repeatPasswordPair
+    ) { f1, f2, f3 ->
+        f1.second && f2.second && f3.second && f1.first.isNotEmpty() && f2.first.isNotEmpty() && f3.first.isNotEmpty()
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false
+        )
 
     fun setName(value: String) {
         val isValid = nameChecker(value)
@@ -86,22 +100,16 @@ class SignUpViewModel: ViewModel() {
 
     fun setEmail(value: String) {
         _emailPair.value = value to emailChecker(value)
-        checkThirdButtonActive()
     }
     fun setPassword(value: String) {
         _passwordPair.value = value to passwordChecker(value)
         if (!repeatPasswordPair.value.second) {
             setRepeatPassword(repeatPasswordPair.value.first)
         }
-        checkThirdButtonActive()
     }
     fun setRepeatPassword(value: String) {
         val isValid = value == passwordPair.value.first
         _repeatPasswordPair.value = value to isValid
-        checkThirdButtonActive()
-    }
-    private fun checkThirdButtonActive() {
-        _thirdButtonActive.value = emailPair.value.second && passwordPair.value.second && repeatPasswordPair.value.second
     }
 
     fun signUp() = with(Repository) {
