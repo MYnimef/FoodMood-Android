@@ -2,7 +2,6 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
@@ -10,15 +9,13 @@ import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.domain.emailChecker
+import com.mynimef.foodmood.domain.passwordChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -47,29 +44,20 @@ class SignUpViewModel: ViewModel() {
     private val _weight = MutableStateFlow(false)
     val weight = _weight.asStateFlow()
 
-    private val _email = MutableStateFlow("")
-    val email = _email.asStateFlow()
+    private val _emailPair = MutableStateFlow("" to true)
+    val emailPair = _emailPair.asStateFlow()
 
-    private val _passwordValues = MutableStateFlow("" to false)
-    val passwordValues = _passwordValues.asStateFlow()
+    private val _passwordPair = MutableStateFlow("" to true)
+    val passwordPair = _passwordPair.asStateFlow()
 
-    private val _repeatPasswordValues = MutableStateFlow("" to false)
-    val repeatPasswordValues = _repeatPasswordValues.asStateFlow()
-
-    val thirdButtonActive = combine(passwordValues, repeatPasswordValues) { f1, f2 ->
-        !(f1.second || f2.second)
-    }
-        .distinctUntilChanged()
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = false
-        )
+    private val _repeatPasswordPair = MutableStateFlow("" to true)
+    val repeatPasswordPair = _repeatPasswordPair.asStateFlow()
 
     private val _secondButtonActive = MutableStateFlow(false)
     val secondButtonActive = _secondButtonActive.asStateFlow()
 
-    private var emailCheck = false
+    private val _thirdButtonActive = MutableStateFlow(false)
+    val thirdButtonActive = _thirdButtonActive.asStateFlow()
 
     fun setName(value: String) {
         _name.value = value
@@ -100,24 +88,34 @@ class SignUpViewModel: ViewModel() {
     }
 
     fun setEmail(value: String) {
-        _email.value = value
-        emailCheck = value.isNotEmpty()
+        _emailPair.value = value to emailChecker(value)
+        checkThirdButtonActive()
     }
     fun setPassword(value: String) {
-        val isError = value.length < 8
-        _passwordValues.value = value to isError
+        _passwordPair.value = value to passwordChecker(value)
+        if (!repeatPasswordPair.value.second) {
+            setRepeatPassword(repeatPasswordPair.value.first)
+        }
+        checkThirdButtonActive()
     }
     fun setRepeatPassword(value: String) {
-        val isError = value.length < 8 || value != passwordValues.value.first
-        _repeatPasswordValues.value = value to isError
+        val isValid = value == passwordPair.value.first
+        _repeatPasswordPair.value = value to isValid
+        checkThirdButtonActive()
+    }
+
+    private fun checkThirdButtonActive() {
+        _thirdButtonActive.value = emailPair.value.second
+                && passwordPair.value.second
+                && repeatPasswordPair.value.second
     }
 
     fun signUp() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignUpRequest(
                 name = _name.value,
-                email = _email.value,
-                password = _passwordValues.value.first,
+                email = _emailPair.value.first,
+                password = _passwordPair.value.first,
                 trackFood = _food.value,
                 trackWater = _water.value,
                 trackWeight = _weight.value,

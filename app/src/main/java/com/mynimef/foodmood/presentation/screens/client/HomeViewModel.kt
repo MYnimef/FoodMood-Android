@@ -16,7 +16,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -26,7 +25,6 @@ class HomeViewModel: ViewModel() {
     private var job: Job? = null
 
     private val client = Repository.storage.getClient()
-        .distinctUntilChanged()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -36,7 +34,6 @@ class HomeViewModel: ViewModel() {
     val dataLoaded = client.map {
         it != null
     }
-        .distinctUntilChanged()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -46,7 +43,6 @@ class HomeViewModel: ViewModel() {
     val trackWater = client.map {
         it?.trackWater ?: false
     }
-        .distinctUntilChanged()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -56,7 +52,6 @@ class HomeViewModel: ViewModel() {
     val waterAmount = client.map {
         it?.waterAmount ?: 0f
     }
-        .distinctUntilChanged()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),

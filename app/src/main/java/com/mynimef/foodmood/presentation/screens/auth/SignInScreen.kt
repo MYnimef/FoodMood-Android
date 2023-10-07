@@ -29,8 +29,8 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun SignInScreen() {
     val viewModel: SignInViewModel = viewModel()
 
-    val emailPairState = viewModel.emailValues.collectAsStateWithLifecycle()
-    val passwordPairState = viewModel.passwordValues.collectAsStateWithLifecycle()
+    val emailPairState = viewModel.emailPair.collectAsStateWithLifecycle()
+    val passwordPairState = viewModel.passwordPair.collectAsStateWithLifecycle()
     val buttonActive = viewModel.buttonActive.collectAsStateWithLifecycle()
 
     SignInScreen(
@@ -102,21 +102,20 @@ private fun SignInScreen(
 @Preview(showBackground = true)
 @Composable
 private fun SignInScreenPreview() = FoodMoodTheme {
-    val emailPairState = remember { mutableStateOf("" to false) }
-    val passwordPairState = remember { mutableStateOf("" to false) }
+    val emailPairState = remember { mutableStateOf("" to true) }
+    val passwordPairState = remember { mutableStateOf("" to true) }
 
     SignInScreen(
         signIn = {},
         signUp = {},
         emailPairProvider = { emailPairState.value },
         setEmail = {
-            val isError = false
-            emailPairState.value = it to isError
+            emailPairState.value = it to true
         },
         passwordPairProvider = { passwordPairState.value },
         setPassword = {
-            val isError = it.length < 8
-            passwordPairState.value = it to isError
+            val isValid = it.length >= 8
+            passwordPairState.value = it to isValid
         },
         buttonActive = true
     )

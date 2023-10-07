@@ -27,7 +27,7 @@ fun MyCheckField(
         label = label,
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
-        isError = pair.second,
+        isError = !pair.second,
         onValueChange = onValueChange,
         trailingIcon = trailingIcon,
     )
@@ -36,14 +36,14 @@ fun MyCheckField(
 @Composable
 @Preview
 private fun MyCheckFieldPreview() = FoodMoodTheme {
-    val pair = remember { mutableStateOf("" to false) }
+    val pair = remember { mutableStateOf("" to true) }
 
     MyCheckField(
         label = "Type 'Hello'",
         pairProvider = { pair.value },
         onValueChange = {
-            val isError = it != "Hello"
-            pair.value = it to isError
+            val isValid = it == "Hello"
+            pair.value = it to isValid
         }
     )
 }
