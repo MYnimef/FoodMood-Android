@@ -207,106 +207,104 @@ fun LineChart(
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview3() {
-    FoodMoodTheme {
-        val xLabels = listOf(
-            "01/05/23",
-            "15.05.23",
-            "30.05.23"
+private fun Preview3() = FoodMoodTheme {
+    val xLabels = listOf(
+        "01/05/23",
+        "15.05.23",
+        "30.05.23"
+    )
+    val yIcons = ETypeEmotion.values().map { it.icon }
+    val yLabels = listOf(
+        "500",
+        "1000",
+        "1500",
+        "2000"
+    )
+    Column() {
+        LineChart(
+            modifier = Modifier
+                .size(2000.dp, 200.dp)
+                .padding(20.dp),
+            xLabels = PlotLabels(
+                labels = xLabels,
+                fontSize = 8.sp,
+                fontColor = Color.Black,
+                padding = 10.dp,
+                diapason = false
+            ),
+            yIcons = PlotIcons(
+                icons = yIcons,
+                iconsSize = 20.dp,
+                diapason = true
+            ),
+            verticalLines = AxisLines(
+                offset = 10.dp
+            ),
+            coordinates = PlotCoordinates(
+                values = listOf(
+                    Pair(0f, 5f),
+                    Pair(1f, 3f),
+                    Pair(3f, 5f),
+                    Pair(4f, 3f),
+                    Pair(9f, 5f)
+                ),
+                minX = 0f,
+                maxX = 9f,
+                minY = 0f,
+                maxY = 5f,
+            ),
+            markStyle = PlotMarkStyle(),
+            underColors = listOf(
+                EmotionDarkGreen,
+                EmotionGreen,
+                EmotionYellow,
+                EmotionOrange,
+                EmotionRed,
+            ),
         )
-        val yIcons = ETypeEmotion.values().map { it.icon }
-        val yLabels = listOf(
-            "500",
-            "1000",
-            "1500",
-            "2000"
+        LineChart(
+            modifier = Modifier
+                .size(2000.dp, 200.dp)
+                .padding(20.dp),
+            xLabels = PlotLabels(
+                labels = xLabels,
+                fontSize = 8.sp,
+                fontColor = Color.Black,
+                padding = 10.dp,
+                diapason = false,
+            ),
+            yLabels = PlotLabels(
+                labels = yLabels,
+                fontSize = 8.sp,
+                fontColor = Color.Black,
+                padding = 10.dp,
+                diapason = false,
+            ),
+            verticalLines = AxisLines(
+                offset = 10.dp
+            ),
+            horizontalLines = AxisLines(
+                offset = 10.dp
+            ),
+            coordinates = PlotCoordinates(
+                values = listOf(
+                    Pair(0f, 1000f),
+                    Pair(1f, 200f),
+                    Pair(3f, 500f),
+                    Pair(4f, 200f),
+                    Pair(9f, 1800f)
+                ),
+                minX = 0f,
+                maxX = 9f,
+                minY = 0f,
+                maxY = 2000f,
+            ),
+            markStyle = PlotMarkStyle(),
+            underColors = listOf(
+                Blue,
+                LightBlue,
+                Color.Unspecified,
+            ),
         )
-        Column() {
-            LineChart(
-                modifier = Modifier
-                    .size(2000.dp, 200.dp)
-                    .padding(20.dp),
-                xLabels = PlotLabels(
-                    labels = xLabels,
-                    fontSize = 8.sp,
-                    fontColor = Color.Black,
-                    padding = 10.dp,
-                    diapason = false
-                ),
-                yIcons = PlotIcons(
-                    icons = yIcons,
-                    iconsSize = 20.dp,
-                    diapason = true
-                ),
-                verticalLines = AxisLines(
-                    offset = 10.dp
-                ),
-                coordinates = PlotCoordinates(
-                    values = listOf(
-                        Pair(0f, 5f),
-                        Pair(1f, 3f),
-                        Pair(3f, 5f),
-                        Pair(4f, 3f),
-                        Pair(9f, 5f)
-                    ),
-                    minX = 0f,
-                    maxX = 9f,
-                    minY = 0f,
-                    maxY = 5f,
-                ),
-                markStyle = PlotMarkStyle(),
-                underColors = listOf(
-                    EmotionDarkGreen,
-                    EmotionGreen,
-                    EmotionYellow,
-                    EmotionOrange,
-                    EmotionRed,
-                ),
-            )
-            LineChart(
-                modifier = Modifier
-                    .size(2000.dp, 200.dp)
-                    .padding(20.dp),
-                xLabels = PlotLabels(
-                    labels = xLabels,
-                    fontSize = 8.sp,
-                    fontColor = Color.Black,
-                    padding = 10.dp,
-                    diapason = false,
-                ),
-                yLabels = PlotLabels(
-                    labels = yLabels,
-                    fontSize = 8.sp,
-                    fontColor = Color.Black,
-                    padding = 10.dp,
-                    diapason = false,
-                ),
-                verticalLines = AxisLines(
-                    offset = 10.dp
-                ),
-                horizontalLines = AxisLines(
-                    offset = 10.dp
-                ),
-                coordinates = PlotCoordinates(
-                    values = listOf(
-                        Pair(0f, 1000f),
-                        Pair(1f, 200f),
-                        Pair(3f, 500f),
-                        Pair(4f, 200f),
-                        Pair(9f, 1800f)
-                    ),
-                    minX = 0f,
-                    maxX = 9f,
-                    minY = 0f,
-                    maxY = 2000f,
-                ),
-                markStyle = PlotMarkStyle(),
-                underColors = listOf(
-                    Blue,
-                    LightBlue,
-                    Color.Unspecified,
-                ),
-            )
-        }
     }
 }

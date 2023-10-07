@@ -128,8 +128,6 @@ private fun SettingsElement(
 
 @Preview
 @Composable
-private fun SettingsScreenPreview() {
-    FoodMoodTheme {
-        SettingsScreen()
-    }
+private fun SettingsScreenPreview() = FoodMoodTheme {
+    SettingsScreen()
 }

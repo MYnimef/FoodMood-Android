@@ -16,7 +16,7 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -149,50 +149,48 @@ private fun CenterElements(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview() {
-    FoodMoodTheme {
-        val cards = listOf(
-            CardEntity(
-                mealType = ETypeMeal.BREAKFAST,
-                emotionType = ETypeEmotion.NORMAL,
-                emotionDescription = "nice",
-                foodDescription = "nice",
-            ),
-            CardEntity(
-                mealType = ETypeMeal.BRUNCH,
-                emotionType = ETypeEmotion.BAD,
-                emotionDescription = "nice",
-                foodDescription = "nice",
-            ),
-            CardEntity(
-                mealType = ETypeMeal.LUNCH,
-                emotionType = ETypeEmotion.VERY_BAD,
-                emotionDescription = "nice",
-                foodDescription = "nice",
-            ),
-            CardEntity(
-                mealType = ETypeMeal.SUPPER,
-                emotionType = ETypeEmotion.GOOD,
-                emotionDescription = "nice",
-                foodDescription = "nice",
-            ),
-            CardEntity(
-                mealType = ETypeMeal.DINNER,
-                emotionType = ETypeEmotion.GOOD,
-                emotionDescription = "nice",
-                foodDescription = "nice",
-            ),
-        )
+private fun HomeScreenPreview() = FoodMoodTheme {
+    val cards = listOf(
+        CardEntity(
+            mealType = ETypeMeal.BREAKFAST,
+            emotionType = ETypeEmotion.NORMAL,
+            emotionDescription = "nice",
+            foodDescription = "nice",
+        ),
+        CardEntity(
+            mealType = ETypeMeal.BRUNCH,
+            emotionType = ETypeEmotion.BAD,
+            emotionDescription = "nice",
+            foodDescription = "nice",
+        ),
+        CardEntity(
+            mealType = ETypeMeal.LUNCH,
+            emotionType = ETypeEmotion.VERY_BAD,
+            emotionDescription = "nice",
+            foodDescription = "nice",
+        ),
+        CardEntity(
+            mealType = ETypeMeal.SUPPER,
+            emotionType = ETypeEmotion.GOOD,
+            emotionDescription = "nice",
+            foodDescription = "nice",
+        ),
+        CardEntity(
+            mealType = ETypeMeal.DINNER,
+            emotionType = ETypeEmotion.GOOD,
+            emotionDescription = "nice",
+            foodDescription = "nice",
+        ),
+    )
 
-        val waterAmount = remember { mutableStateOf(0f) }
+    val waterAmount = remember { mutableFloatStateOf(0f) }
 
-        HomeScreen(
-            trackWaterProvider = { true },
-            waterAmountProvider = { waterAmount.value },
-            setWater = { waterAmount.value += it },
-            cardsProvider = { cards },
-            refreshing = false,
-            onRefresh = {}
-        )
-    }
+    HomeScreen(
+        trackWaterProvider = { true },
+        waterAmountProvider = { waterAmount.floatValue },
+        setWater = { waterAmount.floatValue += it },
+        cardsProvider = { cards },
+        refreshing = false,
+        onRefresh = {}
+    )
 }

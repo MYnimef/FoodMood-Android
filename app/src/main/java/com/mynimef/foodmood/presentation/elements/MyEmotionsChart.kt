@@ -87,20 +87,21 @@ fun MyEmotionsChart(
 
 @Preview(showBackground = true)
 @Composable
-private fun MyEmotionsChartPreview() {
-    FoodMoodTheme {
-        val data = listOf(
-            Pair(0f, 5f),
-            Pair(3f, 3f),
-            Pair(5f, 1f),
-            Pair(9f, 3f),
-            Pair(15f, 2f),
-        )
+private fun MyEmotionsChartPreview() = FoodMoodTheme {
+    val data = listOf(
+        Pair(0f, 5f),
+        Pair(3f, 3f),
+        Pair(5f, 1f),
+        Pair(9f, 3f),
+        Pair(15f, 2f)
+    )
 
-        MyEmotionsChart(
-            modifier = Modifier.size(2000.dp, 200.dp).padding(20.dp),
-            emotionsData = data,
-            periodType = ETypePeriod.DAYS_31
-        )
-    }
+    MyEmotionsChart(
+        modifier = Modifier
+            .size(2000.dp, 200.dp)
+            .padding(20.dp)
+        ,
+        emotionsData = data,
+        periodType = ETypePeriod.DAYS_31
+    )
 }

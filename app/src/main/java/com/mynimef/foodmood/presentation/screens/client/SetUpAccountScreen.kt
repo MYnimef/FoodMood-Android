@@ -30,7 +30,6 @@ import com.mynimef.foodmood.presentation.elements.MySettingsButton
 import com.mynimef.foodmood.presentation.elements.fields.MyTextFieldSettings
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
-
 @Composable
 fun SetUpAccountScreen() {
     val viewModel: SetUpAccountViewModel = viewModel()
@@ -77,7 +76,8 @@ private fun CenterElements(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 30.dp)
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+        ,
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -117,7 +117,8 @@ private fun CenterElements(
             },
             onValueChange = {
                 name.value = it
-            })
+            }
+        )
 
         MyTextFieldSettings(value = login.value,
             label = stringResource(R.string.email),
@@ -134,9 +135,11 @@ private fun CenterElements(
             },
             onValueChange = {
                 login.value = it
-            })
+            }
+        )
 
-        MyTextFieldSettings(value = password.value,
+        MyTextFieldSettings(
+            value = password.value,
             label = stringResource(R.string.password),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             enabled = passwordEdit.value,
@@ -151,14 +154,14 @@ private fun CenterElements(
             },
             onValueChange = {
                 password.value = it
-            })
+            }
+        )
 
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             MySettingsButton(
                 modifier = Modifier
                     .padding(top = 15.dp, bottom = 10.dp)
@@ -189,12 +192,10 @@ private fun CenterElements(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun SetUpAccountScreenPreview() {
-    FoodMoodTheme {
-        SetUpAccountScreen(
-            signOutClick = {},
-        )
-    }
+private fun SetUpAccountScreenPreview() = FoodMoodTheme {
+    SetUpAccountScreen(
+        signOutClick = {}
+    )
 }
