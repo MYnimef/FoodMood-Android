@@ -2,6 +2,7 @@ package com.mynimef.foodmood.presentation.screens.auth
 
 import android.os.Build
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mynimef.foodmood.data.models.ApiError
 import com.mynimef.foodmood.data.models.ApiException
 import com.mynimef.foodmood.data.models.ApiSuccess
@@ -15,7 +16,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SignInViewModel: ViewModel() {
@@ -28,21 +32,24 @@ class SignInViewModel: ViewModel() {
     private val _passwordPair = MutableStateFlow("" to true)
     val passwordPair = _passwordPair.asStateFlow()
 
-    private val _buttonActive = MutableStateFlow(false)
-    val buttonActive = _buttonActive.asStateFlow()
+    val buttonActive = combine(
+        emailPair,
+        passwordPair
+    ) { f1, f2 ->
+        f1.second && f2.second && f1.first.isNotEmpty() && f2.first.isNotEmpty()
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false
+        )
 
     fun setEmail(value: String) {
         _emailPair.value = value to emailChecker(value)
-        checkButtonActive()
     }
 
     fun setPassword(value: String) {
         _passwordPair.value = value to passwordChecker(value)
-        checkButtonActive()
-    }
-
-    private fun checkButtonActive() {
-        _buttonActive.value = emailPair.value.second && passwordPair.value.second
     }
 
     fun signIn() = with(Repository) {
