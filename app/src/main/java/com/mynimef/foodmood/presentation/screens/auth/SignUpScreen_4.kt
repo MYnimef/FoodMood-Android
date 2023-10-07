@@ -11,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,12 +31,13 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun SignUpScreen_4(
     viewModel: SignUpViewModel,
 ) {
+    val emailValuesState = viewModel.email.collectAsStateWithLifecycle()
     val passwordValuesState = viewModel.passwordValues.collectAsStateWithLifecycle()
     val repeatPasswordValuesState = viewModel.repeatPasswordValues.collectAsStateWithLifecycle()
     val buttonActiveState  = viewModel.thirdButtonActive.collectAsStateWithLifecycle()
 
     SignUpScreen_4(
-        login = viewModel.email.collectAsState().value,
+        login = emailValuesState.value,
         setLogin = viewModel::setEmail,
         passwordValuesProvider = { passwordValuesState.value },
         setPassword = viewModel::setPassword,
@@ -92,7 +92,7 @@ private fun SignUpScreen_4(
                 .padding(bottom = 20.dp)
             ,
             label = stringResource(R.string.password),
-            valuesProvider = passwordValuesProvider,
+            pairProvider = passwordValuesProvider,
             onValueChange = setPassword
         )
         MyPasswordField(
@@ -101,7 +101,7 @@ private fun SignUpScreen_4(
                 .padding(bottom = 20.dp)
             ,
             label = stringResource(R.string.repeat_pass),
-            valuesProvider = repeatPasswordValuesProvider,
+            pairProvider = repeatPasswordValuesProvider,
             onValueChange = setRepeatPassword
         )
         MyLoginButton(

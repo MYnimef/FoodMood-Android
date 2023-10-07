@@ -15,13 +15,13 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun MyEmailField(
     modifier: Modifier = Modifier,
     label: String,
-    valuesProvider: () -> Pair<String, Boolean>,
+    pairProvider: () -> Pair<String, Boolean>,
     onValueChange: (String) -> Unit,
 ) {
     MyCheckField(
         modifier = modifier,
         label = label,
-        valuesProvider = valuesProvider,
+        pairProvider = pairProvider,
         onValueChange = onValueChange,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
     )
@@ -34,7 +34,7 @@ private fun MyEmailFieldPreview() = FoodMoodTheme {
 
     MyEmailField(
         label = stringResource(R.string.email),
-        valuesProvider = { emailPairState.value },
+        pairProvider = { emailPairState.value },
         onValueChange = {}
     )
 }

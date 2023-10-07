@@ -29,16 +29,16 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun SignInScreen() {
     val viewModel: SignInViewModel = viewModel()
 
-    val emailValuesState = viewModel.emailValues.collectAsStateWithLifecycle()
-    val passwordValuesState = viewModel.passwordValues.collectAsStateWithLifecycle()
+    val emailPairState = viewModel.emailValues.collectAsStateWithLifecycle()
+    val passwordPairState = viewModel.passwordValues.collectAsStateWithLifecycle()
     val buttonActive = viewModel.buttonActive.collectAsStateWithLifecycle()
 
     SignInScreen(
         signIn = viewModel::signIn,
         signUp = viewModel::signUp,
-        emailValuesProvider = { emailValuesState.value },
+        emailPairProvider = { emailPairState.value },
         setEmail = viewModel::setEmail,
-        passwordValuesProvider = { passwordValuesState.value },
+        passwordPairProvider = { passwordPairState.value },
         setPassword = viewModel::setPassword,
         buttonActive = buttonActive.value,
     )
@@ -48,9 +48,9 @@ fun SignInScreen() {
 private fun SignInScreen(
     signIn: () -> Unit,
     signUp: () -> Unit,
-    emailValuesProvider: () -> Pair<String, Boolean>,
+    emailPairProvider: () -> Pair<String, Boolean>,
     setEmail: (String) -> Unit,
-    passwordValuesProvider: () -> Pair<String, Boolean>,
+    passwordPairProvider: () -> Pair<String, Boolean>,
     setPassword: (String) -> Unit,
     buttonActive: Boolean,
 ) {
@@ -75,7 +75,7 @@ private fun SignInScreen(
                 .padding(bottom = 20.dp)
             ,
             label = stringResource(R.string.email),
-            valuesProvider = emailValuesProvider,
+            pairProvider = emailPairProvider,
             onValueChange = setEmail
         )
         MyPasswordField(
@@ -84,7 +84,7 @@ private fun SignInScreen(
                 .padding(bottom = 20.dp)
             ,
             label = stringResource(R.string.password),
-            valuesProvider = passwordValuesProvider,
+            pairProvider = passwordPairProvider,
             onValueChange = setPassword,
         )
         MyLoginButton(
@@ -108,16 +108,16 @@ private fun SignInScreenPreview() = FoodMoodTheme {
     SignInScreen(
         signIn = {},
         signUp = {},
-        emailValuesProvider = { emailPairState.value },
+        emailPairProvider = { emailPairState.value },
         setEmail = {
             val isError = false
             emailPairState.value = it to isError
-                   },
-        passwordValuesProvider = { passwordPairState.value },
+        },
+        passwordPairProvider = { passwordPairState.value },
         setPassword = {
             val isError = it.length < 8
             passwordPairState.value = it to isError
-                      },
+        },
         buttonActive = true
     )
 }

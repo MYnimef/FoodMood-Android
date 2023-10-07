@@ -20,7 +20,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun MyPasswordField(
     modifier: Modifier = Modifier,
     label: String,
-    valuesProvider: () -> Pair<String, Boolean>,
+    pairProvider: () -> Pair<String, Boolean>,
     onValueChange: (String) -> Unit,
 ) {
     val passwordVisibleState = rememberSaveable { mutableStateOf(false) }
@@ -29,7 +29,7 @@ fun MyPasswordField(
     MyCheckField(
         modifier = modifier,
         label = label,
-        valuesProvider = valuesProvider,
+        pairProvider = pairProvider,
         onValueChange = onValueChange,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -47,14 +47,14 @@ fun MyPasswordField(
 @Composable
 @Preview
 private fun MyPasswordFieldPreview() = FoodMoodTheme {
-    val passwordValues = remember { mutableStateOf("" to false) }
+    val passwordPair = remember { mutableStateOf("" to false) }
 
     MyPasswordField(
         label = stringResource(R.string.password),
-        valuesProvider = { passwordValues.value },
+        pairProvider = { passwordPair.value },
         onValueChange = {
             val isError = it.length < 8
-            passwordValues.value = it to isError
+            passwordPair.value = it to isError
         }
     )
 }

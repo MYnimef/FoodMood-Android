@@ -13,21 +13,21 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun MyCheckField(
     modifier: Modifier = Modifier,
     label: String,
-    valuesProvider: () -> Pair<String, Boolean>,
+    pairProvider: () -> Pair<String, Boolean>,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable (() -> Unit)? = null,
 ) {
-    val values = valuesProvider()
+    val pair = pairProvider()
 
     MyTextFieldLogin(
         modifier = modifier,
-        value = values.first,
+        value = pair.first,
         label = label,
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
-        isError = values.second,
+        isError = pair.second,
         onValueChange = onValueChange,
         trailingIcon = trailingIcon,
     )
@@ -36,14 +36,14 @@ fun MyCheckField(
 @Composable
 @Preview
 private fun MyCheckFieldPreview() = FoodMoodTheme {
-    val values = remember { mutableStateOf("" to false) }
+    val pair = remember { mutableStateOf("" to false) }
 
     MyCheckField(
         label = "Type 'Hello'",
-        valuesProvider = { values.value },
+        pairProvider = { pair.value },
         onValueChange = {
             val isError = it != "Hello"
-            values.value = it to isError
+            pair.value = it to isError
         }
     )
 }
