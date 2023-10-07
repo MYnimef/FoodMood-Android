@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -80,6 +81,10 @@ private fun Element1(
     setName: (String) -> Unit,
 ) {
     MyTextFieldLogin(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 20.dp)
+        ,
         value = nameProvider(),
         label = stringResource(R.string.name),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),

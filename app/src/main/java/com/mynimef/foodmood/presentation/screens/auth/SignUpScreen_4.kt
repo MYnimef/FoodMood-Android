@@ -34,6 +34,7 @@ fun SignUpScreen_4(
 ) {
     val passwordValuesState = viewModel.passwordValues.collectAsStateWithLifecycle()
     val repeatPasswordValuesState = viewModel.repeatPasswordValues.collectAsStateWithLifecycle()
+    val buttonActiveState  = viewModel.thirdButtonActive.collectAsStateWithLifecycle()
 
     SignUpScreen_4(
         login = viewModel.email.collectAsState().value,
@@ -43,7 +44,7 @@ fun SignUpScreen_4(
         repeatPasswordValuesProvider = { repeatPasswordValuesState.value },
         setRepeatPassword = viewModel::setRepeatPassword,
         signUp = viewModel::signUp,
-        buttonActive = viewModel.thirdButtonActive.collectAsState().value,
+        buttonActiveProvider = { buttonActiveState.value },
     )
 }
 
@@ -55,7 +56,7 @@ private fun SignUpScreen_4(
     setPassword: (String) -> Unit,
     repeatPasswordValuesProvider: () -> Pair<String, Boolean>,
     setRepeatPassword: (String) -> Unit,
-    buttonActive: Boolean,
+    buttonActiveProvider: () -> Boolean,
     signUp: () -> Unit,
 ) {
     Column(
@@ -105,7 +106,7 @@ private fun SignUpScreen_4(
         )
         MyLoginButton(
             text = stringResource(R.string.complete),
-            enabled = buttonActive,
+            enabledProvider = buttonActiveProvider,
             onClick = signUp
         )
     }
@@ -117,6 +118,7 @@ private fun SignUpScreen_4_Preview() = FoodMoodTheme {
     val login = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val repeatPassword = remember { mutableStateOf("") }
+    val buttonActiveState = remember { mutableStateOf(false) }
 
     SignUpScreen_4(
         login = login.value,
@@ -126,6 +128,6 @@ private fun SignUpScreen_4_Preview() = FoodMoodTheme {
         repeatPasswordValuesProvider= { repeatPassword.value to false },
         setRepeatPassword = { repeatPassword.value = it },
         signUp = {},
-        buttonActive = true
+        buttonActiveProvider = { buttonActiveState.value }
     )
 }

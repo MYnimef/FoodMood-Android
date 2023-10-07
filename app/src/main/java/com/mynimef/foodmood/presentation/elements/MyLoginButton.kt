@@ -15,6 +15,21 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 @Composable
 fun MyLoginButton(
     text: String,
+    enabledProvider: () -> Boolean,
+    onClick: () -> Unit
+) {
+    val enabled = enabledProvider()
+
+    MyLoginButton(
+        text = text,
+        enabled = enabled,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun MyLoginButton(
+    text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {
@@ -41,14 +56,12 @@ fun MyLoginButton(
 }
 
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun MyLoginButtonPreview() {
-    FoodMoodTheme {
-        MyLoginButton(
-            text = "Sample",
-            enabled = true,
-            onClick = {}
-        )
-    }
+private fun MyLoginButtonPreview() = FoodMoodTheme {
+    MyLoginButton(
+        text = "Sample",
+        enabled = true,
+        onClick = {}
+    )
 }
