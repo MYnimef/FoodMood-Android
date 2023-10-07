@@ -63,37 +63,28 @@ private fun SignUpScreen_4(
             .padding(horizontal = 30.dp)
             .imePadding()
         ,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            modifier = Modifier.padding(bottom = 30.dp),
+            modifier = Modifier.padding(bottom = 10.dp),
             text = stringResource(R.string.final_signup),
             style = MaterialTheme.typography.titleLarge
         )
         MyEmailField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-            ,
+            modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.email),
             pairProvider = emailPairProvider,
             onValueChange = setEmail
         )
         MyPasswordField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-            ,
+            modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.password),
             pairProvider = passwordPairProvider,
             onValueChange = setPassword
         )
         MyPasswordField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-            ,
+            modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.repeat_pass),
             pairProvider = repeatPasswordPairProvider,
             onValueChange = setRepeatPassword
