@@ -30,10 +30,10 @@ import com.mynimef.foodmood.presentation.elements.MyWeightCard
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
-fun CreateScreenFirst(
+fun CreateScreen_1(
     viewModel: CreateViewModel
 ) {
-    CreateScreenFirst(
+    CreateScreen_1(
         setMealType = viewModel::setMealType,
         weight = viewModel.weight.collectAsStateWithLifecycle().value,
         setWeight = viewModel::setWeight,
@@ -43,7 +43,7 @@ fun CreateScreenFirst(
 }
 
 @Composable
-private fun CreateScreenFirst(
+private fun CreateScreen_1(
     setMealType: (ETypeMeal) -> Unit,
     weight: Float,
     setWeight: (Float) -> Unit,
@@ -125,11 +125,11 @@ private fun CreateScreenFirst(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardsChoicePreview() = FoodMoodTheme {
+private fun CreateScreen_1_Preview() = FoodMoodTheme {
     val weight = remember { mutableFloatStateOf(0f) }
     val isDialogShown = remember { mutableStateOf(false) }
 
-    CreateScreenFirst(
+    CreateScreen_1(
         weight = weight.value,
         setWeight = {
             weight.value = it
