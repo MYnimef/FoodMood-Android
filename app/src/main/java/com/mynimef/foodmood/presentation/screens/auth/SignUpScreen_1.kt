@@ -27,11 +27,11 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun SignUpScreen_1(viewModel: SignUpViewModel) {
-    val nameState = viewModel.name.collectAsStateWithLifecycle()
+    val namePairState = viewModel.namePair.collectAsStateWithLifecycle()
     val buttonState = viewModel.firstButtonActive.collectAsStateWithLifecycle()
 
     SignUpScreen_1(
-        namePairProvider = { nameState.value to true },
+        namePairProvider = { namePairState.value },
         setName= viewModel::setName,
         buttonActiveProvider = { buttonState.value },
         onNext = { viewModel.navigateTo(ENavAuth.SIGN_UP_2) }

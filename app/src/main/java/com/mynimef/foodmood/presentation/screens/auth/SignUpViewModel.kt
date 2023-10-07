@@ -10,6 +10,7 @@ import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.repository.Repository
 import com.mynimef.foodmood.domain.emailChecker
+import com.mynimef.foodmood.domain.nameChecker
 import com.mynimef.foodmood.domain.passwordChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +24,8 @@ class SignUpViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    private val _name = MutableStateFlow("")
-    val name = _name.asStateFlow()
+    private val _namePair = MutableStateFlow("" to true)
+    val namePair = _namePair.asStateFlow()
 
     private val _birthday = MutableStateFlow("")
     val birthday = _birthday.asStateFlow()
@@ -32,7 +33,6 @@ class SignUpViewModel: ViewModel() {
     private val _firstButtonActive = MutableStateFlow(false)
     val firstButtonActive = _firstButtonActive.asStateFlow()
 
-    private var nameCheck = false
     private var birthdayCheck = false
 
     private val _food = MutableStateFlow(false)
@@ -60,19 +60,16 @@ class SignUpViewModel: ViewModel() {
     val thirdButtonActive = _thirdButtonActive.asStateFlow()
 
     fun setName(value: String) {
-        _name.value = value
-        nameCheck = value.length >= 2
-        checkFirstButtonActive()
+        val isValid = nameChecker(value)
+        _namePair.value = value to isValid
+        _firstButtonActive.value = isValid
     }
+
     fun setBirthday(value: String) {
         _birthday.value = value
         birthdayCheck = value.isNotEmpty() && (value != LocalDate.now().toString())
         checkSecondButtonActive()
     }
-    private fun checkFirstButtonActive() {
-        _firstButtonActive.value = nameCheck
-    }
-
     private fun checkSecondButtonActive() {
         _secondButtonActive.value = birthdayCheck
     }
@@ -103,17 +100,14 @@ class SignUpViewModel: ViewModel() {
         _repeatPasswordPair.value = value to isValid
         checkThirdButtonActive()
     }
-
     private fun checkThirdButtonActive() {
-        _thirdButtonActive.value = emailPair.value.second
-                && passwordPair.value.second
-                && repeatPasswordPair.value.second
+        _thirdButtonActive.value = emailPair.value.second && passwordPair.value.second && repeatPasswordPair.value.second
     }
 
     fun signUp() = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignUpRequest(
-                name = _name.value,
+                name = _namePair.value.first,
                 email = _emailPair.value.first,
                 password = _passwordPair.value.first,
                 trackFood = _food.value,
