@@ -10,8 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { setUrl("https://jitpack.io") }
     }
 }
+
 rootProject.name = "FoodMood"
-include ':app'
+include(":app")
