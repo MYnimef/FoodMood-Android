@@ -13,6 +13,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.domain.CheckPair
 import com.mynimef.foodmood.presentation.elements.MyIcon
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
@@ -20,7 +21,7 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun MyPasswordField(
     modifier: Modifier = Modifier,
     label: String,
-    pairProvider: () -> Pair<String, Boolean>,
+    pairProvider: () -> CheckPair,
     onValueChange: (String) -> Unit,
 ) {
     val passwordVisibleState = rememberSaveable { mutableStateOf(false) }

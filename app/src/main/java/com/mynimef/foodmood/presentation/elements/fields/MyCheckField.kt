@@ -7,13 +7,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import com.mynimef.foodmood.domain.CheckPair
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun MyCheckField(
     modifier: Modifier = Modifier,
     label: String,
-    pairProvider: () -> Pair<String, Boolean>,
+    pairProvider: () -> CheckPair,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
