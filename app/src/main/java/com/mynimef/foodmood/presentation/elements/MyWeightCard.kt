@@ -56,6 +56,10 @@ fun MyWeightCard(
                 textAlign = TextAlign.Center
             )
             MyTextFieldLogin(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 20.dp)
+                ,
                 value = weight.toString(),
                 label = stringResource(id = R.string.weight),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -66,31 +70,31 @@ fun MyWeightCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.background),
+                    .background(color = MaterialTheme.colorScheme.background)
+                ,
                 horizontalArrangement = Arrangement.spacedBy(space = 10.dp, alignment = Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Button(
-                    onClick = {
-                        onDismiss()
-                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
                     ,
+                    onClick = onDismiss,
                 ) {
                     Text(
                         text = stringResource(id = R.string.cancel),
                     )
                 }
                 Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                    ,
                     onClick = {
                         onConfirm()
                         setWeight(weight)
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
                 ) {
                     Text(text = stringResource(id = R.string.enter))
                 }
@@ -99,10 +103,13 @@ fun MyWeightCard(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun MyWeightCardPreview() {
-    FoodMoodTheme {
-        MyWeightCard(20.0f,{}, {}, {})
-    }
+private fun MyWeightCardPreview() = FoodMoodTheme {
+    MyWeightCard(
+        weight  = 20.0f,
+        setWeight = {},
+        onDismiss = {},
+        onConfirm = {}
+    )
 }

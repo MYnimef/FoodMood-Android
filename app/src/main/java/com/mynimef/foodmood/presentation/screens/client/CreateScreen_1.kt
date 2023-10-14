@@ -33,11 +33,14 @@ import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 fun CreateScreen_1(
     viewModel: CreateViewModel
 ) {
+    val weightState = viewModel.weight.collectAsStateWithLifecycle()
+    val dialogShownState = viewModel.isDialogShown.collectAsStateWithLifecycle()
+
     CreateScreen_1(
         setMealType = viewModel::setMealType,
-        weight = viewModel.weight.collectAsStateWithLifecycle().value,
+        weightProvider = { weightState.value },
         setWeight = viewModel::setWeight,
-        isDialogShown = viewModel.isDialogShown.collectAsStateWithLifecycle().value,
+        dialogShownProvider = { dialogShownState.value },
         triggerDialogShown = viewModel::triggerDialogShown,
     )
 }
@@ -45,9 +48,9 @@ fun CreateScreen_1(
 @Composable
 private fun CreateScreen_1(
     setMealType: (ETypeMeal) -> Unit,
-    weight: Float,
+    weightProvider: () -> Float,
     setWeight: (Float) -> Unit,
-    isDialogShown: Boolean,
+    dialogShownProvider: () -> Boolean,
     triggerDialogShown: () -> Unit,
 ) {
     Box(
@@ -60,13 +63,14 @@ private fun CreateScreen_1(
             textAlign = TextAlign.Center,
         )
 
-        var scale by remember { mutableStateOf(0.5f) }
+        var scale by remember { mutableFloatStateOf(0.5f) }
 
         val scaleAnimate = animateFloatAsState(
             targetValue = scale,
             animationSpec = tween(
                 durationMillis = 500
-            )
+            ),
+            label = "create_animation",
         )
 
         LaunchedEffect(Unit) {
@@ -110,34 +114,51 @@ private fun CreateScreen_1(
             )
         }
 
-        if (isDialogShown) {
-            MyWeightCard(
-                onDismiss = triggerDialogShown,
-                onConfirm = {
-                    //
-                },
-                weight = weight,
-                setWeight = setWeight
-            )
-        }
+        WeightDialog(
+            dialogShownProvider = dialogShownProvider,
+            triggerDialogShown = triggerDialogShown,
+            weightProvider = weightProvider,
+            setWeight = setWeight
+        )
+    }
+}
+
+@Composable
+private fun WeightDialog(
+    dialogShownProvider: () -> Boolean,
+    triggerDialogShown: () -> Unit,
+    weightProvider: () -> Float,
+    setWeight: (Float) -> Unit,
+) {
+    val dialogShown = dialogShownProvider()
+
+    if (dialogShown) {
+        MyWeightCard(
+            onDismiss = triggerDialogShown,
+            onConfirm = {
+                //
+            },
+            weight = weightProvider(),
+            setWeight = setWeight
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun CreateScreen_1_Preview() = FoodMoodTheme {
-    val weight = remember { mutableFloatStateOf(0f) }
-    val isDialogShown = remember { mutableStateOf(false) }
+    val weightState = remember { mutableFloatStateOf(0f) }
+    val dialogShownState = remember { mutableStateOf(false) }
 
     CreateScreen_1(
-        weight = weight.value,
+        weightProvider = { weightState.value },
         setWeight = {
-            weight.value = it
-                    },
-        setMealType = {},
-        isDialogShown = isDialogShown.value,
+            weightState.value = it
+        },
+        setMealType = { },
+        dialogShownProvider = { dialogShownState.value },
         triggerDialogShown = {
-            isDialogShown.value = !isDialogShown.value
+            dialogShownState.value = !dialogShownState.value
         }
     )
 }

@@ -35,7 +35,7 @@ class ReportsViewModel: ViewModel() {
     private val _period = MutableStateFlow(ETypePeriod.DAYS_7)
     val period = _period.asStateFlow()
 
-    fun setPeriod(value: ETypePeriod) = with(Repository) {
+    fun setPeriod(value: ETypePeriod) {
         job = CoroutineScope(Dispatchers.IO).launch {
             _coordinatesEmotions.value = emptyList()
             _coordinatesWater.value = emptyList()
@@ -45,7 +45,7 @@ class ReportsViewModel: ViewModel() {
         }
     }
 
-    fun getData() = with(Repository) {
+    fun getData() {
         job = CoroutineScope(Dispatchers.IO).launch {
             getDataFrom()
         }
