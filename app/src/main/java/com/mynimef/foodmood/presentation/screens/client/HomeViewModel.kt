@@ -13,14 +13,12 @@ import com.mynimef.foodmood.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private var job: Job? = null
 
@@ -65,9 +63,6 @@ class HomeViewModel: ViewModel() {
             initialValue = emptyList()
         )
 
-    private val _refreshing = MutableStateFlow(false)
-    val refreshing = _refreshing.asStateFlow()
-
     fun setWater(amount: Float) = with(Repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = WaterIncreaseRequest(
@@ -90,33 +85,29 @@ class HomeViewModel: ViewModel() {
         }
     }
 
-    fun update() = with(Repository) {
-        _refreshing.value = true
-        job = CoroutineScope(Dispatchers.IO).launch {
-            val request = ClientInfoRequest(
-                timeZone = TimeZone.getDefault().id
-            )
-            when (val result = network.clientGetInfo(request)) {
-                is ApiError -> {
-                    when (result.code) {
-                        401 -> {
-                            toastFlow.emit(EToast.AUTH_FAILED)
-                            signOut()
-                        }
-                        else -> {}
+    suspend fun update() = with(Repository) {
+        val request = ClientInfoRequest(
+            timeZone = TimeZone.getDefault().id
+        )
+        when (val result = network.clientGetInfo(request)) {
+            is ApiError -> {
+                when (result.code) {
+                    401 -> {
+                        toastFlow.emit(EToast.AUTH_FAILED)
+                        signOut()
                     }
-                }
-                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
-                is ApiSuccess -> {
-                    val data = result.data
-                    storage.deleteAllCards()
-                    data.dayCards.forEach {
-                        storage.insertCard(it.toCardEntity())
-                    }
-                    storage.insertClient(data.toClientEntity())
+                    else -> {}
                 }
             }
-            _refreshing.value = false
+            is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+            is ApiSuccess -> {
+                val data = result.data
+                storage.deleteAllCards()
+                data.dayCards.forEach {
+                    storage.insertCard(it.toCardEntity())
+                }
+                storage.insertClient(data.toClientEntity())
+            }
         }
     }
 

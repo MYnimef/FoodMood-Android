@@ -1,5 +1,6 @@
 package com.mynimef.foodmood.presentation.screens.client
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,17 +11,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,6 +36,11 @@ import com.mynimef.foodmood.presentation.elements.MyFoodCard
 import com.mynimef.foodmood.presentation.elements.MyGradient
 import com.mynimef.foodmood.presentation.elements.MyWaterPanel
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
+import kotlinx.coroutines.delay
+
+private fun log(message: String) {
+    Log.d("HOME_SCREEN", message)
+}
 
 @Composable
 fun HomeScreen() {
@@ -48,32 +56,29 @@ fun HomeScreen() {
             waterAmountProvider = { waterAmount.value },
             setWater = viewModel::setWater,
             cardsProvider = { cardsState.value },
-            refreshing = viewModel.refreshing.collectAsStateWithLifecycle().value,
             onRefresh = viewModel::update
         )
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
     trackWaterProvider: () -> Boolean,
     waterAmountProvider: () -> Float,
     setWater: (Float) -> Unit,
     cardsProvider: () -> List<CardEntity>,
-    refreshing: Boolean,
-    onRefresh: () -> Unit,
+    onRefresh: suspend () -> Unit,
 ) {
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = refreshing,
-        onRefresh = onRefresh
-    )
+    log("HomeScreen")
+
+    val pullRefreshState = rememberPullToRefreshState()
 
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .pullRefresh(pullRefreshState)
+            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         CenterElements(
             trackWaterProvider = trackWaterProvider,
@@ -99,12 +104,34 @@ private fun HomeScreen(
             colorBottom = MaterialTheme.colorScheme.background
         )
         MyDate()
-        PullRefreshIndicator(
-            refreshing = refreshing,
+        MyPullToRefresh(
+            modifier = Modifier.align(Alignment.TopCenter),
             state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
+            onRefresh = onRefresh
         )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MyPullToRefresh(
+    modifier: Modifier,
+    state: PullToRefreshState,
+    onRefresh: suspend () -> Unit
+) {
+    log("PullToRefresh")
+
+    if (state.isRefreshing) {
+        LaunchedEffect(Unit) {
+            onRefresh()
+            state.endRefresh()
+        }
+    }
+
+    PullToRefreshContainer(
+        modifier = modifier,
+        state = state
+    )
 }
 
 @Composable
@@ -183,14 +210,15 @@ private fun HomeScreenPreview() = FoodMoodTheme {
         ),
     )
 
-    val waterAmount = remember { mutableFloatStateOf(0f) }
+    val waterAmountState = remember { mutableFloatStateOf(0f) }
 
     HomeScreen(
         trackWaterProvider = { true },
-        waterAmountProvider = { waterAmount.floatValue },
-        setWater = { waterAmount.floatValue += it },
+        waterAmountProvider = { waterAmountState.floatValue },
+        setWater = { waterAmountState.floatValue += it },
         cardsProvider = { cards },
-        refreshing = false,
-        onRefresh = {}
+        onRefresh = {
+            delay(5000)
+        }
     )
 }
