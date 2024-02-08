@@ -18,7 +18,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -202,39 +202,38 @@ fun MultiSelector(
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewMultiSelector() {
-    FoodMoodTheme {
-        val options1 = listOf("Lorem", "Ipsum", "Dolor")
-        var selectedOption1 by remember { mutableStateOf(0) }
-        val options2 = listOf("Sit", "Amet", "Consectetur", "Elit", "Quis")
-        var selectedOption2 by remember { mutableStateOf(0) }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            MultiSelector(
-                modifier = Modifier
-                    .padding(all = 16.dp)
-                    .fillMaxWidth()
-                    .height(56.dp)
-                ,
-                options = options1,
-                selectedOption = selectedOption1,
-                onOptionSelect = { num -> selectedOption1 = num },
-            )
+private fun PreviewMultiSelector() = FoodMoodTheme {
+    val options1 = listOf("Lorem", "Ipsum", "Dolor")
+    var selectedOption1 by remember { mutableIntStateOf(0) }
+    val options2 = listOf("Sit", "Amet", "Consectetur", "Elit", "Quis")
+    var selectedOption2 by remember { mutableIntStateOf(0) }
 
-            MultiSelector(
-                modifier = Modifier
-                    .padding(all = 16.dp)
-                    .fillMaxWidth()
-                    .height(56.dp)
-                ,
-                options = options2,
-                selectedOption = selectedOption2,
-                onOptionSelect = { num -> selectedOption2 = num },
-            )
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        MultiSelector(
+            modifier = Modifier
+                .padding(all = 16.dp)
+                .fillMaxWidth()
+                .height(56.dp)
+            ,
+            options = options1,
+            selectedOption = selectedOption1,
+            onOptionSelect = { num -> selectedOption1 = num }
+        )
+
+        MultiSelector(
+            modifier = Modifier
+                .padding(all = 16.dp)
+                .fillMaxWidth()
+                .height(56.dp)
+            ,
+            options = options2,
+            selectedOption = selectedOption2,
+            onOptionSelect = { num -> selectedOption2 = num }
+        )
     }
 }

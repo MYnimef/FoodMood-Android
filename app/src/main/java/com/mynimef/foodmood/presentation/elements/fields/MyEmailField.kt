@@ -9,13 +9,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.mynimef.foodmood.R
+import com.mynimef.foodmood.domain.CheckPair
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
 fun MyEmailField(
     modifier: Modifier = Modifier,
     label: String,
-    pairProvider: () -> Pair<String, Boolean>,
+    pairProvider: () -> CheckPair,
     onValueChange: (String) -> Unit,
 ) {
     MyCheckField(
