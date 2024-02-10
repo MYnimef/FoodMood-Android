@@ -3,7 +3,7 @@ package com.mynimef.foodmood.data.models.responses
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
-import com.mynimef.domain.models.response.ICardResponse
+import com.mynimef.domain.models.responses.ICardResponse
 
 data class CardResponse(
 

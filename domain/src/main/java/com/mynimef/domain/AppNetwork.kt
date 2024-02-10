@@ -1,16 +1,16 @@
 package com.mynimef.domain
 
-import com.mynimef.domain.models.request.IClientAddCardRequest
-import com.mynimef.domain.models.request.IClientDataRequest
-import com.mynimef.domain.models.request.IClientInfoRequest
-import com.mynimef.domain.models.request.ISignInRequest
-import com.mynimef.domain.models.request.ISignUpRequest
-import com.mynimef.domain.models.request.IWaterIncreaseRequest
-import com.mynimef.domain.models.response.ICardResponse
-import com.mynimef.domain.models.response.IClientDataResponse
-import com.mynimef.domain.models.response.IClientInfoResponse
-import com.mynimef.domain.models.response.ISignInResponse
-import com.mynimef.domain.models.response.IWaterIncreaseResponse
+import com.mynimef.domain.models.requests.IClientAddCardRequest
+import com.mynimef.domain.models.requests.IClientDataRequest
+import com.mynimef.domain.models.requests.IClientInfoRequest
+import com.mynimef.domain.models.requests.ISignInRequest
+import com.mynimef.domain.models.requests.ISignUpRequest
+import com.mynimef.domain.models.requests.IWaterIncreaseRequest
+import com.mynimef.domain.models.responses.ICardResponse
+import com.mynimef.domain.models.responses.IClientDataResponse
+import com.mynimef.domain.models.responses.IClientInfoResponse
+import com.mynimef.domain.models.responses.ISignInResponse
+import com.mynimef.domain.models.responses.IWaterIncreaseResponse
 
 interface AppNetwork<
 

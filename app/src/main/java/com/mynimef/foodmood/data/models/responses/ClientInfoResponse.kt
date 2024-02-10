@@ -1,7 +1,7 @@
 package com.mynimef.foodmood.data.models.responses
 
 import com.google.gson.annotations.SerializedName
-import com.mynimef.domain.models.response.IClientInfoResponse
+import com.mynimef.domain.models.responses.IClientInfoResponse
 
 data class ClientInfoResponse(
 

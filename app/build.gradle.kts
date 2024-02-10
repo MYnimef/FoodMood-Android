@@ -57,6 +57,7 @@ kotlin {
 dependencies {
 
     implementation(project(":domain"))
+    implementation(project(":local_data"))
 
     implementation("androidx.core:core-ktx:1.12.0")
 
@@ -77,10 +78,6 @@ dependencies {
     // Retrofit2
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // Room
-    implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
 
     // Calendar
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")

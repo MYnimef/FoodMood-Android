@@ -1,7 +1,7 @@
 package com.mynimef.foodmood.data.models.requests
 
 import com.google.gson.annotations.SerializedName
-import com.mynimef.domain.models.request.ISignUpRequest
+import com.mynimef.domain.models.requests.ISignUpRequest
 
 data class SignUpRequest(
 

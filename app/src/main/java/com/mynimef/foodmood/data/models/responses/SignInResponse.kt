@@ -2,7 +2,7 @@ package com.mynimef.foodmood.data.models.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.ERole
-import com.mynimef.domain.models.response.ISignInResponse
+import com.mynimef.domain.models.responses.ISignInResponse
 
 data class SignInResponse(
 

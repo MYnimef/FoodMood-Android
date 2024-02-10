@@ -18,8 +18,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,9 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mynimef.foodmood.data.models.database.CardEntity
-import com.mynimef.domain.models.ETypeEmotion
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.CardModel
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyFoodCard
 import com.mynimef.foodmood.presentation.elements.MyGradient
@@ -38,7 +34,6 @@ import com.mynimef.foodmood.presentation.elements.MyWaterPanel
 import com.mynimef.foodmood.presentation.extensions.getIcon
 import com.mynimef.foodmood.presentation.extensions.getLabel
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
-import kotlinx.coroutines.delay
 
 private fun log(message: String) {
     Log.d("HOME_SCREEN", message)
@@ -69,7 +64,7 @@ private fun HomeScreen(
     trackWaterProvider: () -> Boolean,
     waterAmountProvider: () -> Float,
     setWater: (Float) -> Unit,
-    cardsProvider: () -> List<CardEntity>,
+    cardsProvider: () -> List<CardModel>,
     onRefresh: suspend () -> Unit,
 ) {
     log("HomeScreen")
@@ -141,7 +136,7 @@ private fun CenterElements(
     trackWaterProvider: () -> Boolean,
     waterAmountProvider: () -> Float,
     setWater: (Float) -> Unit,
-    cardsProvider: () -> List<CardEntity>,
+    cardsProvider: () -> List<CardModel>,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -179,32 +174,33 @@ private fun CenterElements(
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() = FoodMoodTheme {
+    /*
     val cards = listOf(
-        CardEntity(
+        com.mynimef.local_data.database.CardEntity(
             mealType = ETypeMeal.BREAKFAST,
             emotionType = ETypeEmotion.NORMAL,
             emotionDescription = "nice",
             foodDescription = "nice",
         ),
-        CardEntity(
+        com.mynimef.local_data.database.CardEntity(
             mealType = ETypeMeal.BRUNCH,
             emotionType = ETypeEmotion.BAD,
             emotionDescription = "nice",
             foodDescription = "nice",
         ),
-        CardEntity(
+        com.mynimef.local_data.database.CardEntity(
             mealType = ETypeMeal.LUNCH,
             emotionType = ETypeEmotion.VERY_BAD,
             emotionDescription = "nice",
             foodDescription = "nice",
         ),
-        CardEntity(
+        com.mynimef.local_data.database.CardEntity(
             mealType = ETypeMeal.SUPPER,
             emotionType = ETypeEmotion.GOOD,
             emotionDescription = "nice",
             foodDescription = "nice",
         ),
-        CardEntity(
+        com.mynimef.local_data.database.CardEntity(
             mealType = ETypeMeal.DINNER,
             emotionType = ETypeEmotion.GOOD,
             emotionDescription = "nice",
@@ -223,4 +219,5 @@ private fun HomeScreenPreview() = FoodMoodTheme {
             delay(5000)
         }
     )
+    */
 }
