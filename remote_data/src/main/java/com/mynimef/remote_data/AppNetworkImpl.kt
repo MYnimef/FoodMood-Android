@@ -44,7 +44,7 @@ class AppNetworkImpl: AppNetwork {
 
     init {
         val gson = GsonBuilder()
-            //.excludeFieldsWithoutExposeAnnotation()
+            .excludeFieldsWithoutExposeAnnotation()
             .create()
 
         val retrofit = Retrofit.Builder()
@@ -66,20 +66,20 @@ class AppNetworkImpl: AppNetwork {
     }
 
     override suspend fun signUpClient(request: ISignUpRequest) =
-        handleApi { authAPI.signUpClient(SignUpRequest.fromModel(request)) as Response<ISignInResponse> }
+        handleApi { authAPI.signUpClient(SignUpRequest(request)) as Response<ISignInResponse> }
     override suspend fun signIn(request: ISignInRequest) =
-        handleApi { authAPI.signIn(SignInRequest.fromModel(request)) as Response<ISignInResponse> }
+        handleApi { authAPI.signIn(SignInRequest(request)) as Response<ISignInResponse> }
 
     override suspend fun clientGetInfo(request: IClientInfoRequest) =
-        handleAuthApi { clientAPI.getInfo(it, ClientInfoRequest.fromModel(request)) as Response<IClientInfoResponse> }
+        handleAuthApi { clientAPI.getInfo(it, ClientInfoRequest(request)) as Response<IClientInfoResponse> }
     override suspend fun clientAddCard(request: IClientAddCardRequest) =
-        handleAuthApi { clientAPI.addCard(it, ClientAddCardRequest.fromModel(request)) as Response<ICardResponse> }
+        handleAuthApi { clientAPI.addCard(it, ClientAddCardRequest(request)) as Response<ICardResponse> }
     override suspend fun clientGetDayCards(day: Int, month: Int, year: Int) =
         handleAuthApi { clientAPI.getDateCards(it, day, month, year) as Response<List<ICardResponse>> }
     override suspend fun clientIncreaseWater(request: IWaterIncreaseRequest) =
-        handleAuthApi { clientAPI.increaseWater(it, WaterIncreaseRequest.fromModel(request)) as Response<IWaterIncreaseResponse> }
+        handleAuthApi { clientAPI.increaseWater(it, WaterIncreaseRequest(request)) as Response<IWaterIncreaseResponse> }
     override suspend fun clientGetData(request: IClientDataRequest) =
-        handleAuthApi { clientAPI.getData(it, ClientDataRequest.fromModel(request)) as Response<IClientDataResponse> }
+        handleAuthApi { clientAPI.getData(it, ClientDataRequest(request)) as Response<IClientDataResponse> }
 
     private suspend fun <T: Any> handleApi(
         execute: suspend () -> Response<T>
