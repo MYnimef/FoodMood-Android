@@ -5,7 +5,7 @@ import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiResult
 import com.mynimef.domain.ApiSuccess
-import com.mynimef.domain.AppNetwork
+import com.mynimef.domain.IAppNetwork
 import com.mynimef.domain.models.requests.IClientAddCardRequest
 import com.mynimef.domain.models.requests.IClientDataRequest
 import com.mynimef.domain.models.requests.IClientInfoRequest
@@ -26,6 +26,7 @@ import com.mynimef.data_remote.requests.RefreshTokenRequest
 import com.mynimef.data_remote.requests.SignInRequest
 import com.mynimef.data_remote.requests.SignUpRequest
 import com.mynimef.data_remote.requests.WaterIncreaseRequest
+import com.mynimef.domain.IAppNetworkRoot
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -34,7 +35,7 @@ import retrofit2.create
 
 
 @Suppress("UNCHECKED_CAST")
-class AppNetworkImpl: AppNetwork {
+class AppNetworkImpl: IAppNetworkRoot {
 
     private val authAPI: AuthAPI
     private val clientAPI: ClientAPI

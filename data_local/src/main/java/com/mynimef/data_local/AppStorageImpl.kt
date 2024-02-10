@@ -4,11 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.mynimef.domain.AppStorage
-import com.mynimef.domain.models.AccountModel
-import com.mynimef.domain.models.CardModel
-import com.mynimef.domain.models.ClientModel
-import com.mynimef.domain.models.EAppState
 import com.mynimef.data_local.dao.AccountDao
 import com.mynimef.data_local.dao.CardDao
 import com.mynimef.data_local.dao.ClientDao
@@ -16,9 +11,14 @@ import com.mynimef.data_local.models.AccountEntity
 import com.mynimef.data_local.models.CardEntity
 import com.mynimef.data_local.models.ClientEntity
 import com.mynimef.data_local.models.TrainerEntity
+import com.mynimef.domain.IAppStorageRoot
+import com.mynimef.domain.models.AccountModel
+import com.mynimef.domain.models.CardModel
+import com.mynimef.domain.models.ClientModel
+import com.mynimef.domain.models.EAppState
 import kotlinx.coroutines.flow.Flow
 
-class AppStorageImpl(context: Context): AppStorage {
+class AppStorageImpl(context: Context): IAppStorageRoot {
 
     private val sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
     private val database = Room.databaseBuilder(
@@ -32,12 +32,12 @@ class AppStorageImpl(context: Context): AppStorage {
     private var id = sharedPref.getLong("account_id", 0)
 
     suspend fun initApp(): EAppState {
-        val state = EAppState.fromInt(sharedPref.getInt("app_state", 0))
+        val state = EAppState.fromInt(sharedPref.getInt("app_state", EAppState.AUTH.value))
         return state
     }
 
-    fun setAppState(state: Int) = with(sharedPref.edit()) {
-        putInt("app_state", state)
+    override fun setAppState(state: EAppState) = with(sharedPref.edit()) {
+        putInt("app_state", state.value)
         apply()
     }
 

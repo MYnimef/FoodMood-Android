@@ -5,7 +5,7 @@ import com.mynimef.domain.models.CardModel
 import com.mynimef.domain.models.ClientModel
 import kotlinx.coroutines.flow.Flow
 
-interface AppStorage {
+interface IAppStorage {
 
     suspend fun getRefreshToken(): String
 

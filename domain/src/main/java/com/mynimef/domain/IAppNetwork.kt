@@ -12,11 +12,7 @@ import com.mynimef.domain.models.responses.IClientInfoResponse
 import com.mynimef.domain.models.responses.ISignInResponse
 import com.mynimef.domain.models.responses.IWaterIncreaseResponse
 
-interface AppNetwork {
-
-    fun updateRefreshToken(token: String)
-
-    fun updateAccessToken(token: String?)
+interface IAppNetwork {
 
     suspend fun signUpClient(request: ISignUpRequest): ApiResult<ISignInResponse>
 
