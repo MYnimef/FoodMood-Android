@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavAuth
+import com.mynimef.data.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.fields.MyCheckField
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme

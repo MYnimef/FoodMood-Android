@@ -18,7 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mynimef.foodmood.data.models.enums.ETypeWater
+import com.mynimef.foodmood.presentation.enums.ETypeWater
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable

@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.data.models.enums
+package com.mynimef.data.enums
 
 enum class ENavClientMain(val route: String, val parentRoute: String? = null) {
 

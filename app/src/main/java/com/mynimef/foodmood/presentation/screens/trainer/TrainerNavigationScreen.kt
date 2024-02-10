@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mynimef.foodmood.data.models.enums.ENavigationTrainer
+import com.mynimef.data.enums.ENavigationTrainer
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable

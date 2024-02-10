@@ -6,8 +6,8 @@ import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.models.requests.IClientInfoRequest
-import com.mynimef.foodmood.data.models.enums.EToast
-import com.mynimef.foodmood.data.repository.RepositoryImpl
+import com.mynimef.data.enums.EToast
+import com.mynimef.data.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

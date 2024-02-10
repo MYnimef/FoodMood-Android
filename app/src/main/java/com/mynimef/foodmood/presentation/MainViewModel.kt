@@ -2,7 +2,7 @@ package com.mynimef.foodmood.presentation
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.repository.RepositoryImpl
+import com.mynimef.data.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

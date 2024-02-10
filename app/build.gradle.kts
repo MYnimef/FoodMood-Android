@@ -57,8 +57,7 @@ kotlin {
 dependencies {
 
     implementation(project(":domain"))
-    implementation(project(":data_local"))
-    implementation(project(":data_remote"))
+    implementation(project(":data"))
 
     implementation("androidx.core:core-ktx:1.12.0")
 

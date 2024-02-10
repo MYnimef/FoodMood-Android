@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
-import com.mynimef.foodmood.data.models.enums.ENavClientMain
+import com.mynimef.data.enums.ENavClientMain
 import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
 import com.mynimef.domain.models.requests.IClientAddCardRequest
-import com.mynimef.foodmood.data.repository.RepositoryImpl
+import com.mynimef.data.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

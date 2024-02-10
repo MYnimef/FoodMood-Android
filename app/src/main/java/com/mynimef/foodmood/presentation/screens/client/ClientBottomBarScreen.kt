@@ -14,10 +14,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavClientBottomBar
-import com.mynimef.foodmood.data.models.enums.ENavClientMain
+import com.mynimef.data.enums.ENavClientBottomBar
+import com.mynimef.data.enums.ENavClientMain
 import com.mynimef.foodmood.presentation.elements.BottomNavigationItem
 import com.mynimef.foodmood.presentation.elements.MyNavigationBar
+import com.mynimef.foodmood.presentation.extensions.getIcon
+import com.mynimef.foodmood.presentation.extensions.getIconFill
 
 @Composable
 fun ClientBottomBarScreen() {
@@ -82,8 +84,8 @@ private fun getItem(
     navigate: (ENavClientBottomBar) -> Unit
 ): BottomNavigationItem {
     return BottomNavigationItem(
-        icon = nav.icon,
-        iconFill = nav.iconFill,
+        icon = nav.getIcon(),
+        iconFill = nav.getIconFill(),
         route = nav.route,
         onClick = { navigate(nav) }
     )

@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.commandiron.wheel_picker_compose.WheelDatePicker
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ENavAuth
+import com.mynimef.data.enums.ENavAuth
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import java.time.LocalDate

@@ -7,9 +7,10 @@ import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.models.requests.IClientDataRequest
 import com.mynimef.domain.models.responses.IDataResponse
-import com.mynimef.foodmood.data.models.enums.EToast
-import com.mynimef.foodmood.data.models.enums.ETypePeriod
-import com.mynimef.foodmood.data.repository.RepositoryImpl
+import com.mynimef.data.enums.EToast
+import com.mynimef.data.enums.ETypePeriod
+import com.mynimef.data.RepositoryImpl
+import com.mynimef.foodmood.presentation.extensions.getNum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -54,7 +55,7 @@ class ReportsViewModel: ViewModel() {
     private suspend fun getDataFrom() = with(RepositoryImpl) {
         val request = IClientDataRequest.create(
             timeZone = TimeZone.getDefault().id,
-            days = _period.value.period.toLong(),
+            days = _period.value.getNum().toLong(),
         )
         when (val result = network.clientGetData(request)) {
             is ApiError -> when (result.code) {
@@ -79,7 +80,7 @@ class ReportsViewModel: ViewModel() {
     }
 
     private fun convertData(data: List<IDataResponse>): List<Pair<Float, Float>> {
-        val max = _period.value.period
+        val max = _period.value.getNum()
         val actualDate = LocalDate.now()
 
         val result = mutableListOf<Pair<Float, Float>>()

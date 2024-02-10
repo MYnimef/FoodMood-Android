@@ -9,9 +9,9 @@ import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.extensions.emailChecker
 import com.mynimef.domain.extensions.passwordChecker
 import com.mynimef.domain.models.requests.ISignInRequest
-import com.mynimef.foodmood.data.models.enums.ENavAuth
-import com.mynimef.foodmood.data.models.enums.EToast
-import com.mynimef.foodmood.data.repository.RepositoryImpl
+import com.mynimef.data.enums.ENavAuth
+import com.mynimef.data.enums.EToast
+import com.mynimef.data.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

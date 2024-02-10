@@ -1,5 +1,8 @@
 package com.mynimef.foodmood.presentation.extensions
 
+import com.mynimef.data.enums.ENavClientBottomBar
+import com.mynimef.data.enums.EToast
+import com.mynimef.data.enums.ETypePeriod
 import com.mynimef.foodmood.R
 import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
@@ -26,4 +29,36 @@ fun ETypeMeal.getLabel() = when (this) {
     ETypeMeal.LUNCH -> R.string.type_food_snack2
     ETypeMeal.SUPPER -> R.string.type_food_supper
     ETypeMeal.DINNER -> R.string.type_food_dinner
+}
+
+fun ENavClientBottomBar.getIcon() = when(this) {
+    ENavClientBottomBar.HOME -> R.drawable.ic_nav_home
+    ENavClientBottomBar.CALENDAR -> R.drawable.ic_nav_calendar
+    ENavClientBottomBar.REPORTS -> R.drawable.ic_nav_reports
+    ENavClientBottomBar.SETTINGS -> R.drawable.ic_nav_settings
+}
+
+fun ENavClientBottomBar.getIconFill() = when(this) {
+    ENavClientBottomBar.HOME -> R.drawable.ic_nav_home_fill
+    ENavClientBottomBar.CALENDAR -> R.drawable.ic_nav_calendar_fill
+    ENavClientBottomBar.REPORTS -> R.drawable.ic_nav_reports_fill
+    ENavClientBottomBar.SETTINGS -> R.drawable.ic_nav_settings_fill
+}
+
+fun EToast.getText() = when(this) {
+    EToast.AUTH_FAILED -> R.string.toast_401_client
+    EToast.WRONG_EMAIL_OR_PASSWORD -> R.string.toast_401_signin
+    EToast.WRONG_INPUT -> R.string.toast_403
+    EToast.ACCOUNT_ALREADY_EXISTS -> R.string.toast_409
+    EToast.NO_CONNECTION -> R.string.toast_no_con
+}
+
+fun ETypePeriod.getNum() = when(this) {
+    ETypePeriod.DAYS_7 -> 7
+    ETypePeriod.DAYS_31 -> 31
+}
+
+fun ETypePeriod.getLabel() = when(this) {
+    ETypePeriod.DAYS_7 -> R.string.days_7
+    ETypePeriod.DAYS_31 -> R.string.days_31
 }

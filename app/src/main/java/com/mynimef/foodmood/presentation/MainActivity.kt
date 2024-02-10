@@ -13,6 +13,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.mynimef.domain.models.EAppState
+import com.mynimef.foodmood.presentation.extensions.getText
 import com.mynimef.foodmood.presentation.screens.auth.AuthMainScreen
 import com.mynimef.foodmood.presentation.screens.client.ClientMainScreen
 import com.mynimef.foodmood.presentation.screens.trainer.TrainerNavigationScreen
@@ -33,7 +34,7 @@ class MainActivity: ComponentActivity() {
 
         lifecycleScope.launch {
             viewModel.toastFlow.collect { message ->
-                Toast.makeText(this@MainActivity, message.text, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, message.getText(), Toast.LENGTH_LONG).show()
             }
         }
 

@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
-import com.mynimef.foodmood.data.models.enums.ENavAuth
-import com.mynimef.foodmood.data.models.enums.EToast
-import com.mynimef.foodmood.data.repository.RepositoryImpl
+import com.mynimef.data.enums.ENavAuth
+import com.mynimef.data.enums.EToast
+import com.mynimef.data.RepositoryImpl
 import com.mynimef.domain.extensions.emailChecker
 import com.mynimef.domain.extensions.nameChecker
 import com.mynimef.domain.extensions.passwordChecker

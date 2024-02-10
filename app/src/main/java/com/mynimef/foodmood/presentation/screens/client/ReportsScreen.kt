@@ -22,12 +22,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.data.models.enums.ETypePeriod
+import com.mynimef.data.enums.ETypePeriod
 import com.mynimef.foodmood.presentation.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.presentation.elements.MultiSelector
 import com.mynimef.foodmood.presentation.elements.MyEmotionsChart
 import com.mynimef.foodmood.presentation.elements.MyWaterChart
 import com.mynimef.foodmood.presentation.elements.MyWeightChart
+import com.mynimef.foodmood.presentation.extensions.getLabel
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -71,7 +72,7 @@ private fun ReportsScreen(
                 .fillMaxWidth()
                 .height(30.dp)
             ,
-            options = periods.map { stringResource(it.label) },
+            options = periods.map { stringResource(it.getLabel()) },
             selectedOption = periods.indexOf(periodProvider()),
             onOptionSelect = { num -> setPeriod(periods[num]) },
             selectedTextColor = MaterialTheme.colorScheme.onTertiary,

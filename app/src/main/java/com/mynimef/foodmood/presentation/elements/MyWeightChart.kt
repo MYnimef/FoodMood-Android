@@ -8,13 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mynimef.foodmood.data.models.enums.ETypePeriod
+import com.mynimef.data.enums.ETypePeriod
 import com.mynimef.foodmood.presentation.elements.chart.AxisLines
 import com.mynimef.foodmood.presentation.elements.chart.LineChart
 import com.mynimef.foodmood.presentation.elements.chart.PlotCoordinates
 import com.mynimef.foodmood.presentation.elements.chart.PlotLabels
 import com.mynimef.foodmood.presentation.elements.chart.PlotLineStyle
 import com.mynimef.foodmood.presentation.elements.chart.PlotMarkStyle
+import com.mynimef.foodmood.presentation.extensions.getNum
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import java.time.LocalDate
 import kotlin.math.floor
@@ -26,7 +27,7 @@ fun MyWeightChart(
     periodType: ETypePeriod,
 ) {
     val date = LocalDate.now()
-    val period = periodType.period
+    val period = periodType.getNum()
 
     val xLabels = listOf(
         date.minusDays(period.toLong()).toString(),

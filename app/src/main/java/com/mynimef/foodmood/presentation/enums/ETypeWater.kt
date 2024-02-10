@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.data.models.enums
+package com.mynimef.foodmood.presentation.enums
 
 import com.mynimef.foodmood.R
 

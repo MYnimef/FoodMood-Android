@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.data.models
+package com.mynimef.data
 
 data class Notification(
     val id: Long,
