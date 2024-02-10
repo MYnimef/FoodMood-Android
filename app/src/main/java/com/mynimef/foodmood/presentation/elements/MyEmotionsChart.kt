@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
+import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.foodmood.data.models.enums.ETypePeriod
 import com.mynimef.foodmood.presentation.elements.chart.AxisLines
 import com.mynimef.foodmood.presentation.elements.chart.LineChart
@@ -16,6 +16,7 @@ import com.mynimef.foodmood.presentation.elements.chart.PlotIcons
 import com.mynimef.foodmood.presentation.elements.chart.PlotLabels
 import com.mynimef.foodmood.presentation.elements.chart.PlotLineStyle
 import com.mynimef.foodmood.presentation.elements.chart.PlotMarkStyle
+import com.mynimef.foodmood.presentation.extensions.getIcon
 import com.mynimef.foodmood.presentation.theme.EmotionDarkGreen
 import com.mynimef.foodmood.presentation.theme.EmotionGreen
 import com.mynimef.foodmood.presentation.theme.EmotionOrange
@@ -38,7 +39,7 @@ fun MyEmotionsChart(
         date.minusDays((period / 2).toLong()).toString(),
         date.toString(),
     )
-    val yIcons = ETypeEmotion.values().map { it.icon }
+    val yIcons = ETypeEmotion.entries.map { it.getIcon() }
 
     val iconSize = 20.dp
     val paddingY = iconSize * 1.5f

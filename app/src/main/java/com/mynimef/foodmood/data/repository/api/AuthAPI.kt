@@ -19,4 +19,5 @@ interface AuthAPI {
 
     @POST("/api/auth/refreshtoken")
     suspend fun refreshToken(@Body request: RefreshTokenRequest): Response<RefreshTokenResponse>
+
 }

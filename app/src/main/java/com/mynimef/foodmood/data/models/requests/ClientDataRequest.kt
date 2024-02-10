@@ -1,8 +1,14 @@
 package com.mynimef.foodmood.data.models.requests
 
 import com.google.gson.annotations.SerializedName
+import com.mynimef.domain.models.request.IClientDataRequest
 
 data class ClientDataRequest(
-    @SerializedName("time_zone") val timeZone: String,
-    @SerializedName("days") val days: Long,
-)
+
+    @SerializedName("time_zone")
+    override val timeZone: String,
+
+    @SerializedName("days")
+    override val days: Long
+
+): IClientDataRequest

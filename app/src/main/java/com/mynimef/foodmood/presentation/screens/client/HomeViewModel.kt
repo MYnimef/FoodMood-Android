@@ -3,13 +3,13 @@ package com.mynimef.foodmood.presentation.screens.client
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynimef.foodmood.data.models.ApiError
-import com.mynimef.foodmood.data.models.ApiException
-import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.domain.ApiError
+import com.mynimef.domain.ApiException
+import com.mynimef.domain.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
-import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,7 +22,7 @@ class HomeViewModel : ViewModel() {
 
     private var job: Job? = null
 
-    private val client = Repository.storage.getClient()
+    private val client = RepositoryImpl.storage.getClient()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -56,14 +56,14 @@ class HomeViewModel : ViewModel() {
             initialValue = 0f
         )
 
-    val cards = Repository.storage.getAllCards()
+    val cards = RepositoryImpl.storage.getAllCards()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyList()
         )
 
-    fun setWater(amount: Float) = with(Repository) {
+    fun setWater(amount: Float) = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = WaterIncreaseRequest(
                 amount = amount,
@@ -85,7 +85,7 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    suspend fun update() = with(Repository) {
+    suspend fun update() = with(RepositoryImpl) {
         val request = ClientInfoRequest(
             timeZone = TimeZone.getDefault().id
         )
@@ -104,9 +104,9 @@ class HomeViewModel : ViewModel() {
                 val data = result.data
                 storage.deleteAllCards()
                 data.dayCards.forEach {
-                    storage.insertCard(it.toCardEntity())
+                    storage.insertCard(it)
                 }
-                storage.insertClient(data.toClientEntity())
+                storage.insertClient(data.client)
             }
         }
     }

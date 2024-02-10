@@ -3,8 +3,9 @@ package com.mynimef.foodmood.data.models.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
-import com.mynimef.foodmood.data.models.enums.ETypeMeal
+import com.mynimef.domain.models.CardModel
+import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.domain.models.ETypeMeal
 
 @Entity(tableName = "card")
 data class CardEntity(
@@ -14,15 +15,24 @@ data class CardEntity(
     val id: Long = 0,
 
     @ColumnInfo(name = "meal_type")
-    val mealType: ETypeMeal,
+    override val mealType: ETypeMeal,
 
     @ColumnInfo(name = "emotion_type")
-    val emotionType: ETypeEmotion,
+    override val emotionType: ETypeEmotion,
 
     @ColumnInfo(name = "emotion_description")
-    val emotionDescription: String,
+    override val emotionDescription: String,
 
     @ColumnInfo(name = "food_description")
-    val foodDescription: String?,
+    override val foodDescription: String?
 
-)
+): CardModel {
+    companion object {
+        fun fromModel(model: CardModel) = CardEntity(
+            mealType = model.mealType,
+            emotionType = model.emotionType,
+            emotionDescription = model.emotionDescription,
+            foodDescription = model.foodDescription,
+        )
+    }
+}

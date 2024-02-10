@@ -1,10 +1,20 @@
 package com.mynimef.foodmood.data.models.responses
 
 import com.google.gson.annotations.SerializedName
+import com.mynimef.domain.models.response.IDataResponse
 
 data class DataResponse(
-    @SerializedName("value") val value: Float,
-    @SerializedName("year") val year: Int,
-    @SerializedName("month") val month: Int,
-    @SerializedName("day") val day: Int,
-)
+
+    @SerializedName("value")
+    override val value: Float,
+
+    @SerializedName("year")
+    override val year: Int,
+
+    @SerializedName("month")
+    override val month: Int,
+
+    @SerializedName("day")
+    override val day: Int
+
+): IDataResponse

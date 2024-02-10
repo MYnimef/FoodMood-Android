@@ -2,7 +2,7 @@ package com.mynimef.foodmood.presentation
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -15,13 +15,13 @@ class MainViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    val toastFlow = Repository.toastFlow.asSharedFlow()
-    val appState = Repository.appState
+    val toastFlow = RepositoryImpl.toastFlow.asSharedFlow()
+    val appState = RepositoryImpl.appState
 
     private val _dataLoaded = MutableStateFlow(false)
     val dataLoaded = _dataLoaded.asStateFlow()
 
-    fun initData(context: Context) = with(Repository) {
+    fun initData(context: Context) = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
             init(context)
             _dataLoaded.value = true

@@ -4,16 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.mynimef.domain.AppStorage
+import com.mynimef.domain.models.AccountModel
+import com.mynimef.domain.models.CardModel
+import com.mynimef.domain.models.ClientModel
+import com.mynimef.domain.models.EAppState
 import com.mynimef.foodmood.data.models.database.AccountEntity
 import com.mynimef.foodmood.data.models.database.CardEntity
 import com.mynimef.foodmood.data.models.database.ClientEntity
 import com.mynimef.foodmood.data.models.database.TrainerEntity
-import com.mynimef.foodmood.data.models.enums.EAppState
 import com.mynimef.foodmood.data.repository.dao.AccountDao
 import com.mynimef.foodmood.data.repository.dao.CardDao
 import com.mynimef.foodmood.data.repository.dao.ClientDao
 
-class AppStorage(context: Context) {
+class AppStorageImpl(context: Context): AppStorage {
 
     private val sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
     private val database = Room.databaseBuilder(
@@ -44,21 +48,34 @@ class AppStorage(context: Context) {
         this.id = id
     }
 
-    suspend fun getRefreshToken() = database.accountDao().getRefreshTokenById(id)
-    suspend fun insertAccount(account: AccountEntity) = setId(database.accountDao().insert(account))
-    suspend fun deleteAccount(id: Long) = database.accountDao().deleteById(id)
-    suspend fun deleteAccount() = database.accountDao().deleteById(id)
+    override suspend fun getRefreshToken() =
+        database.accountDao().getRefreshTokenById(id)
+    override suspend fun insertAccount(account: AccountModel) =
+        setId(database.accountDao().insert(AccountEntity.fromModel(account)))
+    override suspend fun deleteAccount(id: Long) =
+        database.accountDao().deleteById(id)
+    override suspend fun deleteAccount() =
+        database.accountDao().deleteById(id)
 
-    fun getAllClients() = database.clientDao().getAll()
-    fun getClient() = database.clientDao().getClientById(id)
-    suspend fun insertClient(client: ClientEntity) = database.clientDao().insert(client.copy(id = id))
-    suspend fun deleteClient(id: Long) = database.clientDao().deleteById(id)
-    suspend fun deleteClient() = database.clientDao().deleteById(id)
-    suspend fun updateWaterAmountClient(waterAmount: Float) = database.clientDao().updateWaterAmount(id = id, waterAmount = waterAmount)
+    override fun getAllClients() =
+        database.clientDao().getAll()
+    override fun getClient() =
+        database.clientDao().getClientById(id)
+    override suspend fun insertClient(client: ClientModel) =
+        database.clientDao().insert(ClientEntity.fromModel(client, id))
+    override suspend fun deleteClient(id: Long) =
+        database.clientDao().deleteById(id)
+    override suspend fun deleteClient() =
+        database.clientDao().deleteById(id)
+    override suspend fun updateWaterAmountClient(waterAmount: Float) =
+        database.clientDao().updateWaterAmount(id = id, waterAmount = waterAmount)
 
-    suspend fun insertCard(card: CardEntity) = database.cardDao().insert(card)
-    fun getAllCards() = database.cardDao().getAll()
-    suspend fun deleteAllCards() = database.cardDao().deleteAll()
+    override suspend fun insertCard(card: CardModel) =
+        database.cardDao().insert(CardEntity.fromModel(card))
+    override fun getAllCards() =
+        database.cardDao().getAll()
+    override suspend fun deleteAllCards() =
+        database.cardDao().deleteAll()
 
     @Database(
         entities = [
@@ -75,4 +92,5 @@ class AppStorage(context: Context) {
         abstract fun clientDao(): ClientDao
         abstract fun cardDao(): CardDao
     }
+
 }

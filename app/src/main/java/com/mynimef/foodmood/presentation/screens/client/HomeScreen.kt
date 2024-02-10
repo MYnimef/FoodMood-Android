@@ -29,12 +29,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.data.models.database.CardEntity
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
-import com.mynimef.foodmood.data.models.enums.ETypeMeal
+import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.domain.models.ETypeMeal
 import com.mynimef.foodmood.presentation.elements.MyDate
 import com.mynimef.foodmood.presentation.elements.MyFoodCard
 import com.mynimef.foodmood.presentation.elements.MyGradient
 import com.mynimef.foodmood.presentation.elements.MyWaterPanel
+import com.mynimef.foodmood.presentation.extensions.getIcon
+import com.mynimef.foodmood.presentation.extensions.getLabel
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import kotlinx.coroutines.delay
 
@@ -46,14 +48,14 @@ private fun log(message: String) {
 fun HomeScreen() {
     val viewModel: HomeViewModel = viewModel()
 
-    val trackWater = viewModel.trackWater.collectAsStateWithLifecycle()
-    val waterAmount = viewModel.waterAmount.collectAsStateWithLifecycle()
+    val trackWaterState = viewModel.trackWater.collectAsStateWithLifecycle()
+    val waterAmountState = viewModel.waterAmount.collectAsStateWithLifecycle()
     val cardsState = viewModel.cards.collectAsStateWithLifecycle()
 
     if (viewModel.dataLoaded.collectAsStateWithLifecycle().value) {
         HomeScreen(
-            trackWaterProvider = { trackWater.value },
-            waterAmountProvider = { waterAmount.value },
+            trackWaterProvider = { trackWaterState.value },
+            waterAmountProvider = { waterAmountState.value },
             setWater = viewModel::setWater,
             cardsProvider = { cardsState.value },
             onRefresh = viewModel::update
@@ -162,8 +164,8 @@ private fun CenterElements(
         }
         items(cardsProvider()) { card ->
             MyFoodCard(
-                iconEatId = card.mealType.icon,
-                typeEatId = card.mealType.label,
+                iconEatId = card.mealType.getIcon(),
+                typeEatId = card.mealType.getLabel(),
                 textEmotion = card.emotionDescription,
                 emotion = card.emotionType,
             )

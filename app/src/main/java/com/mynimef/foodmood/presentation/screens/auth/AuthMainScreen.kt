@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.mynimef.foodmood.data.models.enums.ENavAuth
-import com.mynimef.foodmood.extensions.sharedViewModel
+import com.mynimef.foodmood.presentation.extensions.sharedViewModel
 
 @Composable
 fun AuthMainScreen() {

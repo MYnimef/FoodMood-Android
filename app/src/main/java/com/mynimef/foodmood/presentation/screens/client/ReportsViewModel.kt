@@ -2,14 +2,14 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.models.ApiError
-import com.mynimef.foodmood.data.models.ApiException
-import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.domain.ApiError
+import com.mynimef.domain.ApiException
+import com.mynimef.domain.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.enums.ETypePeriod
 import com.mynimef.foodmood.data.models.requests.ClientDataRequest
 import com.mynimef.foodmood.data.models.responses.DataResponse
-import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -51,7 +51,7 @@ class ReportsViewModel: ViewModel() {
         }
     }
 
-    private suspend fun getDataFrom() = with(Repository) {
+    private suspend fun getDataFrom() = with(RepositoryImpl) {
         val request = ClientDataRequest(
             timeZone = TimeZone.getDefault().id,
             days = _period.value.period.toLong(),

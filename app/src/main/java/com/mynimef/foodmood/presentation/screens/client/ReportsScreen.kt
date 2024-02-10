@@ -23,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.data.models.enums.ETypePeriod
-import com.mynimef.foodmood.extensions.OnLifecycleEvent
+import com.mynimef.foodmood.presentation.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.presentation.elements.MultiSelector
 import com.mynimef.foodmood.presentation.elements.MyEmotionsChart
 import com.mynimef.foodmood.presentation.elements.MyWaterChart

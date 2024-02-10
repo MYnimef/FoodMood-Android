@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.foodmood.R
-import com.mynimef.foodmood.domain.CheckPair
+import com.mynimef.domain.extensions.CheckPair
 import com.mynimef.foodmood.presentation.elements.MyLoginButton
 import com.mynimef.foodmood.presentation.elements.fields.MyEmailField
 import com.mynimef.foodmood.presentation.elements.fields.MyPasswordField

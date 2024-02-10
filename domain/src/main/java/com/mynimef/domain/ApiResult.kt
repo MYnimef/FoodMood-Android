@@ -1,4 +1,4 @@
-package com.mynimef.foodmood.data.models
+package com.mynimef.domain
 
 sealed interface ApiResult<T : Any>
 

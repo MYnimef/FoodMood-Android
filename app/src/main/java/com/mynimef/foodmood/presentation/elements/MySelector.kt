@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import com.mynimef.foodmood.extensions.noRippleClickable
+import com.mynimef.foodmood.presentation.extensions.noRippleClickable
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

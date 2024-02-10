@@ -1,7 +1,7 @@
 package com.mynimef.foodmood.presentation.screens.client
 
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -11,7 +11,7 @@ class SetUpAccountViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    fun signOut() = with(Repository) {
+    fun signOut() = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
             signOut()
         }

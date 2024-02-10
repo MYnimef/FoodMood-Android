@@ -3,16 +3,16 @@ package com.mynimef.foodmood.presentation.screens.auth
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynimef.foodmood.data.models.ApiError
-import com.mynimef.foodmood.data.models.ApiException
-import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.domain.ApiError
+import com.mynimef.domain.ApiException
+import com.mynimef.domain.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
+import com.mynimef.foodmood.data.repository.RepositoryImpl
+import com.mynimef.domain.extensions.emailChecker
+import com.mynimef.domain.extensions.nameChecker
+import com.mynimef.domain.extensions.passwordChecker
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
-import com.mynimef.foodmood.data.repository.Repository
-import com.mynimef.foodmood.domain.emailChecker
-import com.mynimef.foodmood.domain.nameChecker
-import com.mynimef.foodmood.domain.passwordChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -112,7 +112,7 @@ class SignUpViewModel: ViewModel() {
         _repeatPasswordPair.value = value to isValid
     }
 
-    fun signUp() = with(Repository) {
+    fun signUp() = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = SignUpRequest(
                 name = _namePair.value.first,
@@ -132,12 +132,15 @@ class SignUpViewModel: ViewModel() {
                     }
                 }
                 is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
-                is ApiSuccess -> signIn(result.data)
+                is ApiSuccess -> signIn(
+                    account = result.data,
+                    accessToken = result.data.accessToken
+                )
             }
         }
     }
 
-    fun navigateTo(nav: ENavAuth) = with(Repository) {
+    fun navigateTo(nav: ENavAuth) = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.Main).launch {
             authNavMain.emit(nav)
         }

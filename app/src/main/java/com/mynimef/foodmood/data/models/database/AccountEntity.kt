@@ -3,7 +3,8 @@ package com.mynimef.foodmood.data.models.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mynimef.foodmood.data.models.enums.ERole
+import com.mynimef.domain.models.ERole
+import com.mynimef.domain.models.AccountModel
 
 @Entity(tableName = "account")
 data class AccountEntity(
@@ -13,9 +14,16 @@ data class AccountEntity(
     val id: Long = 0,
 
     @ColumnInfo(name = "role")
-    val role: ERole,
+    override val role: ERole,
 
     @ColumnInfo(name = "refresh_token")
-    val refreshToken: String,
+    override val refreshToken: String
 
-)
+): AccountModel {
+    companion object {
+        fun fromModel(model: AccountModel) = AccountEntity(
+            role = model.role,
+            refreshToken = model.refreshToken
+        )
+    }
+}

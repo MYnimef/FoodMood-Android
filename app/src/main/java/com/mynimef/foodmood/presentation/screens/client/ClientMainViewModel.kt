@@ -2,12 +2,12 @@ package com.mynimef.foodmood.presentation.screens.client
 
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
-import com.mynimef.foodmood.data.models.ApiError
-import com.mynimef.foodmood.data.models.ApiException
-import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.domain.ApiError
+import com.mynimef.domain.ApiException
+import com.mynimef.domain.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
-import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,9 +18,9 @@ class ClientMainViewModel: ViewModel() {
 
     private var job: Job? = null
 
-    val navigation = Repository.clientNavMain.asSharedFlow()
+    val navigation = RepositoryImpl.clientNavMain.asSharedFlow()
 
-    fun initClient() = with(Repository) {
+    fun initClient() = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
 
             when (val result = network.clientGetInfo(
@@ -38,9 +38,9 @@ class ClientMainViewModel: ViewModel() {
                     val data = result.data
                     storage.deleteAllCards()
                     data.dayCards.forEach {
-                        storage.insertCard(it.toCardEntity())
+                        storage.insertCard(it)
                     }
-                    storage.insertClient(data.toClientEntity())
+                    storage.insertClient(data.client)
                 }
             }
         }

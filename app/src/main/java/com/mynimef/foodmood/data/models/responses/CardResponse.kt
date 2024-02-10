@@ -1,20 +1,22 @@
 package com.mynimef.foodmood.data.models.responses
 
 import com.google.gson.annotations.SerializedName
-import com.mynimef.foodmood.data.models.database.CardEntity
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
-import com.mynimef.foodmood.data.models.enums.ETypeMeal
+import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.response.ICardResponse
 
 data class CardResponse(
-    @SerializedName("meal_type") val mealType: ETypeMeal,
-    @SerializedName("emotion_type") val emotionType: ETypeEmotion,
-    @SerializedName("emotion_description") val emotionDescription: String,
-    @SerializedName("food_description") val foodDescription: String?,
-) {
-    fun toCardEntity() = CardEntity(
-        mealType = mealType,
-        emotionType = emotionType,
-        emotionDescription = emotionDescription,
-        foodDescription = foodDescription,
-    )
-}
+
+    @SerializedName("meal_type")
+    override val mealType: ETypeMeal,
+
+    @SerializedName("emotion_type")
+    override val emotionType: ETypeEmotion,
+
+    @SerializedName("emotion_description")
+    override val emotionDescription: String,
+
+    @SerializedName("food_description")
+    override val foodDescription: String?
+
+): ICardResponse

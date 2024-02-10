@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
+import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.foodmood.presentation.extensions.getIcon
 import com.mynimef.foodmood.presentation.theme.Blue
 import com.mynimef.foodmood.presentation.theme.EmotionDarkGreen
 import com.mynimef.foodmood.presentation.theme.EmotionGreen
@@ -213,7 +214,7 @@ private fun Preview3() = FoodMoodTheme {
         "15.05.23",
         "30.05.23"
     )
-    val yIcons = ETypeEmotion.values().map { it.icon }
+    val yIcons = ETypeEmotion.entries.map { it.getIcon() }
     val yLabels = listOf(
         "500",
         "1000",

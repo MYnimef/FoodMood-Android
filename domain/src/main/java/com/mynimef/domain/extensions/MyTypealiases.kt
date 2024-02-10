@@ -1,3 +1,3 @@
-package com.mynimef.foodmood.domain
+package com.mynimef.domain.extensions
 
 typealias CheckPair = Pair<String, Boolean>

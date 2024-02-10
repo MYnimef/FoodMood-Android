@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.vector.VectorPainter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.mynimef.foodmood.extensions.toInt
+import com.mynimef.domain.extensions.toInt
 
 data class AxisLabels(
     val labels: List<String>,

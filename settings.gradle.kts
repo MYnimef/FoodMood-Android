@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "FoodMood"
 include(":app")
+include(":domain")

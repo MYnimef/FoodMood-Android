@@ -12,8 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
-import com.mynimef.foodmood.extensions.noRippleClickable
+import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.foodmood.presentation.extensions.getIcon
+import com.mynimef.foodmood.presentation.extensions.noRippleClickable
 import com.mynimef.foodmood.presentation.theme.FoodMoodTheme
 
 @Composable
@@ -42,7 +43,7 @@ fun MyEmotionButton(
             modifier = Modifier
                 .align(Alignment.Center)
                 .size(55.dp),
-            drawableId = emotion.icon,
+            drawableId = emotion.getIcon(),
         )
     }
 }

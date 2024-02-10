@@ -3,14 +3,14 @@ package com.mynimef.foodmood.presentation.screens.client
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynimef.foodmood.data.models.ApiError
-import com.mynimef.foodmood.data.models.ApiException
-import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.domain.ApiError
+import com.mynimef.domain.ApiException
+import com.mynimef.domain.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.ENavClientMain
-import com.mynimef.foodmood.data.models.enums.ETypeEmotion
-import com.mynimef.foodmood.data.models.enums.ETypeMeal
+import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.domain.models.ETypeMeal
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
-import com.mynimef.foodmood.data.repository.Repository
+import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -50,7 +50,7 @@ class CreateViewModel: ViewModel() {
         _isDialogShown.value = !_isDialogShown.value
     }
 
-    val client = Repository.storage.getClient()
+    val client = RepositoryImpl.storage.getClient()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -60,7 +60,7 @@ class CreateViewModel: ViewModel() {
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
         job = CoroutineScope(Dispatchers.Main).launch {
-            Repository.clientNavMain.emit(ENavClientMain.CREATE_EMOTION_CARD)
+            RepositoryImpl.clientNavMain.emit(ENavClientMain.CREATE_EMOTION_CARD)
         }
     }
 
@@ -81,7 +81,7 @@ class CreateViewModel: ViewModel() {
         _weight.value = value
     }
 
-    fun create() = with(Repository) {
+    fun create() = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = ClientAddCardRequest(
                 mealType = _mealType.value,
@@ -99,7 +99,7 @@ class CreateViewModel: ViewModel() {
                 }
                 is ApiException -> {}
                 is ApiSuccess -> {
-                    storage.insertCard(result.data.toCardEntity())
+                    storage.insertCard(result.data)
                     clientNavMain.emit(ENavClientMain.BOTTOM_BAR)
                 }
             }

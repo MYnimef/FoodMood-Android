@@ -1,17 +1,23 @@
 package com.mynimef.foodmood.data.repository
 
-import com.mynimef.foodmood.data.models.ApiError
-import com.mynimef.foodmood.data.models.ApiException
-import com.mynimef.foodmood.data.models.ApiResult
-import com.mynimef.foodmood.data.models.ApiSuccess
+import com.mynimef.domain.ApiError
+import com.mynimef.domain.ApiException
+import com.mynimef.domain.ApiResult
+import com.mynimef.domain.ApiSuccess
+import com.mynimef.domain.AppNetwork
 import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
 import com.mynimef.foodmood.data.models.requests.ClientDataRequest
 import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.models.requests.RefreshTokenRequest
-import com.mynimef.foodmood.data.repository.api.AuthAPI
 import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.models.requests.SignUpRequest
 import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
+import com.mynimef.foodmood.data.models.responses.CardResponse
+import com.mynimef.foodmood.data.models.responses.ClientDataResponse
+import com.mynimef.foodmood.data.models.responses.ClientInfoResponse
+import com.mynimef.foodmood.data.models.responses.SignInResponse
+import com.mynimef.foodmood.data.models.responses.WaterIncreaseResponse
+import com.mynimef.foodmood.data.repository.api.AuthAPI
 import com.mynimef.foodmood.data.repository.api.ClientAPI
 import retrofit2.HttpException
 import retrofit2.Response
@@ -19,13 +25,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-class AppNetwork {
+class AppNetworkImpl: AppNetwork<
+        SignUpRequest, SignInRequest, ClientInfoRequest, ClientAddCardRequest, WaterIncreaseRequest, ClientDataRequest,
+        SignInResponse, ClientInfoResponse, CardResponse, WaterIncreaseResponse, ClientDataResponse
+        >
+{
 
     private val authAPI: AuthAPI
     private val clientAPI: ClientAPI
 
-    lateinit var refreshToken: String
-    var accessToken: String? = null
+    private lateinit var refreshToken: String
+    private var accessToken: String? = null
 
     init {
         val retrofit = Retrofit.Builder()
@@ -38,20 +48,28 @@ class AppNetwork {
         clientAPI = retrofit.create()
     }
 
-    suspend fun signUpClient(request: SignUpRequest) =
+    override fun updateRefreshToken(token: String) {
+        refreshToken = token
+    }
+
+    override fun updateAccessToken(token: String?) {
+        accessToken = token
+    }
+
+    override suspend fun signUpClient(request: SignUpRequest) =
         handleApi { authAPI.signUpClient(request) }
-    suspend fun signIn(request: SignInRequest) =
+    override suspend fun signIn(request: SignInRequest) =
         handleApi { authAPI.signIn(request) }
 
-    suspend fun clientGetInfo(request: ClientInfoRequest) =
+    override suspend fun clientGetInfo(request: ClientInfoRequest) =
         handleAuthApi { clientAPI.getInfo(it, request) }
-    suspend fun clientAddCard(request: ClientAddCardRequest) =
+    override suspend fun clientAddCard(request: ClientAddCardRequest) =
         handleAuthApi { clientAPI.addCard(it, request) }
-    suspend fun clientGetDayCards(day: Int, month: Int, year: Int) =
+    override suspend fun clientGetDayCards(day: Int, month: Int, year: Int) =
         handleAuthApi { clientAPI.getDateCards(it, day, month, year) }
-    suspend fun clientIncreaseWater(request: WaterIncreaseRequest) =
+    override suspend fun clientIncreaseWater(request: WaterIncreaseRequest) =
         handleAuthApi { clientAPI.increaseWater(it, request) }
-    suspend fun clientGetData(request: ClientDataRequest) =
+    override suspend fun clientGetData(request: ClientDataRequest) =
         handleAuthApi { clientAPI.getData(it, request) }
 
     private suspend fun <T: Any> handleApi(

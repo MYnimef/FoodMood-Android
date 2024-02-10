@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.mynimef.foodmood.extensions.noRippleClickable
+import com.mynimef.foodmood.presentation.extensions.noRippleClickable
 
 data class BottomNavigationItem(
     val icon: Int,
