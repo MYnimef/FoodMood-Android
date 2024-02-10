@@ -9,8 +9,8 @@ import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.domain.models.AccountModel
 import com.mynimef.domain.models.EAppState
 import com.mynimef.domain.models.ERole
-import com.mynimef.local_data.AppStorageImpl
-import com.mynimef.remote_data.AppNetworkImpl
+import com.mynimef.data_local.AppStorageImpl
+import com.mynimef.data_remote.AppNetworkImpl
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

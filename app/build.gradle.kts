@@ -57,7 +57,8 @@ kotlin {
 dependencies {
 
     implementation(project(":domain"))
-    implementation(project(":local_data"))
+    implementation(project(":data_local"))
+    implementation(project(":data_remote"))
 
     implementation("androidx.core:core-ktx:1.12.0")
 
@@ -77,7 +78,6 @@ dependencies {
 
     // Calendar
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
-    implementation(project(":remote_data"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
