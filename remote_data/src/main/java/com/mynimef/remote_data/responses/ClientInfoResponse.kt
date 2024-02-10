@@ -1,9 +1,9 @@
-package com.mynimef.foodmood.data.models.responses
+package com.mynimef.remote_data.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.responses.IClientInfoResponse
 
-data class ClientInfoResponse(
+internal data class ClientInfoResponse(
 
     override val client: ClientResponse,
 

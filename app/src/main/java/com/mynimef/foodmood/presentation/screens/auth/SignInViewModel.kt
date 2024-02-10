@@ -8,9 +8,9 @@ import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.extensions.emailChecker
 import com.mynimef.domain.extensions.passwordChecker
+import com.mynimef.domain.models.requests.ISignInRequest
 import com.mynimef.foodmood.data.models.enums.ENavAuth
 import com.mynimef.foodmood.data.models.enums.EToast
-import com.mynimef.foodmood.data.models.requests.SignInRequest
 import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +54,7 @@ class SignInViewModel: ViewModel() {
 
     fun signIn() = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            val request = SignInRequest(
+            val request = ISignInRequest.create(
                 email = _emailPair.value.first,
                 password = _passwordPair.value.first,
                 device = Build.MANUFACTURER + " " + Build.MODEL,

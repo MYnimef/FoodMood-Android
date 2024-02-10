@@ -1,9 +1,9 @@
-package com.mynimef.foodmood.data.models.requests
+package com.mynimef.remote_data.requests
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.requests.ISignUpRequest
 
-data class SignUpRequest(
+internal data class SignUpRequest(
 
     @SerializedName("name")
     override val name: String,
@@ -26,4 +26,18 @@ data class SignUpRequest(
     @SerializedName("device")
     override val device: String
 
-): ISignUpRequest
+): ISignUpRequest {
+
+    companion object {
+        fun fromModel(model: ISignUpRequest) = SignUpRequest(
+            name = model.name,
+            email = model.email,
+            trackFood = model.trackFood,
+            trackWater = model.trackWater,
+            trackWeight = model.trackWeight,
+            password = model.password,
+            device = model.device
+        )
+    }
+
+}

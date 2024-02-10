@@ -18,3 +18,4 @@ rootProject.name = "FoodMood"
 include(":app")
 include(":domain")
 include(":local_data")
+include(":remote_data")

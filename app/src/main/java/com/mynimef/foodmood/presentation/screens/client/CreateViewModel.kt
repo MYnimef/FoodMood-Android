@@ -9,7 +9,7 @@ import com.mynimef.domain.ApiSuccess
 import com.mynimef.foodmood.data.models.enums.ENavClientMain
 import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
-import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
+import com.mynimef.domain.models.requests.IClientAddCardRequest
 import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -83,7 +83,7 @@ class CreateViewModel: ViewModel() {
 
     fun create() = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            val request = ClientAddCardRequest(
+            val request = IClientAddCardRequest.create(
                 mealType = _mealType.value,
                 emotionType = _emotionType.value,
                 emotionDescription = _emotionDescription.value,

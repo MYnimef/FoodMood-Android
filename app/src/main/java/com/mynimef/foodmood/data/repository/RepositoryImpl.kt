@@ -9,18 +9,8 @@ import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.domain.models.AccountModel
 import com.mynimef.domain.models.EAppState
 import com.mynimef.domain.models.ERole
-import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
-import com.mynimef.foodmood.data.models.requests.ClientDataRequest
-import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
-import com.mynimef.foodmood.data.models.requests.SignInRequest
-import com.mynimef.foodmood.data.models.requests.SignUpRequest
-import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
-import com.mynimef.foodmood.data.models.responses.CardResponse
-import com.mynimef.foodmood.data.models.responses.ClientDataResponse
-import com.mynimef.foodmood.data.models.responses.ClientInfoResponse
-import com.mynimef.foodmood.data.models.responses.SignInResponse
-import com.mynimef.foodmood.data.models.responses.WaterIncreaseResponse
 import com.mynimef.local_data.AppStorageImpl
+import com.mynimef.remote_data.AppNetworkImpl
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,10 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 object RepositoryImpl {
 
     lateinit var storage: AppStorageImpl
-    val network: AppNetwork<
-            SignUpRequest, SignInRequest, ClientInfoRequest, ClientAddCardRequest, WaterIncreaseRequest, ClientDataRequest,
-            SignInResponse, ClientInfoResponse, CardResponse, WaterIncreaseResponse, ClientDataResponse
-            > = AppNetworkImpl()
+    val network: AppNetwork = AppNetworkImpl()
 
     private val _appState = MutableStateFlow(EAppState.AUTH)
     val appState = _appState.asStateFlow()

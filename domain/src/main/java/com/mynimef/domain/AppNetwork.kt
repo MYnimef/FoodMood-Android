@@ -12,40 +12,24 @@ import com.mynimef.domain.models.responses.IClientInfoResponse
 import com.mynimef.domain.models.responses.ISignInResponse
 import com.mynimef.domain.models.responses.IWaterIncreaseResponse
 
-interface AppNetwork<
-
-        SignUpReq: ISignUpRequest,
-        SignInReq: ISignInRequest,
-        ClientInfoReq: IClientInfoRequest,
-        ClientAddCardReq: IClientAddCardRequest,
-        WaterIncreaseReq: IWaterIncreaseRequest,
-        ClientDataReq: IClientDataRequest,
-
-        SignInResp: ISignInResponse,
-        ClientInfoResp: IClientInfoResponse,
-        CardResp: ICardResponse,
-        WaterIncreaseResp: IWaterIncreaseResponse,
-        ClientDataResp: IClientDataResponse
-
-        >
-{
+interface AppNetwork {
 
     fun updateRefreshToken(token: String)
 
     fun updateAccessToken(token: String?)
 
-    suspend fun signUpClient(request: SignUpReq): ApiResult<SignInResp>
+    suspend fun signUpClient(request: ISignUpRequest): ApiResult<ISignInResponse>
 
-    suspend fun signIn(request: SignInReq): ApiResult<SignInResp>
+    suspend fun signIn(request: ISignInRequest): ApiResult<ISignInResponse>
 
-    suspend fun clientGetInfo(request: ClientInfoReq): ApiResult<ClientInfoResp>
+    suspend fun clientGetInfo(request: IClientInfoRequest): ApiResult<IClientInfoResponse>
 
-    suspend fun clientAddCard(request: ClientAddCardReq): ApiResult<CardResp>
+    suspend fun clientAddCard(request: IClientAddCardRequest): ApiResult<ICardResponse>
 
-    suspend fun clientGetDayCards(day: Int, month: Int, year: Int): ApiResult<List<CardResp>>
+    suspend fun clientGetDayCards(day: Int, month: Int, year: Int): ApiResult<List<ICardResponse>>
 
-    suspend fun clientIncreaseWater(request: WaterIncreaseReq): ApiResult<WaterIncreaseResp>
+    suspend fun clientIncreaseWater(request: IWaterIncreaseRequest): ApiResult<IWaterIncreaseResponse>
 
-    suspend fun clientGetData(request: ClientDataReq): ApiResult<ClientDataResp>
+    suspend fun clientGetData(request: IClientDataRequest): ApiResult<IClientDataResponse>
 
 }

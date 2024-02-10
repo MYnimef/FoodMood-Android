@@ -75,12 +75,9 @@ dependencies {
 
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-    // Retrofit2
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
     // Calendar
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
+    implementation(project(":remote_data"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

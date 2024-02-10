@@ -1,11 +1,11 @@
-package com.mynimef.foodmood.data.models.requests
+package com.mynimef.remote_data.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
-import com.mynimef.domain.models.requests.IClientAddCardRequest
+import com.mynimef.domain.models.responses.ICardResponse
 
-data class ClientAddCardRequest(
+internal data class CardResponse(
 
     @SerializedName("meal_type")
     override val mealType: ETypeMeal,
@@ -17,9 +17,6 @@ data class ClientAddCardRequest(
     override val emotionDescription: String,
 
     @SerializedName("food_description")
-    override val foodDescription: String?,
+    override val foodDescription: String?
 
-    @SerializedName("time_zone")
-    override val timeZone: String,
-
-    ): IClientAddCardRequest
+): ICardResponse

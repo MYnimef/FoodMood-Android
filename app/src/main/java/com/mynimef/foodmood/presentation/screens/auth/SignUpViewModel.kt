@@ -12,7 +12,7 @@ import com.mynimef.foodmood.data.repository.RepositoryImpl
 import com.mynimef.domain.extensions.emailChecker
 import com.mynimef.domain.extensions.nameChecker
 import com.mynimef.domain.extensions.passwordChecker
-import com.mynimef.foodmood.data.models.requests.SignUpRequest
+import com.mynimef.domain.models.requests.ISignUpRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -114,7 +114,7 @@ class SignUpViewModel: ViewModel() {
 
     fun signUp() = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            val request = SignUpRequest(
+            val request = ISignUpRequest.create(
                 name = _namePair.value.first,
                 email = _emailPair.value.first,
                 password = _passwordPair.value.first,

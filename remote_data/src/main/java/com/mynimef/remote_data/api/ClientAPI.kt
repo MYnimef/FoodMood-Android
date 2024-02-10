@@ -1,13 +1,13 @@
-package com.mynimef.foodmood.data.repository.api
+package com.mynimef.remote_data.api
 
-import com.mynimef.foodmood.data.models.requests.ClientAddCardRequest
-import com.mynimef.foodmood.data.models.requests.ClientDataRequest
-import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
-import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
-import com.mynimef.foodmood.data.models.responses.CardResponse
-import com.mynimef.foodmood.data.models.responses.ClientDataResponse
-import com.mynimef.foodmood.data.models.responses.ClientInfoResponse
-import com.mynimef.foodmood.data.models.responses.WaterIncreaseResponse
+import com.mynimef.remote_data.requests.ClientAddCardRequest
+import com.mynimef.remote_data.requests.ClientDataRequest
+import com.mynimef.remote_data.requests.ClientInfoRequest
+import com.mynimef.remote_data.requests.WaterIncreaseRequest
+import com.mynimef.remote_data.responses.CardResponse
+import com.mynimef.remote_data.responses.ClientDataResponse
+import com.mynimef.remote_data.responses.ClientInfoResponse
+import com.mynimef.remote_data.responses.WaterIncreaseResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,7 +15,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface ClientAPI {
+internal interface ClientAPI {
 
     @POST("/api/client/info")
     suspend fun getInfo(

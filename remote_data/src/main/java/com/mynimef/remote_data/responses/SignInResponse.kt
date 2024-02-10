@@ -1,10 +1,10 @@
-package com.mynimef.foodmood.data.models.responses
+package com.mynimef.remote_data.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.ERole
 import com.mynimef.domain.models.responses.ISignInResponse
 
-data class SignInResponse(
+internal data class SignInResponse(
 
     @SerializedName("refresh_token")
     override val refreshToken: String,

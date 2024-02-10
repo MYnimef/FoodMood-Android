@@ -1,9 +1,9 @@
-package com.mynimef.foodmood.data.models.responses
+package com.mynimef.remote_data.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.responses.IDataResponse
 
-data class DataResponse(
+internal data class DataResponse(
 
     @SerializedName("value")
     override val value: Float,

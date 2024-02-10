@@ -1,9 +1,9 @@
-package com.mynimef.foodmood.data.models.responses
+package com.mynimef.remote_data.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.responses.IRefreshTokenResponse
 
-data class RefreshTokenResponse(
+internal data class RefreshTokenResponse(
 
     @SerializedName("access_token")
     override val accessToken: String

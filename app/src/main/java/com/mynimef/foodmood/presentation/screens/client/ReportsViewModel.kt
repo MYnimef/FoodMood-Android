@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
+import com.mynimef.domain.models.requests.IClientDataRequest
+import com.mynimef.domain.models.responses.IDataResponse
 import com.mynimef.foodmood.data.models.enums.EToast
 import com.mynimef.foodmood.data.models.enums.ETypePeriod
-import com.mynimef.foodmood.data.models.requests.ClientDataRequest
-import com.mynimef.foodmood.data.models.responses.DataResponse
 import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +52,7 @@ class ReportsViewModel: ViewModel() {
     }
 
     private suspend fun getDataFrom() = with(RepositoryImpl) {
-        val request = ClientDataRequest(
+        val request = IClientDataRequest.create(
             timeZone = TimeZone.getDefault().id,
             days = _period.value.period.toLong(),
         )
@@ -78,7 +78,7 @@ class ReportsViewModel: ViewModel() {
         }
     }
 
-    private fun convertData(data: List<DataResponse>): List<Pair<Float, Float>> {
+    private fun convertData(data: List<IDataResponse>): List<Pair<Float, Float>> {
         val max = _period.value.period
         val actualDate = LocalDate.now()
 

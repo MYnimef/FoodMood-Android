@@ -1,9 +1,9 @@
-package com.mynimef.foodmood.data.models.responses
+package com.mynimef.remote_data.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.responses.IClientDataResponse
 
-data class ClientDataResponse(
+internal data class ClientDataResponse(
 
     @SerializedName("emotion_data")
     override val emotionData: List<DataResponse>,

@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
+import com.mynimef.domain.models.requests.IClientInfoRequest
 import com.mynimef.foodmood.data.models.enums.EToast
-import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
 import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,7 @@ class ClientMainViewModel: ViewModel() {
         job = CoroutineScope(Dispatchers.IO).launch {
 
             when (val result = network.clientGetInfo(
-                ClientInfoRequest(TimeZone.getDefault().id)
+                IClientInfoRequest.create(TimeZone.getDefault().id)
             )) {
                 is ApiError -> when (result.code) {
                     401 ->  {

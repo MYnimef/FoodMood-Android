@@ -1,9 +1,9 @@
-package com.mynimef.foodmood.data.models.responses
+package com.mynimef.remote_data.responses
 
 import com.google.gson.annotations.SerializedName
 import com.mynimef.domain.models.ClientModel
 
-data class ClientResponse(
+internal data class ClientResponse(
 
     @SerializedName("name")
     override val name: String,

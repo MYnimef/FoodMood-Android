@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
+import com.mynimef.domain.models.requests.IClientInfoRequest
+import com.mynimef.domain.models.requests.IWaterIncreaseRequest
 import com.mynimef.foodmood.data.models.enums.EToast
-import com.mynimef.foodmood.data.models.requests.ClientInfoRequest
-import com.mynimef.foodmood.data.models.requests.WaterIncreaseRequest
 import com.mynimef.foodmood.data.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,7 +65,7 @@ class HomeViewModel : ViewModel() {
 
     fun setWater(amount: Float) = with(RepositoryImpl) {
         job = CoroutineScope(Dispatchers.IO).launch {
-            val request = WaterIncreaseRequest(
+            val request = IWaterIncreaseRequest.create(
                 amount = amount,
                 TimeZone.getDefault().id,
             )
@@ -86,7 +86,7 @@ class HomeViewModel : ViewModel() {
     }
 
     suspend fun update() = with(RepositoryImpl) {
-        val request = ClientInfoRequest(
+        val request = IClientInfoRequest.create(
             timeZone = TimeZone.getDefault().id
         )
         when (val result = network.clientGetInfo(request)) {
