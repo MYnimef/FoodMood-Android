@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -16,7 +16,7 @@ import com.mynimef.foodmood.extensions.sharedViewModel
 
 @Composable
 fun AuthMainScreen() {
-    val viewModel: AuthMainViewModel = viewModel()
+    val viewModel: AuthMainViewModel = hiltViewModel()
     val navController = rememberNavController()
 
     LaunchedEffect("auth_main") {

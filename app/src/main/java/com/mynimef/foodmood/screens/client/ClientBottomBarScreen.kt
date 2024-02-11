@@ -8,14 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.foodmood.R
 import com.mynimef.data.enums.ENavClientBottomBar
 import com.mynimef.data.enums.ENavClientMain
+import com.mynimef.foodmood.R
 import com.mynimef.foodmood.elements.BottomNavigationItem
 import com.mynimef.foodmood.elements.MyNavigationBar
 import com.mynimef.foodmood.extensions.getIcon
@@ -23,7 +23,7 @@ import com.mynimef.foodmood.extensions.getIconFill
 
 @Composable
 fun ClientBottomBarScreen() {
-    val viewModel: ClientBottomBarViewModel = viewModel()
+    val viewModel: ClientBottomBarViewModel = hiltViewModel()
     val navController = rememberNavController()
 
     LaunchedEffect("client_main") {

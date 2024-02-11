@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -18,7 +18,7 @@ import com.mynimef.foodmood.extensions.sharedViewModel
 
 @Composable
 fun ClientMainScreen() {
-    val viewModel: ClientMainViewModel = viewModel()
+    val viewModel: ClientMainViewModel = hiltViewModel()
     val navController = rememberNavController()
 
     OnLifecycleEvent { _, event ->

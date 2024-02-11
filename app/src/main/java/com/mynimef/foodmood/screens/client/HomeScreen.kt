@@ -26,8 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mynimef.domain.models.CardModel
 import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
@@ -46,7 +46,7 @@ private fun log(message: String) {
 
 @Composable
 fun HomeScreen() {
-    val viewModel: HomeViewModel = viewModel()
+    val viewModel: HomeViewModel = hiltViewModel()
 
     val trackWaterState = viewModel.trackWater.collectAsStateWithLifecycle()
     val waterAmountState = viewModel.waterAmount.collectAsStateWithLifecycle()

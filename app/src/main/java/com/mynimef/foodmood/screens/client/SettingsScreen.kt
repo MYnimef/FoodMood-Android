@@ -18,15 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mynimef.foodmood.R
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mynimef.data.enums.ENavClientMain
+import com.mynimef.foodmood.R
 import com.mynimef.foodmood.elements.MyIcon
 import com.mynimef.foodmood.theme.FoodMoodTheme
 
 @Composable
 fun SettingsScreen() {
-    val viewModel: SettingsViewModel = viewModel()
+    val viewModel: SettingsViewModel = hiltViewModel()
 
     SettingsScreen(
         navigateTo = viewModel::navigateTo,

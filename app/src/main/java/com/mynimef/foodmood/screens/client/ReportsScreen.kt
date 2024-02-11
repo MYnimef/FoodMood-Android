@@ -18,22 +18,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mynimef.foodmood.R
 import com.mynimef.data.enums.ETypePeriod
-import com.mynimef.foodmood.extensions.OnLifecycleEvent
+import com.mynimef.foodmood.R
 import com.mynimef.foodmood.elements.MultiSelector
 import com.mynimef.foodmood.elements.MyEmotionsChart
 import com.mynimef.foodmood.elements.MyWaterChart
 import com.mynimef.foodmood.elements.MyWeightChart
+import com.mynimef.foodmood.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.extensions.getLabel
 import com.mynimef.foodmood.theme.FoodMoodTheme
 
 @Composable
 fun ReportsScreen() {
-    val viewModel: ReportsViewModel = viewModel()
+    val viewModel: ReportsViewModel = hiltViewModel()
 
     val periodState = viewModel.period.collectAsStateWithLifecycle()
     val coordinatesEmotionsState = viewModel.coordinatesEmotions.collectAsStateWithLifecycle()
@@ -63,7 +63,7 @@ private fun ReportsScreen(
     coordinatesWaterProvider: () -> List<Pair<Float, Float>>,
     coordinatesWeightProvider: () -> List<Pair<Float, Float>>,
 ) {
-    val periods = ETypePeriod.values()
+    val periods = ETypePeriod.entries.toTypedArray()
 
     Column {
         MultiSelector(
