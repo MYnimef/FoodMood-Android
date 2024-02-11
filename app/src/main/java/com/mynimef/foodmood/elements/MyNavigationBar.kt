@@ -28,7 +28,7 @@ fun MyNavigationBar(
 ) = NavigationBar(
     modifier = Modifier
         .fillMaxWidth()
-        .fillMaxHeight(0.15f)
+        .fillMaxHeight(0.14f)
     ,
     containerColor = MaterialTheme.colorScheme.background,
     tonalElevation = 0.dp,

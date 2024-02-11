@@ -46,7 +46,7 @@ class ClientMainViewModel @Inject constructor(
                     data.dayCards.forEach {
                         storage.insertCard(it)
                     }
-                    storage.insertClient(data.client)
+                    storage.insertClient(data)
                 }
             }
         }
