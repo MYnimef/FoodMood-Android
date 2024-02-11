@@ -17,10 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mynimef.foodmood.R
 import com.mynimef.domain.extensions.CheckPair
+import com.mynimef.foodmood.R
 import com.mynimef.foodmood.elements.MyLoginButton
 import com.mynimef.foodmood.elements.fields.MyEmailField
 import com.mynimef.foodmood.elements.fields.MyPasswordField
@@ -28,7 +28,7 @@ import com.mynimef.foodmood.theme.FoodMoodTheme
 
 @Composable
 fun SignInScreen() {
-    val viewModel: SignInViewModel = viewModel()
+    val viewModel: SignInViewModel = hiltViewModel()
 
     val emailPairState = viewModel.emailPair.collectAsStateWithLifecycle()
     val passwordPairState = viewModel.passwordPair.collectAsStateWithLifecycle()

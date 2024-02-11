@@ -9,10 +9,12 @@ import com.mynimef.domain.ApiSuccess
 import com.mynimef.data.enums.ENavAuth
 import com.mynimef.data.enums.EToast
 import com.mynimef.data.RepositoryImpl
+import com.mynimef.domain.AppRepository
 import com.mynimef.domain.extensions.emailChecker
 import com.mynimef.domain.extensions.nameChecker
 import com.mynimef.domain.extensions.passwordChecker
 import com.mynimef.domain.models.requests.ISignUpRequest
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,8 +25,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
-class SignUpViewModel: ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    private val repository: AppRepository
+): ViewModel() {
 
     private var job: Job? = null
 
@@ -112,7 +118,7 @@ class SignUpViewModel: ViewModel() {
         _repeatPasswordPair.value = value to isValid
     }
 
-    fun signUp() = with(RepositoryImpl) {
+    fun signUp() = with(repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = ISignUpRequest.create(
                 name = _namePair.value.first,
@@ -126,16 +132,13 @@ class SignUpViewModel: ViewModel() {
             when (val result = network.signUpClient(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        403 -> toastFlow.emit(EToast.WRONG_INPUT)
-                        409 -> toastFlow.emit(EToast.ACCOUNT_ALREADY_EXISTS)
+                        403 -> RepositoryImpl.toastFlow.emit(EToast.WRONG_INPUT)
+                        409 -> RepositoryImpl.toastFlow.emit(EToast.ACCOUNT_ALREADY_EXISTS)
                         else -> {}
                     }
                 }
-                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
-                is ApiSuccess -> signIn(
-                    account = result.data,
-                    accessToken = result.data.accessToken
-                )
+                is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> signIn(account = result.data)
             }
         }
     }

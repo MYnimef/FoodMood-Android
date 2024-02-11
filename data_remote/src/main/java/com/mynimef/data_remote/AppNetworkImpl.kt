@@ -1,11 +1,21 @@
 package com.mynimef.data_remote
 
 import com.google.gson.GsonBuilder
+import com.mynimef.data_remote.api.AuthAPI
+import com.mynimef.data_remote.api.ClientAPI
+import com.mynimef.data_remote.requests.ClientAddCardRequest
+import com.mynimef.data_remote.requests.ClientDataRequest
+import com.mynimef.data_remote.requests.ClientInfoRequest
+import com.mynimef.data_remote.requests.RefreshTokenRequest
+import com.mynimef.data_remote.requests.SignInRequest
+import com.mynimef.data_remote.requests.SignUpRequest
+import com.mynimef.data_remote.requests.WaterIncreaseRequest
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiResult
 import com.mynimef.domain.ApiSuccess
-import com.mynimef.domain.IAppNetwork
+import com.mynimef.domain.IAppNetworkRoot
+import com.mynimef.domain.ITokenGetter
 import com.mynimef.domain.models.requests.IClientAddCardRequest
 import com.mynimef.domain.models.requests.IClientDataRequest
 import com.mynimef.domain.models.requests.IClientInfoRequest
@@ -17,30 +27,20 @@ import com.mynimef.domain.models.responses.IClientDataResponse
 import com.mynimef.domain.models.responses.IClientInfoResponse
 import com.mynimef.domain.models.responses.ISignInResponse
 import com.mynimef.domain.models.responses.IWaterIncreaseResponse
-import com.mynimef.data_remote.api.AuthAPI
-import com.mynimef.data_remote.api.ClientAPI
-import com.mynimef.data_remote.requests.ClientAddCardRequest
-import com.mynimef.data_remote.requests.ClientDataRequest
-import com.mynimef.data_remote.requests.ClientInfoRequest
-import com.mynimef.data_remote.requests.RefreshTokenRequest
-import com.mynimef.data_remote.requests.SignInRequest
-import com.mynimef.data_remote.requests.SignUpRequest
-import com.mynimef.data_remote.requests.WaterIncreaseRequest
-import com.mynimef.domain.IAppNetworkRoot
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-
 @Suppress("UNCHECKED_CAST")
-class AppNetworkImpl: IAppNetworkRoot {
+class AppNetworkImpl(
+    override val tokenGetter: ITokenGetter
+) : IAppNetworkRoot {
 
     private val authAPI: AuthAPI
     private val clientAPI: ClientAPI
 
-    private lateinit var refreshToken: String
     private var accessToken: String? = null
 
     init {
@@ -56,14 +56,6 @@ class AppNetworkImpl: IAppNetworkRoot {
 
         authAPI = retrofit.create()
         clientAPI = retrofit.create()
-    }
-
-    override fun updateRefreshToken(token: String) {
-        refreshToken = token
-    }
-
-    override fun updateAccessToken(token: String?) {
-        accessToken = token
     }
 
     override suspend fun signUpClient(request: ISignUpRequest) =
@@ -105,7 +97,7 @@ class AppNetworkImpl: IAppNetworkRoot {
         execute: suspend (token: String) -> Response<T>,
     ): ApiResult<T> {
         if (accessToken == null) {
-            val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(refreshToken)) }
+            val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(tokenGetter.getRefreshToken())) }
             if (refreshResult is ApiSuccess) {
                 accessToken = refreshResult.data.accessToken
             } else {
@@ -114,7 +106,7 @@ class AppNetworkImpl: IAppNetworkRoot {
         }
         val result = handleApi { execute(accessToken!!) }
         if (result is ApiError && result.code == 401) {
-            val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(refreshToken)) }
+            val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(tokenGetter.getRefreshToken())) }
             return if (refreshResult is ApiSuccess) {
                 accessToken = refreshResult.data.accessToken
                 handleApi { execute(accessToken!!) }

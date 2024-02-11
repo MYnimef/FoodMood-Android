@@ -10,6 +10,8 @@ import com.mynimef.domain.models.requests.IClientInfoRequest
 import com.mynimef.domain.models.requests.IWaterIncreaseRequest
 import com.mynimef.data.enums.EToast
 import com.mynimef.data.RepositoryImpl
+import com.mynimef.domain.AppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,12 +19,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val repository: AppRepository
+) : ViewModel() {
 
     private var job: Job? = null
 
-    private val client = RepositoryImpl.storage.getClient()
+    private val client = repository.storage.getClient()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -56,14 +62,14 @@ class HomeViewModel : ViewModel() {
             initialValue = 0f
         )
 
-    val cards = RepositoryImpl.storage.getAllCards()
+    val cards = repository.storage.getAllCards()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyList()
         )
 
-    fun setWater(amount: Float) = with(RepositoryImpl) {
+    fun setWater(amount: Float) = with(repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = IWaterIncreaseRequest.create(
                 amount = amount,
@@ -76,7 +82,6 @@ class HomeViewModel : ViewModel() {
                         else -> {}
                     }
                 }
-
                 is ApiException -> {}
                 is ApiSuccess -> {
                     storage.updateWaterAmountClient(result.data.totalAmount)
@@ -85,7 +90,7 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    suspend fun update() = with(RepositoryImpl) {
+    suspend fun update() = with(repository) {
         val request = IClientInfoRequest.create(
             timeZone = TimeZone.getDefault().id
         )
@@ -93,13 +98,13 @@ class HomeViewModel : ViewModel() {
             is ApiError -> {
                 when (result.code) {
                     401 -> {
-                        toastFlow.emit(EToast.AUTH_FAILED)
+                        RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
                         signOut()
                     }
                     else -> {}
                 }
             }
-            is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+            is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
             is ApiSuccess -> {
                 val data = result.data
                 storage.deleteAllCards()

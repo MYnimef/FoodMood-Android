@@ -17,6 +17,8 @@ import com.mynimef.domain.models.CardModel
 import com.mynimef.domain.models.ClientModel
 import com.mynimef.domain.models.EAppState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class AppStorageImpl(context: Context): IAppStorageRoot {
 
@@ -31,12 +33,13 @@ class AppStorageImpl(context: Context): IAppStorageRoot {
 
     private var id = sharedPref.getLong("account_id", 0)
 
-    suspend fun initApp(): EAppState {
-        val state = EAppState.fromInt(sharedPref.getInt("app_state", EAppState.AUTH.value))
-        return state
-    }
+    private val _appState = MutableStateFlow(
+        EAppState.fromInt(sharedPref.getInt("app_state", EAppState.AUTH.value))
+    )
+    override val appState = _appState.asStateFlow()
 
     override fun setAppState(state: EAppState) = with(sharedPref.edit()) {
+        _appState.value = state
         putInt("app_state", state.value)
         apply()
     }

@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,18 +17,21 @@ import com.mynimef.foodmood.screens.auth.AuthMainScreen
 import com.mynimef.foodmood.screens.client.ClientMainScreen
 import com.mynimef.foodmood.screens.trainer.TrainerNavigationScreen
 import com.mynimef.foodmood.theme.FoodMoodTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity: ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
+        /*
         installSplashScreen().apply {
             setKeepOnScreenCondition {
                 !viewModel.dataLoaded.value
             }
         }
-        viewModel.initData(this)
+        */
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {

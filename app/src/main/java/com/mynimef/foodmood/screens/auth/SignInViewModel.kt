@@ -12,6 +12,8 @@ import com.mynimef.domain.models.requests.ISignInRequest
 import com.mynimef.data.enums.ENavAuth
 import com.mynimef.data.enums.EToast
 import com.mynimef.data.RepositoryImpl
+import com.mynimef.domain.AppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,8 +23,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignInViewModel: ViewModel() {
+@HiltViewModel
+class SignInViewModel @Inject constructor(
+    private val repository: AppRepository
+): ViewModel() {
 
     private var job: Job? = null
 
@@ -52,7 +58,7 @@ class SignInViewModel: ViewModel() {
         _passwordPair.value = value to passwordChecker(value)
     }
 
-    fun signIn() = with(RepositoryImpl) {
+    fun signIn() = with(repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = ISignInRequest.create(
                 email = _emailPair.value.first,
@@ -62,16 +68,13 @@ class SignInViewModel: ViewModel() {
             when (val result = network.signIn(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> toastFlow.emit(EToast.WRONG_EMAIL_OR_PASSWORD)
-                        403 -> toastFlow.emit(EToast.WRONG_INPUT)
+                        401 -> RepositoryImpl.toastFlow.emit(EToast.WRONG_EMAIL_OR_PASSWORD)
+                        403 -> RepositoryImpl.toastFlow.emit(EToast.WRONG_INPUT)
                         else -> {}
                     }
                 }
-                is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
-                is ApiSuccess -> signIn(
-                    account = result.data,
-                    accessToken = result.data.accessToken
-                )
+                is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiSuccess -> repository.signIn(account = result.data,)
             }
         }
     }

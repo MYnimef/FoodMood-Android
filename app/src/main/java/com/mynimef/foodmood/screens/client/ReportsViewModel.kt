@@ -10,7 +10,9 @@ import com.mynimef.domain.models.responses.IDataResponse
 import com.mynimef.data.enums.EToast
 import com.mynimef.data.enums.ETypePeriod
 import com.mynimef.data.RepositoryImpl
+import com.mynimef.domain.AppRepository
 import com.mynimef.foodmood.extensions.getNum
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,8 +21,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import javax.inject.Inject
 
-class ReportsViewModel: ViewModel() {
+@HiltViewModel
+class ReportsViewModel @Inject constructor(
+    private val repository: AppRepository
+): ViewModel() {
 
     private var job: Job? = null
 
@@ -52,7 +58,7 @@ class ReportsViewModel: ViewModel() {
         }
     }
 
-    private suspend fun getDataFrom() = with(RepositoryImpl) {
+    private suspend fun getDataFrom() = with(repository) {
         val request = IClientDataRequest.create(
             timeZone = TimeZone.getDefault().id,
             days = _period.value.getNum().toLong(),
@@ -60,12 +66,12 @@ class ReportsViewModel: ViewModel() {
         when (val result = network.clientGetData(request)) {
             is ApiError -> when (result.code) {
                 401 ->  {
-                    toastFlow.emit(EToast.AUTH_FAILED)
+                    RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
                     signOut()
                 }
                 else -> {}
             }
-            is ApiException -> toastFlow.emit(EToast.NO_CONNECTION)
+            is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
             is ApiSuccess -> {
                 val data = result.data
                 _coordinatesEmotions.value = convertData(data.emotionData)

@@ -11,6 +11,8 @@ import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
 import com.mynimef.domain.models.requests.IClientAddCardRequest
 import com.mynimef.data.RepositoryImpl
+import com.mynimef.domain.AppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -20,8 +22,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CreateViewModel: ViewModel() {
+@HiltViewModel
+class CreateViewModel @Inject constructor(
+    private val repository: AppRepository
+): ViewModel() {
 
     private var job: Job? = null
 
@@ -50,7 +56,7 @@ class CreateViewModel: ViewModel() {
         _isDialogShown.value = !_isDialogShown.value
     }
 
-    val client = RepositoryImpl.storage.getClient()
+    val client = repository.storage.getClient()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -81,7 +87,7 @@ class CreateViewModel: ViewModel() {
         _weight.value = value
     }
 
-    fun create() = with(RepositoryImpl) {
+    fun create() = with(repository) {
         job = CoroutineScope(Dispatchers.IO).launch {
             val request = IClientAddCardRequest.create(
                 mealType = _mealType.value,
@@ -100,7 +106,7 @@ class CreateViewModel: ViewModel() {
                 is ApiException -> {}
                 is ApiSuccess -> {
                     storage.insertCard(result.data)
-                    clientNavMain.emit(ENavClientMain.BOTTOM_BAR)
+                    RepositoryImpl.clientNavMain.emit(ENavClientMain.BOTTOM_BAR)
                 }
             }
         }
