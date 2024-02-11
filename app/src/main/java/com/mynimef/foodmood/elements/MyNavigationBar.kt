@@ -3,6 +3,8 @@ package com.mynimef.foodmood.elements
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,7 +28,10 @@ fun MyNavigationBar(
 ) {
     NavigationBar(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .fillMaxHeight(0.15f)
+            .defaultMinSize(minHeight = 80.dp)
+        ,
         containerColor = MaterialTheme.colorScheme.background,
         tonalElevation = 0.dp,
     ) {
