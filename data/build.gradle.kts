@@ -38,8 +38,6 @@ dependencies {
     implementation(project(":data_local"))
     implementation(project(":data_remote"))
 
-
-
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     implementation("androidx.core:core-ktx:1.12.0")

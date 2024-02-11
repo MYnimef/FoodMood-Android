@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -24,14 +25,14 @@ import kotlinx.coroutines.launch
 class MainActivity: ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        /*
         installSplashScreen().apply {
             setKeepOnScreenCondition {
-                !viewModel.dataLoaded.value
+                viewModel.isLoading.value
             }
         }
-        */
+
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {
