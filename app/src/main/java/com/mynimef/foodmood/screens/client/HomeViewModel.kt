@@ -3,19 +3,17 @@ package com.mynimef.foodmood.screens.client
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mynimef.data.RepositoryImpl
+import com.mynimef.data.enums.EToast
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
-import com.mynimef.domain.models.requests.IClientInfoRequest
-import com.mynimef.domain.models.requests.IWaterIncreaseRequest
-import com.mynimef.data.enums.EToast
-import com.mynimef.data.RepositoryImpl
 import com.mynimef.domain.AppRepository
 import com.mynimef.domain.models.ClientModel
+import com.mynimef.domain.models.requests.IClientInfoRequest
+import com.mynimef.domain.models.requests.IWaterIncreaseRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,15 +25,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: AppRepository
-) : ViewModel() {
-
-    private var job: Job? = null
+): ViewModel() {
 
     private val _client = MutableStateFlow<ClientModel?>(null)
     val client = _client.asStateFlow()
 
     init {
-        job = CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _client.value = repository.storage.getClient()
         }
     }
@@ -75,7 +71,7 @@ class HomeViewModel @Inject constructor(
         )
 
     fun setWater(amount: Float) = with(repository) {
-        job = CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val request = IWaterIncreaseRequest.create(
                 amount = amount,
                 TimeZone.getDefault().id,
@@ -90,6 +86,7 @@ class HomeViewModel @Inject constructor(
                 is ApiException -> {}
                 is ApiSuccess -> {
                     storage.updateWaterAmountClient(result.data.totalAmount)
+                    _client.value = repository.storage.getClient()
                 }
             }
         }
@@ -117,13 +114,9 @@ class HomeViewModel @Inject constructor(
                     storage.insertCard(it)
                 }
                 storage.insertClient(data)
+                _client.value = repository.storage.getClient()
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
     }
 
 }
