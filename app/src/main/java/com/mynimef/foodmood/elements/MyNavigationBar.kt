@@ -2,8 +2,8 @@ package com.mynimef.foodmood.elements
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,27 +25,33 @@ fun MyNavigationBar(
     items: List<BottomNavigationItem>,
     spaceSize: Dp,
     roundedCorner: Dp = 0.dp,
+) = NavigationBar(
+    modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(0.15f)
+    ,
+    containerColor = MaterialTheme.colorScheme.background,
+    tonalElevation = 0.dp,
 ) {
-    NavigationBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.15f)
-            .defaultMinSize(minHeight = 80.dp)
-        ,
-        containerColor = MaterialTheme.colorScheme.background,
-        tonalElevation = 0.dp,
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                color = MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(topStart = roundedCorner, topEnd = roundedCorner)
+            )
+        ,
+        contentAlignment = Alignment.Center
+    ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = RoundedCornerShape(topStart = roundedCorner, topEnd = roundedCorner)
-                ),
-            horizontalArrangement = Arrangement.spacedBy(spaceSize, Alignment.CenterHorizontally),
+                .fillMaxHeight()
+                .fillMaxWidth(0.9f)
+            ,
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             items.forEach { item ->

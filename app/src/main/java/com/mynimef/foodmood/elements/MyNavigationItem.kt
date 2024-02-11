@@ -1,6 +1,7 @@
 package com.mynimef.foodmood.elements
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +20,7 @@ data class BottomNavigationItem(
 )
 
 @Composable
-fun MyNavigationItem(
+fun RowScope.MyNavigationItem(
     drawableId: Int,
     drawableFillId: Int,
     selected: Boolean,
@@ -30,13 +31,15 @@ fun MyNavigationItem(
             .clip(shape = CircleShape)
             .fillMaxHeight(0.7f)
             .aspectRatio(1f)
+            .weight(1f)
             .noRippleClickable (onClick = onClick)
         ,
         contentAlignment = Alignment.Center
     ) {
         MyIcon(
             modifier = Modifier
-                .fillMaxSize(0.7f),
+                .fillMaxSize(0.6f)
+            ,
             drawableId = if (selected) drawableFillId else drawableId
         )
     }
