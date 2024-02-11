@@ -48,7 +48,7 @@ class MainActivity: ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                     ,
-                    targetState = viewModel.appState.collectAsStateWithLifecycle().value,
+                    targetState = viewModel.appState.collectAsStateWithLifecycle(EAppState.AUTH).value,
                     label = "main",
                 ) { targetState ->
                     when (targetState) {

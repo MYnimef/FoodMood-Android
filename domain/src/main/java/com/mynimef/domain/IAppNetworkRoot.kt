@@ -4,4 +4,6 @@ interface IAppNetworkRoot: IAppNetwork {
 
     val tokenGetter: ITokenGetter
 
+    fun removeAccessToken()
+
 }

@@ -3,11 +3,13 @@ package com.mynimef.domain
 import com.mynimef.domain.models.AccountModel
 import com.mynimef.domain.models.EAppState
 import com.mynimef.domain.models.ERole
+import kotlinx.coroutines.flow.last
 
 class AppRepository(
     private val storageRoot: IAppStorageRoot,
     private val networkRoot: IAppNetworkRoot
 ) {
+
     val appState = storageRoot.appState
 
     val storage: IAppStorage = storageRoot
@@ -26,16 +28,17 @@ class AppRepository(
         storageRoot.deleteAllCards()
         storageRoot.deleteAccount()
 
-        when (appState.value) {
+        when (appState.last()) {
             EAppState.CLIENT -> storageRoot.deleteClient()
             EAppState.TRAINER -> {}
             else -> return
         }
+        networkRoot.removeAccessToken()
 
         setState(EAppState.AUTH)
     }
 
-    private fun setState(state: EAppState) {
+    private suspend fun setState(state: EAppState) {
         storageRoot.setAppState(state)
     }
 

@@ -2,25 +2,23 @@ package com.mynimef.foodmood.screens.client
 
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.mynimef.data.RepositoryImpl
+import com.mynimef.data.enums.ENavClientMain
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
-import com.mynimef.data.enums.ENavClientMain
+import com.mynimef.domain.AppRepository
+import com.mynimef.domain.models.ClientModel
 import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
 import com.mynimef.domain.models.requests.IClientAddCardRequest
-import com.mynimef.data.RepositoryImpl
-import com.mynimef.domain.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -56,12 +54,14 @@ class CreateViewModel @Inject constructor(
         _isDialogShown.value = !_isDialogShown.value
     }
 
-    val client = repository.storage.getClient()
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = null
-        )
+    private val _client = MutableStateFlow<ClientModel?>(null)
+    val client = _client.asStateFlow()
+
+    init {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            _client.value = repository.storage.getClient()
+        }
+    }
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value

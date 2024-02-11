@@ -11,11 +11,14 @@ import com.mynimef.domain.models.requests.IWaterIncreaseRequest
 import com.mynimef.data.enums.EToast
 import com.mynimef.data.RepositoryImpl
 import com.mynimef.domain.AppRepository
+import com.mynimef.domain.models.ClientModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -28,12 +31,14 @@ class HomeViewModel @Inject constructor(
 
     private var job: Job? = null
 
-    private val client = repository.storage.getClient()
-        .stateIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = null
-        )
+    private val _client = MutableStateFlow<ClientModel?>(null)
+    val client = _client.asStateFlow()
+
+    init {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            _client.value = repository.storage.getClient()
+        }
+    }
 
     val dataLoaded = client.map {
         it != null

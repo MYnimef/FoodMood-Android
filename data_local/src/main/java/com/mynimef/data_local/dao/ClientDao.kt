@@ -8,7 +8,6 @@ import androidx.room.Query
 import com.mynimef.data_local.models.ClientEntity
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 internal interface ClientDao {
 
@@ -16,7 +15,7 @@ internal interface ClientDao {
     fun getAll(): Flow<List<ClientEntity>>
 
     @Query("SELECT * FROM client WHERE client.id = :id")
-    fun getClientById(id: Long): Flow<ClientEntity?>
+    suspend fun getClientById(id: Long): ClientEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(client: ClientEntity): Long

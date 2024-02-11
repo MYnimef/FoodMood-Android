@@ -1,12 +1,12 @@
 package com.mynimef.domain
 
 import com.mynimef.domain.models.EAppState
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface IAppStorageRoot: IAppStorage, ITokenGetter {
 
-    val appState: StateFlow<EAppState>
+    val appState: Flow<EAppState>
 
-    fun setAppState(state: EAppState)
+    suspend fun setAppState(state: EAppState)
 
 }

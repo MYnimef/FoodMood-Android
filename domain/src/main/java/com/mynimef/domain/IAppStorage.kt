@@ -17,7 +17,7 @@ interface IAppStorage {
 
     fun getAllClients(): Flow<List<ClientModel>>
 
-    fun getClient(): Flow<ClientModel?>
+    suspend fun getClient(): ClientModel
 
     suspend fun insertClient(client: ClientModel): Long
 

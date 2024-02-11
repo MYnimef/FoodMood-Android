@@ -1,6 +1,12 @@
 package com.mynimef.data_local
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -17,12 +23,38 @@ import com.mynimef.domain.models.CardModel
 import com.mynimef.domain.models.ClientModel
 import com.mynimef.domain.models.EAppState
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.map
 
 class AppStorageImpl(context: Context): IAppStorageRoot {
 
-    private val sharedPref = context.getSharedPreferences("food_mood", Context.MODE_PRIVATE)
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "food_mood")
+    private val dataStore = context.dataStore
+
+    private val PREFERENCE_APP_STATE = intPreferencesKey("app_state")
+    override val appState = dataStore.data
+        .map { preferences ->
+            EAppState.fromInt(preferences[PREFERENCE_APP_STATE] ?: EAppState.AUTH.value)
+        }
+
+    override suspend fun setAppState(state: EAppState) {
+        dataStore.edit { settings ->
+            settings[PREFERENCE_APP_STATE] = state.value
+        }
+    }
+
+    private val PREFERENCE_ID = longPreferencesKey("account_id")
+    private val accountId = dataStore.data
+        .map { preferences ->
+            preferences[PREFERENCE_ID] ?: 0L
+        }
+
+    private suspend fun setId(id: Long) {
+        dataStore.edit { settings ->
+            settings[PREFERENCE_ID] = id
+        }
+    }
+
     private val database = Room.databaseBuilder(
         context = context,
         klass = AppDatabase::class.java,
@@ -31,48 +63,27 @@ class AppStorageImpl(context: Context): IAppStorageRoot {
         .fallbackToDestructiveMigration()
         .build()
 
-    private var id = sharedPref.getLong("account_id", 0)
-
-    private val _appState = MutableStateFlow(
-        EAppState.fromInt(sharedPref.getInt("app_state", EAppState.AUTH.value))
-    )
-    override val appState = _appState.asStateFlow()
-
-    override fun setAppState(state: EAppState) = with(sharedPref.edit()) {
-        _appState.value = state
-        putInt("app_state", state.value)
-        apply()
-    }
-
-    fun setId(id: Long) {
-        with (sharedPref.edit()) {
-            putLong("account_id", id)
-            apply()
-        }
-        this.id = id
-    }
-
     override suspend fun getRefreshToken() =
-        database.accountDao().getRefreshTokenById(id)
+        database.accountDao().getRefreshTokenById(id = accountId.last())
     override suspend fun insertAccount(account: AccountModel) =
         setId(database.accountDao().insert(AccountEntity.fromModel(account)))
     override suspend fun deleteAccount(id: Long) =
         database.accountDao().deleteById(id)
     override suspend fun deleteAccount() =
-        database.accountDao().deleteById(id)
+        database.accountDao().deleteById(id = accountId.last())
 
     override fun getAllClients(): Flow<List<ClientModel>> =
         database.clientDao().getAll()
-    override fun getClient(): Flow<ClientModel?> =
-        database.clientDao().getClientById(id)
+    override suspend fun getClient(): ClientModel =
+        database.clientDao().getClientById(id = accountId.last())
     override suspend fun insertClient(client: ClientModel) =
-        database.clientDao().insert(ClientEntity.fromModel(client, id))
+        database.clientDao().insert(ClientEntity.fromModel(model = client, id = accountId.last()))
     override suspend fun deleteClient(id: Long) =
         database.clientDao().deleteById(id)
     override suspend fun deleteClient() =
-        database.clientDao().deleteById(id)
+        database.clientDao().deleteById(id = accountId.last())
     override suspend fun updateWaterAmountClient(waterAmount: Float) =
-        database.clientDao().updateWaterAmount(id = id, waterAmount = waterAmount)
+        database.clientDao().updateWaterAmount(id = accountId.last(), waterAmount = waterAmount)
 
     override suspend fun insertCard(card: CardModel) =
         database.cardDao().insert(CardEntity.fromModel(card))

@@ -58,6 +58,10 @@ class AppNetworkImpl(
         clientAPI = retrofit.create()
     }
 
+    override fun removeAccessToken() {
+        accessToken = null
+    }
+
     override suspend fun signUpClient(request: ISignUpRequest) =
         handleApi { authAPI.signUpClient(SignUpRequest(request)) as Response<ISignInResponse> }
     override suspend fun signIn(request: ISignInRequest) =
