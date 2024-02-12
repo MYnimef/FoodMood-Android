@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface IAppStorageRoot: IAppStorage, ITokenGetter {
 
-    val appState: Flow<EAppState>
+    fun getAppState(): Flow<EAppState>
+
+    fun getActualAccountId(): Flow<Long>
 
     suspend fun setAppState(state: EAppState)
 

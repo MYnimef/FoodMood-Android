@@ -13,6 +13,7 @@ import com.mynimef.domain.models.requests.IClientInfoRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,14 +26,16 @@ class ClientMainViewModel @Inject constructor(
 
     fun initClient(): Unit = with(repository) {
         viewModelScope.launch(Dispatchers.IO) {
+            val accountId = repository.getActualAccountId().stateIn(this).value
 
             when (val result = network.clientGetInfo(
-                IClientInfoRequest.create(TimeZone.getDefault().id)
+                accountId = accountId,
+                request = IClientInfoRequest.create(TimeZone.getDefault().id)
             )) {
                 is ApiError -> when (result.code) {
                     401 ->  {
                         RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
-                        signOut()
+                        signOutClient(accountId = accountId)
                     }
                     else -> {}
                 }
@@ -43,7 +46,10 @@ class ClientMainViewModel @Inject constructor(
                     data.dayCards.forEach {
                         storage.insertCard(it)
                     }
-                    storage.insertClient(data)
+                    storage.insertClient(
+                        accountId = accountId,
+                        client = data
+                    )
                 }
             }
         }

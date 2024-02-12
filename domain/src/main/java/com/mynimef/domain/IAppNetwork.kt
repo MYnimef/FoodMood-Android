@@ -18,14 +18,14 @@ interface IAppNetwork {
 
     suspend fun signIn(request: ISignInRequest): ApiResult<ISignInResponse>
 
-    suspend fun clientGetInfo(request: IClientInfoRequest): ApiResult<IClientInfoResponse>
+    suspend fun clientGetInfo(accountId: Long, request: IClientInfoRequest): ApiResult<IClientInfoResponse>
 
-    suspend fun clientAddCard(request: IClientAddCardRequest): ApiResult<ICardResponse>
+    suspend fun clientAddCard(accountId: Long, request: IClientAddCardRequest): ApiResult<ICardResponse>
 
-    suspend fun clientGetDayCards(day: Int, month: Int, year: Int): ApiResult<List<ICardResponse>>
+    suspend fun clientGetDayCards(accountId: Long, day: Int, month: Int, year: Int): ApiResult<List<ICardResponse>>
 
-    suspend fun clientIncreaseWater(request: IWaterIncreaseRequest): ApiResult<IWaterIncreaseResponse>
+    suspend fun clientIncreaseWater(accountId: Long, request: IWaterIncreaseRequest): ApiResult<IWaterIncreaseResponse>
 
-    suspend fun clientGetData(request: IClientDataRequest): ApiResult<IClientDataResponse>
+    suspend fun clientGetData(accountId: Long, request: IClientDataRequest): ApiResult<IClientDataResponse>
 
 }

@@ -9,14 +9,12 @@ import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.AppRepository
-import com.mynimef.domain.models.ClientModel
+import com.mynimef.domain.UpdatableClient
 import com.mynimef.domain.models.requests.IClientInfoRequest
 import com.mynimef.domain.models.requests.IWaterIncreaseRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -27,14 +25,12 @@ class HomeViewModel @Inject constructor(
     private val repository: AppRepository
 ): ViewModel() {
 
-    private val _client = MutableStateFlow<ClientModel?>(null)
-    val client = _client.asStateFlow()
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            _client.value = repository.storage.getClient()
-        }
-    }
+    private val updatableClient = UpdatableClient(
+        repository = repository,
+        scope = viewModelScope
+    )
+    private val actualAccountId = updatableClient.actualAccountId
+    val client = updatableClient.client
 
     val dataLoaded = client.map {
         it != null
@@ -72,36 +68,48 @@ class HomeViewModel @Inject constructor(
 
     fun setWater(amount: Float) = with(repository) {
         viewModelScope.launch(Dispatchers.IO) {
+            val accountId = actualAccountId.value
             val request = IWaterIncreaseRequest.create(
                 amount = amount,
-                TimeZone.getDefault().id,
+                timeZone = TimeZone.getDefault().id,
             )
-            when (val result = network.clientIncreaseWater(request)) {
+
+            when (val result = network.clientIncreaseWater(
+                accountId = accountId,
+                request = request
+            )) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> signOut()
+                        401 -> signOutClient(accountId = accountId)
                         else -> {}
                     }
                 }
                 is ApiException -> {}
                 is ApiSuccess -> {
-                    storage.updateWaterAmountClient(result.data.totalAmount)
-                    _client.value = repository.storage.getClient()
+                    storage.updateWaterAmountClient(
+                        accountId = accountId,
+                        waterAmount = result.data.totalAmount
+                    )
+                    updatableClient.update()
                 }
             }
         }
     }
 
     suspend fun update() = with(repository) {
+        val accountId = actualAccountId.value
         val request = IClientInfoRequest.create(
             timeZone = TimeZone.getDefault().id
         )
-        when (val result = network.clientGetInfo(request)) {
+        when (val result = network.clientGetInfo(
+            accountId = accountId,
+            request = request
+        )) {
             is ApiError -> {
                 when (result.code) {
                     401 -> {
                         RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
-                        signOut()
+                        signOutClient(accountId = accountId)
                     }
                     else -> {}
                 }
@@ -113,8 +121,8 @@ class HomeViewModel @Inject constructor(
                 data.dayCards.forEach {
                     storage.insertCard(it)
                 }
-                storage.insertClient(data)
-                _client.value = repository.storage.getClient()
+                storage.insertClient(accountId = accountId, client = data)
+                updatableClient.update()
             }
         }
     }

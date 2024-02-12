@@ -7,25 +7,19 @@ import kotlinx.coroutines.flow.Flow
 
 interface IAppStorage {
 
-    suspend fun getRefreshToken(): String
-
     suspend fun insertAccount(account: AccountModel)
 
-    suspend fun deleteAccount(id: Long)
-
-    suspend fun deleteAccount()
+    suspend fun deleteAccount(accountId: Long)
 
     fun getAllClients(): Flow<List<ClientModel>>
 
-    suspend fun getClient(): ClientModel
+    suspend fun getClient(accountId: Long): ClientModel?
 
-    suspend fun insertClient(client: ClientModel): Long
+    suspend fun insertClient(accountId: Long, client: ClientModel): Long
 
-    suspend fun deleteClient(id: Long)
+    suspend fun deleteClient(accountId: Long)
 
-    suspend fun deleteClient()
-
-    suspend fun updateWaterAmountClient(waterAmount: Float)
+    suspend fun updateWaterAmountClient(accountId: Long, waterAmount: Float)
 
     suspend fun insertCard(card: CardModel): Long
 

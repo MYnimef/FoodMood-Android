@@ -67,16 +67,16 @@ class AppNetworkImpl(
     override suspend fun signIn(request: ISignInRequest) =
         handleApi { authAPI.signIn(SignInRequest(request)) as Response<ISignInResponse> }
 
-    override suspend fun clientGetInfo(request: IClientInfoRequest) =
-        handleAuthApi { clientAPI.getInfo(it, ClientInfoRequest(request)) as Response<IClientInfoResponse> }
-    override suspend fun clientAddCard(request: IClientAddCardRequest) =
-        handleAuthApi { clientAPI.addCard(it, ClientAddCardRequest(request)) as Response<ICardResponse> }
-    override suspend fun clientGetDayCards(day: Int, month: Int, year: Int) =
-        handleAuthApi { clientAPI.getDateCards(it, day, month, year) as Response<List<ICardResponse>> }
-    override suspend fun clientIncreaseWater(request: IWaterIncreaseRequest) =
-        handleAuthApi { clientAPI.increaseWater(it, WaterIncreaseRequest(request)) as Response<IWaterIncreaseResponse> }
-    override suspend fun clientGetData(request: IClientDataRequest) =
-        handleAuthApi { clientAPI.getData(it, ClientDataRequest(request)) as Response<IClientDataResponse> }
+    override suspend fun clientGetInfo(accountId: Long, request: IClientInfoRequest) =
+        handleAuthApi(accountId) { clientAPI.getInfo(it, ClientInfoRequest(request)) as Response<IClientInfoResponse> }
+    override suspend fun clientAddCard(accountId: Long, request: IClientAddCardRequest) =
+        handleAuthApi(accountId) { clientAPI.addCard(it, ClientAddCardRequest(request)) as Response<ICardResponse> }
+    override suspend fun clientGetDayCards(accountId: Long, day: Int, month: Int, year: Int) =
+        handleAuthApi(accountId) { clientAPI.getDateCards(it, day, month, year) as Response<List<ICardResponse>> }
+    override suspend fun clientIncreaseWater(accountId: Long, request: IWaterIncreaseRequest) =
+        handleAuthApi(accountId) { clientAPI.increaseWater(it, WaterIncreaseRequest(request)) as Response<IWaterIncreaseResponse> }
+    override suspend fun clientGetData(accountId: Long, request: IClientDataRequest) =
+        handleAuthApi(accountId) { clientAPI.getData(it, ClientDataRequest(request)) as Response<IClientDataResponse> }
 
     private suspend fun <T: Any> handleApi(
         execute: suspend () -> Response<T>
@@ -98,10 +98,13 @@ class AppNetworkImpl(
 
     @Suppress("UNCHECKED_CAST")
     private suspend fun <T: Any> handleAuthApi(
+        accountId: Long,
         execute: suspend (token: String) -> Response<T>,
     ): ApiResult<T> {
         if (accessToken == null) {
-            val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(tokenGetter.getRefreshToken())) }
+            val refreshResult = handleApi {
+                authAPI.refreshToken(RefreshTokenRequest(tokenGetter.getRefreshToken(accountId)))
+            }
             if (refreshResult is ApiSuccess) {
                 accessToken = refreshResult.data.accessToken
             } else {
@@ -110,7 +113,9 @@ class AppNetworkImpl(
         }
         val result = handleApi { execute(accessToken!!) }
         if (result is ApiError && result.code == 401) {
-            val refreshResult = handleApi { authAPI.refreshToken(RefreshTokenRequest(tokenGetter.getRefreshToken())) }
+            val refreshResult = handleApi {
+                authAPI.refreshToken(RefreshTokenRequest(tokenGetter.getRefreshToken(accountId)))
+            }
             return if (refreshResult is ApiSuccess) {
                 accessToken = refreshResult.data.accessToken
                 handleApi { execute(accessToken!!) }

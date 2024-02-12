@@ -2,6 +2,7 @@ package com.mynimef.foodmood.screens.client
 
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mynimef.data.RepositoryImpl
 import com.mynimef.data.enums.ENavClientMain
 import com.mynimef.domain.ApiError
@@ -13,12 +14,12 @@ import com.mynimef.domain.models.ETypeEmotion
 import com.mynimef.domain.models.ETypeMeal
 import com.mynimef.domain.models.requests.IClientAddCardRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +28,11 @@ class CreateViewModel @Inject constructor(
     private val repository: AppRepository
 ): ViewModel() {
 
-    private var job: Job? = null
+    private val actualAccountId = repository.getActualAccountId().stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = 0L
+    )
 
     private val _mealType = MutableStateFlow(ETypeMeal.BREAKFAST)
     val mealType = _mealType.asStateFlow()
@@ -58,14 +63,14 @@ class CreateViewModel @Inject constructor(
     val client = _client.asStateFlow()
 
     init {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            _client.value = repository.storage.getClient()
+        viewModelScope.launch(Dispatchers.IO) {
+            _client.value = repository.storage.getClient(accountId = actualAccountId.value)
         }
     }
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
-        job = CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch(Dispatchers.Main) {
             RepositoryImpl.clientNavMain.emit(ENavClientMain.CREATE_EMOTION_CARD)
         }
     }
@@ -88,7 +93,8 @@ class CreateViewModel @Inject constructor(
     }
 
     fun create() = with(repository) {
-        job = CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
+            val accountId = actualAccountId.value
             val request = IClientAddCardRequest.create(
                 mealType = _mealType.value,
                 emotionType = _emotionType.value,
@@ -96,10 +102,13 @@ class CreateViewModel @Inject constructor(
                 foodDescription = _foodDescription.value,
                 timeZone = TimeZone.getDefault().id,
             )
-            when (val result = network.clientAddCard(request)) {
+            when (val result = network.clientAddCard(
+                accountId = accountId,
+                request = request
+            )) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> signOut()
+                        401 -> signOutClient(accountId = accountId)
                         else -> {}
                     }
                 }
@@ -110,11 +119,6 @@ class CreateViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
     }
 
 }

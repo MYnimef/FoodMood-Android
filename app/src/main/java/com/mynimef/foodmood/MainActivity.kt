@@ -47,9 +47,8 @@ class MainActivity: ComponentActivity() {
             FoodMoodTheme {
                 Crossfade(
                     modifier = Modifier
-                        .fillMaxSize()
-                    ,
-                    targetState = viewModel.appState.collectAsStateWithLifecycle(EAppState.AUTH).value,
+                        .fillMaxSize(),
+                    targetState = viewModel.appState.collectAsStateWithLifecycle().value,
                     label = "main",
                 ) { targetState ->
                     when (targetState) {

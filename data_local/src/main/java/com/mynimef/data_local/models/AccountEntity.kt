@@ -11,7 +11,7 @@ internal data class AccountEntity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Long = 0,
+    override val id: Long = 0,
 
     @ColumnInfo(name = "role")
     override val role: ERole,

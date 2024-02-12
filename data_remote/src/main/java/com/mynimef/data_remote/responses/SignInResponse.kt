@@ -7,6 +7,8 @@ import com.mynimef.domain.models.responses.ISignInResponse
 
 internal data class SignInResponse(
 
+    override val id: Long = 0,
+
     @Expose
     @SerializedName("refresh_token")
     override val refreshToken: String,

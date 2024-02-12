@@ -3,21 +3,19 @@ package com.mynimef.foodmood.screens.auth
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mynimef.data.RepositoryImpl
+import com.mynimef.data.enums.ENavAuth
+import com.mynimef.data.enums.EToast
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
-import com.mynimef.data.enums.ENavAuth
-import com.mynimef.data.enums.EToast
-import com.mynimef.data.RepositoryImpl
 import com.mynimef.domain.AppRepository
 import com.mynimef.domain.extensions.emailChecker
 import com.mynimef.domain.extensions.nameChecker
 import com.mynimef.domain.extensions.passwordChecker
 import com.mynimef.domain.models.requests.ISignUpRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,8 +29,6 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val repository: AppRepository
 ): ViewModel() {
-
-    private var job: Job? = null
 
     private val _namePair = MutableStateFlow("" to true)
     val namePair = _namePair.asStateFlow()
@@ -119,7 +115,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun signUp() = with(repository) {
-        job = CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val request = ISignUpRequest.create(
                 name = _namePair.value.first,
                 email = _emailPair.value.first,
@@ -144,14 +140,9 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun navigateTo(nav: ENavAuth) = with(RepositoryImpl) {
-        job = CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch(Dispatchers.Main) {
             authNavMain.emit(nav)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
     }
 
 }
