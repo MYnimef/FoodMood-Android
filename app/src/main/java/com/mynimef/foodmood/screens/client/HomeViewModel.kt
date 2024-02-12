@@ -9,7 +9,7 @@ import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.AppRepository
-import com.mynimef.domain.UpdatableClient
+import com.mynimef.domain.UpdatableAccount
 import com.mynimef.domain.models.requests.IClientInfoRequest
 import com.mynimef.domain.models.requests.IWaterIncreaseRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,12 +25,12 @@ class HomeViewModel @Inject constructor(
     private val repository: AppRepository
 ): ViewModel() {
 
-    private val updatableClient = UpdatableClient(
+    private val updatableAccount = UpdatableAccount(
         repository = repository,
         scope = viewModelScope
     )
-    private val actualAccountId = updatableClient.actualAccountId
-    val client = updatableClient.client
+    private val actualAccountId = updatableAccount.actualAccountId
+    val client = updatableAccount.getClient()
 
     val dataLoaded = client.map {
         it != null
@@ -66,7 +66,7 @@ class HomeViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    fun setWater(amount: Float) = with(repository) {
+    fun setWater(amount: Float): Unit = with(repository) {
         viewModelScope.launch(Dispatchers.IO) {
             val accountId = actualAccountId.value
             val request = IWaterIncreaseRequest.create(
@@ -84,13 +84,13 @@ class HomeViewModel @Inject constructor(
                         else -> {}
                     }
                 }
-                is ApiException -> {}
+                is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
                 is ApiSuccess -> {
                     storage.updateWaterAmountClient(
                         accountId = accountId,
                         waterAmount = result.data.totalAmount
                     )
-                    updatableClient.update()
+                    updatableAccount.update()
                 }
             }
         }
@@ -122,7 +122,7 @@ class HomeViewModel @Inject constructor(
                     storage.insertCard(it)
                 }
                 storage.insertClient(accountId = accountId, client = data)
-                updatableClient.update()
+                updatableAccount.update()
             }
         }
     }

@@ -11,30 +11,47 @@ import kotlinx.coroutines.launch
 
 private const val INITIAL_ID = -1L
 
-class UpdatableClient(
-    repository: AppRepository,
+fun AppRepository.getActualAccountId(scope: CoroutineScope) = getActualAccountId().stateIn(
+    scope = scope,
+    started = SharingStarted.WhileSubscribed(),
+    initialValue = INITIAL_ID
+)
+
+class UpdatableAccount(
+    private val repository: AppRepository,
     private val scope: CoroutineScope
 ) {
 
-    val actualAccountId = repository.getActualAccountId().stateIn(
-        scope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = INITIAL_ID
-    )
+    val actualAccountId = repository.getActualAccountId(scope)
 
     private val updateFlow = MutableSharedFlow<Unit>(replay = 1)
 
     init {
-        update()
-    }
-
-    fun update() {
         scope.launch(Dispatchers.Main) {
-            updateFlow.emit(Unit)
+            update()
         }
     }
 
-    val client = actualAccountId
+    suspend fun update() {
+        updateFlow.emit(Unit)
+    }
+
+    /*
+    fun getTrainer() = actualAccountId
+        .filter {
+            it != INITIAL_ID
+        }
+        .combine(updateFlow) { id, _ ->
+            repository.storage.getTrainer(accountId = id)
+        }
+        .stateIn(
+            scope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null
+        )
+     */
+
+    fun getClient() = actualAccountId
         .filter {
             it != INITIAL_ID
         }

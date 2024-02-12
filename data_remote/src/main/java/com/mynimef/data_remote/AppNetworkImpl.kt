@@ -96,7 +96,6 @@ class AppNetworkImpl(
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     private suspend fun <T: Any> handleAuthApi(
         accountId: Long,
         execute: suspend (token: String) -> Response<T>,
