@@ -1,6 +1,5 @@
 package com.mynimef.foodmood.screens.client
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,13 +12,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,31 +32,31 @@ import com.mynimef.domain.models.ETypeMeal
 import com.mynimef.foodmood.elements.MyDate
 import com.mynimef.foodmood.elements.MyFoodCard
 import com.mynimef.foodmood.elements.MyGradient
+import com.mynimef.foodmood.elements.MyPullToUpdate
 import com.mynimef.foodmood.elements.MyWaterPanel
 import com.mynimef.foodmood.extensions.getIcon
 import com.mynimef.foodmood.extensions.getLabel
 import com.mynimef.foodmood.theme.FoodMoodTheme
 import kotlinx.coroutines.delay
-
-private fun log(message: String) {
-    Log.d("HOME_SCREEN", message)
-}
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen() {
     val viewModel: HomeViewModel = hiltViewModel()
 
+    val updatingState = viewModel.updateFlow.collectAsStateWithLifecycle()
     val trackWaterState = viewModel.trackWater.collectAsStateWithLifecycle()
     val waterAmountState = viewModel.waterAmount.collectAsStateWithLifecycle()
     val cardsState = viewModel.cards.collectAsStateWithLifecycle()
 
     if (viewModel.dataLoaded.collectAsStateWithLifecycle().value) {
         HomeScreen(
+            updatingProvider = { updatingState.value },
             trackWaterProvider = { trackWaterState.value },
             waterAmountProvider = { waterAmountState.value },
-            setWater = viewModel::setWater,
             cardsProvider = { cardsState.value },
-            onRefresh = viewModel::update
+            setWater = viewModel::setWater,
+            onUpdate = viewModel::updateAccount
         )
     }
 }
@@ -66,14 +64,13 @@ fun HomeScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
+    updatingProvider: () -> Boolean,
     trackWaterProvider: () -> Boolean,
     waterAmountProvider: () -> Float,
-    setWater: (Float) -> Unit,
     cardsProvider: () -> List<CardModel>,
-    onRefresh: suspend () -> Unit,
+    setWater: (Float) -> Unit,
+    onUpdate: () -> Unit,
 ) {
-    log("HomeScreen")
-
     val pullRefreshState = rememberPullToRefreshState()
 
     Box(
@@ -106,34 +103,13 @@ private fun HomeScreen(
             colorBottom = MaterialTheme.colorScheme.background
         )
         MyDate()
-        MyPullToRefresh(
+        MyPullToUpdate(
             modifier = Modifier.align(Alignment.TopCenter),
             state = pullRefreshState,
-            onRefresh = onRefresh
+            updatingProvider = updatingProvider,
+            onUpdate = onUpdate
         )
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun MyPullToRefresh(
-    modifier: Modifier,
-    state: PullToRefreshState,
-    onRefresh: suspend () -> Unit
-) {
-    log("PullToRefresh")
-
-    if (state.isRefreshing) {
-        LaunchedEffect(Unit) {
-            onRefresh()
-            state.endRefresh()
-        }
-    }
-
-    PullToRefreshContainer(
-        modifier = modifier,
-        state = state
-    )
 }
 
 @Composable
@@ -214,13 +190,21 @@ private fun HomeScreenPreview() = FoodMoodTheme {
 
     val waterAmountState = remember { mutableFloatStateOf(0f) }
 
+    val updatingState = remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
     HomeScreen(
+        updatingProvider = { updatingState.value },
         trackWaterProvider = { true },
         waterAmountProvider = { waterAmountState.floatValue },
-        setWater = { waterAmountState.floatValue += it },
         cardsProvider = { cards },
-        onRefresh = {
-            delay(5000)
+        setWater = { waterAmountState.floatValue += it },
+        onUpdate = {
+            coroutineScope.launch {
+                updatingState.value = true
+                delay(5000)
+                updatingState.value = false
+            }
         }
     )
 }

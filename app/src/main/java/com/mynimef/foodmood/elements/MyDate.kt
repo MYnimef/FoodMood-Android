@@ -4,9 +4,9 @@ import android.content.res.Resources
 import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,7 +31,7 @@ fun MyDate() {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(bottomEnd = 10.dp))
-            .width(150.dp)
+            .wrapContentWidth(align = Alignment.CenterHorizontally)
             .height(45.dp)
             .background(color = MaterialTheme.colorScheme.primary)
         ,
@@ -39,7 +39,7 @@ fun MyDate() {
     ) {
         Text(
             modifier = Modifier
-                .fillMaxWidth(0.7f)
+                .padding(start = 20.dp, end = 20.dp)
             ,
             text = date.toString(),
             color = MaterialTheme.colorScheme.onPrimary,
