@@ -3,8 +3,6 @@ package com.mynimef.foodmood.screens.client
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynimef.data.RepositoryImpl
-import com.mynimef.data.enums.EToast
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
@@ -113,7 +111,7 @@ class HomeViewModel @Inject constructor(
                     else -> {}
                 }
             }
-            is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
+            is ApiException -> {}
             is ApiSuccess -> {
                 clientRepository.updateWaterAmount(
                     accountId = accountId,
@@ -135,13 +133,12 @@ class HomeViewModel @Inject constructor(
             is ApiError -> {
                 when (result.code) {
                     401 -> {
-                        RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
                         clientRepository.signOut(accountId = accountId)
                     }
                     else -> {}
                     }
             }
-            is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
+            is ApiException -> {}
             is ApiSuccess -> {
                 val data = result.data
                 clientRepository.deleteAllCards()

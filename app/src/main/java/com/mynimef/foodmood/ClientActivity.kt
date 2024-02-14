@@ -33,7 +33,11 @@ class ClientActivity: ComponentActivity() {
                         finish()
                     }
                     EAppState.CLIENT -> {}
-                    EAppState.TRAINER -> {}
+                    EAppState.TRAINER -> {
+                        val myIntent = Intent(this@ClientActivity, TrainerActivity::class.java)
+                        startActivity(myIntent)
+                        finish()
+                    }
                 }
             }
         }
