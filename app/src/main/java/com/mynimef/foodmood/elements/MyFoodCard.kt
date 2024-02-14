@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
-import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeEmotion
 import com.mynimef.foodmood.extensions.getIcon
 import com.mynimef.foodmood.theme.FoodMoodTheme
 

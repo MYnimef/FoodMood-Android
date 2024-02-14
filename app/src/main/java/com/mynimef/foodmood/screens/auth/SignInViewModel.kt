@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mynimef.data.RepositoryImpl
-import com.mynimef.data.enums.ENavAuth
+import com.mynimef.domain.models.enums.ENavAuth
 import com.mynimef.data.enums.EToast
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
@@ -54,14 +54,14 @@ class SignInViewModel @Inject constructor(
         _passwordPair.value = value to passwordChecker(value)
     }
 
-    fun signIn() = with(repository) {
+    fun signIn() {
         viewModelScope.launch(Dispatchers.IO) {
             val request = ISignInRequest.create(
                 email = _emailPair.value.first,
                 password = _passwordPair.value.first,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            when (val result = network.signIn(request)) {
+            when (val result = repository.signIn(request)) {
                 is ApiError -> {
                     when (result.code) {
                         401 -> RepositoryImpl.toastFlow.emit(EToast.WRONG_EMAIL_OR_PASSWORD)

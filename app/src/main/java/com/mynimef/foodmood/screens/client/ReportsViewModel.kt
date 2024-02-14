@@ -10,6 +10,7 @@ import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.AppRepository
+import com.mynimef.domain.ClientRepository
 import com.mynimef.domain.models.requests.IClientDataRequest
 import com.mynimef.domain.models.responses.IDataResponse
 import com.mynimef.foodmood.extensions.getNum
@@ -26,7 +27,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportsViewModel @Inject constructor(
-    private val repository: AppRepository
+    private val repository: AppRepository,
+    private val clientRepository: ClientRepository
 ): ViewModel() {
 
     private val actualAccountId = repository.getActualAccountId().stateIn(
@@ -63,14 +65,14 @@ class ReportsViewModel @Inject constructor(
                 timeZone = TimeZone.getDefault().id,
                 days = _period.value.getNum().toLong(),
             )
-            when (val result = network.clientGetData(
+            when (val result = clientRepository.getData(
                 accountId = accountId,
                 request = request
             )) {
                 is ApiError -> when (result.code) {
                     401 -> {
                         RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
-                        signOutClient(accountId = accountId)
+                        clientRepository.signOut(accountId = accountId)
                     }
                     else -> {}
                 }

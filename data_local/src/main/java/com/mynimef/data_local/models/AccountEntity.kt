@@ -3,7 +3,7 @@ package com.mynimef.data_local.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mynimef.domain.models.ERole
+import com.mynimef.domain.models.enums.ERole
 import com.mynimef.domain.models.AccountModel
 
 @Entity(tableName = "account")

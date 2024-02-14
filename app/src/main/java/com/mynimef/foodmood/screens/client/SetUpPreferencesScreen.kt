@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mynimef.foodmood.R
-import com.mynimef.data.enums.ENavClientMain
+import com.mynimef.domain.models.enums.ENavClientMain
 import com.mynimef.foodmood.elements.MyIcon
 import com.mynimef.foodmood.elements.fields.MyTextFieldSettings
 import com.mynimef.foodmood.theme.FoodMoodTheme

@@ -1,8 +1,8 @@
 package com.mynimef.domain.models.requests
 
 import com.mynimef.domain.models.CardModel
-import com.mynimef.domain.models.ETypeEmotion
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.enums.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeMeal
 
 interface IClientAddCardRequest: CardModel {
 

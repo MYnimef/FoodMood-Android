@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mynimef.data.RepositoryImpl
 import com.mynimef.domain.AppRepository
-import com.mynimef.domain.models.EAppState
+import com.mynimef.domain.models.enums.EAppState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

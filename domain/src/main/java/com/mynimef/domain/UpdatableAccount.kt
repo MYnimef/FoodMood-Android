@@ -22,23 +22,25 @@ class UpdatableAccount(
 
     val updateFlow = MutableStateFlow(false)
 
+    /*
     fun getAccount() = actualAccountId
         .filter { it != INITIAL_ID }
         .combine(updateFlow.filter { !it }) { id, _ ->
-            repository.storage.getClient(accountId = id)
+            repository.getClient(accountId = id)
         }
         .stateIn(
             scope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = null
         )
+     */
 
-    fun getClient() = actualAccountId
+    fun getClient(repository: ClientRepository) = actualAccountId
         .filter {
             it != INITIAL_ID
         }
         .combine(updateFlow) { id, _ ->
-            repository.storage.getClient(accountId = id)
+            repository.getAccount(accountId = id)
         }
         .stateIn(
             scope,

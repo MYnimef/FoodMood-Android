@@ -1,4 +1,4 @@
-package com.mynimef.data.enums
+package com.mynimef.domain.models.enums
 
 enum class ENavAuth(val route: String, val parentRoute: String? = null) {
 

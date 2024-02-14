@@ -2,8 +2,10 @@ package com.mynimef.di
 
 import android.content.Context
 import com.mynimef.data_local.AppStorageImpl
-import com.mynimef.data_remote.AppNetworkImpl
+import com.mynimef.data_remote.createAppNetworkImpl
 import com.mynimef.domain.AppRepository
+import com.mynimef.domain.IAppNetwork
+import com.mynimef.domain.IAppStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,15 +19,25 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(
-        @ApplicationContext context: Context
-    ): AppRepository {
-        val storage = AppStorageImpl(context = context)
-        val network = AppNetworkImpl(tokenGetter = storage)
+    fun provideStorage(@ApplicationContext context: Context): IAppStorage {
+        return AppStorageImpl(context = context)
+    }
 
+    @Singleton
+    @Provides
+    fun provideNetwork(storage: IAppStorage): IAppNetwork {
+        return createAppNetworkImpl(tokenGetter = storage)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRepository(
+        storage: IAppStorage,
+        network: IAppNetwork
+    ): AppRepository {
         return AppRepository(
-            storageRoot = storage,
-            networkRoot = network
+            storage = storage,
+            network = network
         )
     }
 

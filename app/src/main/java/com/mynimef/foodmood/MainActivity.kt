@@ -12,7 +12,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.mynimef.domain.models.EAppState
+import com.mynimef.domain.models.enums.EAppState
 import com.mynimef.foodmood.extensions.getText
 import com.mynimef.foodmood.screens.auth.AuthMainScreen
 import com.mynimef.foodmood.screens.client.ClientMainScreen

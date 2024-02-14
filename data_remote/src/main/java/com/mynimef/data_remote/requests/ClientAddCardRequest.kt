@@ -2,8 +2,8 @@ package com.mynimef.data_remote.requests
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.mynimef.domain.models.ETypeEmotion
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.enums.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeMeal
 import com.mynimef.domain.models.requests.IClientAddCardRequest
 
 internal data class ClientAddCardRequest(

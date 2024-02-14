@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeEmotion
 import com.mynimef.foodmood.extensions.getIcon
 import com.mynimef.foodmood.theme.Blue
 import com.mynimef.foodmood.theme.EmotionDarkGreen

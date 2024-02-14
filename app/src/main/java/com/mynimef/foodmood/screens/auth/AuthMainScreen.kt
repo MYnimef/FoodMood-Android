@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.data.enums.ENavAuth
+import com.mynimef.domain.models.enums.ENavAuth
 import com.mynimef.foodmood.extensions.sharedViewModel
 
 @Composable

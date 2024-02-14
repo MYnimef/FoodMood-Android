@@ -1,9 +1,9 @@
 package com.mynimef.foodmood.screens.client
 
 import androidx.lifecycle.ViewModel
-import com.mynimef.data.enums.ENavClientBottomBar
-import com.mynimef.data.enums.ENavClientMain
-import com.mynimef.data.RepositoryImpl
+import com.mynimef.domain.ClientRepository
+import com.mynimef.domain.models.enums.ENavClientBottomBar
+import com.mynimef.domain.models.enums.ENavClientMain
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,22 +14,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClientBottomBarViewModel @Inject constructor(
-
+    private val clientRepository: ClientRepository
 ): ViewModel() {
 
     private var job: Job? = null
 
-    val navigation = RepositoryImpl.clientNavBottomBar.asSharedFlow()
+    val navigation = clientRepository.navBottomBar.asSharedFlow()
 
     fun switchScreen(nav: ENavClientBottomBar) {
         job = CoroutineScope(Dispatchers.Main).launch {
-            RepositoryImpl.clientNavBottomBar.emit(nav)
+            clientRepository.navBottomBar.emit(nav)
         }
     }
 
     fun switchScreen(nav: ENavClientMain) {
         job = CoroutineScope(Dispatchers.Main).launch {
-            RepositoryImpl.clientNavMain.emit(nav)
+            clientRepository.navMain.emit(nav)
         }
     }
 

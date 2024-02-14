@@ -9,6 +9,7 @@ import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.AppRepository
+import com.mynimef.domain.ClientRepository
 import com.mynimef.domain.UpdatableAccount
 import com.mynimef.domain.models.ClientModel
 import com.mynimef.domain.models.requests.IClientInfoRequest
@@ -26,7 +27,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: AppRepository
+    private val repository: AppRepository,
+    private val clientRepository: ClientRepository
 ): ViewModel() {
 
     private val actualAccountId: StateFlow<Long>
@@ -39,7 +41,7 @@ class HomeViewModel @Inject constructor(
     ).let {
         actualAccountId = it.actualAccountId
         _updateFlow = it.updateFlow
-        client = it.getClient()
+        client = it.getClient(clientRepository)
     } }
 
     val updateFlow = _updateFlow.asStateFlow()
@@ -71,7 +73,7 @@ class HomeViewModel @Inject constructor(
             initialValue = 0f
         )
 
-    val cards = repository.storage.getAllCards()
+    val cards = clientRepository.getAllCards()
         .stateIn(
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
@@ -101,19 +103,19 @@ class HomeViewModel @Inject constructor(
             timeZone = TimeZone.getDefault().id,
         )
 
-        when (val result = network.clientIncreaseWater(
+        when (val result = clientRepository.increaseWater(
             accountId = accountId,
             request = request
         )) {
             is ApiError -> {
                 when (result.code) {
-                    401 -> signOutClient(accountId = accountId)
+                    401 -> clientRepository.signOut(accountId = accountId)
                     else -> {}
                 }
             }
             is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
             is ApiSuccess -> {
-                storage.updateWaterAmountClient(
+                clientRepository.updateWaterAmount(
                     accountId = accountId,
                     waterAmount = result.data.totalAmount
                 )
@@ -126,7 +128,7 @@ class HomeViewModel @Inject constructor(
         val request = IClientInfoRequest.create(
             timeZone = TimeZone.getDefault().id
         )
-        when (val result = network.clientGetInfo(
+        when (val result = clientRepository.getInfo(
             accountId = accountId,
             request = request
         )) {
@@ -134,7 +136,7 @@ class HomeViewModel @Inject constructor(
                 when (result.code) {
                     401 -> {
                         RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
-                        signOutClient(accountId = accountId)
+                        clientRepository.signOut(accountId = accountId)
                     }
                     else -> {}
                     }
@@ -142,11 +144,11 @@ class HomeViewModel @Inject constructor(
             is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
             is ApiSuccess -> {
                 val data = result.data
-                storage.deleteAllCards()
+                clientRepository.deleteAllCards()
                 data.dayCards.forEach {
-                    storage.insertCard(it)
+                    clientRepository.insertCard(it)
                 }
-                storage.insertClient(accountId = accountId, client = data)
+                clientRepository.insertAccount(accountId = accountId, client = data)
             }
         }
     }

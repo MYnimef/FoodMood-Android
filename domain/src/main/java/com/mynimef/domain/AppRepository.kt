@@ -1,22 +1,21 @@
 package com.mynimef.domain
 
 import com.mynimef.domain.models.AccountModel
-import com.mynimef.domain.models.EAppState
-import com.mynimef.domain.models.ERole
+import com.mynimef.domain.models.enums.EAppState
+import com.mynimef.domain.models.enums.ERole
+import com.mynimef.domain.models.requests.ISignInRequest
+import com.mynimef.domain.models.requests.ISignUpRequest
 
 class AppRepository(
-    private val storageRoot: IAppStorageRoot,
-    private val networkRoot: IAppNetworkRoot
-) {
+    private val storage: IAppStorage,
+    private val network: IAppNetwork
+): IAppStorageRoot, IAppNetworkRoot {
 
-    fun getAppState() = storageRoot.getAppState()
-    fun getActualAccountId() = storageRoot.getActualAccountId()
-
-    val storage: IAppStorage = storageRoot
-    val network: IAppNetwork = networkRoot
+    fun getAppState() = storage.getAppState()
+    fun getActualAccountId() = storage.getActualAccountId()
 
     suspend fun signIn(account: AccountModel) {
-        storageRoot.insertAccount(account)
+        storage.insertAccount(account)
 
         setState(when (account.role) {
             ERole.CLIENT -> EAppState.CLIENT
@@ -24,27 +23,22 @@ class AppRepository(
         })
     }
 
-    suspend fun signOutClient(accountId: Long) {
-        storageRoot.deleteAllCards()
-        storageRoot.deleteAccount(accountId)
-
-        storageRoot.deleteClient(accountId)
-        networkRoot.removeAccessToken()
-
-        setState(EAppState.AUTH)
-    }
-
-    suspend fun signOutTrainer(accountId: Long) {
-        storageRoot.deleteAllCards()
-        storageRoot.deleteAccount(accountId)
-
-        networkRoot.removeAccessToken()
-
+    suspend fun signOut(accountId: Long) {
+        storage.deleteAccount(accountId)
+        network.removeAccessToken()
         setState(EAppState.AUTH)
     }
 
     private suspend fun setState(state: EAppState) {
-        storageRoot.setAppState(state)
+        storage.setAppState(state)
     }
+
+    override suspend fun signUpClient(request: ISignUpRequest) = network.signUpClient(request)
+
+    override suspend fun signIn(request: ISignInRequest) = network.signIn(request)
+
+    override suspend fun insertAccount(account: AccountModel) = storage.insertAccount(account)
+
+    override suspend fun deleteAccount(accountId: Long) = storage.deleteAccount(accountId)
 
 }

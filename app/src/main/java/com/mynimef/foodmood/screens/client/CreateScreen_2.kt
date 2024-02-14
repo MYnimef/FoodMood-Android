@@ -35,8 +35,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mynimef.foodmood.R
-import com.mynimef.domain.models.ETypeEmotion
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.enums.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeMeal
 import com.mynimef.foodmood.elements.MyDate
 import com.mynimef.foodmood.elements.MyEmotionButton
 import com.mynimef.foodmood.elements.MyGradient

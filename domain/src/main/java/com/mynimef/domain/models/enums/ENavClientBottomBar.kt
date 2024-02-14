@@ -1,4 +1,4 @@
-package com.mynimef.data.enums
+package com.mynimef.domain.models.enums
 
 enum class ENavClientBottomBar(val route: String) {
     HOME(route = "home"),

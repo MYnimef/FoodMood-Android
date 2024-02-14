@@ -1,4 +1,4 @@
-package com.mynimef.domain.models
+package com.mynimef.domain.models.enums
 
 enum class ETypeMeal {
     BREAKFAST,

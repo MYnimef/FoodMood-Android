@@ -1,5 +1,8 @@
 package com.mynimef.domain.models
 
+import com.mynimef.domain.models.enums.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeMeal
+
 interface CardModel {
 
     val mealType: ETypeMeal

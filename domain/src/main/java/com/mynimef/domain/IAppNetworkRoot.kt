@@ -1,9 +1,13 @@
 package com.mynimef.domain
 
-interface IAppNetworkRoot: IAppNetwork {
+import com.mynimef.domain.models.requests.ISignInRequest
+import com.mynimef.domain.models.requests.ISignUpRequest
+import com.mynimef.domain.models.responses.ISignInResponse
 
-    val tokenGetter: ITokenGetter
+interface IAppNetworkRoot {
 
-    fun removeAccessToken()
+    suspend fun signUpClient(request: ISignUpRequest): ApiResult<ISignInResponse>
+
+    suspend fun signIn(request: ISignInRequest): ApiResult<ISignInResponse>
 
 }

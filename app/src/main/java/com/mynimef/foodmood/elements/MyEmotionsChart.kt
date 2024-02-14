@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mynimef.domain.models.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeEmotion
 import com.mynimef.data.enums.ETypePeriod
 import com.mynimef.foodmood.elements.chart.AxisLines
 import com.mynimef.foodmood.elements.chart.LineChart
