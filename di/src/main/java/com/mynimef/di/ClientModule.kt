@@ -12,18 +12,21 @@ import com.mynimef.domain.IClientStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 object ClientModule {
 
+    @ActivityRetainedScoped
     @Provides
     fun provideStorage(@ApplicationContext context: Context): IClientStorage {
         return ClientStorageImpl(context = context)
     }
 
+    @ActivityRetainedScoped
     @Provides
     fun provideNetwork(
         appStorage: IAppStorage,
@@ -35,6 +38,7 @@ object ClientModule {
         )
     }
 
+    @ActivityRetainedScoped
     @Provides
     fun provideRepository(
         storage: IClientStorage,
