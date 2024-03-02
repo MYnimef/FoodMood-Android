@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+        kotlinCompilerExtensionVersion = "1.5.9"
     }
     packaging {
         resources {
@@ -61,23 +61,21 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
-    with(libs.androidx) {
-        implementation(core.ktx)
+    implementation(libs.androidx.core.ktx)
 
-        implementation(lifecycle.runtime.ktx)
-        implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 
-        implementation(activity.compose)
-        implementation(platform(compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
 
-        implementation(compose.ui)
-        implementation(compose.ui.graphics)
-        implementation(compose.ui.tooling.preview)
-        implementation(compose.material3)
-        implementation(navigation.compose)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.navigation.compose)
 
-        implementation(core.splashscreen)
-    }
+    implementation(libs.androidx.core.splashscreen)
 
     // Calendar
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
