@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -36,11 +36,11 @@ dependencies {
 
     implementation(project(":domain"))
 
+    implementation(libs.androidx.core.ktx)
+
     // Retrofit2
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
-
-    implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
