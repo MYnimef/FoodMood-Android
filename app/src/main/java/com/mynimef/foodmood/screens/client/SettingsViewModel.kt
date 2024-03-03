@@ -1,20 +1,25 @@
 package com.mynimef.foodmood.screens.client
 
 import androidx.lifecycle.ViewModel
-import com.mynimef.data.enums.ENavClientMain
-import com.mynimef.data.RepositoryImpl
+import com.mynimef.domain.ClientRepository
+import com.mynimef.domain.models.enums.ENavClientMain
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SettingsViewModel: ViewModel() {
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
+    private val clientRepository: ClientRepository
+): ViewModel() {
 
     private var job: Job? = null
 
-    fun navigateTo(nav: ENavClientMain) = with(RepositoryImpl) {
+    fun navigateTo(nav: ENavClientMain) {
         job = CoroutineScope(Dispatchers.Main).launch {
-            clientNavMain.emit(nav)
+            clientRepository.navMain.emit(nav)
         }
     }
 

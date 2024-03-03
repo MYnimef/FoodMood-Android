@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.data.enums.ENavClientMain
+import com.mynimef.domain.models.enums.ENavClientMain
 import com.mynimef.foodmood.extensions.OnLifecycleEvent
 import com.mynimef.foodmood.extensions.sharedViewModel
 

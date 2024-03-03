@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.domain.models.CardModel
-import com.mynimef.domain.models.ETypeEmotion
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.enums.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeMeal
 import com.mynimef.foodmood.elements.MyDate
 import com.mynimef.foodmood.elements.MyFoodCard
 import com.mynimef.foodmood.elements.MyGradient

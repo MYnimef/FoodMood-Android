@@ -3,15 +3,15 @@ package com.mynimef.foodmood.screens.client
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynimef.data.RepositoryImpl
-import com.mynimef.data.enums.ENavClientMain
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.AppRepository
+import com.mynimef.domain.ClientRepository
 import com.mynimef.domain.models.ClientModel
-import com.mynimef.domain.models.ETypeEmotion
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.enums.ENavClientMain
+import com.mynimef.domain.models.enums.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeMeal
 import com.mynimef.domain.models.requests.IClientAddCardRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,10 +25,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateViewModel @Inject constructor(
-    private val repository: AppRepository
+    private val appRepository: AppRepository,
+    private val clientRepository: ClientRepository
 ): ViewModel() {
 
-    private val actualAccountId = repository.getActualAccountId().stateIn(
+    private val actualAccountId = appRepository.getActualAccountId().stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = 0L
@@ -64,14 +65,14 @@ class CreateViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _client.value = repository.storage.getClient(accountId = actualAccountId.value)
+            _client.value = clientRepository.getAccount(accountId = actualAccountId.value)
         }
     }
 
     fun setMealType(value: ETypeMeal) {
         _mealType.value = value
         viewModelScope.launch(Dispatchers.Main) {
-            RepositoryImpl.clientNavMain.emit(ENavClientMain.CREATE_EMOTION_CARD)
+            clientRepository.navMain.emit(ENavClientMain.CREATE_EMOTION_CARD)
         }
     }
 
@@ -92,7 +93,7 @@ class CreateViewModel @Inject constructor(
         _weight.value = value
     }
 
-    fun create() = with(repository) {
+    fun create() {
         viewModelScope.launch(Dispatchers.IO) {
             val accountId = actualAccountId.value
             val request = IClientAddCardRequest.create(
@@ -102,20 +103,20 @@ class CreateViewModel @Inject constructor(
                 foodDescription = _foodDescription.value,
                 timeZone = TimeZone.getDefault().id,
             )
-            when (val result = network.clientAddCard(
+            when (val result = clientRepository.addCard(
                 accountId = accountId,
                 request = request
             )) {
                 is ApiError -> {
                     when (result.code) {
-                        401 -> signOutClient(accountId = accountId)
+                        401 -> appRepository.signOut(accountId = accountId)
                         else -> {}
                     }
                 }
                 is ApiException -> {}
                 is ApiSuccess -> {
-                    storage.insertCard(result.data)
-                    RepositoryImpl.clientNavMain.emit(ENavClientMain.BOTTOM_BAR)
+                    clientRepository.insertCard(result.data)
+                    clientRepository.navMain.emit(ENavClientMain.BOTTOM_BAR)
                 }
             }
         }

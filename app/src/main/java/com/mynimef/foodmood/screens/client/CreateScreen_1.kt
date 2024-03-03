@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.foodmood.R
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.enums.ETypeMeal
 import com.mynimef.foodmood.elements.MyChoiceCard
 import com.mynimef.foodmood.elements.MyPolygonLayout
 import com.mynimef.foodmood.elements.MyWeightCard

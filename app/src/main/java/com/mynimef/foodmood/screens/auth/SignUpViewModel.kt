@@ -3,16 +3,15 @@ package com.mynimef.foodmood.screens.auth
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynimef.data.RepositoryImpl
-import com.mynimef.data.enums.ENavAuth
-import com.mynimef.data.enums.EToast
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.AppRepository
+import com.mynimef.domain.AuthRepository
 import com.mynimef.domain.extensions.emailChecker
 import com.mynimef.domain.extensions.nameChecker
 import com.mynimef.domain.extensions.passwordChecker
+import com.mynimef.domain.models.enums.ENavAuth
 import com.mynimef.domain.models.requests.ISignUpRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +26,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val repository: AppRepository
+    private val repository: AppRepository,
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     private val _namePair = MutableStateFlow("" to true)
@@ -114,7 +114,7 @@ class SignUpViewModel @Inject constructor(
         _repeatPasswordPair.value = value to isValid
     }
 
-    fun signUp() = with(repository) {
+    fun signUp() {
         viewModelScope.launch(Dispatchers.IO) {
             val request = ISignUpRequest.create(
                 name = _namePair.value.first,
@@ -125,23 +125,23 @@ class SignUpViewModel @Inject constructor(
                 trackWeight = _weight.value,
                 device = Build.MANUFACTURER + " " + Build.MODEL,
             )
-            when (val result = network.signUpClient(request)) {
+            when (val result = repository.signUpClient(request)) {
                 is ApiError -> {
                     when (result.code) {
-                        403 -> RepositoryImpl.toastFlow.emit(EToast.WRONG_INPUT)
-                        409 -> RepositoryImpl.toastFlow.emit(EToast.ACCOUNT_ALREADY_EXISTS)
+                        403 -> {}
+                        409 -> {}
                         else -> {}
                     }
                 }
-                is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
-                is ApiSuccess -> signIn(account = result.data)
+                is ApiException -> {}
+                is ApiSuccess -> repository.signIn(account = result.data)
             }
         }
     }
 
-    fun navigateTo(nav: ENavAuth) = with(RepositoryImpl) {
+    fun navigateTo(nav: ENavAuth) {
         viewModelScope.launch(Dispatchers.Main) {
-            authNavMain.emit(nav)
+            authRepository.navMain.emit(nav)
         }
     }
 

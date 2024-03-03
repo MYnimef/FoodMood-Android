@@ -3,12 +3,11 @@ package com.mynimef.foodmood.screens.client
 import android.icu.util.TimeZone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mynimef.data.RepositoryImpl
-import com.mynimef.data.enums.EToast
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
 import com.mynimef.domain.AppRepository
+import com.mynimef.domain.ClientRepository
 import com.mynimef.domain.models.requests.IClientInfoRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,34 +18,34 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClientMainViewModel @Inject constructor(
-    private val repository: AppRepository
+    private val appRepository: AppRepository,
+    private val clientRepository: ClientRepository
 ): ViewModel() {
 
-    val navigation = RepositoryImpl.clientNavMain.asSharedFlow()
+    val navigation = clientRepository.navMain.asSharedFlow()
 
-    fun initClient(): Unit = with(repository) {
+    fun initClient() {
         viewModelScope.launch(Dispatchers.IO) {
-            val accountId = repository.getActualAccountId().stateIn(this).value
+            val accountId = appRepository.getActualAccountId().stateIn(this).value
 
-            when (val result = network.clientGetInfo(
+            when (val result = clientRepository.getInfo(
                 accountId = accountId,
                 request = IClientInfoRequest.create(TimeZone.getDefault().id)
             )) {
                 is ApiError -> when (result.code) {
                     401 ->  {
-                        RepositoryImpl.toastFlow.emit(EToast.AUTH_FAILED)
-                        signOutClient(accountId = accountId)
+                        appRepository.signOut(accountId = accountId)
                     }
                     else -> {}
                 }
-                is ApiException -> RepositoryImpl.toastFlow.emit(EToast.NO_CONNECTION)
+                is ApiException -> {}
                 is ApiSuccess -> {
                     val data = result.data
-                    storage.deleteAllCards()
+                    clientRepository.deleteAllCards()
                     data.dayCards.forEach {
-                        storage.insertCard(it)
+                        clientRepository.insertCard(it)
                     }
-                    storage.insertClient(
+                    clientRepository.insertAccount(
                         accountId = accountId,
                         client = data
                     )

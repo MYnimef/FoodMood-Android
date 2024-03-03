@@ -1,14 +1,11 @@
 package com.mynimef.domain
 
-import com.mynimef.domain.models.EAppState
-import kotlinx.coroutines.flow.Flow
+import com.mynimef.domain.models.AccountModel
 
-interface IAppStorageRoot: IAppStorage, ITokenGetter {
+interface IAppStorageRoot {
 
-    fun getAppState(): Flow<EAppState>
+    suspend fun insertAccount(account: AccountModel)
 
-    fun getActualAccountId(): Flow<Long>
-
-    suspend fun setAppState(state: EAppState)
+    suspend fun deleteAccount(accountId: Long)
 
 }

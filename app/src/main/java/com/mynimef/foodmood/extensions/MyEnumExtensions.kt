@@ -1,11 +1,11 @@
 package com.mynimef.foodmood.extensions
 
-import com.mynimef.data.enums.ENavClientBottomBar
+import com.mynimef.domain.models.enums.ENavClientBottomBar
 import com.mynimef.data.enums.EToast
 import com.mynimef.data.enums.ETypePeriod
 import com.mynimef.foodmood.R
-import com.mynimef.domain.models.ETypeEmotion
-import com.mynimef.domain.models.ETypeMeal
+import com.mynimef.domain.models.enums.ETypeEmotion
+import com.mynimef.domain.models.enums.ETypeMeal
 
 fun ETypeEmotion.getIcon() = when (this) {
     ETypeEmotion.VERY_BAD -> R.drawable.ic_mood_very_bad

@@ -13,8 +13,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mynimef.data.enums.ENavClientBottomBar
-import com.mynimef.data.enums.ENavClientMain
+import com.mynimef.domain.models.enums.ENavClientBottomBar
+import com.mynimef.domain.models.enums.ENavClientMain
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.elements.BottomNavigationItem
 import com.mynimef.foodmood.elements.MyNavigationBar
