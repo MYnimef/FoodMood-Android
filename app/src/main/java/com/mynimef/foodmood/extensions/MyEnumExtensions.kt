@@ -1,7 +1,7 @@
 package com.mynimef.foodmood.extensions
 
 import com.mynimef.domain.models.enums.ENavClientBottomBar
-import com.mynimef.data.enums.EToast
+import com.mynimef.data.enums.EMessage
 import com.mynimef.data.enums.ETypePeriod
 import com.mynimef.foodmood.R
 import com.mynimef.domain.models.enums.ETypeEmotion
@@ -45,12 +45,12 @@ fun ENavClientBottomBar.getIconFill() = when(this) {
     ENavClientBottomBar.SETTINGS -> R.drawable.ic_nav_settings_fill
 }
 
-fun EToast.getText() = when(this) {
-    EToast.AUTH_FAILED -> R.string.toast_401_client
-    EToast.WRONG_EMAIL_OR_PASSWORD -> R.string.toast_401_signin
-    EToast.WRONG_INPUT -> R.string.toast_403
-    EToast.ACCOUNT_ALREADY_EXISTS -> R.string.toast_409
-    EToast.NO_CONNECTION -> R.string.toast_no_con
+fun EMessage.getText() = when(this) {
+    EMessage.AUTH_FAILED -> R.string.toast_401_client
+    EMessage.WRONG_EMAIL_OR_PASSWORD -> R.string.toast_401_signin
+    EMessage.WRONG_INPUT -> R.string.toast_403
+    EMessage.ACCOUNT_ALREADY_EXISTS -> R.string.toast_409
+    EMessage.NO_CONNECTION -> R.string.toast_no_con
 }
 
 fun ETypePeriod.getNum() = when(this) {

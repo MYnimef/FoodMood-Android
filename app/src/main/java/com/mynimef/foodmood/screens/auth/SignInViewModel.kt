@@ -3,6 +3,7 @@ package com.mynimef.foodmood.screens.auth
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mynimef.data.enums.EMessage
 import com.mynimef.domain.ApiError
 import com.mynimef.domain.ApiException
 import com.mynimef.domain.ApiSuccess
@@ -14,8 +15,10 @@ import com.mynimef.domain.models.enums.ENavAuth
 import com.mynimef.domain.models.requests.ISignInRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -27,6 +30,9 @@ class SignInViewModel @Inject constructor(
     private val repository: AppRepository,
     private val authRepository: AuthRepository
 ): ViewModel() {
+
+    private val _messagesFlow = MutableSharedFlow<EMessage>()
+    val messagesFlow = _messagesFlow.asSharedFlow()
 
     private val _emailPair = MutableStateFlow("" to true)
     val emailPair = _emailPair.asStateFlow()
@@ -69,8 +75,8 @@ class SignInViewModel @Inject constructor(
                         else -> {}
                     }
                 }
-                is ApiException -> {}
-                is ApiSuccess -> repository.signIn(account = result.data,)
+                is ApiException -> _messagesFlow.emit(EMessage.NO_CONNECTION)
+                is ApiSuccess -> repository.signIn(account = result.data)
             }
         }
     }

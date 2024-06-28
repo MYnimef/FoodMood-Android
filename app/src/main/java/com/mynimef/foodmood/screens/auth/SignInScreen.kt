@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mynimef.domain.extensions.CheckPair
 import com.mynimef.foodmood.R
 import com.mynimef.foodmood.elements.MyLoginButton
+import com.mynimef.foodmood.elements.MyToastCollector
 import com.mynimef.foodmood.elements.fields.MyEmailField
 import com.mynimef.foodmood.elements.fields.MyPasswordField
 import com.mynimef.foodmood.theme.FoodMoodTheme
@@ -43,6 +44,8 @@ fun SignInScreen() {
         setPassword = viewModel::setPassword,
         buttonActive = buttonActive.value,
     )
+
+    MyToastCollector(messagesFlow = viewModel.messagesFlow)
 }
 
 @Composable
