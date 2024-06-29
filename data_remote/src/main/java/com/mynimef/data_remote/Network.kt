@@ -19,8 +19,8 @@ open class Network(
 
     private var accessToken: String? = null
 
-    protected suspend fun <T: Any> handleApi(
-        execute: suspend () -> Response<T>
+    protected inline fun <T: Any> handleApi(
+        execute: () -> Response<T>
     ): ApiResult<T> {
         return try {
             val response = execute()
