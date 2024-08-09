@@ -16,8 +16,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "FoodMood"
 include(":app")
+include(":presentation")
 include(":domain")
 include(":data_local")
 include(":data_remote")
 include(":data")
-include(":di")

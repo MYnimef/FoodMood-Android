@@ -16,27 +16,6 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.FoodMood"
         tools:targetApi="34">
-        <activity
-            android:name=".AuthActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.App.Starting">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ClientActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.FoodMood"
-            >
-
-        </activity>
     </application>
 
 </manifest>

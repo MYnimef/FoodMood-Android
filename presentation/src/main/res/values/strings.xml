@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name" translatable="false">FoodMood</string>
+    <string name="welcome">Welcome!</string>
+    <string name="password">Password</string>
+    <string name="signin">Sign in</string>
+    <string name="email">Email</string>
+    <string name="signup">Create account</string>
+    <string name="welcome_mess">Let\'s start!</string>
+    <string name="final_signup">Final step...</string>
+
+    <string name="name">Name</string>
+    <string name="birthday">Set birthday date</string>
+    <string name="repeat_pass">Repeat password</string>
+
+    <string name="next">Next</string>
+    <string name="pref">What will you track?</string>
+    <string name="emotion">Emotions after eating</string>
+    <string name="water">Water balance</string>
+    <string name="food">Food</string>
+    <string name="weight">Weight</string>
+    <string name="complete">Complete</string>
+    <string name="settings">Settings</string>
+    <string name="user_settings">Account</string>
+    <string name="prefrences">Preferences</string>
+    <string name="notifications">Notifications</string>
+    <string name="language">Language</string>
+    <string name="error">Report an error</string>
+    <string name="idea">Suggest an idea</string>
+    <string name="userinfo">Profile</string>
+    <string name="water_l">Water norm in liters</string>
+    <string name="water_notif">Set reminders to drink water</string>
+    <string name="weight_kg">Weight in kg</string>
+    <string name="emotion_button">emotions</string>
+    <string name="emotion_question">How do you feel?</string>
+    <string name="food_question">What did you eat?</string>
+    <string name="write_here">Write here</string>
+    <string name="pick">Pick\ntype</string>
+    <string name="weight_title">Enter the current weight</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter">Enter</string>
+
+    <string name="type_food_breakfast">Breakfast</string>
+    <string name="type_food_dinner">Dinner</string>
+    <string name="type_food_supper">Supper</string>
+    <string name="type_food_snack1">Snack 1</string>
+    <string name="type_food_snack2">Snack 2</string>
+
+    <string name="ml_100">100 ml</string>
+    <string name="ml_200">200 ml</string>
+    <string name="ml_300">300 ml</string>
+    <string name="ml_400">400 ml</string>
+    <string name="ml_500">500 ml</string>
+    <string name="ml_600">600 ml</string>
+
+    <string name="change">Change account</string>
+    <string name="change_hint">You can connect multiple accounts with different email</string>
+    <string name="delete">Delete account</string>
+    <string name="exit">Log out</string>
+
+    <string name="emotion_chart">Emotion chart</string>
+    <string name="calendar">Calendar</string>
+
+    <string name="toast_401_client">Authentication failed</string>
+    <string name="toast_401_signin">Wrong email or password</string>
+    <string name="toast_403">Wrong input data</string>
+    <string name="toast_409">Account already exists</string>
+    <string name="toast_no_con">No connection</string>
+
+    <string name="days_7">7 days</string>
+    <string name="days_31">31 days</string>
+</resources>

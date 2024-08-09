@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Добро Пожаловать!</string>
+    <string name="password">Пароль</string>
+    <string name="signin">Войти</string>
+    <string name="email">Эл.почта</string>
+    <string name="signup">Создать аккаунт</string>
+    <string name="welcome_mess">Давайте познакомимся!</string>
+    <string name="final_signup">Последний шаг...</string>
+
+    <string name="name">Имя</string>
+    <string name="repeat_pass">Повторите пароль</string>
+    <string name="birthday">Укажите дату рождения</string>
+
+    <string name="next">Далее</string>
+    <string name="pref">Что будем отслеживать?</string>
+    <string name="emotion">Эмоции после еды</string>
+    <string name="water">Водный баланс</string>
+    <string name="food">Еда</string>
+    <string name="weight">Вес</string>
+    <string name="complete">Завершить</string>
+    <string name="settings">Настройки</string>
+    <string name="user_settings">Аккаунт</string>
+    <string name="prefrences">Предпочтения</string>
+    <string name="notifications">Уведомления</string>
+    <string name="language">Язык</string>
+    <string name="error">Сообщить об ошибке</string>
+    <string name="idea">Предложить идею</string>
+    <string name="userinfo">Данные профиля</string>
+    <string name="water_l">Норма воды в литрах</string>
+    <string name="water_notif">Настроить напоминания пить воду</string>
+    <string name="weight_kg">Вес в килограммах</string>
+    <string name="emotion_button">эмоции</string>
+    <string name="emotion_question">Как ты себя чувствуешь?</string>
+    <string name="food_question">Что ты ел?</string>
+    <string name="pick">Выберите\nтип</string>
+    <string name="write_here">Напиши здесь</string>
+    <string name="weight_title">Введите текущий вес</string>
+    <string name="cancel">Отменить</string>
+    <string name="enter">Ввести</string>
+
+    <string name="type_food_breakfast">Завтрак</string>
+    <string name="type_food_dinner">Обед</string>
+    <string name="type_food_supper">Ужин</string>
+    <string name="type_food_snack1">Перекус 1</string>
+    <string name="type_food_snack2">Перекус 2</string>
+
+    <string name="ml_100">100 ml</string>
+    <string name="ml_200">200 ml</string>
+    <string name="ml_300">300 ml</string>
+    <string name="ml_400">400 ml</string>
+    <string name="ml_500">500 ml</string>
+    <string name="ml_600">600 ml</string>
+
+    <string name="change">Сменить аккаунт</string>
+    <string name="change_hint">Вы можете подключить несколько аккаунтов с разными логинами</string>
+    <string name="delete">Удалить аккаунт</string>
+    <string name="exit">Выйти из аккаунта</string>
+
+    <string name="emotion_chart">График эмоций</string>
+    <string name="calendar">Календарь</string>
+
+    <string name="toast_401_client">Ошибка аутентификации</string>
+    <string name="toast_401_signin">Неправильная почта или пароль</string>
+    <string name="toast_403">Некорректные входные данные</string>
+    <string name="toast_409">Аккаунт уже существует</string>
+    <string name="toast_no_con">Отсутствует соединение</string>
+
+    <string name="days_7">7 дней</string>
+    <string name="days_31">31 день</string>
+</resources>
