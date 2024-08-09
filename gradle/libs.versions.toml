@@ -1,5 +1,15 @@
 [versions]
-activity-compose = "1.9.0"
+agp = "8.5.2"
+kotlin = "2.0.10"
+ksp = "2.0.10-1.0.24"
+hilt = "2.51.1"
+material3 = "1.2.1"
+navigation-compose = "2.7.7"
+retrofit = "2.11.0"
+room = "2.6.1"
+compose-ui = "1.6.8"
+
+activity-compose = "1.9.1"
 datastore-preferences = "1.1.1"
 androidx-junit = "1.2.1"
 core-ktx = "1.13.1"
@@ -7,20 +17,9 @@ core-splashscreen = "1.0.1"
 espresso-core = "3.6.1"
 hilt-navigation-compose = "1.2.0"
 junit = "4.13.2"
-kotlinx-coroutines-core = "1.8.0"
-lifecycle-runtime-ktx = "2.8.2"
+kotlinx-coroutines-core = "1.8.1"
+lifecycle-runtime-ktx = "2.8.4"
 compose-bom = "2024.06.00"
-compose-compiler = "1.5.9"
-
-agp = "8.5.0"
-ksp = "1.9.22-1.0.17"
-kotlin = "1.9.22"
-hilt = "2.51.1"
-material3 = "1.2.1"
-navigation-compose = "2.7.7"
-retrofit = "2.11.0"
-room = "2.6.1"
-compose-ui = "1.6.8"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -59,5 +58,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

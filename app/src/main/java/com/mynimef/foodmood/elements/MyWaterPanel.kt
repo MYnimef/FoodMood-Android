@@ -49,7 +49,7 @@ fun MyWaterPanel(
             setWater = setWater
         )
         LinearProgressIndicator(
-            progress = waterAmountProvider(),
+            progress = waterAmountProvider,
             color = MaterialTheme.colorScheme.tertiary,
             trackColor = MaterialTheme.colorScheme.tertiaryContainer,
             modifier = Modifier
